@@ -1,10 +1,13 @@
 import React from 'react';
-import {ImageBackground, View, Text} from 'react-native';
+import {ImageBackground, Text, Pressable, ViewStyle} from 'react-native';
 import t from '../../Theme/theme';
 
 interface Props {
   img?: string;
   name?: string;
+  onPress?: () => void;
+  style?: ViewStyle[];
+  imageStyle?: ViewStyle[];
 }
 
 const DEFAULT_PROFILE_IMAGE =
@@ -13,16 +16,21 @@ const DEFAULT_PROFILE_IMAGE =
 export const Avatar: React.FC<Props> = ({
   img = DEFAULT_PROFILE_IMAGE,
   name,
+  style,
+  onPress,
+  imageStyle,
 }) => {
   return (
-    <View style={[t.flexCol, t.justifyCenter, t.itemsCenter]}>
+    <Pressable
+      style={[t.flexCol, t.justifyCenter, t.itemsCenter, style]}
+      onPress={onPress}>
       <ImageBackground
         source={{uri: img}}
-        style={[t.w12, t.h12, t.mB1, t.shadowMd]}
+        style={[t.w12, t.h12, t.mB1, imageStyle]}
         imageStyle={[t.roundedFull]}
         resizeMode="cover"
       />
       {name && <Text style={[t.fontSans, t.textSm]}>{name}</Text>}
-    </View>
+    </Pressable>
   );
 };
