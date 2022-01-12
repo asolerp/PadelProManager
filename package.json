@@ -19,9 +19,12 @@
     "react-native": "0.66.4",
     "react-native-charts-wrapper": "^0.5.7",
     "react-native-gesture-handler": "^2.1.0",
+    "react-native-pager-view": "^5.4.9",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.10.1",
     "react-native-svg": "^12.1.1",
+    "react-native-svg-transformer": "^1.0.0",
+    "react-native-tab-view": "^3.1.1",
     "react-native-vector-icons": "^9.0.0",
     "react-native-whirlwind": "^0.2.0",
     "victory-native": "^36.2.0"

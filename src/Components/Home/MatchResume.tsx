@@ -22,11 +22,10 @@ export const MatchResume: React.FC<Props> = ({match}) => {
         <View>
           <View style={[t.flex1, t.justifyEnd, t.mB1]}>
             <Text style={[t.fontSansMedium, t.textSm]}>
-              {shortName(match.team1[0].firstName, match.team1[0].secondName)}{' '}
-              {shortName(match.team1[1].firstName, match.team1[1].secondName)}{' '}
-              vs{' '}
-              {shortName(match.team2[0].firstName, match.team2[0].secondName)}{' '}
-              {shortName(match.team2[1].firstName, match.team2[1].secondName)}
+              {shortName(match.t1[0].firstName, match.t1[0].secondName)}{' '}
+              {shortName(match.t1[1].firstName, match.t1[1].secondName)} vs{' '}
+              {shortName(match.t2[0].firstName, match.t2[0].secondName)}{' '}
+              {shortName(match.t2[1].firstName, match.t2[1].secondName)}
             </Text>
           </View>
           <View style={[t.flex1, t.flexRow, t.itemsStart, t.justifyStart]}>

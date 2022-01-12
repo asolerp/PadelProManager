@@ -1,15 +1,18 @@
 import React, {useState, useEffect} from 'react';
 
-import {View, processColor} from 'react-native';
+import {ScrollView, View, Text, processColor} from 'react-native';
 import {RadarChart} from 'react-native-charts-wrapper';
 import {ScreenLayout} from '../../Components/Layout/ScreenLayout';
 import {Stat} from '../../Components/Player/Stat';
 import {Avatar as PlayerAvatar} from '../../Components/UI/Avatar';
 import t from '../../Theme/theme';
-
+import {MatchResume} from '../../Components/Home/MatchResume';
+import {matches} from '../../Mocks/matches';
 import {useGetPlayer} from './hooks/useGetPlayer';
 
 export const PLAYER_SCREEN_KEY = 'playerScreen';
+
+const testMatch = matches[0];
 
 const legend = {
   enabled: false,
@@ -20,7 +23,7 @@ const legend = {
 
 export const PlayerScreen = ({route}) => {
   const {playerId} = route.params;
-  const {player} = useGetPlayer({playerId});
+  const {player, globalStats, winners, nonforced} = useGetPlayer(playerId);
   const [data, setData] = useState();
   const [xAxis, setXaxis] = useState();
 
@@ -41,12 +44,12 @@ export const PlayerScreen = ({route}) => {
       dataSets: [
         {
           values: [
-            {value: 100},
-            {value: 110},
-            {value: 105},
-            {value: 115},
-            {value: 110},
-            {value: 110},
+            {value: winners.vd},
+            {value: winners.vi},
+            {value: winners.fd},
+            {value: winners.fi},
+            {value: winners.sm},
+            {value: winners.bd},
           ],
           label: 'Winners',
           config: {
@@ -60,12 +63,12 @@ export const PlayerScreen = ({route}) => {
         },
         {
           values: [
-            {value: 105},
-            {value: 115},
-            {value: 121},
-            {value: 110},
-            {value: 105},
-            {value: 110},
+            {value: nonforced.vd},
+            {value: nonforced.vi},
+            {value: nonforced.fd},
+            {value: nonforced.fi},
+            {value: nonforced.sm},
+            {value: nonforced.bd},
           ],
           label: 'Errores no forzados',
           config: {
@@ -83,13 +86,13 @@ export const PlayerScreen = ({route}) => {
 
   return (
     <ScreenLayout withBack title={player?.firstName + ' ' + player?.secondName}>
-      <View style={[t.mT7]}>
+      <ScrollView style={[t.mT7]} showsVerticalScrollIndicator={false}>
         <View style={[t.justifyCenter, t.itemsCenter]}>
           <PlayerAvatar img={player.profileImg} imageStyle={[t.w28, t.h28]} />
           <View style={[t.flexRow, t.justifyBetween, t.w60, t.mT5]}>
-            <Stat label="Jugados" count={20} />
-            <Stat label="Ganados" count={14} />
-            <Stat label="Perdidos" count={6} />
+            <Stat label="Jugados" count={globalStats.games} />
+            <Stat label="Ganados" count={globalStats.win} />
+            <Stat label="Perdidos" count={globalStats.lose} />
           </View>
         </View>
         <View style={[t.itemsCenter, t.mT1]}>
@@ -111,7 +114,17 @@ export const PlayerScreen = ({route}) => {
             touchEnabled={false}
           />
         </View>
-      </View>
+        <View>
+          <Text style={[t.textLg, t.fontSansMedium, t.mB3]}>
+            Últimos partidos
+          </Text>
+          <View>
+            <MatchResume match={testMatch} />
+            <MatchResume match={testMatch} />
+            <MatchResume match={testMatch} />
+          </View>
+        </View>
+      </ScrollView>
     </ScreenLayout>
   );
 };

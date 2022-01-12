@@ -1,9 +1,11 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Pressable} from 'react-native';
 import t from '../../Theme/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {format} from 'date-fns';
 import {shortName} from '../../Utils/parsers';
+import {openScreenWithPush} from '../../Router/utils/actions';
+import {MATCH_SCREEN_KEY} from '../../Screens/Match/Match';
 
 const cardLabel = [t.textXs, t.fontSansBold, t.textWhite, t.opacity70];
 const cardInfo = [t.textXs, t.fontSansBold, t.textWhite];
@@ -17,7 +19,9 @@ export const LiveMatchResume: React.FC<Props> = ({match}) => {
   const matchDay = format(match.date, 'iii d MMMM yyyy');
 
   return (
-    <View style={[t.w64, t.h36, t.bgInfo, t.roundedLg, t.p3, t.shadowMd]}>
+    <Pressable
+      style={[t.w64, t.h36, t.bgInfo, t.roundedLg, t.p3, t.shadowMd]}
+      onPress={() => openScreenWithPush(MATCH_SCREEN_KEY, {matchId: match.id})}>
       <View style={[t.flexRow, t.itemsCenter, t.justifyBetween, t.mB3]}>
         <View>
           <Text style={[cardLabel]}>Fecha</Text>
@@ -32,10 +36,10 @@ export const LiveMatchResume: React.FC<Props> = ({match}) => {
       <View style={[t.flexGrow, t.flexRow, t.mR4]}>
         <View style={[t.flex2, t.justifyCenter]}>
           <Text style={[cardInfo]}>
-            {shortName(match.team1[0].firstName, match.team1[0].secondName)}
+            {shortName(match.t1[0].firstName, match.t1[0].secondName)}
           </Text>
           <Text style={[cardInfo]}>
-            {shortName(match.team1[1].firstName, match.team1[1].secondName)}
+            {shortName(match.t1[1].firstName, match.t1[1].secondName)}
           </Text>
         </View>
         <View style={[t.flex1, t.justifyCenter]}>
@@ -56,10 +60,10 @@ export const LiveMatchResume: React.FC<Props> = ({match}) => {
       <View style={[t.flexGrow, t.flexRow, t.mR4]}>
         <View style={[t.flex2, t.justifyCenter]}>
           <Text style={[cardInfo]}>
-            {shortName(match.team2[0].firstName, match.team2[0].secondName)}
+            {shortName(match.t2[0].firstName, match.t2[0].secondName)}
           </Text>
           <Text style={[cardInfo]}>
-            {shortName(match.team2[1].firstName, match.team2[1].secondName)}
+            {shortName(match.t2[1].firstName, match.t2[1].secondName)}
           </Text>
         </View>
         <View style={[t.flex1, t.justifyCenter]}>
@@ -76,6 +80,6 @@ export const LiveMatchResume: React.FC<Props> = ({match}) => {
           <Text style={[setNumber]}>{match.game.s3t2}</Text>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
