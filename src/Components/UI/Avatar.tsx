@@ -1,10 +1,11 @@
 import React from 'react';
-import {ImageBackground, Text, Pressable, ViewStyle} from 'react-native';
+import {ImageBackground, Text, View, Pressable, ViewStyle} from 'react-native';
 import t from '../../Theme/theme';
 
 interface Props {
   img?: string;
   name?: string;
+  active?: boolean;
   onPress?: () => void;
   style?: ViewStyle[];
   imageStyle?: ViewStyle[];
@@ -19,10 +20,17 @@ export const Avatar: React.FC<Props> = ({
   style,
   onPress,
   imageStyle,
+  active = false,
 }) => {
   return (
     <Pressable
-      style={[t.flexCol, t.justifyCenter, t.itemsCenter, style]}
+      style={[
+        t.flexCol,
+        t.justifyCenter,
+        t.itemsCenter,
+        t.borderInfoDark,
+        style,
+      ]}
       onPress={onPress}>
       <ImageBackground
         source={{uri: img}}
@@ -30,7 +38,19 @@ export const Avatar: React.FC<Props> = ({
         imageStyle={[t.roundedFull]}
         resizeMode="cover"
       />
-      {name && <Text style={[t.fontSans, t.textSm]}>{name}</Text>}
+      {name && (
+        <>
+          {active ? (
+            <View style={[t.bgInfo, t.roundedSm, t.pX1, t.pY0_5]}>
+              <Text style={[t.fontSansMedium, t.textSm, t.textWhite]}>
+                {name}
+              </Text>
+            </View>
+          ) : (
+            <Text style={[t.fontSans, t.textSm]}>{name}</Text>
+          )}
+        </>
+      )}
     </Pressable>
   );
 };

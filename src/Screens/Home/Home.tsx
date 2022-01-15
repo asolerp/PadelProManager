@@ -8,15 +8,15 @@ import t from '../../Theme/theme';
 import {LiveMatchResume} from '../../Components/Home/LiveMatchResume';
 import {MatchResume} from '../../Components/Home/MatchResume';
 
-import {matches} from '../../Mocks/matches';
 import {players} from '../../Mocks/players';
 import {MyPlayers} from '../../Components/Home/MyPlayers';
-
-const testMatch = matches[0];
+import {useGetMatches} from '../../Hooks/useGetMatches';
 
 export const HOME_SCREEN_KEY = 'homeScreen';
 
 export const HomeScreen: FunctionComponent = () => {
+  const {matches, loadingMatches} = useGetMatches();
+
   return (
     <ScreenLayout>
       <View style={[t.flexRow, t.itemsCenter, t.justifyBetween, t.mB10]}>
@@ -33,7 +33,10 @@ export const HomeScreen: FunctionComponent = () => {
           </Text>
           <View
             style={[t.flexRow, t.w60, t.justifyBetween, t.itemsCenter, t.mB7]}>
-            <LiveMatchResume match={testMatch} />
+            {!loadingMatches &&
+              matches?.map(match => (
+                <LiveMatchResume key={match?.id} match={match} />
+              ))}
           </View>
         </View>
         <View>
@@ -41,9 +44,9 @@ export const HomeScreen: FunctionComponent = () => {
             Últimos partidos
           </Text>
           <View>
-            <MatchResume match={testMatch} />
-            <MatchResume match={testMatch} />
-            <MatchResume match={testMatch} />
+            {/* <MatchResume match={matches} />
+            <MatchResume match={matches} />
+            <MatchResume match={matches} /> */}
           </View>
         </View>
       </View>

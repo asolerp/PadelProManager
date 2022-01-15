@@ -6,6 +6,7 @@ import {format} from 'date-fns';
 import {shortName} from '../../Utils/parsers';
 import {openScreenWithPush} from '../../Router/utils/actions';
 import {MATCH_SCREEN_KEY} from '../../Screens/Match/Match';
+import {resultGame} from '../../Utils/gameLogic';
 
 const cardLabel = [t.textXs, t.fontSansBold, t.textWhite, t.opacity70];
 const cardInfo = [t.textXs, t.fontSansBold, t.textWhite];
@@ -16,7 +17,7 @@ interface Props {
 }
 
 export const LiveMatchResume: React.FC<Props> = ({match}) => {
-  const matchDay = format(match.date, 'iii d MMMM yyyy');
+  const matchDay = format(new Date(match.date.toDate()), 'iii d MMMM yyyy');
 
   return (
     <Pressable
@@ -49,7 +50,7 @@ export const LiveMatchResume: React.FC<Props> = ({match}) => {
         </View>
         <View style={[t.flex3, t.flexRow, t.itemsCenter, t.justifyBetween]}>
           <Text style={[t.textSm, t.fontSansBold, t.textWhite, t.w10]}>
-            {match.game.gt1}
+            {resultGame(match?.game).split('-')[0]}
           </Text>
           <Text style={[setNumber]}>{match.game.s1t1}</Text>
           <Text style={[setNumber]}>{match.game.s2t1}</Text>
@@ -73,7 +74,7 @@ export const LiveMatchResume: React.FC<Props> = ({match}) => {
         </View>
         <View style={[t.flex3, t.flexRow, t.itemsCenter, t.justifyBetween]}>
           <Text style={[t.textSm, t.fontSansBold, t.textWhite, t.w10]}>
-            {match.game.gt2}
+            {resultGame(match?.game).split('-')[1]}
           </Text>
           <Text style={[setNumber]}>{match.game.s1t2}</Text>
           <Text style={[setNumber]}>{match.game.s2t2}</Text>

@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const MatchResume: React.FC<Props> = ({match}) => {
-  const matchDay = format(match.date, 'iii d MMMM yyyy');
+  const matchDay = format(new Date(match?.date), 'iii d MMMM yyyy');
 
   return (
     <>
