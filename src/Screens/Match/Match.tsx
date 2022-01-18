@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View, Text} from 'react-native';
-import {ScreenLayout} from '../../Components/Layout/ScreenLayout';
+import {ScreenLayout, Header} from '../../Components/Layout';
 import {useGetMatch} from './hooks/useGetMatch';
 import {roundParser} from '../../Utils/parsers';
 import t from '../../Theme/theme';
@@ -21,14 +21,15 @@ import {Button} from '../../Components/UI/Button';
 export const MATCH_SCREEN_KEY = 'matchScreen';
 
 export const MatchScreen: React.FC = ({route}) => {
-  const {matchId} = route.params;
+  const {matchId, title} = route.params;
   const {notes, match, loadingMatch, isStartTeamAssigned, history} =
     useGetMatch(matchId);
   const {handleSavePoint, handleWhoStarts, loading} = useLiveMatch(match);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   return (
-    <ScreenLayout withBack title={roundParser[match?.round]}>
+    <ScreenLayout>
+      <Header withBack title={roundParser[title]} />
       <AddButton
         iconName="tennisball"
         style={[t.bgSuccessLight]}
@@ -39,12 +40,16 @@ export const MatchScreen: React.FC = ({route}) => {
           ¿Que pareja empieza sacando?
         </Text>
         <View style={[t.flexRow, t.mT3, t.justifyBetween]}>
-          <Button style={[t.mR3]} onPress={() => handleWhoStarts('t1')}>
-            Pareja 1
-          </Button>
-          <Button type="success" onPress={() => handleWhoStarts('t2')}>
-            Pareja 2
-          </Button>
+          <Button
+            title="Pareja 1"
+            style={[t.mR3]}
+            onPress={() => handleWhoStarts('t1')}
+          />
+          <Button
+            title="Pareja 2"
+            type="success"
+            onPress={() => handleWhoStarts('t2')}
+          />
         </View>
       </NormalModal>
       <BottomModal

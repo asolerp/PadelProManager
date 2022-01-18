@@ -28,10 +28,17 @@ export const useHistory = matchId => {
     );
   };
 
-  const handleDeleteComment = (pointHistoryId, callback) => {
-    updateHistoryPoint(pointHistoryId, {
-      comment: null,
-    });
+  const handleDeleteComment = (
+    pointHistoryId: string,
+    callback?: () => void,
+  ) => {
+    updateHistoryPoint(
+      pointHistoryId,
+      {
+        comment: null,
+      },
+      () => callback(),
+    );
   };
 
   const handleAddAsFavorite = (historyPointId, isSaved) => {

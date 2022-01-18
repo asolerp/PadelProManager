@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {Dimensions, KeyboardAvoidingView, View} from 'react-native';
 import Modal from 'react-native-modal';
 import t from '../../Theme/theme';
 
@@ -11,12 +11,21 @@ export const BottomModal = ({isVisible, children, onClose}) => {
       onBackdropPress={onClose}
       onSwipeComplete={onClose}
       swipeDirection={['down']}
-      style={[t.justifyEnd, t.m0]}>
-      <View
-        style={[t.bgWhite, t.itemsCenter, t.p5, t.roundedLXl, t.roundedRXl]}>
-        <View style={[t.w20, t.h1, t.bgBlack, t.roundedFull, t.mB7]} />
-        {children}
-      </View>
+      style={[t.justifyEnd, {height: Dimensions.get('screen').height}, t.m0]}>
+      <KeyboardAvoidingView behavior="padding">
+        <View
+          style={[
+            t.bgWhite,
+            t.itemsCenter,
+            t.pY5,
+            t.pX5,
+            t.roundedTlXl,
+            t.roundedTrXl,
+          ]}>
+          <View style={[t.w20, t.h1, t.bgBlack, t.roundedFull, t.mB5]} />
+          {children}
+        </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };

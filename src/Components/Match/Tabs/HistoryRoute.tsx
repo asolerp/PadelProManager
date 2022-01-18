@@ -8,7 +8,7 @@ export const HistoricRoute = ({match, pointsHistory}) => {
     <PointHistoryItem match={match} pointHistory={item} />
   );
   return (
-    <View>
+    <View style={[t.mT5]}>
       <FlatList
         showsVerticalScrollIndicator={false}
         data={pointsHistory?.sort(

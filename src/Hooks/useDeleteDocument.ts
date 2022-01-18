@@ -2,24 +2,19 @@ import {useState} from 'react';
 
 interface HookProps {
   docId?: string;
-  data: any;
   callback?: () => void;
 }
 
-export const useAddDocument = query => {
+export const useDeleteDocument = query => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
 
-  const addDocument = async ({docId, data, callback}: HookProps) => {
+  const deleteDocument = async ({docId, callback}: HookProps) => {
     setLoading(true);
     try {
       setLoading(false);
-      const result = docId
-        ? await query.doc(docId).set({...data})
-        : await query.add({...data});
-      return result;
+      await query.doc(docId).delete();
     } catch (err) {
-      console.log(err);
       setError(err);
       setLoading(false);
     } finally {
@@ -27,5 +22,5 @@ export const useAddDocument = query => {
     }
   };
 
-  return {addDocument, loading, error};
+  return {deleteDocument, loading, error};
 };

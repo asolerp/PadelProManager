@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Pressable} from 'react-native';
+import {View, Text} from 'react-native';
 import {PlayerType} from '../../Global/types';
 import t from '../../Theme/theme';
 import {shortName} from '../../Utils/parsers';
@@ -89,18 +89,18 @@ export const NewPointModal = ({match, loading, onSavePoint}) => {
         <Text style={[t.fontSansBold, t.mB5]}>Ganador del punto</Text>
         <View style={[t.flexRow]}>
           <Button
+            title="Gana T1"
             type="info"
             style={[t.mR2]}
             active={isWinPointTeamActive(TEAM1)}
-            onPress={() => handlePressWinPointTeam(TEAM1)}>
-            Gana T1
-          </Button>
+            onPress={() => handlePressWinPointTeam(TEAM1)}
+          />
           <Button
+            title="Gana T2"
             type="info"
             active={isWinPointTeamActive(TEAM2)}
-            onPress={() => handlePressWinPointTeam(TEAM2)}>
-            Gana T2
-          </Button>
+            onPress={() => handlePressWinPointTeam(TEAM2)}
+          />
         </View>
       </View>
       <View style={[t.mB5]}>
@@ -132,25 +132,25 @@ export const NewPointModal = ({match, loading, onSavePoint}) => {
       <View style={[t.mB5]}>
         <View style={[t.flexRow]}>
           <Button
+            title="Winner"
             type="success"
             style={[t.mR2]}
             active={isResultActive(WINNER)}
-            onPress={() => handlePressResult(WINNER)}>
-            Winner
-          </Button>
+            onPress={() => handlePressResult(WINNER)}
+          />
           <Button
+            title="Fuerza error"
             type="info"
             style={[t.mR2]}
             active={isResultActive(ERROR_FORCED)}
-            onPress={() => handlePressResult(ERROR_FORCED)}>
-            Fuerza error
-          </Button>
+            onPress={() => handlePressResult(ERROR_FORCED)}
+          />
           <Button
+            title="No forzado"
             type="error"
             active={isResultActive(NONFORCED)}
-            onPress={() => handlePressResult(NONFORCED)}>
-            No forzado
-          </Button>
+            onPress={() => handlePressResult(NONFORCED)}
+          />
         </View>
       </View>
       <View style={[t.flexRow, t.flexWrap, t.justifyBetween, t.mB5]}>
@@ -205,20 +205,20 @@ export const NewPointModal = ({match, loading, onSavePoint}) => {
       </View>
       <View style={[t.mB10]}>
         <Button
+          title="Añadir estadística"
           textStyle={[t.textBlack]}
           style={[t.border0, t.bgWhite, t.shadowNone]}
-          onPress={handlePressAddPointStat}>
-          Añadir estádistica
-        </Button>
+          onPress={handlePressAddPointStat}
+        />
       </View>
       <View>
         <Button
+          title="Guardar punto"
           loading={loading}
           onPress={() => handleSavePoint(pointStats)}
           textStyle={[t.textBlack, t.fontSansBold]}
-          style={[t.border0, t.bgWhite, t.shadowNone]}>
-          Guardar punto
-        </Button>
+          style={[t.border0, t.bgWhite, t.shadowNone]}
+        />
       </View>
     </View>
   );

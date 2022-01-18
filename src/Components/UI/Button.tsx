@@ -1,4 +1,3 @@
-import te from 'date-fns/esm/locale/te/index.js';
 import React from 'react';
 import {
   Text,
@@ -6,15 +5,16 @@ import {
   ViewStyle,
   TextStyle,
   ActivityIndicator,
+  ButtonProps,
 } from 'react-native';
 import t from '../../Theme/theme';
 
-interface Props {
+interface Props extends ButtonProps {
   style?: ViewStyle[];
   textStyle?: TextStyle[];
+  title: string;
   active?: boolean;
   loading?: boolean;
-  children: string;
   type?: 'error' | 'success' | 'info';
   onPress?: () => void;
 }
@@ -23,11 +23,14 @@ export const Button: React.FC<Props> = ({
   style,
   textStyle,
   onPress,
-  children,
+  title,
   loading,
+  disabled,
   active = false,
   type = 'info',
 }) => {
+  const disabledStyles = disabled ? [t.opacity10] : [t.opacity100];
+
   const parseBgTypeColors = {
     success: [active ? t.bgSuccessLight : t.bgWhite, t.borderSuccessDark],
     error: [active ? t.bgErrorLight : t.bgWhite, t.borderErrorDark],
@@ -42,7 +45,7 @@ export const Button: React.FC<Props> = ({
 
   return (
     <Pressable
-      onPress={onPress}
+      onPress={!disabled ? onPress : () => {}}
       style={[
         t.justifyCenter,
         t.itemsCenter,
@@ -56,8 +59,14 @@ export const Button: React.FC<Props> = ({
       {loading ? (
         <ActivityIndicator color="black" />
       ) : (
-        <Text style={[parseTextTypeColor[type], t.textSm, textStyle]}>
-          {children}
+        <Text
+          style={[
+            parseTextTypeColor[type],
+            t.textSm,
+            textStyle,
+            disabledStyles,
+          ]}>
+          {title}
         </Text>
       )}
     </Pressable>

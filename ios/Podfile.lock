@@ -777,6 +777,8 @@ PODS:
     - Charts (= 3.3.0)
     - React
     - SwiftyJSON (= 5.0)
+  - RNDateTimePicker (5.1.0):
+    - React-Core
   - RNFBApp (14.2.2):
     - Firebase/CoreOnly (= 8.10.0)
     - React-Core
@@ -857,6 +859,7 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNCharts (from `../node_modules/react-native-charts-wrapper`)
+  - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -965,6 +968,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCharts:
     :path: "../node_modules/react-native-charts-wrapper"
+  RNDateTimePicker:
+    :path: "../node_modules/@react-native-community/datetimepicker"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBFirestore:
@@ -1042,6 +1047,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: dec32ee6f2e2a26e13e58152271535fadff5455a
   ReactCommon: 57b69f6383eafcbd7da625bfa6003810332313c4
   RNCharts: d364ca2085e24edb9ee0390d3fb7209257daa44c
+  RNDateTimePicker: 1dd15d7ed1ab7d999056bc77879a42920d139c12
   RNFBApp: 78d0446e8b28dc30616c134a9e4d8d4b01f9f966
   RNFBFirestore: 0b11664ee7aef061378ad3a3acc48d0bc31d821a
   RNGestureHandler: e1ad51d31a580755079d5124d3ab66f0fcaa8311

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Pressable, TextInput} from 'react-native';
+import {View, Text, Pressable} from 'react-native';
 import t from '../../Theme/theme';
 import {resultGame} from '../../Utils/gameLogic';
 import {shortName} from '../../Utils/parsers';
@@ -16,13 +16,19 @@ import {useHistory} from './hooks/useHistory';
 import {BottomModal} from '../Modal/BottomModal';
 import {Button} from '../UI/Button';
 import {useState} from 'react';
+import {Input} from '../UI/Input';
 
 export const PointHistoryItem = ({match, pointHistory}) => {
   const {s1t1, s1t2, s2t1, s2t2, s3t1, s3t2, set, service} =
     pointHistory?.gameState;
 
-  const {handleAddAsFavorite, handleAddComment, comment, setComment} =
-    useHistory(match?.id);
+  const {
+    handleAddAsFavorite,
+    handleDeleteComment,
+    handleAddComment,
+    comment,
+    setComment,
+  } = useHistory(match?.id);
   const [visibleCommentModal, setVisibleCommentModal] = useState(false);
 
   const isHistoryPointSavedAsFavorite = match?.favoritePoints?.some(
@@ -44,13 +50,15 @@ export const PointHistoryItem = ({match, pointHistory}) => {
       <BottomModal
         isVisible={visibleCommentModal}
         onClose={() => setVisibleCommentModal(false)}>
-        <View style={[t.wFull, t.itemsStart, t.mB3]}>
-          <Text style={[t.fontSansBold, t.textLg, t.textLeft, t.mB10]}>
+        <View style={[t.wFull]}>
+          <Text style={[t.fontSansBold, t.textLg, t.textLeft, t.mB5]}>
             Nuevo comentario
           </Text>
-          <View style={[t.wFull, t.mB3, t.borderB]}>
-            <TextInput
+          <View style={[t.wFull]}>
+            <Input
+              label="Comentario"
               value={comment}
+              multiline
               onChangeText={setComment}
               placeholder="Añade un comentario"
               style={[t.mB2]}
@@ -58,15 +66,15 @@ export const PointHistoryItem = ({match, pointHistory}) => {
           </View>
           <View style={[t.wFull, t.justifyCenter, t.itemsCenter]}>
             <Button
+              title="Guardar"
               onPress={() =>
                 handleAddComment(pointHistory?.id, () =>
                   setVisibleCommentModal(false),
                 )
               }
               style={[t.border0, t.bgWhite, t.shadowNone]}
-              textStyle={[t.textBlack]}>
-              Guardar
-            </Button>
+              textStyle={[t.textBlack]}
+            />
           </View>
         </View>
       </BottomModal>
@@ -121,9 +129,24 @@ export const PointHistoryItem = ({match, pointHistory}) => {
           );
         })}
         {pointHistory?.comment && (
-          <View style={[]}>
+          <View style={[t.maxW56, t.borderL, t.pL2]}>
             <Text style={[t.fontSansBold, t.mB1]}>Comentario</Text>
-            <Text style={[t.fontSans, t.textXs]}>{pointHistory?.comment}</Text>
+            <View style={[t.flexRow, t.itemsEnd]}>
+              <Text style={[t.fontSans, t.textXs]}>
+                {pointHistory?.comment}
+              </Text>
+              <Pressable
+                onPress={() => {
+                  handleDeleteComment(pointHistory?.id);
+                }}>
+                <Icon
+                  name="ios-trash"
+                  color="#f44336"
+                  size={17}
+                  style={[t.mL3]}
+                />
+              </Pressable>
+            </View>
           </View>
         )}
         <View style={[t.flexRow, t.justifyEnd]}>

@@ -1,7 +1,9 @@
 import {processColor} from 'react-native';
 
 export const radarGraphDataGenerator = playerStatistics => {
-  const {w, nf, ef} = playerStatistics;
+  const w = playerStatistics?.w || 0;
+  const nf = playerStatistics?.nf || 0;
+  const ef = playerStatistics?.ef || 0;
 
   const data = {
     dataSets: [

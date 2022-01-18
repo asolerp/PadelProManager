@@ -1,10 +1,9 @@
 import React from 'react';
-import {View, Text, useWindowDimensions} from 'react-native';
+import {Text, useWindowDimensions} from 'react-native';
 
 import {TabView, TabBar} from 'react-native-tab-view';
 
 import t from '../../Theme/theme';
-import {Button} from '../UI/Button';
 
 import {HistoricRoute} from './Tabs/HistoryRoute';
 import {NotesRoute} from './Tabs/NotesRoute';
@@ -22,7 +21,7 @@ export const MatchTabs = ({match, notes, pointsHistory}) => {
   const renderScene = ({route}) => {
     switch (route.key) {
       case 'notes':
-        return <NotesRoute notes={notes} />;
+        return <NotesRoute matchId={match?.id} notes={notes} />;
       case 'statistics':
         return <StatisticsRoute statistics={match?.statistics} />;
       case 'historic':

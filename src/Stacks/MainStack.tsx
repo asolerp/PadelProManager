@@ -1,8 +1,13 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {HomeScreen, HOME_SCREEN_KEY} from '../Screens/Home/Home';
 import {PlayerScreen, PLAYER_SCREEN_KEY} from '../Screens/Player/Player';
 import {MatchScreen, MATCH_SCREEN_KEY} from '../Screens/Match/Match';
+import {TAB_STACK_KEY} from '../Router/utils/routerKeys';
+import {TabStack} from './TabStack';
+import {
+  NewMatchScreen,
+  NEW_MATCH_SCREEN_KEY,
+} from '../Screens/NewMatch/NewMatch';
 
 const Stack = createNativeStackNavigator();
 
@@ -11,8 +16,8 @@ export const MainStack = () => {
     <Stack.Navigator>
       <Stack.Screen
         options={{headerShown: false}}
-        name={HOME_SCREEN_KEY}
-        component={HomeScreen}
+        name={TAB_STACK_KEY}
+        component={TabStack}
       />
       <Stack.Screen
         options={{headerShown: false}}
@@ -23,6 +28,11 @@ export const MainStack = () => {
         options={{headerShown: false}}
         name={MATCH_SCREEN_KEY}
         component={MatchScreen}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name={NEW_MATCH_SCREEN_KEY}
+        component={NewMatchScreen}
       />
     </Stack.Navigator>
   );

@@ -21,7 +21,7 @@ export const useGetMatch = (matchId: string) => {
   );
 
   const [notes, loadingNotes, errorNotes] = useCollectionData(
-    query.collection('note'),
+    query.collection('notes'),
     {
       idField: 'id',
     },
@@ -37,8 +37,6 @@ export const useGetMatch = (matchId: string) => {
 
   const loading = loadingMatch || loadingHistory || loadingNotes;
   const error = errorMatch || errorHistory || errorNotes;
-
-  console.log(notes);
 
   return {
     notes,

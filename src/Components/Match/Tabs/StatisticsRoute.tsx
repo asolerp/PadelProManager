@@ -15,8 +15,8 @@ export const StatisticsRoute = ({statistics}) => {
     t2Tbj,
     t1Tsm,
     t2Tsm,
-    t1Tbd,
-    t2Tbr,
+    t1Tbp,
+    t2Tbp,
     t1Tf,
     t2Tf,
     t1Tw,
@@ -35,7 +35,7 @@ export const StatisticsRoute = ({statistics}) => {
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={[t.itemsCenter, t.pX3]}>
+      contentContainerStyle={[t.itemsCenter, t.pX3, t.mT5]}>
       <StatisticItem
         label="Winners"
         t1PointCount={t1Tw}
@@ -68,8 +68,8 @@ export const StatisticsRoute = ({statistics}) => {
       />
       <StatisticItem
         label="Puntos ganados bajada de pared"
-        t1PointCount={t1Tbd}
-        t2PointCount={t2Tbr}
+        t1PointCount={t1Tbp}
+        t2PointCount={t2Tbp}
         totalCount={totalPoints}
       />
       <StatisticItem
@@ -84,10 +84,10 @@ export const StatisticsRoute = ({statistics}) => {
         t2PointCount={t2Tsm}
         totalCount={totalPoints}
       />
-      <PlayerRadarGraph data={dataP1} />
-      <PlayerRadarGraph data={dataP2} />
-      <PlayerRadarGraph data={dataP3} />
-      <PlayerRadarGraph data={dataP4} />
+      {dataP1 && <PlayerRadarGraph data={dataP1} />}
+      {dataP2 && <PlayerRadarGraph data={dataP2} />}
+      {dataP3 && <PlayerRadarGraph data={dataP3} />}
+      {dataP4 && <PlayerRadarGraph data={dataP4} />}
     </ScrollView>
   );
 };
