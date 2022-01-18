@@ -3,6 +3,7 @@ export interface PlayerType {
   firstName?: string;
   secondName?: string;
   profileImg?: string;
+  team?: string;
 }
 
 export interface GameType {

@@ -25,7 +25,7 @@ import {
   WINNER,
 } from './utils/constants';
 
-export const NewPointModal = ({match, onSavePoint}) => {
+export const NewPointModal = ({match, loading, onSavePoint}) => {
   const {
     pointStats,
     winPointTeam,
@@ -108,29 +108,25 @@ export const NewPointModal = ({match, onSavePoint}) => {
           Añadir estadística a jugador
         </Text>
         <View style={[t.flexRow, t.justifyBetween, t.itemsCenter]}>
-          {Object.entries(match?.t1)?.map(
-            ([key, player]: [string, PlayerType]) => (
-              <Avatar
-                key={key}
-                onPress={() => handlePressPlayer(player)}
-                active={isPlayerActive(player)}
-                img={player.profileImg}
-                name={shortName(player.firstName, player.secondName)}
-              />
-            ),
-          )}
+          {match?.t1?.map((player: PlayerType) => (
+            <Avatar
+              key={player.id}
+              onPress={() => handlePressPlayer(player)}
+              active={isPlayerActive(player)}
+              img={player.profileImg}
+              name={shortName(player.firstName, player.secondName)}
+            />
+          ))}
           <Text style={[t.textXl, t.fontSansBold, t.mB5]}>vs</Text>
-          {Object.entries(match?.t2)?.map(
-            ([key, player]: [string, PlayerType]) => (
-              <Avatar
-                key={key}
-                onPress={() => handlePressPlayer(player)}
-                active={isPlayerActive(player)}
-                img={player.profileImg}
-                name={shortName(player.firstName, player.secondName)}
-              />
-            ),
-          )}
+          {match?.t2?.map((player: PlayerType) => (
+            <Avatar
+              key={player.id}
+              onPress={() => handlePressPlayer(player)}
+              active={isPlayerActive(player)}
+              img={player.profileImg}
+              name={shortName(player.firstName, player.secondName)}
+            />
+          ))}
         </View>
       </View>
       <View style={[t.mB5]}>
@@ -147,7 +143,7 @@ export const NewPointModal = ({match, onSavePoint}) => {
             style={[t.mR2]}
             active={isResultActive(ERROR_FORCED)}
             onPress={() => handlePressResult(ERROR_FORCED)}>
-            Forzado error
+            Fuerza error
           </Button>
           <Button
             type="error"
@@ -212,11 +208,12 @@ export const NewPointModal = ({match, onSavePoint}) => {
           textStyle={[t.textBlack]}
           style={[t.border0, t.bgWhite, t.shadowNone]}
           onPress={handlePressAddPointStat}>
-          Añadir
+          Añadir estádistica
         </Button>
       </View>
       <View>
         <Button
+          loading={loading}
           onPress={() => handleSavePoint(pointStats)}
           textStyle={[t.textBlack, t.fontSansBold]}
           style={[t.border0, t.bgWhite, t.shadowNone]}>

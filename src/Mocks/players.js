@@ -14,7 +14,7 @@ export const players = [
       play: {
         winners: {
           vd: 12,
-          vi: 8,
+          vi: 0,
           fd: 7,
           fi: 5,
           sm: 10,

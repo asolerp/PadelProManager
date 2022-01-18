@@ -85,7 +85,7 @@ export const useNewPoint = () => {
       player: playerStat,
       result: resultPoint,
       point: typePoint,
-      team: winPointTeam,
+      team: playerStat?.team,
     };
     const error = hasPointStatErrors(newStat);
     if (error) {

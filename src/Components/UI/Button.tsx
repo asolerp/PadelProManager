@@ -1,12 +1,19 @@
 import te from 'date-fns/esm/locale/te/index.js';
 import React from 'react';
-import {Text, Pressable, ViewStyle, TextStyle} from 'react-native';
+import {
+  Text,
+  Pressable,
+  ViewStyle,
+  TextStyle,
+  ActivityIndicator,
+} from 'react-native';
 import t from '../../Theme/theme';
 
 interface Props {
   style?: ViewStyle[];
   textStyle?: TextStyle[];
   active?: boolean;
+  loading?: boolean;
   children: string;
   type?: 'error' | 'success' | 'info';
   onPress?: () => void;
@@ -17,6 +24,7 @@ export const Button: React.FC<Props> = ({
   textStyle,
   onPress,
   children,
+  loading,
   active = false,
   type = 'info',
 }) => {
@@ -45,9 +53,13 @@ export const Button: React.FC<Props> = ({
         t.shadow,
         style,
       ]}>
-      <Text style={[parseTextTypeColor[type], t.textSm, textStyle]}>
-        {children}
-      </Text>
+      {loading ? (
+        <ActivityIndicator color="black" />
+      ) : (
+        <Text style={[parseTextTypeColor[type], t.textSm, textStyle]}>
+          {children}
+        </Text>
+      )}
     </Pressable>
   );
 };

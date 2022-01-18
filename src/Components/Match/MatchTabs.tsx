@@ -1,36 +1,16 @@
 import React from 'react';
 import {View, Text, useWindowDimensions} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+
 import {TabView, TabBar} from 'react-native-tab-view';
+
 import t from '../../Theme/theme';
-import {PointHistoryItem} from './PointHistoryItem';
+import {Button} from '../UI/Button';
 
-const NotesRoute = () => (
-  <View style={[t.flex1, t.justifyCenter, t.itemsCenter]}>
-    <Text>1</Text>
-  </View>
-);
+import {HistoricRoute} from './Tabs/HistoryRoute';
+import {NotesRoute} from './Tabs/NotesRoute';
+import {StatisticsRoute} from './Tabs/StatisticsRoute';
 
-const StatisticsRoute = () => (
-  <View style={[t.flex1, t.justifyCenter, t.itemsCenter]}>
-    <Text>2</Text>
-  </View>
-);
-
-const HistoricRoute = ({game, pointsHistory}) => (
-  <ScrollView showsVerticalScrollIndicator={false} style={[t.flex1]}>
-    <Text style={[t.fontSansMedium, t.textCenter, t.mT4]}>
-      ¡Empieza el partido!
-    </Text>
-    {pointsHistory
-      ?.sort((a, b) => new Date(b.date.toDate()) - new Date(a.date.toDate()))
-      ?.map((p, i) => (
-        <PointHistoryItem key={i} pointHistory={p} />
-      ))}
-  </ScrollView>
-);
-
-export const MatchTabs = ({match, pointsHistory}) => {
+export const MatchTabs = ({match, notes, pointsHistory}) => {
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
@@ -42,13 +22,11 @@ export const MatchTabs = ({match, pointsHistory}) => {
   const renderScene = ({route}) => {
     switch (route.key) {
       case 'notes':
-        return <NotesRoute />;
+        return <NotesRoute notes={notes} />;
       case 'statistics':
-        return <StatisticsRoute />;
+        return <StatisticsRoute statistics={match?.statistics} />;
       case 'historic':
-        return (
-          <HistoricRoute game={match?.game} pointsHistory={pointsHistory} />
-        );
+        return <HistoricRoute match={match} pointsHistory={pointsHistory} />;
       default:
         return null;
     }

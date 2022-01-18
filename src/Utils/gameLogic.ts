@@ -3,6 +3,7 @@ const mapPoints = {
   1: '15',
   2: '30',
   3: '40',
+  4: 'ADV',
 };
 
 export const tennisGameLogic = (game, point) => {
@@ -29,18 +30,47 @@ const checkResult = game => {
       return 'Adv Player2';
     default:
       if (game.pt1 > game.pt2) {
+        const sets = game[`s${game.set}t1`] + 1;
+        if (sets >= 6) {
+          if (sets - game[`s${game.set}t2`] >= 2) {
+            return {
+              ...game,
+              pt1: 0,
+              pt2: 0,
+              set: game.set + 1,
+              s1t1: sets,
+              info: {
+                text: 'Pareja 1 gana el set! 🎾',
+              },
+            };
+          }
+        }
         return {
           ...game,
           pt1: 0,
           pt2: 0,
-          s1t1: game.st1t1 + 1,
+          service: game.service === 't1' ? 't2' : 't1',
+          [`s${game.set}t1`]: game[`s${game.set}t1`] + 1,
+          info: {
+            text:
+              game.service === 't1'
+                ? '🔥 Pareja 1 gana el juego! 🔥'
+                : 'Break para la pareja 1 💪🚀 !! ',
+          },
         };
       }
       return {
         ...game,
         pt1: 0,
         pt2: 0,
-        s1t2: game.s1t1 + 1,
+        service: game.service === 't1' ? 't2' : 't1',
+        [`s${game.set}t2`]: game[`s${game.set}t2`] + 1,
+        info: {
+          text:
+            game.service === 't2'
+              ? '🔥 Pareja 2 gana el juego! 🔥'
+              : 'Break para la pareja 2 💪🚀 !! ',
+        },
       };
   }
 };

@@ -12,15 +12,21 @@ export const mapPreposicion = {
   ef: 'con',
 };
 
+export const mapResultColorStyle = {
+  w: [t.textSuccessDark],
+  nf: [t.textErrorDark],
+  ef: [t.textInfoDark],
+};
+
 export const mapShotColorStyles = {
-  fd: [t.bgInfo, t.borderInfoDark],
-  fr: [t.bgInfo, t.borderInfoDark],
-  vd: [t.bgWarning, t.borderWarningDark],
-  vr: [t.bgWarning, t.borderWarningDark],
-  bd: [t.bgError, t.borderErrorDark],
-  br: [t.bgError, t.borderErrorDark],
-  bj: [t.bgPrimary, t.borderPrimaryDark],
-  sm: [t.bgSecondary, t.borderSecondaryDark],
+  fd: [t.textInfoDark],
+  fr: [t.textInfoDark],
+  vd: [t.textWarningDark],
+  vr: [t.textWarningDark],
+  bd: [t.textErrorDark],
+  br: [t.textErrorDark],
+  bj: [t.textPrimaryDark],
+  sm: [t.textSecondaryDark],
 };
 
 export const mapShotName = {

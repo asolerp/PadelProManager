@@ -21,7 +21,7 @@ export const LiveMatchResume: React.FC<Props> = ({match}) => {
 
   return (
     <Pressable
-      style={[t.w64, t.h36, t.bgInfo, t.roundedLg, t.p3, t.shadowMd]}
+      style={[t.w64, t.h36, t.bgInfo, t.roundedLg, t.p3, t.shadow]}
       onPress={() => openScreenWithPush(MATCH_SCREEN_KEY, {matchId: match.id})}>
       <View style={[t.flexRow, t.itemsCenter, t.justifyBetween, t.mB3]}>
         <View>

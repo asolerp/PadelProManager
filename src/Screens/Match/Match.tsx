@@ -5,25 +5,26 @@ import {useGetMatch} from './hooks/useGetMatch';
 import {roundParser} from '../../Utils/parsers';
 import t from '../../Theme/theme';
 
-import PadelField from '../../Assets/SVG/padelField.svg';
 import {HDivider} from '../../Components/UI/HDivider';
 import {MatchHeader} from '../../Components/Match/MatchHeader';
 import {MatchInfo} from '../../Components/Match/MatchInfo';
 
-import {ScrollView} from 'react-native-gesture-handler';
 import {MatchTabs} from '../../Components/Match/MatchTabs';
 import {AddButton} from '../../Components/UI/AddButton';
 import {BottomModal} from '../../Components/Modal/BottomModal';
 
 import {NewPointModal} from '../../Components/Match/NewPointModal';
 import {useLiveMatch} from '../../Components/Match/hooks/useLiveMatch';
+import {NormalModal} from '../../Components/Modal/NormalModal';
+import {Button} from '../../Components/UI/Button';
 
 export const MATCH_SCREEN_KEY = 'matchScreen';
 
 export const MatchScreen: React.FC = ({route}) => {
   const {matchId} = route.params;
-  const {match, loadingMatch, history} = useGetMatch(matchId);
-  const {handleSavePoint} = useLiveMatch(match);
+  const {notes, match, loadingMatch, isStartTeamAssigned, history} =
+    useGetMatch(matchId);
+  const {handleSavePoint, handleWhoStarts, loading} = useLiveMatch(match);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   return (
@@ -33,23 +34,35 @@ export const MatchScreen: React.FC = ({route}) => {
         style={[t.bgSuccessLight]}
         onPress={() => setIsModalVisible(true)}
       />
+      <NormalModal isVisible={isStartTeamAssigned} onClose={() => {}}>
+        <Text style={[t.fontSansBold, t.textLg]}>
+          ¿Que pareja empieza sacando?
+        </Text>
+        <View style={[t.flexRow, t.mT3, t.justifyBetween]}>
+          <Button style={[t.mR3]} onPress={() => handleWhoStarts('t1')}>
+            Pareja 1
+          </Button>
+          <Button type="success" onPress={() => handleWhoStarts('t2')}>
+            Pareja 2
+          </Button>
+        </View>
+      </NormalModal>
       <BottomModal
         isVisible={isModalVisible}
         onClose={() => setIsModalVisible(false)}>
         <NewPointModal
           match={match}
+          loading={loading}
           onSavePoint={point => {
-            setIsModalVisible(false);
-            handleSavePoint(point);
+            handleSavePoint(point, () => setIsModalVisible(false));
           }}
         />
       </BottomModal>
-      <ScrollView contentContainerStyle={[t.flex1]}>
+      <View style={[t.flex1]}>
         {!loadingMatch && (
           <>
-            <MatchHeader match={match} />
-            <View style={[t.mY5]}>
-              <PadelField />
+            <View style={[t.mB5]}>
+              <MatchHeader match={match} />
             </View>
             <HDivider />
             <MatchInfo
@@ -59,11 +72,11 @@ export const MatchScreen: React.FC = ({route}) => {
             />
             <HDivider />
             <View style={[t.flexGrow, t.mT5]}>
-              <MatchTabs match={match} pointsHistory={history} />
+              <MatchTabs match={match} pointsHistory={history} notes={notes} />
             </View>
           </>
         )}
-      </ScrollView>
+      </View>
     </ScreenLayout>
   );
 };

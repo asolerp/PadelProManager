@@ -109,8 +109,6 @@ export const PlayerScreen = ({route}) => {
             webAlpha={255}
             webColorInner={processColor('#cbd5e0')}
             skipWebLineCount={1}
-            onSelect={event => console.log(event)}
-            onChange={event => console.log(event.nativeEvent)}
             touchEnabled={false}
           />
         </View>
