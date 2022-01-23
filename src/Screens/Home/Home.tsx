@@ -10,15 +10,23 @@ import {MatchResume} from '../../Components/Home/MatchResume';
 
 import {players} from '../../Mocks/players';
 import {MyPlayers} from '../../Components/Home/MyPlayers';
-import {useGetMatches} from '../../Hooks/useGetMatches';
+
+import {FlatList} from 'react-native-gesture-handler';
+import {useGetLiveMatches} from '../../Hooks/useGetLiveMatches';
+import {useGetFinishedMatches} from '../../Hooks/useGetFinishedMatches';
 
 export const HOME_SCREEN_KEY = 'homeScreen';
 
 export const HomeScreen: FunctionComponent = () => {
-  const {matches, loadingMatches} = useGetMatches();
+  const {finishedMatches, loadingFinishedMatches} = useGetFinishedMatches();
+  const {liveMatches, loadingLiveMatches} = useGetLiveMatches();
+
+  const renderItem = ({item}) => (
+    <LiveMatchResume key={item?.id} match={item} />
+  );
 
   return (
-    <ScreenLayout>
+    <ScreenLayout edges={['top', 'left', 'right', 'bottom']}>
       <View style={[t.flexRow, t.itemsCenter, t.justifyBetween, t.mB10]}>
         <Text style={[t.textXl, t.fontSansBold]}>Padel Manager Pro</Text>
         <Player img={players[0].profileImg} />
@@ -31,12 +39,16 @@ export const HomeScreen: FunctionComponent = () => {
           <Text style={[t.textLg, t.fontSansMedium, t.mB3]}>
             Partidos activos
           </Text>
-          <View
-            style={[t.flexRow, t.w60, t.justifyBetween, t.itemsCenter, t.mB7]}>
-            {!loadingMatches &&
-              matches?.map(match => (
-                <LiveMatchResume key={match?.id} match={match} />
-              ))}
+          <View style={[t.flexRow, t.justifyBetween, t.itemsCenter, t.mB7]}>
+            {!loadingLiveMatches && liveMatches?.length > 0 && (
+              <FlatList
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                data={liveMatches}
+                renderItem={renderItem}
+                keyExtractor={item => item.id}
+              />
+            )}
           </View>
         </View>
         <View>
@@ -44,9 +56,10 @@ export const HomeScreen: FunctionComponent = () => {
             Últimos partidos
           </Text>
           <View>
-            {/* <MatchResume match={matches} />
-            <MatchResume match={matches} />
-            <MatchResume match={matches} /> */}
+            {!loadingFinishedMatches &&
+              finishedMatches?.map(match => (
+                <MatchResume key={match?.id} match={match} />
+              ))}
           </View>
         </View>
       </View>

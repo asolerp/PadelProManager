@@ -3,17 +3,19 @@ import {View, Text, FlatList} from 'react-native';
 import {PlayerType} from '../../Global/types';
 import {Avatar as Player} from '../../Components/UI/Avatar';
 
-import {players} from '../../Mocks/players';
 import {openScreenWithPush} from '../../Router/utils/actions';
 import {PLAYER_SCREEN_KEY} from '../../Screens/Player/Player';
 import t from '../../Theme/theme';
 import {shortName} from '../../Utils/parsers';
+import {useGetPlayers} from '../../Hooks/useGetPlayers';
 
 export const MyPlayers = () => {
+  const {players} = useGetPlayers();
+
   const PlayerItem = ({item}: {item: PlayerType}) => (
     <Player
       img={item.profileImg}
-      name={shortName(item.firstName, item.secondName)}
+      name={shortName(1, item.firstName, item.secondName)}
       onPress={() =>
         openScreenWithPush(PLAYER_SCREEN_KEY, {
           playerId: item.id,

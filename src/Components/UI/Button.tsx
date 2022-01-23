@@ -29,12 +29,12 @@ export const Button: React.FC<Props> = ({
   active = false,
   type = 'info',
 }) => {
-  const disabledStyles = disabled ? [t.opacity10] : [t.opacity100];
+  const disabledStyles = disabled ? [t.opacity50] : [t.opacity100];
 
   const parseBgTypeColors = {
-    success: [active ? t.bgSuccessLight : t.bgWhite, t.borderSuccessDark],
-    error: [active ? t.bgErrorLight : t.bgWhite, t.borderErrorDark],
-    info: [active ? t.bgInfoLight : t.bgWhite, t.borderInfoDark],
+    success: [active ? t.bgSuccess : t.bgWhite, t.borderSuccessDark],
+    error: [active ? t.bgError : t.bgWhite, t.borderErrorDark],
+    info: [active ? t.bgInfo : t.bgWhite, t.borderInfoDark],
   };
 
   const parseTextTypeColor = {
@@ -55,6 +55,7 @@ export const Button: React.FC<Props> = ({
         t.p2,
         t.shadow,
         style,
+        disabled && t.opacity50,
       ]}>
       {loading ? (
         <ActivityIndicator color="black" />
@@ -63,6 +64,7 @@ export const Button: React.FC<Props> = ({
           style={[
             parseTextTypeColor[type],
             t.textSm,
+            t.fontSansMedium,
             textStyle,
             disabledStyles,
           ]}>

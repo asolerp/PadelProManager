@@ -17,7 +17,7 @@ interface Props {
 export const Result = ({won, result}) => {
   const colorResultWrapper = won ? t.borderSuccessLight : t.borderErrorLight;
   const colorResultText = won ? t.textSuccessLight : t.textErrorLight;
-  const textColor = [t.fontSansMedium, t.textBase, colorResultText];
+  const textColor = [t.fontSansMedium, t.textLg, colorResultText];
 
   return (
     <View
@@ -28,6 +28,7 @@ export const Result = ({won, result}) => {
         t.roundedSm,
         t.mR3,
         t.pY1,
+        t.h14,
       ]}>
       <View style={[t.flexRow, t.justifyAround, t.itemsCenter, t.w14]}>
         <Text style={textColor}>{result.s1t1}</Text>

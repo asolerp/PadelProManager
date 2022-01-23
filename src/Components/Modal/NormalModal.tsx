@@ -11,9 +11,7 @@ export const NormalModal = ({isVisible, children, onClose}) => {
       onBackdropPress={onClose}
       onSwipeComplete={onClose}
       swipeDirection={['down']}>
-      <View style={[t.bgWhite, t.itemsCenter, t.p5, t.rounded]}>
-        {children}
-      </View>
+      <View style={[t.bgWhite, t.p5, t.rounded]}>{children}</View>
     </Modal>
   );
 };

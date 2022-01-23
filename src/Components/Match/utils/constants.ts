@@ -1,8 +1,8 @@
 export const WINNER = 'w';
 export const NONFORCED = 'nf';
 export const ERROR_FORCED = 'ef';
-export const TEAM1 = 'pt1';
-export const TEAM2 = 'pt2';
+export const TEAM1 = 'team1';
+export const TEAM2 = 'team2';
 
 export const VOLEA_DERECHA = 'vd';
 export const VOLEA_REVES = 'vr';

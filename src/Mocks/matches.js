@@ -1,15 +1,13 @@
 export const matches = [
   {
-    id: '1',
     date: Date.now(),
     club: 'Palma Raquet',
     round: 'quarter',
     category: '3',
     sex: 'male',
     game: {
-      service: 't1',
-      pt1: 0,
-      pt2: 0,
+      team1: 0,
+      team2: 0,
       s1t1: 0,
       s1t2: 0,
       s2t1: 0,

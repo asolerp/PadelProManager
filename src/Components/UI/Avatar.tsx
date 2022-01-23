@@ -6,8 +6,9 @@ interface Props {
   img?: string;
   name?: string;
   active?: boolean;
-  onPress?: () => void;
+  disabled?: boolean;
   style?: ViewStyle[];
+  onPress?: () => void;
   imageStyle?: ViewStyle[];
 }
 
@@ -19,6 +20,7 @@ export const Avatar: React.FC<Props> = ({
   name,
   style,
   onPress,
+  disabled,
   imageStyle,
   active = false,
 }) => {
@@ -29,12 +31,13 @@ export const Avatar: React.FC<Props> = ({
         t.justifyCenter,
         t.itemsCenter,
         t.borderInfoDark,
+        disabled && t.opacity40,
         style,
       ]}
       onPress={onPress}>
       <ImageBackground
         source={{uri: img}}
-        style={[t.w12, t.h12, t.mB1, imageStyle]}
+        style={[t.w12, t.h12, imageStyle]}
         imageStyle={[t.roundedFull]}
         resizeMode="cover"
       />

@@ -1,6 +1,6 @@
 import {processColor} from 'react-native';
 
-export const radarGraphDataGenerator = playerStatistics => {
+export const radarGraphDataGenerator = (playerStatistics: any) => {
   const w = playerStatistics?.w || 0;
   const nf = playerStatistics?.nf || 0;
   const ef = playerStatistics?.ef || 0;

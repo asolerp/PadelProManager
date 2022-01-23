@@ -10,11 +10,11 @@ export const MatchHeader = ({match}) => {
   return (
     <View style={[t.flexRow, t.mT10, t.justifyBetween]}>
       <View style={[t.flexRow]}>
-        {Object.entries(match.t1).map(([key, player]: [string, PlayerType]) => (
+        {match.t1.map((player, i) => (
           <Avatar
-            key={key}
-            img={player.profileImg}
-            name={shortName(player.firstName, player.secondName)}
+            key={player?.id}
+            img={player?.profileImg}
+            name={shortName(i + 1, player?.firstName, player?.secondName)}
             style={[t.mR3]}
           />
         ))}
@@ -23,12 +23,12 @@ export const MatchHeader = ({match}) => {
         <LiveResult game={match.game} />
       </View>
       <View style={[t.flexRow]}>
-        {Object.entries(match.t2).map(([key, player]: [string, PlayerType]) => (
+        {match.t2.map((player, i) => (
           <Avatar
-            key={key}
-            img={player.profileImg}
-            name={shortName(player.firstName, player.secondName)}
-            style={[t.mL3]}
+            key={player?.id}
+            img={player?.profileImg}
+            name={shortName(i + 3, player?.firstName, player?.secondName)}
+            style={[t.mR3]}
           />
         ))}
       </View>

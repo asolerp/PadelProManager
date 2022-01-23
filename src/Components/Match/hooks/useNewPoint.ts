@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 import {PlayerType} from '../../../Global/types';
 import {showError} from '../utils/alertErrorMessages';
@@ -18,31 +18,59 @@ export const useNewPoint = () => {
 
   const isPointWithoutStatistic = winPointTeam && pointStats.length === 0;
   const isWinPointTeamActive = team => team === winPointTeam;
-  const isPlayerActive = player => player?.id === playerStat?.id;
+  const isPlayerActive = player => player?.id && player?.id === playerStat?.id;
   const isResultActive = result => resultPoint === result;
   const isTypePointActive = type => typePoint === type;
 
-  const hasSavePointError = !winPointTeam;
+  const hasPointStatErrors = useCallback(
+    newPoint => {
+      if (!playerStat) {
+        return 'no_player';
+      }
+      if (!resultPoint) {
+        return 'no_result';
+      }
+      if (!typePoint) {
+        return 'no_point';
+      }
+      if (pointStats.some(stat => stat?.result === newPoint.result)) {
+        return 'duplicated_result';
+      }
+      if (pointStats.some(stat => stat?.player?.id === newPoint?.player?.id)) {
+        return 'duplicated_player';
+      } else {
+        return false;
+      }
+    },
+    [playerStat, resultPoint, typePoint, pointStats],
+  );
 
-  const hasPointStatErrors = newPoint => {
-    if (!playerStat) {
-      return 'no_player';
-    }
-    if (!resultPoint) {
-      return 'no_result';
-    }
-    if (!typePoint) {
-      return 'no_point';
-    }
-    if (pointStats.some(stat => stat?.result === newPoint.result)) {
-      return 'duplicated_result';
-    }
-    if (pointStats.some(stat => stat?.player?.id === newPoint?.player?.id)) {
-      return 'duplicated_player';
+  const handlePressAddPointStat = useCallback(() => {
+    const newStat = {
+      player: playerStat,
+      result: resultPoint,
+      point: typePoint,
+      team: playerStat?.team,
+      winPointTeam,
+    };
+    const error = hasPointStatErrors(newStat);
+    if (error) {
+      showError[error]();
     } else {
-      return false;
+      setPointStats(oldArray => [...oldArray, newStat]);
+      setPlayerStat(null);
+      setResultPoint(null);
+      setTypePoint(null);
     }
-  };
+  }, [playerStat, resultPoint, typePoint, winPointTeam, hasPointStatErrors]);
+
+  useEffect(() => {
+    if (playerStat && resultPoint && typePoint) {
+      handlePressAddPointStat();
+    }
+  }, [playerStat, resultPoint, typePoint, handlePressAddPointStat]);
+
+  const hasSavePointError = !winPointTeam;
 
   const handlePressWinPointTeam = team => {
     if (winPointTeam === team) {
@@ -52,11 +80,11 @@ export const useNewPoint = () => {
     }
   };
 
-  const handlePressPlayer = player => {
+  const handlePressPlayer = (player, team) => {
     if (playerStat?.id === player?.id) {
       setPlayerStat(null);
     } else {
-      setPlayerStat(player);
+      setPlayerStat({...player, team});
     }
   };
 
@@ -78,24 +106,6 @@ export const useNewPoint = () => {
 
   const handlePressRemoveStat = playerId => {
     setPointStats(pointStats.filter(stat => stat?.player?.id !== playerId));
-  };
-
-  const handlePressAddPointStat = () => {
-    const newStat = {
-      player: playerStat,
-      result: resultPoint,
-      point: typePoint,
-      team: playerStat?.team,
-    };
-    const error = hasPointStatErrors(newStat);
-    if (error) {
-      showError[error]();
-    } else {
-      setPointStats(oldArray => [...oldArray, newStat]);
-      setPlayerStat(null);
-      setResultPoint(null);
-      setTypePoint(null);
-    }
   };
 
   return {

@@ -40,7 +40,6 @@ export const NewPointModal = ({match, loading, onSavePoint}) => {
     handlePressRemoveStat,
     isPointWithoutStatistic,
     handlePressWinPointTeam,
-    handlePressAddPointStat,
   } = useNewPoint();
 
   const handleSavePoint = point => {
@@ -52,7 +51,7 @@ export const NewPointModal = ({match, loading, onSavePoint}) => {
         points: [{info: 'Punto sin estádística', team: winPointTeam}],
       });
     } else {
-      return onSavePoint({points: point});
+      return onSavePoint({points: point, winPointTeam});
     }
   };
 
@@ -108,23 +107,25 @@ export const NewPointModal = ({match, loading, onSavePoint}) => {
           Añadir estadística a jugador
         </Text>
         <View style={[t.flexRow, t.justifyBetween, t.itemsCenter]}>
-          {match?.t1?.map((player: PlayerType) => (
+          {match?.t1?.map((player: PlayerType, i: number) => (
             <Avatar
-              key={player.id}
-              onPress={() => handlePressPlayer(player)}
+              disabled={!player?.id}
+              key={player?.id}
+              onPress={() => handlePressPlayer(player, 'team1')}
               active={isPlayerActive(player)}
-              img={player.profileImg}
-              name={shortName(player.firstName, player.secondName)}
+              img={player?.profileImg}
+              name={shortName(i + 1, player?.firstName, player?.secondName)}
             />
           ))}
           <Text style={[t.textXl, t.fontSansBold, t.mB5]}>vs</Text>
-          {match?.t2?.map((player: PlayerType) => (
+          {match?.t2?.map((player: PlayerType, i: number) => (
             <Avatar
-              key={player.id}
-              onPress={() => handlePressPlayer(player)}
+              disabled={!player?.id}
+              key={player?.id}
+              onPress={() => handlePressPlayer(player, 'team2')}
               active={isPlayerActive(player)}
-              img={player.profileImg}
-              name={shortName(player.firstName, player.secondName)}
+              img={player?.profileImg}
+              name={shortName(i + 3, player?.firstName, player?.secondName)}
             />
           ))}
         </View>
@@ -203,14 +204,7 @@ export const NewPointModal = ({match, loading, onSavePoint}) => {
           Smash
         </PointType>
       </View>
-      <View style={[t.mB10]}>
-        <Button
-          title="Añadir estadística"
-          textStyle={[t.textBlack]}
-          style={[t.border0, t.bgWhite, t.shadowNone]}
-          onPress={handlePressAddPointStat}
-        />
-      </View>
+
       <View>
         <Button
           title="Guardar punto"

@@ -15,7 +15,7 @@ interface Props {
 export const Header: React.FC<Props> = ({title, withBack, rightSide}) => {
   return (
     <View style={[t.flexRow, t.itemsCenter]}>
-      <View>
+      <View style={[t.w7]}>
         {withBack && (
           <Pressable onPress={popScreen}>
             <Icon name="chevron-left" size={20} color="black" />
@@ -25,7 +25,7 @@ export const Header: React.FC<Props> = ({title, withBack, rightSide}) => {
       <View style={[t.flexGrow, t.itemsCenter]}>
         <Text style={[t.fontSansBold, t.textLg]}>{title}</Text>
       </View>
-      <View>{!!rightSide && rightSide}</View>
+      <View style={[t.w7]}>{!!rightSide && rightSide}</View>
     </View>
   );
 };

@@ -8,32 +8,39 @@ import {
   NewMatchScreen,
   NEW_MATCH_SCREEN_KEY,
 } from '../Screens/NewMatch/NewMatch';
+import {NewMatchProvider} from '../Components/Context/NewMatchContext';
 
 const Stack = createNativeStackNavigator();
 
 export const MainStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        options={{headerShown: false}}
-        name={TAB_STACK_KEY}
-        component={TabStack}
-      />
-      <Stack.Screen
-        options={{headerShown: false}}
-        name={PLAYER_SCREEN_KEY}
-        component={PlayerScreen}
-      />
-      <Stack.Screen
-        options={{headerShown: false}}
-        name={MATCH_SCREEN_KEY}
-        component={MatchScreen}
-      />
-      <Stack.Screen
-        options={{headerShown: false}}
-        name={NEW_MATCH_SCREEN_KEY}
-        component={NewMatchScreen}
-      />
+      <Stack.Group>
+        <Stack.Screen
+          options={{headerShown: false}}
+          name={TAB_STACK_KEY}
+          component={TabStack}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name={PLAYER_SCREEN_KEY}
+          component={PlayerScreen}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name={MATCH_SCREEN_KEY}
+          component={MatchScreen}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name={NEW_MATCH_SCREEN_KEY}>
+          {() => (
+            <NewMatchProvider>
+              <NewMatchScreen />
+            </NewMatchProvider>
+          )}
+        </Stack.Screen>
+      </Stack.Group>
     </Stack.Navigator>
   );
 };

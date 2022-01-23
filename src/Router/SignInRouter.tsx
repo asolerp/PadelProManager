@@ -9,6 +9,10 @@ import {
 
 import {MainStack} from '../Stacks/MainStack';
 import {MAIN_STACK_KEY} from './utils/routerKeys';
+import {
+  NewMatchScreen,
+  NEW_MATCH_SCREEN_KEY,
+} from '../Screens/NewMatch/NewMatch';
 
 const Stack = createNativeStackNavigator();
 

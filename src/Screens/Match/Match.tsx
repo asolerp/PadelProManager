@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Pressable, ActivityIndicator} from 'react-native';
 import {ScreenLayout, Header} from '../../Components/Layout';
 import {useGetMatch} from './hooks/useGetMatch';
 import {roundParser} from '../../Utils/parsers';
@@ -18,6 +18,9 @@ import {useLiveMatch} from '../../Components/Match/hooks/useLiveMatch';
 import {NormalModal} from '../../Components/Modal/NormalModal';
 import {Button} from '../../Components/UI/Button';
 
+import Icon from 'react-native-vector-icons/Ionicons';
+import {useSavePlayersStats} from './hooks/useSavePlayerStats';
+
 export const MATCH_SCREEN_KEY = 'matchScreen';
 
 export const MatchScreen: React.FC = ({route}) => {
@@ -26,30 +29,50 @@ export const MatchScreen: React.FC = ({route}) => {
     useGetMatch(matchId);
   const {handleSavePoint, handleWhoStarts, loading} = useLiveMatch(match);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const {savePlayersStatsHandler, loading: loadingSaveStats} =
+    useSavePlayersStats();
 
   return (
     <ScreenLayout>
-      <Header withBack title={roundParser[title]} />
+      <NormalModal isVisible={loadingSaveStats} onClose={() => {}}>
+        <View style={[t.justifyCenter, t.itemsCenter]}>
+          <ActivityIndicator size="large" color="black" style={[t.mB4]} />
+          <Text style={[t.fontSansMedium, t.textCenter, t.w32]}>
+            Guardando stats de jugadores
+          </Text>
+        </View>
+      </NormalModal>
+      <Header
+        withBack
+        title={roundParser[title]}
+        rightSide={
+          <Pressable onPress={() => savePlayersStatsHandler({match})}>
+            <Icon name="ios-settings-sharp" size={22} />
+          </Pressable>
+        }
+      />
       <AddButton
         iconName="tennisball"
         style={[t.bgSuccessLight]}
         onPress={() => setIsModalVisible(true)}
       />
       <NormalModal isVisible={isStartTeamAssigned} onClose={() => {}}>
-        <Text style={[t.fontSansBold, t.textLg]}>
-          ¿Que pareja empieza sacando?
-        </Text>
-        <View style={[t.flexRow, t.mT3, t.justifyBetween]}>
-          <Button
-            title="Pareja 1"
-            style={[t.mR3]}
-            onPress={() => handleWhoStarts('t1')}
-          />
-          <Button
-            title="Pareja 2"
-            type="success"
-            onPress={() => handleWhoStarts('t2')}
-          />
+        <View style={[t.itemsCenter]}>
+          <Text style={[t.fontSansBold, t.textLg]}>
+            ¿Que pareja empieza sacando?
+          </Text>
+          <View style={[t.flexRow, t.mT3, t.justifyBetween]}>
+            <Button
+              title="Pareja 1"
+              style={[t.mR3]}
+              onPress={() => handleWhoStarts('t1')}
+            />
+            <Button
+              title="Pareja 2"
+              type="success"
+              onPress={() => handleWhoStarts('t2')}
+            />
+          </View>
         </View>
       </NormalModal>
       <BottomModal

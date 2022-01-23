@@ -1,11 +1,11 @@
 import React from 'react';
-import {ScrollView} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import t from '../../../Theme/theme';
 import {PlayerRadarGraph} from '../../Common/PlayerRadarGraph';
 import {useStatistics} from '../hooks/useStatistics';
 import {StatisticItem} from '../StatisticItem';
 
-export const StatisticsRoute = ({statistics}) => {
+export const StatisticsRoute = ({team1, team2, statistics}) => {
   const {
     dataP1,
     dataP2,
@@ -29,6 +29,8 @@ export const StatisticsRoute = ({statistics}) => {
     t2Tv,
     totalPoints,
   } = useStatistics({
+    team1,
+    team2,
     statistics,
   });
 
@@ -84,10 +86,20 @@ export const StatisticsRoute = ({statistics}) => {
         t2PointCount={t2Tsm}
         totalCount={totalPoints}
       />
-      {dataP1 && <PlayerRadarGraph data={dataP1} />}
-      {dataP2 && <PlayerRadarGraph data={dataP2} />}
-      {dataP3 && <PlayerRadarGraph data={dataP3} />}
-      {dataP4 && <PlayerRadarGraph data={dataP4} />}
+      <View style={[t.mT5, t.itemsCenter]}>
+        {dataP1 && team1?.[0] && (
+          <PlayerRadarGraph player={team1?.[0]} data={dataP1} />
+        )}
+        {dataP2 && team1?.[1] && (
+          <PlayerRadarGraph player={team1?.[1]} data={dataP2} />
+        )}
+        {dataP3 && team2?.[0] && (
+          <PlayerRadarGraph player={team2?.[0]} data={dataP3} />
+        )}
+        {dataP4 && team2?.[1] && (
+          <PlayerRadarGraph player={team2?.[1]} data={dataP4} />
+        )}
+      </View>
     </ScrollView>
   );
 };

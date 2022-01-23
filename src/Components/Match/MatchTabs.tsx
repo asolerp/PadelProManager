@@ -23,7 +23,13 @@ export const MatchTabs = ({match, notes, pointsHistory}) => {
       case 'notes':
         return <NotesRoute matchId={match?.id} notes={notes} />;
       case 'statistics':
-        return <StatisticsRoute statistics={match?.statistics} />;
+        return (
+          <StatisticsRoute
+            team1={match?.t1}
+            team2={match?.t2}
+            statistics={match?.statistics}
+          />
+        );
       case 'historic':
         return <HistoricRoute match={match} pointsHistory={pointsHistory} />;
       default:

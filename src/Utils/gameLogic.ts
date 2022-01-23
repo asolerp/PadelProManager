@@ -7,36 +7,48 @@ const mapPoints = {
 };
 
 export const tennisGameLogic = (game, point) => {
-  const teamWinPoint = point[0]?.team;
+  const teamWinPoint = point[0]?.winPointTeam;
+
   const newGameState = {
     ...game,
     [`${teamWinPoint}`]: game?.[`${teamWinPoint}`] + 1,
   };
 
-  if (newGameState.pt1 >= 4 || newGameState.pt2 >= 4) {
-    if (newGameState.pt1 !== newGameState.pt2) {
+  if (newGameState.team1 >= 4 || newGameState.team2 >= 4) {
+    if (newGameState.team1 !== newGameState.team2) {
       return checkResult(newGameState);
     }
+    return {
+      ...game,
+      team1: 3,
+      team2: 3,
+    };
   } else {
     return {...game, [`${teamWinPoint}`]: game?.[`${teamWinPoint}`] + 1};
   }
 };
 
 const checkResult = game => {
-  switch (game.pt1 - game.pt2) {
+  switch (game.team1 - game.team2) {
     case 1:
-      return 'Adv Player1';
+      return {
+        ...game,
+        ['team1']: 4,
+      };
     case -1:
-      return 'Adv Player2';
+      return {
+        ...game,
+        ['team2']: 4,
+      };
     default:
-      if (game.pt1 > game.pt2) {
+      if (game.team1 > game.team2) {
         const sets = game[`s${game.set}t1`] + 1;
         if (sets >= 6) {
           if (sets - game[`s${game.set}t2`] >= 2) {
             return {
               ...game,
-              pt1: 0,
-              pt2: 0,
+              team1: 0,
+              team2: 0,
               set: game.set + 1,
               s1t1: sets,
               info: {
@@ -47,8 +59,8 @@ const checkResult = game => {
         }
         return {
           ...game,
-          pt1: 0,
-          pt2: 0,
+          team1: 0,
+          team2: 0,
           service: game.service === 't1' ? 't2' : 't1',
           [`s${game.set}t1`]: game[`s${game.set}t1`] + 1,
           info: {
@@ -61,8 +73,8 @@ const checkResult = game => {
       }
       return {
         ...game,
-        pt1: 0,
-        pt2: 0,
+        team1: 0,
+        team2: 0,
         service: game.service === 't1' ? 't2' : 't1',
         [`s${game.set}t2`]: game[`s${game.set}t2`] + 1,
         info: {
@@ -76,16 +88,23 @@ const checkResult = game => {
 };
 
 export const resultGame = game => {
-  if (game.pt1 === 0 && game.pt2 === 0) {
+  if (game.team1 === 0 && game.team2 === 0) {
     return '0-0';
   }
 
-  if (game.pt1 >= 4 || game.pt2 >= 4) {
-    if (game.pt1 === game.pt2) {
+  if (game.team1 >= 4 || game.team2 >= 4) {
+    if (game.team1 === game.team2) {
       return '40-40';
     }
-    return game.ctheckResult();
+    switch (game.team1 - game.team2) {
+      case 1:
+        return 'ADV-40';
+      case -1:
+        return '40-ADV';
+      default:
+        break;
+    }
   }
 
-  return `${mapPoints[game.pt1]}-${mapPoints[game.pt2]}`;
+  return `${mapPoints[game.team1]}-${mapPoints[game.team2]}`;
 };

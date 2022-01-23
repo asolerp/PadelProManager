@@ -107,7 +107,7 @@ export const PointHistoryItem = ({match, pointHistory}) => {
                 {p?.player && (
                   <Text style={[t.textBase]}>
                     <Text style={[t.fontSansBold]}>
-                      {shortName(player?.firstName, player?.secondName)}
+                      {shortName(1, player?.firstName, player?.secondName)}
                     </Text>
                     <Text style={[t.fontSans]}> ha </Text>
                     <Text style={[t.fontSansBold, mapResultColorStyle[result]]}>

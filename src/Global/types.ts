@@ -8,8 +8,8 @@ export interface PlayerType {
 
 export interface GameType {
   service: string;
-  pt1: number;
-  pt2: number;
+  team1: number;
+  team2: number;
   s1t1: number;
   s1t2: number;
   s2t1: number;
