@@ -47,7 +47,8 @@ export const MatchTabs = ({match, notes, pointsHistory}) => {
           renderLabel={({route, focused}) => {
             const isFocused = focused ? t.opacity100 : t.opacity30;
             return (
-              <Text style={[t.fontSansBold, t.textBlack, isFocused]}>
+              <Text
+                style={[t.fontSansBold, t.textBlack, t.textBase, isFocused]}>
                 {route.title}
               </Text>
             );

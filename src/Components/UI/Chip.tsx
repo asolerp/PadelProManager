@@ -2,47 +2,32 @@ import React from 'react';
 import {View, Text, ViewStyle, Pressable} from 'react-native';
 import t from '../../Theme/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {WINNER} from '../Match/utils/constants';
+
+import {capitalize} from '../../Utils/parsers';
 
 interface Props {
   text: string;
-  type?: 'w' | 'nf' | 'ef';
-  styles?: ViewStyle[];
+  mainColor?: string;
+  style?: ViewStyle[];
   withClose?: boolean;
   onClose?: () => void;
 }
 
 export const Chip: React.FC<Props> = ({
   text,
-  type = WINNER,
+  mainColor = 'success',
   withClose,
   onClose,
-  styles,
+  style,
 }) => {
-  const border = {
-    w: t.borderSuccessDark,
-    nf: t.borderErrorDark,
-    ef: t.borderInfoDark,
-  };
+  const capitalizedColor = capitalize(mainColor);
 
-  const bg = {
-    w: t.bgSuccessLight,
-    nf: t.bgErrorLight,
-    ef: t.bgInfoLight,
-  };
-
+  const border = t?.[`border${capitalizedColor}Dark`];
+  const bg = t?.[`bg${capitalizedColor}`];
+  const textColor = t?.['textWhite'];
   return (
     <>
-      <View
-        style={[
-          t.rounded,
-          t.pX2,
-          t.pY1,
-          t.border,
-          border[type],
-          bg[type],
-          styles,
-        ]}>
+      <View style={[t.rounded, t.pX1, t.pY1, t.border, border, bg, style]}>
         {withClose && (
           <Pressable
             onPress={onClose}
@@ -63,7 +48,7 @@ export const Chip: React.FC<Props> = ({
             <Icon name="close" size={10} color="red" />
           </Pressable>
         )}
-        <Text style={[t.textWhite, t.textXs]}>{text}</Text>
+        <Text style={[textColor, t.textXs]}>{text}</Text>
       </View>
     </>
   );

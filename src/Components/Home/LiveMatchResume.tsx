@@ -9,9 +9,9 @@ import {MATCH_SCREEN_KEY} from '../../Screens/Match/Match';
 import {resultGame} from '../../Utils/gameLogic';
 import {DATE_MATCH} from '../../Utils/date-ext';
 
-const cardLabel = [t.textXs, t.fontSansBold, t.textWhite, t.opacity70];
-const cardInfo = [t.textXs, t.fontSansBold, t.textWhite];
-const setNumber = [t.textBase, t.fontSansBold, t.textWhite, t.opacity70];
+const cardLabel = [t.textBase, t.fontSansBold, t.textWhite, t.opacity70];
+const cardInfo = [t.textBase, t.fontSansBold, t.textWhite];
+const setNumber = [t.textLg, t.fontSansBold, t.textWhite, t.opacity70];
 
 interface Props {
   match: any;
@@ -22,7 +22,7 @@ export const LiveMatchResume: React.FC<Props> = ({match}) => {
 
   return (
     <Pressable
-      style={[t.w64, t.h36, t.bgInfo, t.roundedLg, t.p3, t.shadow, t.mR3]}
+      style={[t.w80, t.h44, t.bgInfo, t.roundedLg, t.p3, t.shadow, t.mR3]}
       onPress={() =>
         openScreenWithPush(MATCH_SCREEN_KEY, {
           matchId: match?.id,
@@ -63,7 +63,7 @@ export const LiveMatchResume: React.FC<Props> = ({match}) => {
           )}
         </View>
         <View style={[t.flex3, t.flexRow, t.itemsCenter, t.justifyBetween]}>
-          <Text style={[t.textSm, t.fontSansBold, t.textWhite, t.w10]}>
+          <Text style={[t.textBase, t.fontSansBold, t.textWhite, t.w10]}>
             {resultGame(match?.game).split('-')[0]}
           </Text>
           <Text style={[setNumber]}>{match?.game.s1t1}</Text>
@@ -95,7 +95,7 @@ export const LiveMatchResume: React.FC<Props> = ({match}) => {
           )}
         </View>
         <View style={[t.flex3, t.flexRow, t.itemsCenter, t.justifyBetween]}>
-          <Text style={[t.textSm, t.fontSansBold, t.textWhite, t.w10]}>
+          <Text style={[t.textBase, t.fontSansBold, t.textWhite, t.w10]}>
             {resultGame(match?.game).split('-')[1]}
           </Text>
           <Text style={[setNumber]}>{match?.game.s1t2}</Text>

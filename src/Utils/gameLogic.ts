@@ -6,8 +6,8 @@ const mapPoints = {
   4: 'ADV',
 };
 
-export const tennisGameLogic = (game, point) => {
-  const teamWinPoint = point[0]?.winPointTeam;
+export const tennisGameLogic = (game, winPointTeam) => {
+  const teamWinPoint = winPointTeam;
 
   const newGameState = {
     ...game,

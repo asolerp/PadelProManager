@@ -11,7 +11,6 @@ interface Props extends TextInputProps {
 export const Input: React.FC<Props> = ({label, style, error, ...props}) => {
   return (
     <View style={[style]}>
-      <Text style={[t.fontSansBold, t.mB2]}>{label}</Text>
       <View
         style={[
           t.border,
@@ -19,11 +18,17 @@ export const Input: React.FC<Props> = ({label, style, error, ...props}) => {
           t.pX4,
           t.pY4,
           t.roundedSm,
-          t.borderGray400,
+          error ? t.borderErrorDark : t.borderGray400,
         ]}>
-        <TextInput placeholderTextColor="#718096" {...props} />
-        {error && <Text style={[t.fontSansMedium, t.textError]}>{error}</Text>}
+        <TextInput
+          placeholderTextColor="#718096"
+          style={[t.fontSans, t.textBase]}
+          {...props}
+        />
       </View>
+      {error && (
+        <Text style={[t.fontSansMedium, t.textError, t.mT1]}>{error}</Text>
+      )}
     </View>
   );
 };

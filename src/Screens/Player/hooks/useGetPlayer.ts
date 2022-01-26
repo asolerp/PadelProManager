@@ -4,7 +4,6 @@ import {playerQuery} from '../../../Api/queries';
 import {radarGraphDataGenerator} from '../../../Utils/radaGraphDataGenerator';
 
 export const useGetPlayer = (playerId: string) => {
-  console.log(playerId);
   const [player, loadingPlayer, errorPlayer] = useDocumentData(
     playerQuery.doc(playerId),
   );

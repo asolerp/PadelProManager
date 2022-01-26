@@ -9,7 +9,7 @@ export const useGetPlayers = () => {
 
   return {
     players,
-    loadingMatches: loading,
-    errorMatches: error,
+    loadingPlayers: loading,
+    errorPlayers: error,
   };
 };

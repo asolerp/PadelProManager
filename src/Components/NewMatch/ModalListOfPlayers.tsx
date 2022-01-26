@@ -97,6 +97,7 @@ export const ModalListOfPlayers = ({
         disabled={!player}
         title="Guardar"
         style={[t.mT4]}
+        textStyle={[t.textLg]}
       />
     </FullModal>
   );

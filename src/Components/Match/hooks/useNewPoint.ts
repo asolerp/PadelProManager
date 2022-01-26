@@ -51,7 +51,6 @@ export const useNewPoint = () => {
       result: resultPoint,
       point: typePoint,
       team: playerStat?.team,
-      winPointTeam,
     };
     const error = hasPointStatErrors(newStat);
     if (error) {
@@ -62,7 +61,7 @@ export const useNewPoint = () => {
       setResultPoint(null);
       setTypePoint(null);
     }
-  }, [playerStat, resultPoint, typePoint, winPointTeam, hasPointStatErrors]);
+  }, [playerStat, resultPoint, typePoint, hasPointStatErrors]);
 
   useEffect(() => {
     if (playerStat && resultPoint && typePoint) {

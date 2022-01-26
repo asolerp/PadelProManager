@@ -38,7 +38,7 @@ export const useLiveMatch = match => {
     });
 
     if (!error) {
-      const newStateGame = tennisGameLogic(match?.game, stats.points);
+      const newStateGame = tennisGameLogic(match?.game, stats?.winPointTeam);
       try {
         await addDocument({
           data: {
@@ -51,6 +51,8 @@ export const useLiveMatch = match => {
         delete newStateGame.info;
         await updateDocument(match?.id, {
           game: newStateGame,
+          [`statistics.s${newStateGame.set}.count`]:
+            firebase.firestore.FieldValue.increment(1),
           ['statistics.total.count']:
             firebase.firestore.FieldValue.increment(1),
         });
@@ -60,7 +62,11 @@ export const useLiveMatch = match => {
             .map(
               async p =>
                 await updateDocument(match?.id, {
-                  [`statistics.s${newStateGame.set}.${p?.team}.${p?.player?.id}.${p?.result}.${p?.point}`]:
+                  [`statistics.s${newStateGame.set}.${p?.team}.players.${p?.player?.id}.${p?.result}.${p?.point}`]:
+                    firebase.firestore.FieldValue.increment(1),
+                  [`statistics.s${newStateGame.set}.${p?.team}.global.${p?.result}.${p?.point}`]:
+                    firebase.firestore.FieldValue.increment(1),
+                  [`statistics.s${newStateGame.set}.${p?.team}.global.${p?.result}.count`]:
                     firebase.firestore.FieldValue.increment(1),
                   [`statistics.total.${p?.team}.players.${p?.player?.id}.${p?.result}.${p?.point}`]:
                     firebase.firestore.FieldValue.increment(1),

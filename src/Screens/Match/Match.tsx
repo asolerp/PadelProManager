@@ -20,13 +20,23 @@ import {Button} from '../../Components/UI/Button';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useSavePlayersStats} from './hooks/useSavePlayerStats';
+import {FinishedMatchHeader} from '../../Components/Match/FinishedMatchHeader';
+import {format} from 'date-fns';
+import {DATE_FORM} from '../../Utils/date-ext';
+import {MatchSettings} from '../../Components/Match/MatchSettings';
 
 export const MATCH_SCREEN_KEY = 'matchScreen';
 
 export const MatchScreen: React.FC = ({route}) => {
-  const {matchId, title} = route.params;
-  const {notes, match, loadingMatch, isStartTeamAssigned, history} =
-    useGetMatch(matchId);
+  const {matchId} = route.params;
+  const {
+    notes,
+    match,
+    history,
+    loadingMatch,
+    isMatchFinished,
+    isStartTeamAssigned,
+  } = useGetMatch(matchId);
   const {handleSavePoint, handleWhoStarts, loading} = useLiveMatch(match);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const {savePlayersStatsHandler, loading: loadingSaveStats} =
@@ -42,20 +52,23 @@ export const MatchScreen: React.FC = ({route}) => {
           </Text>
         </View>
       </NormalModal>
-      <Header
-        withBack
-        title={roundParser[title]}
-        rightSide={
-          <Pressable onPress={() => savePlayersStatsHandler({match})}>
-            <Icon name="ios-settings-sharp" size={22} />
-          </Pressable>
-        }
-      />
-      <AddButton
-        iconName="tennisball"
-        style={[t.bgSuccessLight]}
-        onPress={() => setIsModalVisible(true)}
-      />
+      {!loadingMatch && (
+        <Header
+          withBack
+          title={
+            match?.tournamentName ||
+            'Partida ' + format(match?.date?.toDate(), DATE_FORM)
+          }
+          rightSide={<MatchSettings />}
+        />
+      )}
+      {!isMatchFinished && (
+        <AddButton
+          iconName="tennisball"
+          style={[t.bgSuccessLight]}
+          onPress={() => setIsModalVisible(true)}
+        />
+      )}
       <NormalModal isVisible={isStartTeamAssigned} onClose={() => {}}>
         <View style={[t.itemsCenter]}>
           <Text style={[t.fontSansBold, t.textLg]}>
@@ -90,10 +103,16 @@ export const MatchScreen: React.FC = ({route}) => {
         {!loadingMatch && (
           <>
             <View style={[t.mB5]}>
-              <MatchHeader match={match} />
+              {isMatchFinished ? (
+                <FinishedMatchHeader match={match} />
+              ) : (
+                <MatchHeader match={match} />
+              )}
             </View>
             <HDivider />
             <MatchInfo
+              tournamentName={match?.tournamentName}
+              round={match?.round}
               club={match?.club}
               date={match?.date.toDate()}
               category={match?.category}

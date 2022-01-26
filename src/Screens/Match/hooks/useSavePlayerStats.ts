@@ -8,8 +8,6 @@ export const useSavePlayersStats = () => {
 
   const savePlayersStats = functions().httpsCallable('savePlayersStats');
 
-  console.log(loading, 'LOADING');
-
   const timeout = ms => {
     return new Promise(resolve => setTimeout(resolve, ms));
   };

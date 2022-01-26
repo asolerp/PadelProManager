@@ -27,12 +27,13 @@ export const Avatar: React.FC<Props> = ({
   return (
     <Pressable
       style={[
+        t.mX1,
+        style,
         t.flexCol,
         t.justifyCenter,
         t.itemsCenter,
-        t.borderInfoDark,
+        t.borderWhite,
         disabled && t.opacity40,
-        style,
       ]}
       onPress={onPress}>
       <ImageBackground
@@ -44,13 +45,13 @@ export const Avatar: React.FC<Props> = ({
       {name && (
         <>
           {active ? (
-            <View style={[t.bgInfo, t.roundedSm, t.pX1, t.pY0_5]}>
+            <View style={[t.bgInfo, t.roundedSm, t.pX1, t.pY0_5, t.mT1]}>
               <Text style={[t.fontSansMedium, t.textSm, t.textWhite]}>
                 {name}
               </Text>
             </View>
           ) : (
-            <Text style={[t.fontSans, t.textSm]}>{name}</Text>
+            <Text style={[t.fontSansMedium, t.textSm]}>{name}</Text>
           )}
         </>
       )}

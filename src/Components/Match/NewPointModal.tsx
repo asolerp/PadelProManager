@@ -42,13 +42,20 @@ export const NewPointModal = ({match, loading, onSavePoint}) => {
     handlePressWinPointTeam,
   } = useNewPoint();
 
+  const resultColor = {
+    w: 'success',
+    ef: 'info',
+    nf: 'error',
+  };
+
   const handleSavePoint = point => {
     if (hasSavePointError) {
       return showError.no_team();
     }
     if (isPointWithoutStatistic) {
       return onSavePoint({
-        points: [{info: 'Punto sin estádística', team: winPointTeam}],
+        winPointTeam,
+        points: [{info: 'Punto sin estádística'}],
       });
     } else {
       return onSavePoint({points: point, winPointTeam});
@@ -56,17 +63,19 @@ export const NewPointModal = ({match, loading, onSavePoint}) => {
   };
 
   return (
-    <View>
+    <View style={[t.mB3]}>
       <View style={[t.mB5]}>
-        <Text style={[t.fontSansBold, t.mB5]}>Resumen punto</Text>
+        <Text style={[t.fontSansBold, t.mB5, t.text2xl]}>Resumen punto</Text>
         {pointStats.length === 0 && !winPointTeam && (
-          <Text>No hay niguna estadística añadida </Text>
+          <Text style={[t.fontSansMedium, t.textBase]}>
+            No hay niguna estadística añadida{' '}
+          </Text>
         )}
         <View style={[t.flexRow, t.flexWrap]}>
           {winPointTeam && (
             <Chip
               text={`Gana ${winPointTeam.toUpperCase()}`}
-              styles={[t.mR2]}
+              style={[t.mR2, t.pX2]}
             />
           )}
           {pointStats &&
@@ -76,16 +85,18 @@ export const NewPointModal = ({match, loading, onSavePoint}) => {
                 text={`${
                   stat?.player?.firstName
                 } - ${stat?.point?.toUpperCase()}`}
-                type={stat?.result}
+                mainColor={resultColor[stat?.result]}
                 withClose
                 onClose={() => handlePressRemoveStat(stat?.player?.id)}
-                styles={[t.mR2]}
+                style={[t.mR2, t.pX2]}
               />
             ))}
         </View>
       </View>
       <View style={[t.mB5]}>
-        <Text style={[t.fontSansBold, t.mB5]}>Ganador del punto</Text>
+        <Text style={[t.fontSansBold, t.text2xl, t.mB5]}>
+          Ganador del punto
+        </Text>
         <View style={[t.flexRow]}>
           <Button
             title="Gana T1"
@@ -103,14 +114,14 @@ export const NewPointModal = ({match, loading, onSavePoint}) => {
         </View>
       </View>
       <View style={[t.mB5]}>
-        <Text style={[t.fontSansBold, t.mB5]}>
-          Añadir estadística a jugador
+        <Text style={[t.fontSansBold, t.text2xl, t.mB5]}>
+          Añadir estadística
         </Text>
         <View style={[t.flexRow, t.justifyBetween, t.itemsCenter]}>
           {match?.t1?.map((player: PlayerType, i: number) => (
             <Avatar
               disabled={!player?.id}
-              key={player?.id}
+              key={player?.id || i}
               onPress={() => handlePressPlayer(player, 'team1')}
               active={isPlayerActive(player)}
               img={player?.profileImg}
@@ -207,11 +218,11 @@ export const NewPointModal = ({match, loading, onSavePoint}) => {
 
       <View>
         <Button
+          active
           title="Guardar punto"
           loading={loading}
           onPress={() => handleSavePoint(pointStats)}
-          textStyle={[t.textBlack, t.fontSansBold]}
-          style={[t.border0, t.bgWhite, t.shadowNone]}
+          textStyle={[t.fontSansBold, t.textLg]}
         />
       </View>
     </View>

@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Text,
+  View,
   Pressable,
   ViewStyle,
   TextStyle,
@@ -17,6 +18,7 @@ interface Props extends ButtonProps {
   loading?: boolean;
   type?: 'error' | 'success' | 'info';
   onPress?: () => void;
+  rightSide?: React.ReactNode;
 }
 
 export const Button: React.FC<Props> = ({
@@ -26,6 +28,7 @@ export const Button: React.FC<Props> = ({
   title,
   loading,
   disabled,
+  rightSide,
   active = false,
   type = 'info',
 }) => {
@@ -58,18 +61,21 @@ export const Button: React.FC<Props> = ({
         disabled && t.opacity50,
       ]}>
       {loading ? (
-        <ActivityIndicator color="black" />
+        <ActivityIndicator color="white" />
       ) : (
-        <Text
-          style={[
-            parseTextTypeColor[type],
-            t.textSm,
-            t.fontSansMedium,
-            textStyle,
-            disabledStyles,
-          ]}>
-          {title}
-        </Text>
+        <View style={[t.flexRow, t.itemsCenter]}>
+          <Text
+            style={[
+              parseTextTypeColor[type],
+              t.textSm,
+              t.fontSansMedium,
+              textStyle,
+              disabledStyles,
+            ]}>
+            {title}
+          </Text>
+          {rightSide}
+        </View>
       )}
     </Pressable>
   );

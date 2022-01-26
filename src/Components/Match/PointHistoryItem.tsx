@@ -50,8 +50,8 @@ export const PointHistoryItem = ({match, pointHistory}) => {
       <BottomModal
         isVisible={visibleCommentModal}
         onClose={() => setVisibleCommentModal(false)}>
-        <View style={[t.wFull]}>
-          <Text style={[t.fontSansBold, t.textLg, t.textLeft, t.mB5]}>
+        <View style={[t.wFull, t.mB3]}>
+          <Text style={[t.fontSansBold, t.text2xl, t.textLeft, t.mB5]}>
             Nuevo comentario
           </Text>
           <View style={[t.wFull]}>
@@ -64,16 +64,18 @@ export const PointHistoryItem = ({match, pointHistory}) => {
               style={[t.mB2]}
             />
           </View>
-          <View style={[t.wFull, t.justifyCenter, t.itemsCenter]}>
+          <View>
             <Button
+              active
               title="Guardar"
               onPress={() =>
                 handleAddComment(pointHistory?.id, () =>
                   setVisibleCommentModal(false),
                 )
               }
-              style={[t.border0, t.bgWhite, t.shadowNone]}
-              textStyle={[t.textBlack]}
+              disabled={!comment}
+              style={[t.mT3]}
+              textStyle={[t.textLg]}
             />
           </View>
         </View>

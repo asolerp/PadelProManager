@@ -3,6 +3,9 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {HomeScreen} from '../Screens/Home/Home';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Matches} from '../Screens/Matches/Matches';
+import t from '../Theme/theme';
+import {View} from 'react-native';
+import {Players} from '../Screens/Players/Players';
 
 const Tab = createBottomTabNavigator();
 
@@ -10,33 +13,58 @@ export const TabStack = () => {
   return (
     <Tab.Navigator
       screenOptions={{
+        tabBarShowLabel: false,
+
         headerShown: false,
       }}>
       <Tab.Screen
         name="Home"
         component={HomeScreen}
-        options={({route}) => ({
-          tabBarIcon: ({focused, color, size}) => (
-            <Icon
-              name="home"
-              size={size ? size : 24}
-              color={color}
-              focused={focused}
-            />
+        options={() => ({
+          tabBarIcon: ({focused}) => (
+            <View
+              style={[t.roundedFull, t.p2, focused ? t.bgBlack : t.bgWhite]}>
+              <Icon
+                name="home"
+                size={20}
+                color={focused ? 'white' : 'black'}
+                focused={focused}
+              />
+            </View>
+          ),
+        })}
+      />
+      <Tab.Screen
+        name="Jugadores"
+        component={Players}
+        options={() => ({
+          tabBarIcon: ({focused}) => (
+            <View
+              style={[t.roundedFull, t.p2, focused ? t.bgBlack : t.bgWhite]}>
+              <Icon
+                name="ios-person"
+                size={20}
+                color={focused ? 'white' : 'black'}
+                focused={focused}
+              />
+            </View>
           ),
         })}
       />
       <Tab.Screen
         name="Partidos"
         component={Matches}
-        options={({route}) => ({
-          tabBarIcon: ({focused, color, size}) => (
-            <Icon
-              name="tennisball"
-              size={size ? size : 24}
-              color={color}
-              focused={focused}
-            />
+        options={() => ({
+          tabBarIcon: ({focused}) => (
+            <View
+              style={[t.roundedFull, t.p2, focused ? t.bgBlack : t.bgWhite]}>
+              <Icon
+                name="tennisball"
+                size={20}
+                color={focused ? 'white' : 'black'}
+                focused={focused}
+              />
+            </View>
           ),
         })}
       />

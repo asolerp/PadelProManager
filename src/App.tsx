@@ -7,7 +7,7 @@ import {StatusBar} from 'react-native';
 const App: FunctionComponent = () => {
   return (
     <>
-      <StatusBar animated={true} barStyle="default" />
+      <StatusBar animated={true} barStyle="dark-content" />
       <AuthRouter />
     </>
   );

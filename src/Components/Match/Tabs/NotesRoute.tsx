@@ -50,7 +50,7 @@ export const NotesRoute = ({notes, matchId}) => {
       <BottomModal
         isVisible={newNoteModalOpen}
         onClose={() => setNewNoteModalOpen(false)}>
-        <View style={[t.wFull]}>
+        <View style={[t.wFull, t.mB3]}>
           <Text style={[t.fontSansBold, t.textLg, t.mB5]}>Nueva nota</Text>
           <Input
             value={title}
@@ -72,8 +72,9 @@ export const NotesRoute = ({notes, matchId}) => {
             disabled={!isFormReady}
             title="Guardar"
             onPress={() => handleSaveNote(() => setNewNoteModalOpen(false))}
-            style={[t.border0, t.bgWhite, t.shadowNone]}
-            textStyle={[t.textBlack]}
+            active
+            style={[t.mT3]}
+            textStyle={[t.textLg]}
           />
         </View>
       </BottomModal>

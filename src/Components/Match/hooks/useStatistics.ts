@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {radarGraphDataGenerator} from '../../../Utils/radaGraphDataGenerator';
 
 export const useStatistics = ({team1, team2, statistics}) => {
+  const [activeSet, setActiveSet] = useState<string>('total');
   const [t1Tw, setT1Tw] = useState();
   const [t2Tw, setT2Tw] = useState();
   const [t1Tnf, setT1Tnf] = useState();
@@ -26,97 +27,109 @@ export const useStatistics = ({team1, team2, statistics}) => {
 
   const getStatisticCount = stat => stat || 0;
 
+  const handleSetActiveSet = active => {
+    return setActiveSet(active);
+  };
+
   useEffect(() => {
-    if (statistics) {
+    if (statistics && activeSet) {
       // Winners
-      setT1Tw(statistics?.total?.team1?.global?.w?.count);
-      setT2Tw(statistics?.total?.team2?.global?.w?.count);
+      setT1Tw(statistics?.[activeSet]?.team1?.global?.w?.count);
+      setT2Tw(statistics?.[activeSet]?.team2?.global?.w?.count);
 
       // Non-forced
-      setT1Tnf(statistics?.total?.team1?.global?.nf?.count);
-      setT2Tnf(statistics?.total?.team2?.global?.nf?.count);
+      setT1Tnf(statistics?.[activeSet]?.team1?.global?.nf?.count);
+      setT2Tnf(statistics?.[activeSet]?.team2?.global?.nf?.count);
 
       // Errores-forced
-      setT1Tef(statistics?.total?.team1?.global?.ef?.count);
-      setT2Tef(statistics?.total?.team2?.global?.ef?.count);
+      setT1Tef(statistics?.[activeSet]?.team1?.global?.ef?.count);
+      setT2Tef(statistics?.[activeSet]?.team2?.global?.ef?.count);
 
       // Volea
       setT1Tv(
-        getStatisticCount(statistics?.total?.team1?.global?.w?.vd) +
-          getStatisticCount(statistics?.total?.team1?.global?.w?.vr) +
-          getStatisticCount(statistics?.total?.team1?.global?.ef?.vd) +
-          getStatisticCount(statistics?.total?.team1?.global?.ef?.vr),
+        getStatisticCount(statistics?.[activeSet]?.team1?.global?.w?.vd) +
+          getStatisticCount(statistics?.[activeSet]?.team1?.global?.w?.vr) +
+          getStatisticCount(statistics?.[activeSet]?.team1?.global?.ef?.vd) +
+          getStatisticCount(statistics?.[activeSet]?.team1?.global?.ef?.vr),
       );
       setT2Tv(
-        getStatisticCount(statistics?.total?.team2?.global?.w?.vd) +
-          getStatisticCount(statistics?.total?.team2?.global?.w?.vr) +
-          getStatisticCount(statistics?.total?.team2?.global?.ef?.vd) +
-          getStatisticCount(statistics?.total?.team2?.global?.ef?.vr),
+        getStatisticCount(statistics?.[activeSet]?.team2?.global?.w?.vd) +
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.w?.vr) +
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.ef?.vd) +
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.ef?.vr),
       );
 
       // Fondo
       setT1Tf(
-        getStatisticCount(statistics?.total?.team1?.global?.w?.fd) +
-          getStatisticCount(statistics?.total?.team1?.global?.w?.fr) +
-          getStatisticCount(statistics?.total?.team1?.global?.ef?.fd) +
-          getStatisticCount(statistics?.total?.team1?.global?.ef?.fr),
+        getStatisticCount(statistics?.[activeSet]?.team1?.global?.w?.fd) +
+          getStatisticCount(statistics?.[activeSet]?.team1?.global?.w?.fr) +
+          getStatisticCount(statistics?.[activeSet]?.team1?.global?.ef?.fd) +
+          getStatisticCount(statistics?.[activeSet]?.team1?.global?.ef?.fr),
       );
       setT2Tf(
-        getStatisticCount(statistics?.total?.team2?.global?.w?.fd) +
-          getStatisticCount(statistics?.total?.team2?.global?.w?.fr) +
-          getStatisticCount(statistics?.total?.team2?.global?.ef?.fd) +
-          getStatisticCount(statistics?.total?.team2?.global?.ef?.fr),
+        getStatisticCount(statistics?.[activeSet]?.team2?.global?.w?.fd) +
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.w?.fr) +
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.ef?.fd) +
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.ef?.fr),
       );
 
       // Bajada de pared
       setT1Tbp(
-        getStatisticCount(statistics?.total?.team1?.global?.w?.bd) +
-          getStatisticCount(statistics?.total?.team1?.global?.w?.br) +
-          getStatisticCount(statistics?.total?.team1?.global?.ef?.bd) +
-          getStatisticCount(statistics?.total?.team1?.global?.ef?.br),
+        getStatisticCount(statistics?.[activeSet]?.team1?.global?.w?.bd) +
+          getStatisticCount(statistics?.[activeSet]?.team1?.global?.w?.br) +
+          getStatisticCount(statistics?.[activeSet]?.team1?.global?.ef?.bd) +
+          getStatisticCount(statistics?.[activeSet]?.team1?.global?.ef?.br),
       );
       setT2Tbp(
-        getStatisticCount(statistics?.total?.team2?.global?.w?.bd) +
-          getStatisticCount(statistics?.total?.team2?.global?.w?.br) +
-          getStatisticCount(statistics?.total?.team2?.global?.ef?.bd) +
-          getStatisticCount(statistics?.total?.team2?.global?.ef?.br),
+        getStatisticCount(statistics?.[activeSet]?.team2?.global?.w?.bd) +
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.w?.br) +
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.ef?.bd) +
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.ef?.br),
       );
 
       // Bandeja
       setT1Tbj(
-        getStatisticCount(statistics?.total?.team1?.global?.w?.bj) +
-          getStatisticCount(statistics?.total?.team1?.global?.ef?.bj),
+        getStatisticCount(statistics?.[activeSet]?.team1?.global?.w?.bj) +
+          getStatisticCount(statistics?.[activeSet]?.team1?.global?.ef?.bj),
       );
       setT2Tbj(
-        getStatisticCount(statistics?.total?.team2?.global?.w?.bj) +
-          getStatisticCount(statistics?.total?.team2?.global?.ef?.bj),
+        getStatisticCount(statistics?.[activeSet]?.team2?.global?.w?.bj) +
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.ef?.bj),
       );
 
       // Smash
       setT1Tsm(
-        getStatisticCount(statistics?.total?.team1?.global?.w?.sm) +
-          getStatisticCount(statistics?.total?.team1?.global?.ef?.sm),
+        getStatisticCount(statistics?.[activeSet]?.team1?.global?.w?.sm) +
+          getStatisticCount(statistics?.[activeSet]?.team1?.global?.ef?.sm),
       );
       setT2Tsm(
-        getStatisticCount(statistics?.total?.team2?.global?.w?.sm) +
-          getStatisticCount(statistics?.total?.team2?.global?.ef?.sm),
+        getStatisticCount(statistics?.[activeSet]?.team2?.global?.w?.sm) +
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.ef?.sm),
       );
       setDataP1(
-        radarGraphDataGenerator(statistics?.s1?.team1?.[team1?.[0]?.id]),
+        radarGraphDataGenerator(
+          statistics?.[activeSet]?.team1?.players?.[team1?.[0]?.id],
+        ),
       );
       setDataP2(
-        radarGraphDataGenerator(statistics?.s1?.team1?.[team1?.[1]?.id]),
+        radarGraphDataGenerator(
+          statistics?.[activeSet]?.team1?.players?.[team1?.[1]?.id],
+        ),
       );
       setDataP3(
-        radarGraphDataGenerator(statistics?.s1?.team2?.[team2?.[0]?.id]),
+        radarGraphDataGenerator(
+          statistics?.[activeSet]?.team2?.players?.[team2?.[0]?.id],
+        ),
       );
       setDataP4(
-        radarGraphDataGenerator(statistics?.s1?.team2?.[team2?.[1]?.id]),
+        radarGraphDataGenerator(
+          statistics?.[activeSet]?.team2?.players?.[team2?.[1]?.id],
+        ),
       );
 
-      setTotalPoints(statistics?.total?.count);
+      setTotalPoints(statistics?.[activeSet]?.count);
     }
-  }, [statistics]);
+  }, [statistics, activeSet, team1, team2]);
 
   return {
     dataP1,
@@ -139,6 +152,8 @@ export const useStatistics = ({team1, team2, statistics}) => {
     t2Tbj,
     t1Tsm,
     t2Tsm,
+    activeSet,
     totalPoints,
+    handleSetActiveSet,
   };
 };

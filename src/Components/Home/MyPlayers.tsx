@@ -14,6 +14,8 @@ export const MyPlayers = () => {
 
   const PlayerItem = ({item}: {item: PlayerType}) => (
     <Player
+      imageStyle={[t.w16, t.h16]}
+      style={[t.mX2]}
       img={item.profileImg}
       name={shortName(1, item.firstName, item.secondName)}
       onPress={() =>
@@ -21,14 +23,13 @@ export const MyPlayers = () => {
           playerId: item.id,
         })
       }
-      style={[t.mR4]}
     />
   );
 
   return (
     <View>
       <View>
-        <Text style={[t.textLg, t.fontSansMedium, t.mB3]}>Mis jugadores</Text>
+        <Text style={[t.text2xl, t.fontSansBold, t.mB5]}>Mis jugadores</Text>
       </View>
       <FlatList
         data={players}

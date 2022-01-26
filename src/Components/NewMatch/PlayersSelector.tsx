@@ -34,7 +34,9 @@ export const PlayersSelector = () => {
         onSave={handleSavePlayer}
         onClose={() => setIsVisible(false)}
       />
-      <Text style={[t.fontSansBold, t.mB2]}>Seleccionar jugadores</Text>
+      <Text style={[t.fontSansBold, t.textLg, t.mB2]}>
+        Seleccionar jugadores
+      </Text>
       <View
         style={[
           {backgroundColor: FIELD_COLOR},

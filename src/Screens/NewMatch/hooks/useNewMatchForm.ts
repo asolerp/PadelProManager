@@ -1,3 +1,4 @@
+import {format, parse, parseISO, toDate} from 'date-fns';
 import {useContext, useRef, useState} from 'react';
 import {matchQuery} from '../../../Api/queries';
 import {NewMatchContext} from '../../../Components/Context/NewMatchContext';
@@ -12,15 +13,19 @@ export const useNewMatchForm = () => {
   const {selectedPlayers} = useContext(NewMatchContext);
   const {addDocument, loading} = useAddDocument(matchQuery);
 
-  const handleCreateNewMatch = () => {
-    const {club, category, date, round, tournamentName} =
-      newMatchFormRef?.current?.values;
+  const handleCreateNewMatch = values => {
+    const {club, category, date, sex, round = '', tournamentName = ''} = values;
+
+    const dateParts = date.split('/');
+    const dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
 
     const newMatch = {
-      date: new Date(date),
+      date: dateObject,
       club,
       round,
+      sex,
       tournamentName,
+      state: 'live',
       category: category,
       game: {
         set: 1,
@@ -51,6 +56,12 @@ export const useNewMatchForm = () => {
           team2: {},
         },
       },
+      playersId: [
+        selectedPlayers?.['1']?.id || null,
+        selectedPlayers?.['2']?.id || null,
+        selectedPlayers?.['3']?.id || null,
+        selectedPlayers?.['4']?.id || null,
+      ].filter(pId => pId !== null),
       t1: [selectedPlayers?.['1'] || null, selectedPlayers?.['2'] || null],
       t2: [selectedPlayers?.['3'] || null, selectedPlayers?.['4'] || null],
     };
@@ -61,16 +72,23 @@ export const useNewMatchForm = () => {
     });
   };
 
+  const handleSubmitForm = () => {
+    newMatchFormRef?.current.handleSubmit();
+  };
+
   const initialValues = {
+    sex: '',
     club: '',
     date: '',
     category: '',
     round: '',
+    tournament: false,
   };
 
   return {
     handleCreateNewMatch,
     setPlayerPosition,
+    handleSubmitForm,
     newMatchFormRef,
     playerPosition,
     initialValues,
