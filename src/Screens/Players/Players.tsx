@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {Pressable, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {Header, ScreenLayout} from '../../Components/Layout';
 import {useSearch} from '../../Components/Players/hooks/useSearch';
@@ -8,6 +8,9 @@ import {PlayerItem} from '../../Components/Players/PlayerItem';
 import {Input} from '../../Components/UI/Input';
 import {useGetPlayers} from '../../Hooks/useGetPlayers';
 import t from '../../Theme/theme';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {openScreenWithPush} from '../../Router/utils/actions';
+import {NEW_PLAYER_SCREEN_KEY} from '../NewPlayer/NewPlayer';
 
 export const PLAYERS_SCREEN_KEY = 'playersScreen';
 
@@ -18,7 +21,14 @@ export const Players = () => {
 
   return (
     <ScreenLayout>
-      <Header title="Mis jugadores" />
+      <Header
+        title="Mis jugadores"
+        rightSide={
+          <Pressable onPress={() => openScreenWithPush(NEW_PLAYER_SCREEN_KEY)}>
+            <Icon name="ios-add-circle-outline" size={25} />
+          </Pressable>
+        }
+      />
       <View style={[t.mT10, t.mB3]}>
         <Input
           value={search}

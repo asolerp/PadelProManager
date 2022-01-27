@@ -80,7 +80,7 @@ export const NewMatchScreen = () => {
                     placeholder="Fecha del partido"
                     error={errors.date}
                     onBlur={handleBlur('date')}
-                    style={[t.flex1, t.mR5]}
+                    style={[t.flex1, t.mR3]}
                   />
                   <Input
                     placeholder="Club"
@@ -104,7 +104,7 @@ export const NewMatchScreen = () => {
                     onBlur={handleBlur('category')}
                     onChange={v => setFieldValue('category', v)}
                     label="Categoría"
-                    style={[t.flex1]}
+                    style={[t.flex1, t.mR3]}
                   />
                   <Select
                     list={sex}

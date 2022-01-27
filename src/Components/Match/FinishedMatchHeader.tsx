@@ -1,4 +1,6 @@
 import React from 'react';
+import Animated, {LightSpeedInLeft, SlideOutUp} from 'react-native-reanimated';
+
 import {View, Text} from 'react-native';
 import t from '../../Theme/theme';
 import {shortName} from '../../Utils/parsers';
@@ -13,7 +15,7 @@ export const FinishedMatchHeader = ({match}) => {
   const p4 = match?.t2?.[1];
 
   return (
-    <View style={[t.mT7]}>
+    <Animated.View entering={LightSpeedInLeft} style={[t.mT7, t.bgWhite]}>
       <View style={[t.flexRow, t.justifyBetween, t.itemsCenter, t.mB4]}>
         <View style={[t.flex1]}>
           <Avatar img={p1?.profileImg} style={[]} />
@@ -52,6 +54,6 @@ export const FinishedMatchHeader = ({match}) => {
           <Text style={setStyle}>{match?.game?.s3t2}</Text>
         </View>
       </View>
-    </View>
+    </Animated.View>
   );
 };

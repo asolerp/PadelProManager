@@ -69,6 +69,7 @@ export const ModalListOfPlayers = ({
         placeholder="Nombre del jugador"
         value={search}
         onChangeText={setSearch}
+        style={[t.mT5]}
       />
       {filteredList?.length > 0 ? (
         <FlatList

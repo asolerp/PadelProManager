@@ -59,7 +59,7 @@ export const Select = ({
         onPressIn={() => setIsVisible(true)}
         onBlur={onBlur}
         label={label}
-        style={[t.flex2, t.mR3]}
+        style={[t.flex2]}
       />
     </View>
   );

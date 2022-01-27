@@ -37,7 +37,7 @@ export const useGetMatch = (matchId: string) => {
 
   const loading = loadingMatch || loadingHistory || loadingNotes;
   const error = errorMatch || errorHistory || errorNotes;
-  const isMatchFinished = match?.state === 'finished';
+  const isMatchFinished = match?.state === 'finished' || match?.game?.finished;
 
   return {
     notes,

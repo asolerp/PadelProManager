@@ -9,11 +9,14 @@ import {openScreenWithPush} from '../../Router/utils/actions';
 import {NEW_MATCH_SCREEN_KEY} from '../NewMatch/NewMatch';
 import {useGetMatches} from '../../Hooks/useGetMatches';
 import {MatchResume} from '../../Components/Home/MatchResume';
+import {FlatList} from 'react-native-gesture-handler';
 
 export const MATCHES_SCREE_KEY = 'matchesScreen';
 
 export const Matches = () => {
   const {matches} = useGetMatches();
+
+  const renderItem = ({item}) => <MatchResume match={item} />;
 
   return (
     <ScreenLayout>
@@ -30,10 +33,13 @@ export const Matches = () => {
           <Text style={[t.fontSans]}>No tienes ningúna partida</Text>
         </View>
       ) : (
-        <View style={[t.mT10]}>
-          {matches?.map(match => (
-            <MatchResume key={match?.id} match={match} />
-          ))}
+        <View style={[t.flexGrow, t.mT10]}>
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            data={matches}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+          />
         </View>
       )}
     </ScreenLayout>

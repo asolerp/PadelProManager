@@ -17,7 +17,7 @@ export const MatchHeader = ({match}) => {
           />
         ))}
       </View>
-      <View style={[t.flexGrow]}>
+      <View style={[t.w20]}>
         <LiveResult game={match.game} />
       </View>
       <View style={[t.flexRow, t.flexGrow, t.justifyCenter]}>

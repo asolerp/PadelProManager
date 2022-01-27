@@ -13,7 +13,7 @@ const t = StyleSheet.create({
     },
   }),
   shadow: {
-    shadowColor: '#6d6d6d',
+    shadowColor: '#4f4f4f',
     shadowOffset: {
       width: 0,
       height: 2,

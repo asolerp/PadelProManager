@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import t from '../../Theme/theme';
 import {resultGame} from '../../Utils/gameLogic';
+import {Chip} from '../UI/Chip';
 
 interface LiveResultProps {
   game: {
@@ -28,6 +29,11 @@ export const LiveResult: React.FC<LiveResultProps> = ({game}) => {
 
   return (
     <View style={[t.justifyCenter, t.itemsCenter]}>
+      {game?.tiebreak && (
+        <View style={[t.mB1]}>
+          <Chip text="Tiebreak" mainColor="error" />
+        </View>
+      )}
       <View style={[t.flexRow, t.mB2]}>
         <Text style={[t.fontSansBold, isT1Serving(TEAM1), t.textXl, t.mR1]}>
           {result[0]}

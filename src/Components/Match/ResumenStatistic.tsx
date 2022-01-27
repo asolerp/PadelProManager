@@ -75,40 +75,40 @@ export const ResumenStatistic = ({statistics}) => {
           </View>
           <View style={[t.flexRow, t.itemsCenter, t.mB2]}>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansBold, t.textSuccessDark]}>W</Text>
+              <Text style={[t.fontSansBold, t.textSuccess]}>W</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textSuccessDark]}>{vdW}</Text>
+              <Text style={[t.fontSansMedium, t.textSuccess]}>{fdW}</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textSuccessDark]}>{fdW}</Text>
+              <Text style={[t.fontSansMedium, t.textSuccess]}>{frW}</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textSuccessDark]}>{frW}</Text>
+              <Text style={[t.fontSansMedium, t.textSuccess]}>{vdW}</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textSuccessDark]}>{vrW}</Text>
+              <Text style={[t.fontSansMedium, t.textSuccess]}>{vrW}</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textSuccessDark]}>{bdW}</Text>
+              <Text style={[t.fontSansMedium, t.textSuccess]}>{bdW}</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textSuccessDark]}>{brW}</Text>
+              <Text style={[t.fontSansMedium, t.textSuccess]}>{brW}</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textSuccessDark]}>{bjW}</Text>
+              <Text style={[t.fontSansMedium, t.textSuccess]}>{bjW}</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textSuccessDark]}>{smW}</Text>
+              <Text style={[t.fontSansMedium, t.textSuccess]}>{smW}</Text>
             </View>
             <View
               style={[
                 {width: CELL_SIZE},
                 t.itemsCenter,
                 t.mL3,
-                t.bgSuccessDark,
+                t.bgSuccess,
                 t.p1,
-                t.roundedFull,
+                t.roundedSm,
               ]}>
               <Text style={[t.fontSansMedium, t.textWhite, t.textXs]}>
                 {totalW}
@@ -117,40 +117,40 @@ export const ResumenStatistic = ({statistics}) => {
           </View>
           <View style={[t.flexRow, t.itemsCenter, t.mB2]}>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansBold, t.textInfoDark]}>FE</Text>
+              <Text style={[t.fontSansBold, t.textInfo]}>FE</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textInfoDark]}>{fdEf}</Text>
+              <Text style={[t.fontSansMedium, t.textInfo]}>{fdEf}</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textInfoDark]}>{frEf}</Text>
+              <Text style={[t.fontSansMedium, t.textInfo]}>{frEf}</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textInfoDark]}>{vdEf}</Text>
+              <Text style={[t.fontSansMedium, t.textInfo]}>{vdEf}</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textInfoDark]}>{vrEf}</Text>
+              <Text style={[t.fontSansMedium, t.textInfo]}>{vrEf}</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textInfoDark]}>{bdEf}</Text>
+              <Text style={[t.fontSansMedium, t.textInfo]}>{bdEf}</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textInfoDark]}>{brEf}</Text>
+              <Text style={[t.fontSansMedium, t.textInfo]}>{brEf}</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textInfoDark]}>{bjEf}</Text>
+              <Text style={[t.fontSansMedium, t.textInfo]}>{bjEf}</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textInfoDark]}>{smEf}</Text>
+              <Text style={[t.fontSansMedium, t.textInfo]}>{smEf}</Text>
             </View>
             <View
               style={[
                 {width: CELL_SIZE},
                 t.itemsCenter,
                 t.mL3,
-                t.bgInfoDark,
+                t.bgInfo,
                 t.p1,
-                t.roundedFull,
+                t.roundedSm,
               ]}>
               <Text style={[t.fontSansMedium, t.textWhite, t.textXs]}>
                 {totalEf}
@@ -159,40 +159,40 @@ export const ResumenStatistic = ({statistics}) => {
           </View>
           <View style={[t.flexRow, t.itemsCenter]}>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansBold, t.textErrorDark]}>NF</Text>
+              <Text style={[t.fontSansBold, t.textError]}>NF</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textErrorDark]}>{fdNf}</Text>
+              <Text style={[t.fontSansMedium, t.textError]}>{fdNf}</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textErrorDark]}>{frNf}</Text>
+              <Text style={[t.fontSansMedium, t.textError]}>{frNf}</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textErrorDark]}>{vdNf}</Text>
+              <Text style={[t.fontSansMedium, t.textError]}>{vdNf}</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textErrorDark]}>{vrNf}</Text>
+              <Text style={[t.fontSansMedium, t.textError]}>{vrNf}</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textErrorDark]}>{bdNf}</Text>
+              <Text style={[t.fontSansMedium, t.textError]}>{bdNf}</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textErrorDark]}>{brNf}</Text>
+              <Text style={[t.fontSansMedium, t.textError]}>{brNf}</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textErrorDark]}>{bjNf}</Text>
+              <Text style={[t.fontSansMedium, t.textError]}>{bjNf}</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textErrorDark]}>{smNf}</Text>
+              <Text style={[t.fontSansMedium, t.textError]}>{smNf}</Text>
             </View>
             <View
               style={[
                 {width: CELL_SIZE},
                 t.itemsCenter,
                 t.mL3,
-                t.bgErrorDark,
+                t.bgError,
                 t.p1,
-                t.roundedFull,
+                t.roundedSm,
               ]}>
               <Text style={[t.fontSansMedium, t.textWhite, t.textXs]}>
                 {totalNf}

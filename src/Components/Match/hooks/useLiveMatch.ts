@@ -51,6 +51,7 @@ export const useLiveMatch = match => {
         delete newStateGame.info;
         await updateDocument(match?.id, {
           game: newStateGame,
+          state: newStateGame.finished ? 'finished' : 'live',
           [`statistics.s${newStateGame.set}.count`]:
             firebase.firestore.FieldValue.increment(1),
           ['statistics.total.count']:

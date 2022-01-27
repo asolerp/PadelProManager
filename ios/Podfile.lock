@@ -711,6 +711,8 @@ PODS:
   - React-jsinspector (0.66.4)
   - React-logger (0.66.4):
     - glog
+  - react-native-image-picker (4.7.1):
+    - React-Core
   - react-native-pager-view (5.4.9):
     - React-Core
   - react-native-safe-area-context (3.3.2):
@@ -801,6 +803,34 @@ PODS:
     - RNFBApp
   - RNGestureHandler (2.2.0):
     - React-Core
+  - RNReanimated (2.3.1):
+    - DoubleConversion
+    - FBLazyVector
+    - FBReactNativeSpec
+    - glog
+    - RCT-Folly
+    - RCTRequired
+    - RCTTypeSafety
+    - React
+    - React-callinvoker
+    - React-Core
+    - React-Core/DevSupport
+    - React-Core/RCTWebSocket
+    - React-CoreModules
+    - React-cxxreact
+    - React-jsi
+    - React-jsiexecutor
+    - React-jsinspector
+    - React-RCTActionSheet
+    - React-RCTAnimation
+    - React-RCTBlob
+    - React-RCTImage
+    - React-RCTLinking
+    - React-RCTNetwork
+    - React-RCTSettings
+    - React-RCTText
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNScreens (3.10.2):
     - React-Core
     - React-RCTImage
@@ -857,6 +887,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
+  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -878,6 +909,7 @@ DEPENDENCIES:
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
   - "RNFBFunctions (from `../node_modules/@react-native-firebase/functions`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
@@ -955,6 +987,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
+  react-native-image-picker:
+    :path: "../node_modules/react-native-image-picker"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-safe-area-context:
@@ -997,6 +1031,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/functions"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNReanimated:
+    :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   RNSVG:
@@ -1055,6 +1091,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 94ce921e1d8ce7023366873ec371f3441383b396
   React-jsinspector: d0374f7509d407d2264168b6d0fad0b54e300b85
   React-logger: 933f80c97c633ee8965d609876848148e3fef438
+  react-native-image-picker: 5fe0a96bef4935bbdfb02f59b910bf40d5526109
   react-native-pager-view: 3ee7d4c7697fb3ef788346e834a60cca97ed8540
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   React-perflogger: 93075d8931c32cd1fce8a98c15d2d5ccc4d891bd
@@ -1076,6 +1113,7 @@ SPEC CHECKSUMS:
   RNFBFirestore: 1ba382d55702376493cf6b7f7c5f9d9389fd9a3a
   RNFBFunctions: ef3a2037edb6470aa17a8f6515d9c926c47f0d49
   RNGestureHandler: bf572f552ea324acd5b5464b8d30755b2d8c1de6
+  RNReanimated: da3860204e5660c0dd66739936732197d359d753
   RNScreens: d6da2b9e29cf523832c2542f47bf1287318b1868
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: 4143ba35feebab8fdbe6bc43d1e776b393d47ac8

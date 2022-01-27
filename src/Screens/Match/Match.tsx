@@ -38,6 +38,7 @@ export const MatchScreen: React.FC = ({route}) => {
     isStartTeamAssigned,
   } = useGetMatch(matchId);
   const {handleSavePoint, handleWhoStarts, loading} = useLiveMatch(match);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const {savePlayersStatsHandler, loading: loadingSaveStats} =
     useSavePlayersStats();
@@ -62,11 +63,17 @@ export const MatchScreen: React.FC = ({route}) => {
           rightSide={<MatchSettings />}
         />
       )}
-      {!isMatchFinished && (
+      {!isMatchFinished ? (
         <AddButton
           iconName="tennisball"
           style={[t.bgSuccessLight]}
           onPress={() => setIsModalVisible(true)}
+        />
+      ) : (
+        <AddButton
+          iconName={isExpanded ? 'ios-contract' : 'ios-expand'}
+          style={[t.bgSuccessLight]}
+          onPress={() => setIsExpanded(old => !old)}
         />
       )}
       <NormalModal isVisible={isStartTeamAssigned} onClose={() => {}}>
@@ -104,20 +111,24 @@ export const MatchScreen: React.FC = ({route}) => {
           <>
             <View style={[t.mB5]}>
               {isMatchFinished ? (
-                <FinishedMatchHeader match={match} />
+                <>{!isExpanded && <FinishedMatchHeader match={match} />}</>
               ) : (
                 <MatchHeader match={match} />
               )}
             </View>
-            <HDivider />
-            <MatchInfo
-              tournamentName={match?.tournamentName}
-              round={match?.round}
-              club={match?.club}
-              date={match?.date.toDate()}
-              category={match?.category}
-            />
-            <HDivider />
+            {!isExpanded && (
+              <>
+                <HDivider />
+                <MatchInfo
+                  tournamentName={match?.tournamentName}
+                  round={match?.round}
+                  club={match?.club}
+                  date={match?.date.toDate()}
+                  category={match?.category}
+                />
+                <HDivider />
+              </>
+            )}
             <View style={[t.flexGrow, t.mT5]}>
               <MatchTabs match={match} pointsHistory={history} notes={notes} />
             </View>

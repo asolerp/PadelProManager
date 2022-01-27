@@ -14,7 +14,7 @@ interface Props {
 
 export const Header: React.FC<Props> = ({title, withBack, rightSide}) => {
   return (
-    <View style={[t.flexRow, t.itemsCenter]}>
+    <View style={[t.flexRow, t.itemsCenter, t.bgWhite, t.z20]}>
       <View style={[t.w7]}>
         {withBack && (
           <Pressable onPress={popScreen}>

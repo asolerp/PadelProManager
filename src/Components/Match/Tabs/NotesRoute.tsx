@@ -88,17 +88,17 @@ export const NotesRoute = ({notes, matchId}) => {
         </View>
       )}
       {notes?.length > 0 && (
-        <View style={[t.justifyCenter]}>
+        <View style={[t.justifyCenter, t.flexGrow]}>
+          <Button
+            title="Nueva nota"
+            onPress={() => setNewNoteModalOpen(true)}
+            style={[t.mB3, t.w32]}
+          />
           <FlatList
             showsVerticalScrollIndicator={false}
             data={notes}
             renderItem={renderItem}
             keyExtractor={item => item.id}
-          />
-          <Button
-            title="Nueva nota"
-            onPress={() => setNewNoteModalOpen(true)}
-            style={[t.mT3, t.w32]}
           />
         </View>
       )}

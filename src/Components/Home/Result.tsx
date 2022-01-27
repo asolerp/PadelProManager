@@ -28,7 +28,6 @@ export const Result = ({won, result}) => {
         t.roundedSm,
         t.mR3,
         t.pY1,
-        t.h14,
       ]}>
       <View style={[t.flexRow, t.justifyAround, t.itemsCenter, t.w14]}>
         <Text style={textColor}>{result.s1t1}</Text>

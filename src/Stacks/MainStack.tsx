@@ -9,6 +9,10 @@ import {
   NEW_MATCH_SCREEN_KEY,
 } from '../Screens/NewMatch/NewMatch';
 import {NewMatchProvider} from '../Components/Context/NewMatchContext';
+import {
+  NewPlayerScreen,
+  NEW_PLAYER_SCREEN_KEY,
+} from '../Screens/NewPlayer/NewPlayer';
 
 const Stack = createNativeStackNavigator();
 
@@ -40,6 +44,11 @@ export const MainStack = () => {
             </NewMatchProvider>
           )}
         </Stack.Screen>
+        <Stack.Screen
+          options={{headerShown: false}}
+          name={NEW_PLAYER_SCREEN_KEY}
+          component={NewPlayerScreen}
+        />
       </Stack.Group>
     </Stack.Navigator>
   );

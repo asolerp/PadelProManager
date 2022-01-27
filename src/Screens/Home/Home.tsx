@@ -33,18 +33,13 @@ export const HomeScreen: FunctionComponent = () => {
         <Image
           resizeMode="contain"
           source={require('../../Assets/logo.png')}
-          style={[t.w14]}
+          style={[t.w10]}
         />
       </View>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[t.relative]}>
-        {/* <View style={[t.flexRow, t.itemsCenter, t.justifyBetween, t.mB5]}>
-          <Text style={[t.textXl, t.fontSansBold]}>Padel Manager Pro</Text>
-          <Player img={players[0].profileImg} />
-        </View> */}
         <WelcomeMessage />
-        {/* <GroupActionButton /> */}
         <View>
           <View style={[t.mB7]}>
             <MyPlayers />
@@ -57,7 +52,7 @@ export const HomeScreen: FunctionComponent = () => {
               {!loadingLiveMatches && liveMatches?.length > 0 && (
                 <FlatList
                   horizontal
-                  showsHorizontalScrollIndicator={false}
+                  showsVerticalScrollIndicator={false}
                   data={liveMatches}
                   renderItem={renderItem}
                   keyExtractor={item => item.id}

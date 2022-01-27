@@ -59,6 +59,7 @@ export const MatchTabs = ({match, notes, pointsHistory}) => {
       renderScene={renderScene}
       onIndexChange={setIndex}
       initialLayout={{width: layout.width}}
+      style={[t.bgWhite]}
     />
   );
 };

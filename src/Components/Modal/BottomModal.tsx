@@ -20,7 +20,7 @@ export const BottomModal = ({
       <KeyboardAvoidingView behavior="padding">
         <View style={[t.bgWhite, t.pY5, t.pX5, t.roundedTlXl, t.roundedTrXl]}>
           <View style={[t.itemsCenter]}>
-            <View style={[t.w20, t.h1, t.bgBlack, t.roundedFull, t.mB5]} />
+            <View style={[t.w10, t.h1, t.bgGray500, t.roundedFull, t.mB5]} />
           </View>
           {children}
         </View>

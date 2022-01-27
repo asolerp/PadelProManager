@@ -38,7 +38,7 @@ export const Avatar: React.FC<Props> = ({
       onPress={onPress}>
       <ImageBackground
         source={{uri: img}}
-        style={[t.w12, t.h12, imageStyle]}
+        style={[t.w12, t.h12, t.shadow, imageStyle]}
         imageStyle={[t.roundedFull]}
         resizeMode="cover"
       />

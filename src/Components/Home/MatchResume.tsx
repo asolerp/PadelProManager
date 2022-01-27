@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {openScreenWithPush} from '../../Router/utils/actions';
 import {MATCH_SCREEN_KEY} from '../../Screens/Match/Match';
 import {Chip} from '../UI/Chip';
+import {HDivider} from '../UI/HDivider';
 
 interface Props {
   match: any;
@@ -17,7 +18,7 @@ export const MatchResume: React.FC<Props> = ({match}) => {
   const matchDay = format(new Date(match?.date?.toDate()), 'iii d MMMM yyyy');
 
   return (
-    <>
+    <View style={[t.mB2]}>
       <Pressable
         onPress={() =>
           openScreenWithPush(MATCH_SCREEN_KEY, {
@@ -25,19 +26,12 @@ export const MatchResume: React.FC<Props> = ({match}) => {
             title: match?.round,
           })
         }
-        style={[
-          t.wFull,
-          t.flexRow,
-          t.h16,
-          t.justifyCenter,
-          t.itemsCenter,
-          t.mY1,
-        ]}>
-        <View style={[t.hFull, t.justifyCenter]}>
+        style={[t.wFull, t.flexRow, t.justifyCenter, t.itemsCenter, t.mB2]}>
+        <View style={[t.justifyCenter]}>
           <Result won result={match.game} />
         </View>
         <View>
-          <View style={[t.flex1, t.justifyEnd, t.mB1, t.mT1]}>
+          <View style={[t.justifyEnd, t.mB1, t.mT1]}>
             <Text style={[t.fontSansMedium, t.textSm]}>
               {shortName(
                 1,
@@ -62,7 +56,7 @@ export const MatchResume: React.FC<Props> = ({match}) => {
               )}
             </Text>
           </View>
-          <View style={[t.flex1, t.flexRow, t.itemsStart, t.justifyStart]}>
+          <View style={[t.flexRow, t.itemsStart, t.justifyStart]}>
             <Text style={[t.opacity30, t.fontSansMedium, t.textXs, t.mR4]}>
               {matchDay}
             </Text>
@@ -71,8 +65,8 @@ export const MatchResume: React.FC<Props> = ({match}) => {
             </Text>
           </View>
           {match?.state === 'live' && (
-            <View style={[t.flex1, t.itemsStart, t.mB1]}>
-              <Text style={[t.fontSans, t.textXs, t.textErrorDark]}>Live</Text>
+            <View style={[t.itemsStart, t.mY1]}>
+              <Chip mainColor="error" text="Live" />
             </View>
           )}
         </View>
@@ -80,7 +74,7 @@ export const MatchResume: React.FC<Props> = ({match}) => {
           <Icon name="chevron-right" size={15} color="black" />
         </View>
       </Pressable>
-      <View style={[t.borderB, t.h1, t.wFull, t.opacity20]} />
-    </>
+      <HDivider />
+    </View>
   );
 };

@@ -5,6 +5,7 @@ import t from '../../Theme/theme';
 import {rounds} from '../../Utils/lists';
 import {HDivider} from '../UI/HDivider';
 import {VDivider} from '../UI/VDivider';
+import Animated, {LightSpeedInLeft, SlideOutUp} from 'react-native-reanimated';
 
 interface MatchInfoProps {
   club: string;
@@ -52,7 +53,7 @@ export const MatchInfo: React.FC<MatchInfoProps> = ({
 }) => {
   const matchDay = format(new Date(date), 'iii d MMMM yyyy');
   return (
-    <>
+    <Animated.View entering={LightSpeedInLeft}>
       <View style={[t.flexRow, t.justifyBetween, t.mY2]}>
         <InfoElement label="Club" info={club} />
         <VDivider />
@@ -90,6 +91,6 @@ export const MatchInfo: React.FC<MatchInfoProps> = ({
           />
         </View>
       )}
-    </>
+    </Animated.View>
   );
 };

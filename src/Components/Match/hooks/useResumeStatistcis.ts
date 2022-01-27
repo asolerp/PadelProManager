@@ -1,13 +1,13 @@
 export const useResumeStatistics = ({statistics}) => {
   const generateResumen = dataSet => ({
-    vd: dataSet.values?.[0]?.value || 0,
-    vr: dataSet.values?.[1]?.value || 0,
-    fd: dataSet.values?.[2]?.value || 0,
-    fr: dataSet.values?.[3]?.value || 0,
-    bd: dataSet.values?.[4]?.value || 0,
-    br: dataSet.values?.[5]?.value || 0,
-    bj: dataSet.values?.[6]?.value || 0,
-    sm: dataSet.values?.[7]?.value || 0,
+    vd: dataSet?.values?.[0]?.value || 0,
+    vr: dataSet?.values?.[1]?.value || 0,
+    fd: dataSet?.values?.[2]?.value || 0,
+    fr: dataSet?.values?.[3]?.value || 0,
+    bd: dataSet?.values?.[4]?.value || 0,
+    br: dataSet?.values?.[5]?.value || 0,
+    bj: dataSet?.values?.[6]?.value || 0,
+    sm: dataSet?.values?.[7]?.value || 0,
   });
 
   const {

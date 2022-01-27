@@ -33,6 +33,7 @@ export const MyPlayers = () => {
       </View>
       <FlatList
         data={players}
+        showsHorizontalScrollIndicator={false}
         horizontal
         keyExtractor={item => item.id}
         renderItem={PlayerItem}

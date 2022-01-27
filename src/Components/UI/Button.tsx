@@ -52,7 +52,7 @@ export const Button: React.FC<Props> = ({
       style={[
         t.justifyCenter,
         t.itemsCenter,
-        t.rounded,
+        t.roundedSm,
         t.border,
         parseBgTypeColors[type],
         t.p2,

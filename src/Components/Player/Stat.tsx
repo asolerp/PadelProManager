@@ -10,7 +10,7 @@ interface Props {
 export const Stat: React.FC<Props> = ({label, count}) => {
   return (
     <View style={[t.justifyCenter, t.itemsCenter]}>
-      <Text style={[t.textXs, t.fontSansMedium]}>{label}</Text>
+      <Text style={[t.textBase, t.fontSansMedium]}>{label}</Text>
       <Text style={[t.text5xl, t.fontSansBold, t.textInfo]}>{count}</Text>
     </View>
   );

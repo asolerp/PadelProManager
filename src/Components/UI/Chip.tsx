@@ -21,13 +21,13 @@ export const Chip: React.FC<Props> = ({
   style,
 }) => {
   const capitalizedColor = capitalize(mainColor);
+  const paddingVertical = 4;
 
-  const border = t?.[`border${capitalizedColor}Dark`];
   const bg = t?.[`bg${capitalizedColor}`];
   const textColor = t?.['textWhite'];
   return (
     <>
-      <View style={[t.rounded, t.pX1, t.pY1, t.border, border, bg, style]}>
+      <View style={[t.roundedSm, t.pX1, {paddingVertical}, bg, style]}>
         {withClose && (
           <Pressable
             onPress={onClose}
@@ -40,7 +40,7 @@ export const Chip: React.FC<Props> = ({
               t.borderError,
               t.justifyCenter,
               t.itemsCenter,
-              t.roundedFull,
+              t.rounded,
               t.bgWhite,
               t.w4,
               t.h4,
@@ -48,7 +48,7 @@ export const Chip: React.FC<Props> = ({
             <Icon name="close" size={10} color="red" />
           </Pressable>
         )}
-        <Text style={[textColor, t.textXs]}>{text}</Text>
+        <Text style={[textColor, t.textXs, t.fontSansMedium]}>{text}</Text>
       </View>
     </>
   );
