@@ -16,19 +16,23 @@ import {HDivider} from '../../Components/UI/HDivider';
 import {ImageSelector} from '../../Components/NewPlayer/ImageSelector';
 import {Select} from '../../Components/UI/Select';
 import {cateogries, gender, lateralidad} from '../../Utils/lists';
+import {LoadingModal} from '../../Components/Common/LoadingModal';
 
 export const NEW_PLAYER_SCREEN_KEY = 'newPlayerScreen';
 
-export const NewPlayerScreen = () => {
+export const NewPlayerScreen = ({route}) => {
+  const {edit, playerId} = route?.params;
+
   const {
     handleCreateNewPlayer,
+    handleUpdatePlayer,
     handleSubmitForm,
     newPlayerFormRef,
     initialValues,
     onImagePress,
     response,
     loading,
-  } = useNewPlayerForm();
+  } = useNewPlayerForm(playerId);
 
   const [show, setShow] = useState(false);
 
@@ -42,13 +46,17 @@ export const NewPlayerScreen = () => {
 
   return (
     <ScreenLayout edges={['top', 'right', 'left', 'bottom']}>
-      <Header withBack title="Nuevo jugador" />
+      <Header withBack title={`${edit ? 'Editar' : 'Nuevo'} jugador`} />
+      <LoadingModal text="Creando nuevo jugador" isVisible={loading} />
       <ScrollView>
         <Formik
           innerRef={newPlayerFormRef}
           validateOnBlur={false}
+          enableReinitialize={true}
           initialValues={initialValues}
-          onSubmit={values => handleCreateNewPlayer(values)}>
+          onSubmit={values =>
+            edit ? handleUpdatePlayer(values) : handleCreateNewPlayer(values)
+          }>
           {({
             handleChange,
             touched,
@@ -72,6 +80,7 @@ export const NewPlayerScreen = () => {
               />
               <View style={[t.flexGrow, t.mT10]}>
                 <ImageSelector
+                  imageSource={initialValues?.profileImg}
                   onImagePress={onImagePress}
                   imageSelected={response}
                   name={`${values?.firstName?.[0]?.toUpperCase() || ''}${
@@ -180,7 +189,7 @@ export const NewPlayerScreen = () => {
       <Button
         active
         loading={loading}
-        title="Crear jugador"
+        title={`${edit ? 'Editar' : 'Crear'} jugador`}
         style={[t.mT3]}
         textStyle={[t.textLg]}
         onPress={handleSubmitForm}

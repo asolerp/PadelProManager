@@ -4,16 +4,16 @@ import {matchQuery} from '../../../Api/queries';
 import {NewMatchContext} from '../../../Components/Context/NewMatchContext';
 import {useAddDocument} from '../../../Hooks/useAddDocument';
 import {popScreen} from '../../../Router/utils/actions';
+import {timeout} from '../../../Utils/timeout';
 
 export const useNewMatchForm = () => {
   const newMatchFormRef = useRef();
   const [playerPosition, setPlayerPosition] = useState();
-  const [inputs, setInputs] = useState();
-
+  const [loading, setLoading] = useState(false);
   const {selectedPlayers} = useContext(NewMatchContext);
-  const {addDocument, loading} = useAddDocument(matchQuery);
+  const {addDocument, loading: loadingAddMatch} = useAddDocument(matchQuery);
 
-  const handleCreateNewMatch = values => {
+  const handleCreateNewMatch = async values => {
     const {club, category, date, sex, round = '', tournamentName = ''} = values;
 
     const dateParts = date.split('/');
@@ -66,10 +66,17 @@ export const useNewMatchForm = () => {
       t2: [selectedPlayers?.['3'] || null, selectedPlayers?.['4'] || null],
     };
 
-    addDocument({
-      data: newMatch,
-      callback: () => popScreen(),
-    });
+    setLoading(true);
+    try {
+      await timeout(2000);
+      await addDocument({
+        data: newMatch,
+        callback: () => popScreen(),
+      });
+    } catch (err) {
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSubmitForm = () => {
@@ -92,7 +99,6 @@ export const useNewMatchForm = () => {
     newMatchFormRef,
     playerPosition,
     initialValues,
-    setInputs,
-    loading,
+    loading: loading || loadingAddMatch,
   };
 };

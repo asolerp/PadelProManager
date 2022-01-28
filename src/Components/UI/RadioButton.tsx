@@ -3,7 +3,12 @@ import t from '../../Theme/theme';
 
 import {Pressable, StyleSheet, View} from 'react-native';
 
-export const RadioButton = ({active, onPress}) => {
+interface Props {
+  active: boolean;
+  onPress?: () => void;
+}
+
+export const RadioButton: React.FC<Props> = ({active, onPress}) => {
   const insideCircle = active ? t.bgInfoDark : t.bgWhite;
 
   return (

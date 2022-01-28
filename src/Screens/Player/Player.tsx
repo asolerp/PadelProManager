@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {ScrollView, View, Text, processColor} from 'react-native';
+import {View, Text, processColor} from 'react-native';
 import {RadarChart} from 'react-native-charts-wrapper';
 import {ScreenLayout} from '../../Components/Layout/ScreenLayout';
 import {Stat} from '../../Components/Player/Stat';
@@ -14,36 +14,70 @@ import {legend, xAxis} from '../../Utils/graphParams';
 import {ResumenStatistic} from '../../Components/Match/ResumenStatistic';
 import {FlatList} from 'react-native-gesture-handler';
 import {useGetMatches} from '../../Hooks/useGetMatches';
+import {
+  categoryParse,
+  colorByCategory,
+  colorByHand,
+  handParse,
+} from '../../Utils/parsers';
+import {Chip} from '../../Components/UI/Chip';
+import {PlayerSettings} from '../../Components/Player/PlayerSettings';
 
 export const PLAYER_SCREEN_KEY = 'playerScreen';
 
 export const PlayerScreen = ({route}) => {
   const {playerId} = route.params;
-  const {player, tw, tl, tm, graphData, loading, error} =
-    useGetPlayer(playerId);
+  const {player, tw, tl, tm, graphData, loading} = useGetPlayer(playerId);
   const {matches} = useGetMatches(playerId);
   const renderItem = ({item}) => <MatchResume match={item} />;
 
   return (
     <ScreenLayout edges={['top', 'left', 'right', 'bottom']}>
-      <Header withBack title={player?.firstName + ' ' + player?.secondName} />
-
+      <Header
+        withBack
+        position="absolute"
+        rightSide={<PlayerSettings playerId={playerId} />}
+      />
       <FlatList
         ListHeaderComponent={
           <>
-            <View style={[t.mT10]}>
+            <View style={[t.mT5]}>
               <View style={[t.justifyCenter, t.itemsCenter]}>
                 <PlayerAvatar
                   img={player?.profileImg}
                   imageStyle={[t.w28, t.h28]}
                 />
+                <Text style={[t.fontSansBold, t.textLg, t.mT2]}>
+                  {player?.firstName} {player?.secondName}
+                </Text>
+                <View style={[t.flexRow, t.itemsCenter, t.mT3]}>
+                  <View style={[t.flexRow, t.itemsCenter, t.mR2]}>
+                    <Text style={[t.fontSans, t.textXs, t.textGray800, t.mR1]}>
+                      Categoría:
+                    </Text>
+                    <Chip
+                      mainColor={colorByCategory[player?.category || 3]}
+                      text={`${categoryParse[player?.category || 3]}`}
+                      style={[t.mR1]}
+                    />
+                  </View>
+                  <View style={[t.flexRow, t.itemsCenter]}>
+                    <Text style={[t.fontSans, t.textXs, t.textGray800, t.mR1]}>
+                      Mano:
+                    </Text>
+                    <Chip
+                      mainColor={colorByHand[player?.hand || 'right']}
+                      text={`${handParse[player?.hand || 'right']}`}
+                    />
+                  </View>
+                </View>
                 <View style={[t.flexRow, t.justifyBetween, t.w60, t.mT5]}>
                   <Stat label="Jugados" count={tm} />
                   <Stat label="Ganados" count={tw} />
                   <Stat label="Perdidos" count={tl} />
                 </View>
               </View>
-              <View style={[t.itemsCenter, t.mT1]}>
+              <View style={[t.itemsCenter]}>
                 {!loading && (
                   <>
                     <RadarChart

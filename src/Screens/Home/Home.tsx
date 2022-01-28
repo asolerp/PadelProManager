@@ -9,6 +9,8 @@ import {LiveMatchResume} from '../../Components/Home/LiveMatchResume';
 import {MatchResume} from '../../Components/Home/MatchResume';
 
 import {players} from '../../Mocks/players';
+import {openScreenWithPush} from '../../Router/utils/actions';
+
 import {MyPlayers} from '../../Components/Home/MyPlayers';
 
 import {FlatList} from 'react-native-gesture-handler';
@@ -16,6 +18,8 @@ import {useGetLiveMatches} from '../../Hooks/useGetLiveMatches';
 import {useGetFinishedMatches} from '../../Hooks/useGetFinishedMatches';
 import {WelcomeMessage} from '../../Components/Home/WelcomeMessage';
 import {GroupActionButton} from '../../Components/Home/GroupActionButtons';
+import {Banner} from '../../Components/UI/Banner';
+import {NEW_MATCH_SCREEN_KEY} from '../NewMatch/NewMatch';
 
 export const HOME_SCREEN_KEY = 'homeScreen';
 
@@ -48,14 +52,23 @@ export const HomeScreen: FunctionComponent = () => {
             <Text style={[t.text2xl, t.fontSansBold, t.mB5]}>
               Partidos activos
             </Text>
+
             <View style={[t.flexRow, t.justifyBetween, t.itemsCenter, t.mB7]}>
-              {!loadingLiveMatches && liveMatches?.length > 0 && (
+              {!loadingLiveMatches && liveMatches?.length > 0 ? (
                 <FlatList
                   horizontal
-                  showsVerticalScrollIndicator={false}
+                  showsHorizontalScrollIndicator={false}
                   data={liveMatches}
                   renderItem={renderItem}
                   keyExtractor={item => item.id}
+                />
+              ) : (
+                <Banner
+                  onPress={() => openScreenWithPush(NEW_MATCH_SCREEN_KEY)}
+                  ctaText="CREAR PARTIDA"
+                  title="Seguimiento de jugadores"
+                  subtitle="Crea una partida con tus jugadores y registra todos sus golpes para
+            después poder analizarlos."
                 />
               )}
             </View>

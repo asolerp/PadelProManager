@@ -6,8 +6,8 @@ export const imageActions = {
     includeExtra: true,
   },
   library: {
-    maxHeight: 200,
-    maxWidth: 200,
+    maxHeight: 400,
+    maxWidth: 400,
     selectionLimit: 1,
     mediaType: 'photo',
     includeBase64: false,

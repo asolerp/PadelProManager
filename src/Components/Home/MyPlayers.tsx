@@ -17,7 +17,7 @@ export const MyPlayers = () => {
       imageStyle={[t.w16, t.h16]}
       style={[t.mX2]}
       img={item.profileImg}
-      name={shortName(1, item.firstName, item.secondName)}
+      name={shortName(1, item.firstName, item.secondName.split(' ')[0])}
       onPress={() =>
         openScreenWithPush(PLAYER_SCREEN_KEY, {
           playerId: item.id,

@@ -1,12 +1,12 @@
 import React from 'react';
-import {View, Text, Pressable, ViewStyle} from 'react-native';
+import {View, Text, Pressable, TextStyle} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import t from '../../Theme/theme';
 import {HDivider} from './HDivider';
 
 interface Props {
   title: string;
-  textStyle?: ViewStyle[];
+  textStyle?: TextStyle[];
   onPress?: () => void;
   iconName: string;
   iconColor?: string;

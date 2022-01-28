@@ -31,24 +31,29 @@ export const MatchResume: React.FC<Props> = ({match}) => {
           <Result won result={match.game} />
         </View>
         <View>
-          <View style={[t.justifyEnd, t.mB1, t.mT1]}>
+          <View style={[t.justifyEnd, t.mT1]}>
             <Text style={[t.fontSansMedium, t.textSm]}>
               {shortName(
                 1,
                 match?.t1?.[0]?.firstName,
                 match?.t1?.[0]?.secondName,
-              )}{' '}
+              )}
+              {' / '}
               {shortName(
                 2,
                 match?.t1?.[1]?.firstName,
                 match?.t1?.[1]?.secondName,
               )}{' '}
-              vs{' '}
+            </Text>
+          </View>
+          <View style={[t.justifyEnd, t.mB1, t.mT1]}>
+            <Text style={[t.fontSansMedium, t.textSm]}>
               {shortName(
                 3,
                 match?.t2?.[0]?.firstName,
                 match?.t2?.[0]?.secondName,
-              )}{' '}
+              )}
+              {' / '}
               {shortName(
                 4,
                 match?.t2?.[1]?.firstName,
@@ -56,22 +61,25 @@ export const MatchResume: React.FC<Props> = ({match}) => {
               )}
             </Text>
           </View>
-          <View style={[t.flexRow, t.itemsStart, t.justifyStart]}>
-            <Text style={[t.opacity30, t.fontSansMedium, t.textXs, t.mR4]}>
-              {matchDay}
-            </Text>
-            <Text style={[t.opacity30, t.fontSansMedium, t.textXs]}>
-              {match.club}
-            </Text>
+          <View>
+            <View style={[t.flexRow, t.itemsStart, t.justifyStart]}>
+              <Text style={[t.opacity30, t.fontSansMedium, t.textXs, t.mR4]}>
+                {matchDay}
+              </Text>
+              <Text style={[t.opacity30, t.fontSansMedium, t.textXs]}>
+                {match.club}
+              </Text>
+            </View>
           </View>
+        </View>
+        <View />
+        <View style={[t.flexGrow, t.flexRow, t.itemsCenter, t.justifyEnd]}>
           {match?.state === 'live' && (
             <View style={[t.itemsStart, t.mY1]}>
               <Chip mainColor="error" text="Live" />
             </View>
           )}
-        </View>
-        <View style={[t.flexGrow, t.itemsEnd, t.justifyCenter]}>
-          <Icon name="chevron-right" size={15} color="black" />
+          <Icon name="chevron-right" size={15} color="black" style={[t.mL3]} />
         </View>
       </Pressable>
       <HDivider />

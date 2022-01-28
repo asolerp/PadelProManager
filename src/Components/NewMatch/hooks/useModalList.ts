@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {PlayerType} from '../../../Global/types';
 import {removeAccents} from '../../../Utils/removeAccents';
+import {sortByName} from '../../../Utils/sorts';
 import {isSameUser, onlyInLeft} from '../utils/onlyInLeft';
 
 export const useModalList = ({selectedPlayers, list}) => {
@@ -28,8 +29,10 @@ export const useModalList = ({selectedPlayers, list}) => {
     : onlyInLeft(list, formatedSelectedPlayers, isSameUser);
 
   const filteredList = !search
-    ? playersList
-    : playersList?.filter(p => getFormatedName(p).includes(formatedSearch));
+    ? playersList?.sort(sortByName)
+    : playersList
+        ?.sort(sortByName)
+        ?.filter(p => getFormatedName(p).includes(formatedSearch));
 
   return {
     search,

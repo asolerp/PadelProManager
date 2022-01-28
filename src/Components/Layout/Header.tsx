@@ -7,14 +7,20 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {popScreen} from '../../Router/utils/actions';
 
 interface Props {
-  title: string;
+  title?: string;
   withBack?: boolean;
+  position?: 'relative' | 'absolute';
   rightSide?: React.ReactNode;
 }
 
-export const Header: React.FC<Props> = ({title, withBack, rightSide}) => {
+export const Header: React.FC<Props> = ({
+  title,
+  position = 'relative',
+  withBack,
+  rightSide,
+}) => {
   return (
-    <View style={[t.flexRow, t.itemsCenter, t.bgWhite, t.z20]}>
+    <View style={[t.flexRow, t.itemsCenter, t.z20, t?.[position]]}>
       <View style={[t.w7]}>
         {withBack && (
           <Pressable onPress={popScreen}>

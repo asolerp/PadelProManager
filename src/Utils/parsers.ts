@@ -26,6 +26,15 @@ export const colorByCategory = {
   5: 'error',
 };
 
+export const categoryParse = {
+  PRO: 'PRO',
+  1: 'Primera',
+  2: 'Segunda',
+  3: 'Tercera',
+  4: 'Cuarta',
+  5: 'Quinta',
+};
+
 export const handParse = {
   left: 'Zurdo',
   right: 'Diestro',

@@ -17,6 +17,7 @@ import {SwitchInput} from '../../Components/UI/SwitchInput';
 import {Select} from '../../Components/UI/Select';
 import {cateogries, rounds, sex} from '../../Utils/lists';
 import {newMatchValidationSchema} from './utils/validation';
+import {LoadingModal} from '../../Components/Common/LoadingModal';
 
 export const NEW_MATCH_SCREEN_KEY = 'newMatchScreen';
 
@@ -42,6 +43,7 @@ export const NewMatchScreen = () => {
   return (
     <ScreenLayout edges={['top', 'right', 'left', 'bottom']}>
       <Header withBack title="Nuevo partido" />
+      <LoadingModal text="Creando nuevo partido..." isVisible={loading} />
       <ScrollView>
         <Formik
           innerRef={newMatchFormRef}

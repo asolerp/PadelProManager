@@ -1,6 +1,23 @@
 import {Alert} from 'react-native';
 
 export const showError = {
+  delete_match: ({onAccept, onCancel}) =>
+    Alert.alert(
+      'Atención',
+      '¿Seguro que quieres eliminar el partido? No se podrá recuperar',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => onCancel(),
+          style: 'cancel',
+        },
+        {
+          text: 'Eliminar',
+          style: 'destructive',
+          onPress: () => onAccept(),
+        },
+      ],
+    ),
   no_point: () =>
     Alert.alert('Atención', 'No has seleccionado ningún golpe', [
       {

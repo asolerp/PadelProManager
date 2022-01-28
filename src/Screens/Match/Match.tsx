@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {View, Text, Pressable, ActivityIndicator} from 'react-native';
+import {View} from 'react-native';
 import {ScreenLayout, Header} from '../../Components/Layout';
 import {useGetMatch} from './hooks/useGetMatch';
-import {roundParser} from '../../Utils/parsers';
+
 import t from '../../Theme/theme';
 
 import {HDivider} from '../../Components/UI/HDivider';
@@ -15,15 +15,14 @@ import {BottomModal} from '../../Components/Modal/BottomModal';
 
 import {NewPointModal} from '../../Components/Match/NewPointModal';
 import {useLiveMatch} from '../../Components/Match/hooks/useLiveMatch';
-import {NormalModal} from '../../Components/Modal/NormalModal';
-import {Button} from '../../Components/UI/Button';
 
-import Icon from 'react-native-vector-icons/Ionicons';
 import {useSavePlayersStats} from './hooks/useSavePlayerStats';
 import {FinishedMatchHeader} from '../../Components/Match/FinishedMatchHeader';
-import {format} from 'date-fns';
-import {DATE_FORM} from '../../Utils/date-ext';
+
 import {MatchSettings} from '../../Components/Match/MatchSettings';
+import {LoadingModal} from '../../Components/Common/LoadingModal';
+import {ServiceModal} from '../../Components/Match/ServiceModal';
+import {FinishedMatchModal} from '../../Components/Match/FinishedMatchModal';
 
 export const MATCH_SCREEN_KEY = 'matchScreen';
 
@@ -34,67 +33,48 @@ export const MatchScreen: React.FC = ({route}) => {
     match,
     history,
     loadingMatch,
+    isGameFinished,
     isMatchFinished,
     isStartTeamAssigned,
   } = useGetMatch(matchId);
-  const {handleSavePoint, handleWhoStarts, loading} = useLiveMatch(match);
+  const {handleSavePoint, loading} = useLiveMatch(match);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const {savePlayersStatsHandler, loading: loadingSaveStats} =
+  const {loading: loadingSaveStats, savePlayersStatsHandler} =
     useSavePlayersStats();
 
   return (
     <ScreenLayout>
-      <NormalModal isVisible={loadingSaveStats} onClose={() => {}}>
-        <View style={[t.justifyCenter, t.itemsCenter]}>
-          <ActivityIndicator size="large" color="black" style={[t.mB4]} />
-          <Text style={[t.fontSansMedium, t.textCenter, t.w32]}>
-            Guardando stats de jugadores
-          </Text>
-        </View>
-      </NormalModal>
+      <LoadingModal
+        isVisible={loadingSaveStats}
+        text="Guardando stats de jugad@res"
+      />
+      <FinishedMatchModal
+        isVisible={isGameFinished && !isMatchFinished}
+        onAccept={() => savePlayersStatsHandler({match})}
+      />
+      <ServiceModal isVisible={isStartTeamAssigned} match={match} />
       {!loadingMatch && (
         <Header
           withBack
-          title={
-            match?.tournamentName ||
-            'Partida ' + format(match?.date?.toDate(), DATE_FORM)
-          }
-          rightSide={<MatchSettings />}
+          title={match?.tournamentName || 'Partida'}
+          rightSide={<MatchSettings match={match} />}
         />
       )}
-      {!isMatchFinished ? (
-        <AddButton
-          iconName="tennisball"
-          style={[t.bgSuccessLight]}
-          onPress={() => setIsModalVisible(true)}
-        />
-      ) : (
+      {isMatchFinished && (
         <AddButton
           iconName={isExpanded ? 'ios-contract' : 'ios-expand'}
           style={[t.bgSuccessLight]}
           onPress={() => setIsExpanded(old => !old)}
         />
       )}
-      <NormalModal isVisible={isStartTeamAssigned} onClose={() => {}}>
-        <View style={[t.itemsCenter]}>
-          <Text style={[t.fontSansBold, t.textLg]}>
-            ¿Que pareja empieza sacando?
-          </Text>
-          <View style={[t.flexRow, t.mT3, t.justifyBetween]}>
-            <Button
-              title="Pareja 1"
-              style={[t.mR3]}
-              onPress={() => handleWhoStarts('t1')}
-            />
-            <Button
-              title="Pareja 2"
-              type="success"
-              onPress={() => handleWhoStarts('t2')}
-            />
-          </View>
-        </View>
-      </NormalModal>
+      {!isMatchFinished && !isGameFinished && (
+        <AddButton
+          iconName="tennisball"
+          style={[t.bgSuccessLight]}
+          onPress={() => setIsModalVisible(true)}
+        />
+      )}
       <BottomModal
         isVisible={isModalVisible}
         onClose={() => setIsModalVisible(false)}>

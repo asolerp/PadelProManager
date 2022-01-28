@@ -1,6 +1,7 @@
 import {tennisGameLogic} from '../../../Utils/gameLogic';
 import {useUpdateDocument} from '../../../Hooks/useUpdateDocument';
 import {useAddDocument} from '../../../Hooks/useAddDocument';
+import {useDeleteDocument} from '../../../Hooks/useDeleteDocument';
 
 import firebase from '@react-native-firebase/app';
 import firestore from '@react-native-firebase/firestore';
@@ -11,6 +12,7 @@ import {Alert} from 'react-native';
 export const useLiveMatch = match => {
   const query = firestore().collection('matches');
   const {updateDocument, loading: loadingUpdate} = useUpdateDocument(query);
+  const {deleteDocument} = useDeleteDocument(query);
   const {addDocument, loading: loadingAdd} = useAddDocument(
     query.doc(match?.id).collection('history'),
   );
@@ -19,6 +21,10 @@ export const useLiveMatch = match => {
     await updateDocument(match?.id, {
       'game.service': team,
     });
+  };
+
+  const handleDeleteMatch = async () => {
+    await deleteDocument({docId: match?.id});
   };
 
   const handleSavePoint = async (stats, callback) => {
@@ -94,5 +100,6 @@ export const useLiveMatch = match => {
     loading,
     handleWhoStarts,
     handleSavePoint,
+    handleDeleteMatch,
   };
 };

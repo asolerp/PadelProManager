@@ -11,6 +11,7 @@ import {Header} from '../Layout/Header';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Input} from '../UI/Input';
 import {useModalList} from './hooks/useModalList';
+import {PlayerItem} from '../Players/PlayerItem';
 
 export const ModalListOfPlayers = ({
   selectedPlayers,
@@ -33,26 +34,16 @@ export const ModalListOfPlayers = ({
   });
 
   const renderItem = ({item}) => (
-    <View style={[t.mB3]}>
-      <View style={[t.flexRow, t.justifyBetween, t.itemsCenter, t.mB2]}>
-        <View style={[t.flexRow]}>
-          <Avatar img={item.profileImg} style={[t.mR3]} />
-          <View style={[t.justifyCenter]}>
-            <Text style={[t.fontSansMedium, t.textBase]}>
-              {item.firstName} {item.secondName}
-            </Text>
-            <Text style={[t.fontSansMedium, t.textXs, t.opacity60]}>
-              Diestro / 3ª Categoría{' '}
-            </Text>
-          </View>
-        </View>
+    <PlayerItem
+      onPress={() => handlePressPlayer(item)}
+      item={item}
+      rightSide={
         <RadioButton
           onPress={() => handlePressPlayer(item)}
           active={item.id === player?.id}
         />
-      </View>
-      <HDivider />
-    </View>
+      }
+    />
   );
 
   return (

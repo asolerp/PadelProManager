@@ -12,12 +12,11 @@ export const useDeleteDocument = query => {
   const deleteDocument = async ({docId, callback}: HookProps) => {
     setLoading(true);
     try {
-      setLoading(false);
       await query.doc(docId).delete();
     } catch (err) {
       setError(err);
-      setLoading(false);
     } finally {
+      setLoading(false);
       callback && callback();
     }
   };

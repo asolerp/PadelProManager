@@ -17,6 +17,7 @@ export const AddPlayer: React.FC<Props> = ({imageSrc, title, onPress}) => {
         <Avatar
           onPress={onPress}
           img={imageSrc}
+          imageStyle={[t.w16, t.h16]}
           style={[t.shadow, {borderWidth: 2}, t.borderWhite, t.roundedFull]}
         />
       ) : (

@@ -10,7 +10,12 @@ import {imageActions} from './utils/imageActions';
 const CAPTURE_ACTION = 'capture';
 const LIBRARY_ACTION = 'library';
 
-export const ImageSelector = ({name, onImagePress, imageSelected}) => {
+export const ImageSelector = ({
+  name,
+  onImagePress,
+  imageSelected,
+  imageSource,
+}) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -40,10 +45,10 @@ export const ImageSelector = ({name, onImagePress, imageSelected}) => {
         </View>
       </BottomModal>
       <View style={[t.mB10, t.itemsCenter]}>
-        {imageSelected?.assets?.length > 0 ? (
+        {imageSource || imageSelected?.assets?.length > 0 ? (
           <Pressable onPress={() => setIsVisible(true)} style={[t.w28, t.h28]}>
             <ImageBackground
-              source={{uri: imageSelected?.assets?.[0].uri}}
+              source={{uri: imageSelected?.assets?.[0].uri || imageSource}}
               style={[t.w28, t.h28]}
               imageStyle={[t.roundedFull]}
             />
