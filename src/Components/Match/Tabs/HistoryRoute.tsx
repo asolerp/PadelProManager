@@ -7,6 +7,8 @@ import {PointHistoryItem} from '../PointHistoryItem';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {useHistoryFilters} from './hooks/useHistoryFilters';
+import {HDivider} from '../../UI/HDivider';
+import {capitalize} from '../../../Utils/parsers';
 
 export const HistoricRoute = ({match, pointsHistory}) => {
   const {historyList, favoriteFilter, setFavoriteFilter} = useHistoryFilters(
@@ -14,9 +16,24 @@ export const HistoricRoute = ({match, pointsHistory}) => {
     pointsHistory,
   );
 
-  const renderItem = ({item}) => (
-    <PointHistoryItem match={match} pointHistory={item} />
-  );
+  const renderItem = ({item}) => {
+    if (item?.alert) {
+      const capitalizedColor = capitalize(item?.type);
+      const bg = t?.[`bg${capitalizedColor}Dark`];
+      return (
+        <>
+          <View style={[t.pY3, t.pX4, bg, t.roundedSm, t.mY3]}>
+            <Text
+              style={[t.fontSansMedium, t.textBase, t.textWhite, t.textCenter]}>
+              {item.alert}
+            </Text>
+          </View>
+          <HDivider />
+        </>
+      );
+    }
+    return <PointHistoryItem match={match} pointHistory={item} />;
+  };
   return (
     <>
       <View
@@ -53,7 +70,7 @@ export const HistoricRoute = ({match, pointsHistory}) => {
               data={historyList}
               renderItem={renderItem}
               keyExtractor={item => item.id}
-              style={[t.wFull]}
+              style={[t.wFull, t.pT8]}
             />
           ) : (
             <View style={[t.flexGrow, t.justifyCenter, t.itemsCenter]}>

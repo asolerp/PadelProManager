@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import {playerQuery} from '../../../Api/queries';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import firestore from '@react-native-firebase/firestore';
@@ -9,6 +9,9 @@ import {useUploadCloudinaryImage} from '../../../Hooks/useUploadCloudinaryImage'
 import {firebaseIDGenerator} from '../../../Utils/firebaseIDGenerator';
 import {emptyStats} from '../utils/emptyStats';
 import {useUpdateDocument} from '../../../Hooks/useUpdateDocument';
+import {LoadingModalContext} from '../../../Context/LoadngModalContext';
+import {AuthContext} from '../../../Context/AuthContex';
+import {timeout} from '../../../Utils/timeout';
 
 export const useNewPlayerForm = playerId => {
   const init = {
@@ -28,7 +31,6 @@ export const useNewPlayerForm = playerId => {
 
   const [response, setResponse] = useState<any>(null);
   const {uploadCloudinary} = useUploadCloudinaryImage();
-  const [loading, setLoading] = useState(false);
 
   const onImagePress = useCallback(({type, options}) => {
     if (type === 'capture') {
@@ -41,29 +43,40 @@ export const useNewPlayerForm = playerId => {
   const {addDocument, loading: loadingAddDocument} =
     useAddDocument(playerQuery);
 
+  const {user} = useContext(AuthContext);
   const {updateDocument} = useUpdateDocument(playerQuery);
+  const {setIsVisible, setText} = useContext(LoadingModalContext);
 
   const handleUpdatePlayer = async values => {
-    setLoading(true);
+    setText('Editando jugador...');
+    setIsVisible(true);
+    await timeout(1500);
     try {
       if (response?.assets?.length > 0) {
         await uploadCloudinary(
           response?.assets?.[0],
           `PadelPro/users/${playerId}/avatar`,
           async url =>
-            await updateDocument(playerId, {...values, profileImg: url}),
+            await updateDocument(playerId, {
+              ...values,
+              coach: [user?.id],
+              profileImg: url,
+            }),
         );
+      } else {
+        await updateDocument(playerId, {...values});
       }
     } catch (err) {
       console.log(err);
     } finally {
-      setLoading(false);
+      setIsVisible(false);
       popScreen();
     }
   };
 
   const handleCreateNewPlayer = async values => {
-    setLoading(true);
+    setIsVisible(true);
+    setText('Creando nuevo jugador...');
     const id = firebaseIDGenerator();
     try {
       await uploadCloudinary(
@@ -72,7 +85,7 @@ export const useNewPlayerForm = playerId => {
         async url =>
           await addDocument({
             docId: id,
-            data: {...values, profileImg: url},
+            data: {...values, coach: [user?.id], profileImg: url},
             callback: async () =>
               await firestore()
                 .collection('players')
@@ -85,7 +98,7 @@ export const useNewPlayerForm = playerId => {
     } catch (err) {
       console.log(err);
     } finally {
-      setLoading(false);
+      setIsVisible(false);
       popScreen();
     }
   };
@@ -118,6 +131,6 @@ export const useNewPlayerForm = playerId => {
     initialValues,
     onImagePress,
     response,
-    loading: loading || loadingAddDocument,
+    loading: loadingAddDocument,
   };
 };

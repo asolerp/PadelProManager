@@ -13,14 +13,16 @@ export const useModalList = ({selectedPlayers, list}) => {
     Object.entries(selectedPlayers)?.map(([_, value]) => value);
 
   const handlePressPlayer = p => {
-    if (p.id === player?.id) {
-      return setPlayer(null);
+    if (p) {
+      if (p?.id === player?.id) {
+        return setPlayer(null);
+      }
+      return setPlayer(p);
     }
-    return setPlayer(p);
   };
 
   const getFormatedName = p =>
-    removeAccents(`${p.firstName} ${p.secondName}`).toLowerCase();
+    removeAccents(`${p?.firstName} ${p?.secondName}`).toLowerCase();
 
   const formatedSearch = search && removeAccents(search).toLowerCase();
 

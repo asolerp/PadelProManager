@@ -5,7 +5,9 @@ import t from '../../Theme/theme';
 import {rounds} from '../../Utils/lists';
 import {HDivider} from '../UI/HDivider';
 import {VDivider} from '../UI/VDivider';
-import Animated, {LightSpeedInLeft, SlideOutUp} from 'react-native-reanimated';
+import Animated, {LightSpeedInLeft} from 'react-native-reanimated';
+import {es} from 'date-fns/locale';
+import {capitalizeText} from '../../Utils/capitalizeText';
 
 interface MatchInfoProps {
   club: string;
@@ -51,13 +53,13 @@ export const MatchInfo: React.FC<MatchInfoProps> = ({
   category,
   tournamentName,
 }) => {
-  const matchDay = format(new Date(date), 'iii d MMMM yyyy');
+  const matchDay = format(new Date(date), 'iii d MMMM yyyy', {locale: es});
   return (
     <Animated.View entering={LightSpeedInLeft}>
       <View style={[t.flexRow, t.justifyBetween, t.mY2]}>
         <InfoElement label="Club" info={club} />
         <VDivider />
-        <InfoElement label="Fecha" info={matchDay} />
+        <InfoElement label="Fecha" info={capitalizeText(matchDay)} />
         <VDivider />
         <InfoElement label="Categoría" align="center">
           <View

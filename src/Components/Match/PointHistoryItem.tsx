@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Pressable} from 'react-native';
+import {View, Text} from 'react-native';
 import t from '../../Theme/theme';
 import {resultGame} from '../../Utils/gameLogic';
 import {shortName} from '../../Utils/parsers';
@@ -17,6 +17,7 @@ import {BottomModal} from '../Modal/BottomModal';
 import {Button} from '../UI/Button';
 import {useState} from 'react';
 import {Input} from '../UI/Input';
+import PressableOpacity from '../UI/PressableOpacity';
 
 export const PointHistoryItem = ({match, pointHistory}) => {
   const {s1t1, s1t2, s2t1, s2t2, s3t1, s3t2, set, service} =
@@ -137,7 +138,7 @@ export const PointHistoryItem = ({match, pointHistory}) => {
               <Text style={[t.fontSans, t.textXs]}>
                 {pointHistory?.comment}
               </Text>
-              <Pressable
+              <PressableOpacity
                 onPress={() => {
                   handleDeleteComment(pointHistory?.id);
                 }}>
@@ -147,19 +148,19 @@ export const PointHistoryItem = ({match, pointHistory}) => {
                   size={17}
                   style={[t.mL3]}
                 />
-              </Pressable>
+              </PressableOpacity>
             </View>
           </View>
         )}
         <View style={[t.flexRow, t.justifyEnd]}>
-          <Pressable
+          <PressableOpacity
             onPress={() => {
               setComment(pointHistory?.comment);
               setVisibleCommentModal(true);
             }}>
             <Icon name="ios-chatbox-ellipses" color={'#a0aec0'} size={20} />
-          </Pressable>
-          <Pressable
+          </PressableOpacity>
+          <PressableOpacity
             onPress={() =>
               handleAddAsFavorite(
                 pointHistory?.id,
@@ -176,7 +177,7 @@ export const PointHistoryItem = ({match, pointHistory}) => {
               size={20}
               style={[t.mL3]}
             />
-          </Pressable>
+          </PressableOpacity>
         </View>
       </View>
       <HDivider />

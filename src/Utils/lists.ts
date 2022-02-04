@@ -34,3 +34,9 @@ export const lateralidad = [
   {label: 'Diestro', value: 'right'},
   {label: 'Zurdo', value: 'left'},
 ];
+
+export const searchOptions = [
+  {label: '', value: ''},
+  {label: 'Nombre de jugadores', value: 'name'},
+  {label: 'Nombre del club', value: 'club'},
+];

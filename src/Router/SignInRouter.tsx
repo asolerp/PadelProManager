@@ -9,14 +9,13 @@ import {
 
 import {MainStack} from '../Stacks/MainStack';
 import {MAIN_STACK_KEY} from './utils/routerKeys';
-import {
-  NewMatchScreen,
-  NEW_MATCH_SCREEN_KEY,
-} from '../Screens/NewMatch/NewMatch';
+import {usePayments} from '../Lib/Payments/hooks/usePayments';
 
 const Stack = createNativeStackNavigator();
 
-const SignInRouter = () => {
+export const SignInRouter = () => {
+  usePayments();
+
   return (
     <NavigationContainer
       ref={navigationRef}
@@ -32,5 +31,3 @@ const SignInRouter = () => {
     </NavigationContainer>
   );
 };
-
-export default SignInRouter;

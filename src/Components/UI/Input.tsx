@@ -1,14 +1,26 @@
 import React from 'react';
-import {View, Text, TextInput, TextInputProps, ViewStyle} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TextInputProps,
+  ViewStyle,
+  TextStyle,
+} from 'react-native';
 import t from '../../Theme/theme';
 
 interface Props extends TextInputProps {
-  label?: string;
   style?: ViewStyle[];
+  inputStyle?: TextStyle[];
   error?: string;
 }
 
-export const Input: React.FC<Props> = ({label, style, error, ...props}) => {
+export const Input: React.FC<Props> = ({
+  style,
+  error,
+  inputStyle,
+  ...props
+}) => {
   return (
     <View style={[style]}>
       <View
@@ -22,7 +34,7 @@ export const Input: React.FC<Props> = ({label, style, error, ...props}) => {
         ]}>
         <TextInput
           placeholderTextColor="#718096"
-          style={[t.fontSans, t.textBase]}
+          style={[t.fontSans, t.textBase, inputStyle]}
           {...props}
         />
       </View>

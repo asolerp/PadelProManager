@@ -1,12 +1,12 @@
 import React from 'react';
-import {Pressable} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import t from '../../Theme/theme';
+import PressableOpacity from './PressableOpacity';
 
 export const AddButton = ({onPress, iconName, style}) => {
   return (
-    <Pressable
+    <PressableOpacity
       onPress={onPress}
       style={[
         t.w14,
@@ -22,6 +22,6 @@ export const AddButton = ({onPress, iconName, style}) => {
         style,
       ]}>
       <Icon name={iconName} size={35} color="white" />
-    </Pressable>
+    </PressableOpacity>
   );
 };

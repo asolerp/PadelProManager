@@ -1,10 +1,11 @@
 import React from 'react';
 
-import {View, Text, Pressable} from 'react-native';
+import {View, Text} from 'react-native';
 import t from '../../Theme/theme';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import {popScreen} from '../../Router/utils/actions';
+import PressableOpacity from '../UI/PressableOpacity';
 
 interface Props {
   title?: string;
@@ -23,9 +24,9 @@ export const Header: React.FC<Props> = ({
     <View style={[t.flexRow, t.itemsCenter, t.z20, t?.[position]]}>
       <View style={[t.w7]}>
         {withBack && (
-          <Pressable onPress={popScreen}>
+          <PressableOpacity onPress={popScreen}>
             <Icon name="ios-chevron-back" size={30} color="black" />
-          </Pressable>
+          </PressableOpacity>
         )}
       </View>
       <View style={[t.flexGrow, t.itemsCenter]}>

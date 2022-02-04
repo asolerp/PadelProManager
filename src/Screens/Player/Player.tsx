@@ -109,6 +109,11 @@ export const PlayerScreen = ({route}) => {
                 <Text style={[t.text2xl, t.fontSansBold, t.mB5]}>
                   Últimos partidos
                 </Text>
+                {matches?.length === 0 && (
+                  <Text style={[t.fontSansMedium]}>
+                    No hay partidas finalizadas
+                  </Text>
+                )}
                 <View />
               </View>
             </View>

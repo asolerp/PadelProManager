@@ -1,7 +1,8 @@
 import React from 'react';
 import t from '../../Theme/theme';
 
-import {Pressable, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import PressableOpacity from './PressableOpacity';
 
 interface Props {
   active: boolean;
@@ -12,7 +13,7 @@ export const RadioButton: React.FC<Props> = ({active, onPress}) => {
   const insideCircle = active ? t.bgInfoDark : t.bgWhite;
 
   return (
-    <Pressable
+    <PressableOpacity
       onPress={onPress}
       style={[
         styles.buttonContainer,
@@ -25,7 +26,7 @@ export const RadioButton: React.FC<Props> = ({active, onPress}) => {
         t.h8,
       ]}>
       <View style={[insideCircle, t.w4, t.h4, t.roundedFull]} />
-    </Pressable>
+    </PressableOpacity>
   );
 };
 

@@ -1,17 +1,20 @@
 import {format, parse, parseISO, toDate} from 'date-fns';
 import {useContext, useRef, useState} from 'react';
 import {matchQuery} from '../../../Api/queries';
-import {NewMatchContext} from '../../../Components/Context/NewMatchContext';
+import {AuthContext} from '../../../Context/AuthContex';
+import {NewMatchContext} from '../../../Context/NewMatchContext';
 import {useAddDocument} from '../../../Hooks/useAddDocument';
 import {popScreen} from '../../../Router/utils/actions';
 import {timeout} from '../../../Utils/timeout';
+import {useAddNewMatch} from './useAddNewMatch';
 
 export const useNewMatchForm = () => {
   const newMatchFormRef = useRef();
+  const {user} = useContext(AuthContext);
   const [playerPosition, setPlayerPosition] = useState();
   const [loading, setLoading] = useState(false);
   const {selectedPlayers} = useContext(NewMatchContext);
-  const {addDocument, loading: loadingAddMatch} = useAddDocument(matchQuery);
+  const {addNewMatch, loading: loadingAddMatch} = useAddNewMatch();
 
   const handleCreateNewMatch = async values => {
     const {club, category, date, sex, round = '', tournamentName = ''} = values;
@@ -24,6 +27,7 @@ export const useNewMatchForm = () => {
       club,
       round,
       sex,
+      coachId: user?.id,
       tournamentName,
       state: 'live',
       category: category,
@@ -69,7 +73,7 @@ export const useNewMatchForm = () => {
     setLoading(true);
     try {
       await timeout(2000);
-      await addDocument({
+      await addNewMatch({
         data: newMatch,
         callback: () => popScreen(),
       });

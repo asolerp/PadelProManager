@@ -49,6 +49,7 @@ export const MatchScreen: React.FC = ({route}) => {
         isVisible={loadingSaveStats}
         text="Guardando stats de jugad@res"
       />
+
       <FinishedMatchModal
         isVisible={isGameFinished && !isMatchFinished}
         onAccept={() => savePlayersStatsHandler({match})}

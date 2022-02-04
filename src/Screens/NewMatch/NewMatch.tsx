@@ -159,10 +159,10 @@ export const NewMatchScreen = () => {
       <HDivider />
       <Button
         active
+        size="lg"
         loading={loading}
-        title="Crear partido"
+        title="Crear"
         style={[t.mT3]}
-        textStyle={[t.textLg]}
         onPress={handleSubmitForm}
       />
     </ScreenLayout>

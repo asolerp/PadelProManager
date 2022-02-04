@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, Pressable} from 'react-native';
+import {View, Text} from 'react-native';
 import t from '../../../Theme/theme';
 import {BottomModal} from '../../Modal/BottomModal';
 import {Button} from '../../UI/Button';
@@ -8,6 +8,7 @@ import {Input} from '../../UI/Input';
 import {useNotes} from '../hooks/useNotes';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {FlatList} from 'react-native-gesture-handler';
+import PressableOpacity from '../../UI/PressableOpacity';
 
 export const NotesRoute = ({notes, matchId}) => {
   const [newNoteModalOpen, setNewNoteModalOpen] = useState(false);
@@ -36,9 +37,9 @@ export const NotesRoute = ({notes, matchId}) => {
             t.rounded,
             t.p2,
           ]}>
-          <Pressable onPress={() => handleDeleteNote(item.id)}>
+          <PressableOpacity onPress={() => handleDeleteNote(item.id)}>
             <Icon name="ios-trash" color="white" size={15} />
-          </Pressable>
+          </PressableOpacity>
         </View>
       </View>
       <HDivider style={[t.mB2]} />
@@ -82,6 +83,7 @@ export const NotesRoute = ({notes, matchId}) => {
         <View style={[t.flexGrow, t.justifyCenter, t.itemsCenter]}>
           <Text style={[t.mB3]}>No tienes ninguna nota guardada</Text>
           <Button
+            size="sm"
             title="Añadir nota"
             onPress={() => setNewNoteModalOpen(true)}
           />

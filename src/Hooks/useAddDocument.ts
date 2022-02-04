@@ -8,6 +8,7 @@ interface HookProps {
 
 export const useAddDocument = query => {
   const [loading, setLoading] = useState(false);
+  const [docRefId, setDoRefId] = useState();
   const [error, setError] = useState();
 
   const addDocument = async ({docId, data, callback}: HookProps) => {
@@ -16,7 +17,7 @@ export const useAddDocument = query => {
       setLoading(false);
       const result = docId
         ? await query.doc(docId).set({...data})
-        : await query.add({...data});
+        : await query.add({...data}).then(docRef => setDoRefId(docRef.id));
       return result;
     } catch (err) {
       console.log(err);
@@ -27,5 +28,5 @@ export const useAddDocument = query => {
     }
   };
 
-  return {addDocument, loading, error};
+  return {addDocument, docRefId, loading, error};
 };

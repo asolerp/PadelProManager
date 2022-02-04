@@ -1,8 +1,9 @@
 import React from 'react';
-import {Text, ViewStyle, Pressable, ImageBackground} from 'react-native';
+import {Text, ViewStyle, ImageBackground} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import t from '../../Theme/theme';
+import PressableOpacity from './PressableOpacity';
 
 interface Props {
   iconName: string;
@@ -31,7 +32,7 @@ export const ActionButton: React.FC<Props> = ({
   };
 
   return (
-    <Pressable
+    <PressableOpacity
       onPress={onPress}
       style={[
         t.p2,
@@ -53,6 +54,6 @@ export const ActionButton: React.FC<Props> = ({
           {title}
         </Text>
       </ImageBackground>
-    </Pressable>
+    </PressableOpacity>
   );
 };

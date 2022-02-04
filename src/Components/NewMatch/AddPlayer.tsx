@@ -1,8 +1,9 @@
 import React from 'react';
-import {Pressable, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import t from '../../Theme/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Avatar} from '../UI/Avatar';
+import PressableOpacity from '../UI/PressableOpacity';
 
 interface Props {
   onPress?: () => void;
@@ -12,13 +13,21 @@ interface Props {
 
 export const AddPlayer: React.FC<Props> = ({imageSrc, title, onPress}) => {
   return (
-    <Pressable onPress={onPress} style={[t.justifyCenter, t.itemsCenter]}>
+    <PressableOpacity
+      onPress={onPress}
+      style={[t.justifyCenter, t.itemsCenter]}>
       {imageSrc ? (
         <Avatar
           onPress={onPress}
           img={imageSrc}
           imageStyle={[t.w16, t.h16]}
-          style={[t.shadow, {borderWidth: 2}, t.borderWhite, t.roundedFull]}
+          style={[
+            t.shadow,
+            {borderWidth: 2},
+            t.borderWhite,
+            t.roundedFull,
+            t.mB1,
+          ]}
         />
       ) : (
         <View
@@ -36,6 +45,6 @@ export const AddPlayer: React.FC<Props> = ({imageSrc, title, onPress}) => {
         </View>
       )}
       <Text style={[t.fontSansBold, t.textWhite]}>{title}</Text>
-    </Pressable>
+    </PressableOpacity>
   );
 };

@@ -2,21 +2,22 @@ import React from 'react';
 import {
   Text,
   View,
-  Pressable,
   ViewStyle,
   TextStyle,
   ActivityIndicator,
   ButtonProps,
 } from 'react-native';
 import t from '../../Theme/theme';
-
+import {capitalize} from '../../Utils/parsers';
+import PressableOpacity from './PressableOpacity';
 interface Props extends ButtonProps {
   style?: ViewStyle[];
   textStyle?: TextStyle[];
   title: string;
   active?: boolean;
   loading?: boolean;
-  type?: 'error' | 'success' | 'info';
+  type?: 'error' | 'success' | 'info' | 'white';
+  size?: 'xs' | 'sm' | 'md' | 'base' | 'lg' | 'xl';
   onPress?: () => void;
   rightSide?: React.ReactNode;
 }
@@ -29,25 +30,31 @@ export const Button: React.FC<Props> = ({
   loading,
   disabled,
   rightSide,
+  size = 'sm',
   active = false,
   type = 'info',
 }) => {
+  const capitalizedSize = capitalize(size);
+  const textSize = t?.[`text${capitalizedSize}`];
+
   const disabledStyles = disabled ? [t.opacity50] : [t.opacity100];
 
   const parseBgTypeColors = {
     success: [active ? t.bgSuccess : t.bgWhite, t.borderSuccessDark],
     error: [active ? t.bgError : t.bgWhite, t.borderErrorDark],
     info: [active ? t.bgInfo : t.bgWhite, t.borderInfoDark],
+    white: [active ? t.bgWhite : t.bgWhite, t.border0],
   };
 
   const parseTextTypeColor = {
     success: active ? t.textWhite : t.textSuccessDark,
     error: active ? t.textWhite : t.textErrorDark,
     info: active ? t.textWhite : t.textInfoDark,
+    white: active ? t.textGray700 : t.textGray700,
   };
 
   return (
-    <Pressable
+    <PressableOpacity
       onPress={!disabled ? onPress : () => {}}
       style={[
         t.justifyCenter,
@@ -55,7 +62,8 @@ export const Button: React.FC<Props> = ({
         t.roundedSm,
         t.border,
         parseBgTypeColors[type],
-        t.p2,
+        t.pX2,
+        size === 'lg' || size === 'xl' ? t.pY3 : t.pY2,
         t.shadow,
         style,
         disabled && t.opacity50,
@@ -67,16 +75,16 @@ export const Button: React.FC<Props> = ({
           <Text
             style={[
               parseTextTypeColor[type],
-              t.textSm,
-              t.fontSansMedium,
-              textStyle,
               disabledStyles,
+              t.fontSansBold,
+              textSize,
+              textStyle,
             ]}>
             {title}
           </Text>
           {rightSide}
         </View>
       )}
-    </Pressable>
+    </PressableOpacity>
   );
 };

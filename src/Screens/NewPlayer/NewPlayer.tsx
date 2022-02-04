@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import {Pressable, ScrollView, Text, View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import {Header} from '../../Components/Layout/Header';
 import {ScreenLayout} from '../../Components/Layout/ScreenLayout';
 import {Input} from '../../Components/UI/Input';
@@ -16,7 +16,6 @@ import {HDivider} from '../../Components/UI/HDivider';
 import {ImageSelector} from '../../Components/NewPlayer/ImageSelector';
 import {Select} from '../../Components/UI/Select';
 import {cateogries, gender, lateralidad} from '../../Utils/lists';
-import {LoadingModal} from '../../Components/Common/LoadingModal';
 
 export const NEW_PLAYER_SCREEN_KEY = 'newPlayerScreen';
 
@@ -47,7 +46,6 @@ export const NewPlayerScreen = ({route}) => {
   return (
     <ScreenLayout edges={['top', 'right', 'left', 'bottom']}>
       <Header withBack title={`${edit ? 'Editar' : 'Nuevo'} jugador`} />
-      <LoadingModal text="Creando nuevo jugador" isVisible={loading} />
       <ScrollView>
         <Formik
           innerRef={newPlayerFormRef}
@@ -71,7 +69,7 @@ export const NewPlayerScreen = ({route}) => {
                 mode="date"
                 date={new Date()}
                 locale="es-ES"
-                display="inline"
+                display="spinner"
                 onConfirm={date => {
                   setFieldValue('birthDate', format(date, DATE_FORM));
                   setShow(false);
@@ -188,10 +186,10 @@ export const NewPlayerScreen = ({route}) => {
       <HDivider />
       <Button
         active
+        size="lg"
         loading={loading}
-        title={`${edit ? 'Editar' : 'Crear'} jugador`}
+        title={`${edit ? 'Editar' : 'Crear'}`}
         style={[t.mT3]}
-        textStyle={[t.textLg]}
         onPress={handleSubmitForm}
       />
     </ScreenLayout>

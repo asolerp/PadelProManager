@@ -1,9 +1,10 @@
 import React from 'react';
-import {View, Text, ViewStyle, Pressable} from 'react-native';
+import {View, Text, ViewStyle} from 'react-native';
 import t from '../../Theme/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {capitalize} from '../../Utils/parsers';
+import PressableOpacity from './PressableOpacity';
 
 interface Props {
   text: string;
@@ -29,7 +30,7 @@ export const Chip: React.FC<Props> = ({
     <>
       <View style={[t.roundedSm, t.pX1, {paddingVertical}, bg, style]}>
         {withClose && (
-          <Pressable
+          <PressableOpacity
             onPress={onClose}
             style={[
               t.absolute,
@@ -46,7 +47,7 @@ export const Chip: React.FC<Props> = ({
               t.h4,
             ]}>
             <Icon name="close" size={10} color="red" />
-          </Pressable>
+          </PressableOpacity>
         )}
         <Text style={[textColor, t.textXs, t.fontSansMedium]}>{text}</Text>
       </View>

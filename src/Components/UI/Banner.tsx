@@ -1,8 +1,9 @@
 import React from 'react';
 
-import {View, Text, ImageBackground} from 'react-native';
+import {View, Text, ImageBackground, ViewStyle} from 'react-native';
 import {Button} from '../UI/Button';
 import t from '../../Theme/theme';
+import {capitalize} from '../../Utils/parsers';
 
 interface Props {
   title: string;
@@ -10,31 +11,38 @@ interface Props {
   ctaText: string;
   onPress: () => void;
   imageSrc?: string;
+  mainColor?: string;
+  style?: ViewStyle[];
 }
 
 const DEFAULT_PROFILE_IMAGE =
   'https://media.babolat.com//image/upload/f_auto,q_auto,c_scale,w_456,h_420/Website_content/Padel_landing_page/02092020-Launch/Product%20block%20right%20-%20balls/balls-range-new.jpg';
 
-export const Banner = ({
+export const Banner: React.FC<Props> = ({
   title,
   subtitle,
   ctaText,
   onPress,
+  style,
+  mainColor = 'success',
   imageSrc = DEFAULT_PROFILE_IMAGE,
 }) => {
+  const capitalizedColor = capitalize(mainColor);
+  const bg = t?.[`bg${capitalizedColor}Light`];
+
   return (
     <ImageBackground
       source={{uri: imageSrc}}
       imageStyle={[t.roundedLg, t.opacity50]}
-      style={[t.wFull, t.h48, t.relative, t.shadow]}>
+      style={[t.wFull, t.h48, t.relative, t.shadow, style]}>
       <View
         style={[
           t.wFull,
           t.hFull,
           t.p3,
           t.roundedLg,
-          t.bgSuccessLight,
-          t.opacity80,
+          bg,
+          t.opacity60,
           t.absolute,
         ]}
       />
@@ -46,7 +54,7 @@ export const Banner = ({
           {subtitle}
         </Text>
         <View style={[t.flexGrow, t.justifyEnd, t.itemsCenter]}>
-          <Button title={ctaText} onPress={onPress} />
+          <Button size="xs" title={ctaText} onPress={onPress} type="white" />
         </View>
       </View>
     </ImageBackground>

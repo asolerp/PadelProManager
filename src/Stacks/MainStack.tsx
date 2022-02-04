@@ -8,7 +8,7 @@ import {
   NewMatchScreen,
   NEW_MATCH_SCREEN_KEY,
 } from '../Screens/NewMatch/NewMatch';
-import {NewMatchProvider} from '../Components/Context/NewMatchContext';
+import {NewMatchProvider} from '../Context/NewMatchContext';
 import {
   NewPlayerScreen,
   NEW_PLAYER_SCREEN_KEY,

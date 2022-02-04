@@ -1,10 +1,19 @@
-const mapPoints = {
+export const mapPoints = {
   0: '0',
   1: '15',
   2: '30',
   3: '40',
   4: 'ADV',
   5: '0',
+};
+
+export const mapPointsToNumber = {
+  0: 0,
+  15: 1,
+  30: 2,
+  40: 3,
+  ADV: 4,
+  5: 0,
 };
 
 const generateSet = (game, sets, team) => {

@@ -5,17 +5,56 @@ import t from '../../Theme/theme';
 import {useNewMatchForm} from '../../Screens/NewMatch/hooks/useNewMatchForm';
 import {ModalListOfPlayers} from './ModalListOfPlayers';
 import {useState} from 'react';
-import {NewMatchContext} from '../Context/NewMatchContext';
+import {NewMatchContext} from '../../Context/NewMatchContext';
 import {Chip} from '../UI/Chip';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {
   categoryParse,
   colorByCategory,
   colorByHand,
   handParse,
 } from '../../Utils/parsers';
+import PressableOpacity from '../UI/PressableOpacity';
 
 const HEIGHT_FIELD = 250;
 const FIELD_COLOR = '#0083B0';
+
+const AvatarWithClose = ({
+  selectedPlayer,
+  pos,
+  onPressAvatar,
+  onPressClose,
+}) => {
+  return (
+    <View>
+      {selectedPlayer && (
+        <PressableOpacity
+          onPress={onPressClose}
+          style={[
+            t.absolute,
+            t.right0,
+            t.top0,
+            t.z10,
+            t.border,
+            t.borderError,
+            t.justifyCenter,
+            t.itemsCenter,
+            t.rounded,
+            t.bgWhite,
+            t.w6,
+            t.h6,
+          ]}>
+          <Icon name="close" size={12} color="red" />
+        </PressableOpacity>
+      )}
+      <AddPlayer
+        imageSrc={selectedPlayer?.profileImg}
+        title={selectedPlayer?.firstName || `Jugador ${pos}`}
+        onPress={() => onPressAvatar()}
+      />
+    </View>
+  );
+};
 
 export const PlayersSelector = () => {
   const borderSyles = [t.border, t.borderWhite];
@@ -29,8 +68,19 @@ export const PlayersSelector = () => {
     setIsVisible(true);
   };
 
+  const handlePressRemovePlayer = pos => {
+    setSelectedPlayers({
+      ...selectedPlayers,
+      [pos]: undefined,
+    });
+  };
+
   const handleSavePlayer = player => {
-    setSelectedPlayers({...selectedPlayers, [playerPosition]: player});
+    console.log(playerPosition);
+    setSelectedPlayers({
+      ...selectedPlayers,
+      [playerPosition]: {...player},
+    });
   };
 
   return (
@@ -107,10 +157,11 @@ export const PlayersSelector = () => {
               t.itemsCenter,
               {height: HEIGHT_FIELD / 2},
             ]}>
-            <AddPlayer
-              imageSrc={selectedPlayers?.['1']?.profileImg}
-              title={selectedPlayers?.['1']?.firstName || 'Jugador 1'}
-              onPress={() => handlePressAddPlayer(1)}
+            <AvatarWithClose
+              pos={1}
+              selectedPlayer={selectedPlayers?.['1']}
+              onPressAvatar={() => handlePressAddPlayer(1)}
+              onPressClose={() => handlePressRemovePlayer(1)}
             />
           </View>
           <View
@@ -122,10 +173,11 @@ export const PlayersSelector = () => {
               t.itemsCenter,
               {height: HEIGHT_FIELD / 2},
             ]}>
-            <AddPlayer
-              imageSrc={selectedPlayers?.['2']?.profileImg}
-              title={selectedPlayers?.['2']?.firstName || 'Jugador 2'}
-              onPress={() => handlePressAddPlayer(2)}
+            <AvatarWithClose
+              pos={2}
+              selectedPlayer={selectedPlayers?.['2']}
+              onPressAvatar={() => handlePressAddPlayer(2)}
+              onPressClose={() => handlePressRemovePlayer(2)}
             />
           </View>
         </View>
@@ -139,10 +191,11 @@ export const PlayersSelector = () => {
               t.itemsCenter,
               {height: HEIGHT_FIELD / 2},
             ]}>
-            <AddPlayer
-              imageSrc={selectedPlayers?.['3']?.profileImg}
-              title={selectedPlayers?.['3']?.firstName || 'Jugador 3'}
-              onPress={() => handlePressAddPlayer(3)}
+            <AvatarWithClose
+              pos={3}
+              selectedPlayer={selectedPlayers?.['3']}
+              onPressAvatar={() => handlePressAddPlayer(3)}
+              onPressClose={() => handlePressRemovePlayer(3)}
             />
           </View>
           <View
@@ -154,10 +207,11 @@ export const PlayersSelector = () => {
               t.itemsCenter,
               {height: HEIGHT_FIELD / 2},
             ]}>
-            <AddPlayer
-              imageSrc={selectedPlayers?.['4']?.profileImg}
-              title={selectedPlayers?.['4']?.firstName || 'Jugador 4'}
-              onPress={() => handlePressAddPlayer(4)}
+            <AvatarWithClose
+              pos={4}
+              selectedPlayer={selectedPlayers?.['4']}
+              onPressAvatar={() => handlePressAddPlayer(4)}
+              onPressClose={() => handlePressRemovePlayer(4)}
             />
           </View>
         </View>

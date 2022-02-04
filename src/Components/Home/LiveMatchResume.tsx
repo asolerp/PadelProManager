@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Pressable} from 'react-native';
+import {View, Text} from 'react-native';
 import t from '../../Theme/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {format} from 'date-fns';
@@ -8,6 +8,9 @@ import {openScreenWithPush} from '../../Router/utils/actions';
 import {MATCH_SCREEN_KEY} from '../../Screens/Match/Match';
 import {resultGame} from '../../Utils/gameLogic';
 import {DATE_MATCH} from '../../Utils/date-ext';
+import {es} from 'date-fns/locale';
+import {capitalizeText} from '../../Utils/capitalizeText';
+import PressableOpacity from '../UI/PressableOpacity';
 
 const cardLabel = [t.textBase, t.fontSansBold, t.textWhite, t.opacity70];
 const cardInfo = [t.textBase, t.fontSansBold, t.textWhite];
@@ -18,10 +21,12 @@ interface Props {
 }
 
 export const LiveMatchResume: React.FC<Props> = ({match}) => {
-  const matchDay = format(new Date(match.date.toDate()), DATE_MATCH);
+  const matchDay = format(new Date(match.date.toDate()), DATE_MATCH, {
+    locale: es,
+  });
 
   return (
-    <Pressable
+    <PressableOpacity
       style={[t.w80, t.h44, t.bgInfo, t.roundedLg, t.p3, t.shadow, t.mR3]}
       onPress={() =>
         openScreenWithPush(MATCH_SCREEN_KEY, {
@@ -32,7 +37,7 @@ export const LiveMatchResume: React.FC<Props> = ({match}) => {
       <View style={[t.flexRow, t.itemsCenter, t.justifyBetween, t.mB3]}>
         <View>
           <Text style={[cardLabel]}>Fecha</Text>
-          <Text style={[cardInfo]}>{matchDay}</Text>
+          <Text style={[cardInfo]}>{capitalizeText(matchDay)}</Text>
         </View>
         <View>
           <Text style={[cardLabel]}>Club</Text>
@@ -103,6 +108,6 @@ export const LiveMatchResume: React.FC<Props> = ({match}) => {
           <Text style={[setNumber]}>{match?.game.s3t2}</Text>
         </View>
       </View>
-    </Pressable>
+    </PressableOpacity>
   );
 };

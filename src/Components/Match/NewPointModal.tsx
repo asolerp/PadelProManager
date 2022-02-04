@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {View, Text} from 'react-native';
 import {PlayerType} from '../../Global/types';
 import t from '../../Theme/theme';
@@ -24,6 +24,7 @@ import {
   VOLEA_REVES,
   WINNER,
 } from './utils/constants';
+import debounce from 'lodash.debounce';
 
 export const NewPointModal = ({match, loading, onSavePoint}) => {
   const {
@@ -48,17 +49,23 @@ export const NewPointModal = ({match, loading, onSavePoint}) => {
     nf: 'error',
   };
 
+  const handlerSavePoint = point => {
+    onSavePoint(point);
+  };
+
+  const debouncedSavePoint = useCallback(debounce(handlerSavePoint, 300), []);
+
   const handleSavePoint = point => {
     if (hasSavePointError) {
       return showError.no_team();
     }
     if (isPointWithoutStatistic) {
-      return onSavePoint({
+      return debouncedSavePoint({
         winPointTeam,
         points: [{info: 'Punto sin estádística'}],
       });
     } else {
-      return onSavePoint({points: point, winPointTeam});
+      return debouncedSavePoint({points: point, winPointTeam});
     }
   };
 
@@ -219,10 +226,11 @@ export const NewPointModal = ({match, loading, onSavePoint}) => {
       <View>
         <Button
           active
+          size="lg"
           title="Guardar punto"
           loading={loading}
           onPress={() => handleSavePoint(pointStats)}
-          textStyle={[t.fontSansBold, t.textLg]}
+          textStyle={[t.fontSansBold]}
         />
       </View>
     </View>

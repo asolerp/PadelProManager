@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 
-import {View, Text, Pressable, ImageBackground} from 'react-native';
+import {View, Text, ImageBackground} from 'react-native';
 import t from '../../Theme/theme';
 import {BottomModal} from '../Modal/BottomModal';
 
 import {ListItem} from '../UI/ListItem';
+import PressableOpacity from '../UI/PressableOpacity';
 import {imageActions} from './utils/imageActions';
 
 const CAPTURE_ACTION = 'capture';
@@ -46,15 +47,17 @@ export const ImageSelector = ({
       </BottomModal>
       <View style={[t.mB10, t.itemsCenter]}>
         {imageSource || imageSelected?.assets?.length > 0 ? (
-          <Pressable onPress={() => setIsVisible(true)} style={[t.w28, t.h28]}>
+          <PressableOpacity
+            onPress={() => setIsVisible(true)}
+            style={[t.w28, t.h28]}>
             <ImageBackground
               source={{uri: imageSelected?.assets?.[0].uri || imageSource}}
               style={[t.w28, t.h28]}
               imageStyle={[t.roundedFull]}
             />
-          </Pressable>
+          </PressableOpacity>
         ) : (
-          <Pressable
+          <PressableOpacity
             onPress={() => setIsVisible(true)}
             style={[
               t.w28,
@@ -69,7 +72,7 @@ export const ImageSelector = ({
                 {name}
               </Text>
             )}
-          </Pressable>
+          </PressableOpacity>
         )}
       </View>
     </>

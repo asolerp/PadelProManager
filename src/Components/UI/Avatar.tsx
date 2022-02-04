@@ -1,6 +1,7 @@
 import React from 'react';
-import {ImageBackground, Text, View, Pressable, ViewStyle} from 'react-native';
+import {ImageBackground, Text, View, ViewStyle} from 'react-native';
 import t from '../../Theme/theme';
+import PressableOpacity from './PressableOpacity';
 
 interface Props {
   img?: string;
@@ -25,7 +26,7 @@ export const Avatar: React.FC<Props> = ({
   active = false,
 }) => {
   return (
-    <Pressable
+    <PressableOpacity
       style={[
         t.mX1,
         style,
@@ -55,6 +56,6 @@ export const Avatar: React.FC<Props> = ({
           )}
         </>
       )}
-    </Pressable>
+    </PressableOpacity>
   );
 };

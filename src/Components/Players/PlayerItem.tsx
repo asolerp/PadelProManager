@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Pressable} from 'react-native';
+import {View, Text} from 'react-native';
 import t from '../../Theme/theme';
 import {Avatar} from '../UI/Avatar';
 import {HDivider} from '../UI/HDivider';
@@ -14,6 +14,7 @@ import {
   colorByHand,
   handParse,
 } from '../../Utils/parsers';
+import PressableOpacity from '../UI/PressableOpacity';
 
 export const PlayerItem = ({
   item,
@@ -24,7 +25,7 @@ export const PlayerItem = ({
   rightSide,
 }) => {
   return (
-    <Pressable onPress={onPress}>
+    <PressableOpacity onPress={onPress}>
       <View style={[t.pY2]}>
         <View style={[t.flexRow, t.itemsCenter, t.justifyBetween]}>
           <View style={[t.flexRow, t.itemsCenter]}>
@@ -64,6 +65,6 @@ export const PlayerItem = ({
         </View>
       </View>
       <HDivider />
-    </Pressable>
+    </PressableOpacity>
   );
 };

@@ -1,10 +1,9 @@
 import React from 'react';
-import {Text, View, FlatList, Pressable} from 'react-native';
+import {Text, View, FlatList} from 'react-native';
 import {useGetPlayers} from '../../Hooks/useGetPlayers';
 import t from '../../Theme/theme';
 import {FullModal} from '../Modal/FullModal';
 import {HDivider} from '../UI/HDivider';
-import {Avatar} from '../UI/Avatar';
 import {RadioButton} from '../UI/RadioButton';
 import {Button} from '../UI/Button';
 import {Header} from '../Layout/Header';
@@ -12,6 +11,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {Input} from '../UI/Input';
 import {useModalList} from './hooks/useModalList';
 import {PlayerItem} from '../Players/PlayerItem';
+import PressableOpacity from '../UI/PressableOpacity';
 
 export const ModalListOfPlayers = ({
   selectedPlayers,
@@ -51,9 +51,9 @@ export const ModalListOfPlayers = ({
       <Header
         title="Jugadores"
         rightSide={
-          <Pressable onPress={onClose}>
+          <PressableOpacity onPress={onClose}>
             <Icon name="close" size={25} />
-          </Pressable>
+          </PressableOpacity>
         }
       />
       <Input
@@ -67,7 +67,7 @@ export const ModalListOfPlayers = ({
           showsVerticalScrollIndicator={false}
           data={filteredList}
           renderItem={renderItem}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item?.id}
           contentContainerStyle={[t.flex1, t.mT8]}
         />
       ) : (

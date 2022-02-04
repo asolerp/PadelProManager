@@ -1,24 +1,36 @@
-import React, {useContext, useState} from 'react';
-import {Pressable, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {Text, View} from 'react-native';
 import {BottomModal} from '../Modal/BottomModal';
 import {ListItem} from '../UI/ListItem';
 import Icon from 'react-native-vector-icons/Ionicons';
 import t from '../../Theme/theme';
 import {useSavePlayersStats} from '../../Screens/Match/hooks/useSavePlayerStats';
-import {showError} from './utils/alertErrorMessages';
+import {infoAlert, showError} from './utils/alertErrorMessages';
 import {useLiveMatch} from './hooks/useLiveMatch';
 import {timeout} from '../../Utils/timeout';
-import {LoadingModalContext} from '../Context/LoadngModalContext';
+
 import {popScreen} from '../../Router/utils/actions';
+import {EditResultModal} from './EditResultModal';
+import PressableOpacity from '../UI/PressableOpacity';
 
 export const MatchSettings = ({match}) => {
+  const [editModalVisible, setEditModalVisible] = useState(false);
   const [isVisible, setIsModalVisible] = useState(false);
-  const {savePlayersStatsHandler} = useSavePlayersStats();
+  const {savePlayersStatsHandler} = useSavePlayersStats(match);
   const {handleDeleteMatch} = useLiveMatch(match);
-  const {setIsVisible} = useContext(LoadingModalContext);
+
+  const openModal = async () => {
+    await timeout(500);
+    setEditModalVisible(true);
+  };
 
   return (
     <>
+      <EditResultModal
+        isVisible={editModalVisible}
+        onClose={() => setEditModalVisible(false)}
+        match={match}
+      />
       <BottomModal
         isVisible={isVisible}
         onClose={() => setIsModalVisible(false)}>
@@ -27,12 +39,29 @@ export const MatchSettings = ({match}) => {
             Opciones de partido
           </Text>
           <View>
-            <ListItem iconName="ios-pencil" title="Editar resultado" />
             <ListItem
-              iconName="tennisball"
-              title="Finalizar partido"
-              onPress={() => savePlayersStatsHandler({match})}
+              iconName="ios-pencil"
+              title="Editar resultado"
+              onPress={async () => {
+                console.log('hola');
+                setIsModalVisible(false);
+                openModal();
+              }}
             />
+            {match?.state !== 'finished' && (
+              <ListItem
+                iconName="tennisball"
+                title="Finalizar partido"
+                onPress={() =>
+                  infoAlert.finish_match({
+                    onAccept: () => {
+                      setIsModalVisible(false);
+                      savePlayersStatsHandler();
+                    },
+                  })
+                }
+              />
+            )}
             <ListItem
               onPress={() =>
                 showError.delete_match({
@@ -53,9 +82,9 @@ export const MatchSettings = ({match}) => {
           </View>
         </>
       </BottomModal>
-      <Pressable onPress={() => setIsModalVisible(true)}>
+      <PressableOpacity onPress={() => setIsModalVisible(true)}>
         <Icon name="ios-settings-sharp" size={22} />
-      </Pressable>
+      </PressableOpacity>
     </>
   );
 };

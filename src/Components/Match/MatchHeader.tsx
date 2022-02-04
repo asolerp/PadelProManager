@@ -27,7 +27,7 @@ export const MatchHeader = ({match}) => {
         ))}
       </View>
       <View style={[t.w20]}>
-        <LiveResult game={match.game} />
+        <LiveResult game={match?.game} />
       </View>
       <View style={[t.flexRow, t.flexGrow, t.justifyCenter]}>
         {match.t2.map((player, i) => (

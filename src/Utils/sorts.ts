@@ -3,3 +3,13 @@ export const sortByName = (x, y) => {
     ignorePunctuation: true,
   });
 };
+
+export const sortByClubName = (x, y) => {
+  return x.club.localeCompare(y.club, 'es', {
+    ignorePunctuation: true,
+  });
+};
+
+export const sortByDate = (x, y) => {
+  return x.date.toDate() - y.date.toDate();
+};

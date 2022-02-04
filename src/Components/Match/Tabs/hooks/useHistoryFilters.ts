@@ -2,7 +2,9 @@ import {useEffect, useState} from 'react';
 
 export const useHistoryFilters = (match, history) => {
   const sortedHistory = list =>
-    list?.sort((a, b) => new Date(b.date.toDate()) - new Date(a.date.toDate()));
+    list?.sort(
+      (a, b) => new Date(b?.date.toDate()) - new Date(a?.date.toDate()),
+    );
 
   const [favoriteFilter, setFavoriteFilter] = useState<boolean>();
   const [historyList, setHistoryList] = useState<any>();
@@ -12,13 +14,6 @@ export const useHistoryFilters = (match, history) => {
       setHistoryList(sortedHistory(history));
     }
   }, [history]);
-
-  // useEffect(() => {
-  //   if (match?.favoritePoinst?.length === 0) {
-  //     setFavoriteFilter(false);
-  //     setHistoryList(sortedHistory(history));
-  //   }
-  // }, [match?.favoritePoinst?.length, sortedHistory, history]);
 
   useEffect(() => {
     if (favoriteFilter) {

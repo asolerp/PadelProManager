@@ -1,6 +1,6 @@
 import {format} from 'date-fns';
 import React from 'react';
-import {View, Text, Pressable} from 'react-native';
+import {View, Text} from 'react-native';
 import t from '../../Theme/theme';
 import {shortName} from '../../Utils/parsers';
 import {Result} from './Result';
@@ -9,17 +9,22 @@ import {openScreenWithPush} from '../../Router/utils/actions';
 import {MATCH_SCREEN_KEY} from '../../Screens/Match/Match';
 import {Chip} from '../UI/Chip';
 import {HDivider} from '../UI/HDivider';
+import {es} from 'date-fns/locale';
+import {capitalizeText} from '../../Utils/capitalizeText';
+import PressableOpacity from '../UI/PressableOpacity';
 
 interface Props {
   match: any;
 }
 
 export const MatchResume: React.FC<Props> = ({match}) => {
-  const matchDay = format(new Date(match?.date?.toDate()), 'iii d MMMM yyyy');
+  const matchDay = format(new Date(match?.date?.toDate()), 'iii d MMMM yyyy', {
+    locale: es,
+  });
 
   return (
     <View style={[t.mB2]}>
-      <Pressable
+      <PressableOpacity
         onPress={() =>
           openScreenWithPush(MATCH_SCREEN_KEY, {
             matchId: match?.id,
@@ -64,7 +69,7 @@ export const MatchResume: React.FC<Props> = ({match}) => {
           <View>
             <View style={[t.flexRow, t.itemsStart, t.justifyStart]}>
               <Text style={[t.opacity30, t.fontSansMedium, t.textXs, t.mR4]}>
-                {matchDay}
+                {capitalizeText(matchDay)}
               </Text>
               <Text style={[t.opacity30, t.fontSansMedium, t.textXs]}>
                 {match.club}
@@ -81,7 +86,7 @@ export const MatchResume: React.FC<Props> = ({match}) => {
           )}
           <Icon name="chevron-right" size={15} color="black" style={[t.mL3]} />
         </View>
-      </Pressable>
+      </PressableOpacity>
       <HDivider />
     </View>
   );

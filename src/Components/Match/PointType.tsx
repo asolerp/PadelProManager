@@ -1,8 +1,9 @@
 import React from 'react';
-import {Text, Pressable} from 'react-native';
+import {Text} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import t from '../../Theme/theme';
 import {capitalize} from '../../Utils/parsers';
+import PressableOpacity from '../UI/PressableOpacity';
 
 interface Props {
   children: string;
@@ -24,7 +25,7 @@ export const PointType: React.FC<Props> = ({
   const textColor = active ? t.textWhite : t?.[`text${capitalizedColor}Dark`];
 
   return (
-    <Pressable
+    <PressableOpacity
       onPress={onPress}
       style={[
         t.w20,
@@ -43,6 +44,6 @@ export const PointType: React.FC<Props> = ({
         style={[t.fontSansMedium, t.textXs, textColor, t.textCenter, t.maxW12]}>
         {children}
       </Text>
-    </Pressable>
+    </PressableOpacity>
   );
 };

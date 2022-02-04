@@ -4,11 +4,11 @@ export const LoadingModalContext = createContext();
 
 export const LoadingModalProvider = ({children}) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [title, setTitle] = useState('Cargando...');
+  const [text, setText] = useState('Cargando...');
 
   const value = {
-    title,
-    setTitle,
+    text,
+    setText,
     isVisible,
     setIsVisible,
   };

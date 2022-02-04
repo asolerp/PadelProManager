@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable, View} from 'react-native';
+import {View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {Header, ScreenLayout} from '../../Components/Layout';
 import {useSearch} from '../../Components/Players/hooks/useSearch';
@@ -11,6 +11,7 @@ import t from '../../Theme/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {openScreenWithPush} from '../../Router/utils/actions';
 import {NEW_PLAYER_SCREEN_KEY} from '../NewPlayer/NewPlayer';
+import PressableOpacity from '../../Components/UI/PressableOpacity';
 
 export const PLAYERS_SCREEN_KEY = 'playersScreen';
 
@@ -24,9 +25,10 @@ export const Players = () => {
       <Header
         title="Mis jugadores"
         rightSide={
-          <Pressable onPress={() => openScreenWithPush(NEW_PLAYER_SCREEN_KEY)}>
+          <PressableOpacity
+            onPress={() => openScreenWithPush(NEW_PLAYER_SCREEN_KEY)}>
             <Icon name="ios-add-circle-outline" size={25} />
-          </Pressable>
+          </PressableOpacity>
         }
       />
       <View style={[t.mT10, t.mB3]}>

@@ -1,14 +1,11 @@
-import React, {FunctionComponent} from 'react';
-
-import {Avatar as Player} from '../../Components/UI/Avatar';
+import React, {FunctionComponent, useContext} from 'react';
 
 import {ScreenLayout} from '../../Components/Layout/ScreenLayout';
-import {View, Text, ScrollView, Image} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 import t from '../../Theme/theme';
 import {LiveMatchResume} from '../../Components/Home/LiveMatchResume';
 import {MatchResume} from '../../Components/Home/MatchResume';
 
-import {players} from '../../Mocks/players';
 import {openScreenWithPush} from '../../Router/utils/actions';
 
 import {MyPlayers} from '../../Components/Home/MyPlayers';
@@ -17,15 +14,44 @@ import {FlatList} from 'react-native-gesture-handler';
 import {useGetLiveMatches} from '../../Hooks/useGetLiveMatches';
 import {useGetFinishedMatches} from '../../Hooks/useGetFinishedMatches';
 import {WelcomeMessage} from '../../Components/Home/WelcomeMessage';
-import {GroupActionButton} from '../../Components/Home/GroupActionButtons';
+
 import {Banner} from '../../Components/UI/Banner';
 import {NEW_MATCH_SCREEN_KEY} from '../NewMatch/NewMatch';
+import {Button} from '../../Components/UI/Button';
+
+import auth from '@react-native-firebase/auth';
+import {Header} from '../../Components/Home/Header';
+import {DailyExercise} from '../../Components/Home/DailyExercise';
+import {sortByDate} from '../../Utils/sorts';
+import {useIAP, requestSubscription} from 'react-native-iap';
+import {SubscriptionContext} from '../../Context/SubscriptionContext';
 
 export const HOME_SCREEN_KEY = 'homeScreen';
 
 export const HomeScreen: FunctionComponent = () => {
   const {finishedMatches, loadingFinishedMatches} = useGetFinishedMatches();
   const {liveMatches, loadingLiveMatches} = useGetLiveMatches();
+  const {subscriptions} = useIAP();
+  const {isUserWithActiveSubscription, isChecking, isExpired} =
+    useContext(SubscriptionContext);
+
+  console.log(isExpired);
+
+  const handleSubscription = async () => {
+    try {
+      await requestSubscription(subscriptions[0].productId);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const logOut = async () => {
+    try {
+      await auth().signOut();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const renderItem = ({item}) => (
     <LiveMatchResume key={item?.id} match={item} />
@@ -33,17 +59,22 @@ export const HomeScreen: FunctionComponent = () => {
 
   return (
     <ScreenLayout edges={['top', 'left', 'right']}>
-      <View style={[t.absolute, t._top28, t.right0]}>
-        <Image
-          resizeMode="contain"
-          source={require('../../Assets/logo.png')}
-          style={[t.w10]}
-        />
-      </View>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[t.relative]}>
+        <Header />
         <WelcomeMessage />
+        {!isUserWithActiveSubscription && !isChecking && (
+          <Banner
+            mainColor="warning"
+            onPress={() => handleSubscription()}
+            title="PadelPro Premium"
+            subtitle="Hazte premium para poder gestionar más jugadores y acceder a cientos de ejercicios para poder realizar con tus alumnos."
+            ctaText="ADQUIRIR"
+            imageSrc="https://news.mondoiberica.com.es/wp-content/uploads/2021/03/Excelente-aspecto-este%CC%81tico-1-1024x471.jpg"
+            style={[t.mB5]}
+          />
+        )}
         <View>
           <View style={[t.mB7]}>
             <MyPlayers />
@@ -52,40 +83,42 @@ export const HomeScreen: FunctionComponent = () => {
             <Text style={[t.text2xl, t.fontSansBold, t.mB5]}>
               Partidos activos
             </Text>
-
             <View style={[t.flexRow, t.justifyBetween, t.itemsCenter, t.mB7]}>
-              {!loadingLiveMatches && liveMatches?.length > 0 ? (
-                <FlatList
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  data={liveMatches}
-                  renderItem={renderItem}
-                  keyExtractor={item => item.id}
-                />
-              ) : (
+              {liveMatches?.length === 0 && !loadingLiveMatches && (
                 <Banner
                   onPress={() => openScreenWithPush(NEW_MATCH_SCREEN_KEY)}
                   ctaText="CREAR PARTIDA"
-                  title="Seguimiento de jugadores"
+                  title="Registra una partida"
                   subtitle="Crea una partida con tus jugadores y registra todos sus golpes para
             después poder analizarlos."
                 />
               )}
+              {liveMatches?.length > 0 && (
+                <FlatList
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  data={liveMatches?.sort(sortByDate)}
+                  renderItem={renderItem}
+                  keyExtractor={item => item.id}
+                />
+              )}
             </View>
           </View>
+          <DailyExercise />
           <View>
             <Text style={[t.text2xl, t.fontSansBold, t.mB5]}>
               Últimos partidos
             </Text>
-            <View>
+            <View style={[t.mB5]}>
               {!loadingFinishedMatches &&
-                finishedMatches?.map(match => (
-                  <MatchResume key={match?.id} match={match} />
-                ))}
+                finishedMatches
+                  ?.sort(sortByDate)
+                  ?.map(match => <MatchResume key={match?.id} match={match} />)}
               {finishedMatches?.length === 0 && (
                 <Text>No tienes ningún partido finalizado</Text>
               )}
             </View>
+            <Button title="Salir" onPress={() => logOut()} />
           </View>
         </View>
       </ScrollView>
