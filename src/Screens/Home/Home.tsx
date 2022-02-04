@@ -1,7 +1,7 @@
 import React, {FunctionComponent, useContext} from 'react';
 
-import {ScreenLayout} from '../../Components/Layout/ScreenLayout';
-import {View, Text, ScrollView} from 'react-native';
+import {ScreenLayout, Header} from '../../Components/Layout';
+import {View, Text, ScrollView, Image} from 'react-native';
 import t from '../../Theme/theme';
 import {LiveMatchResume} from '../../Components/Home/LiveMatchResume';
 import {MatchResume} from '../../Components/Home/MatchResume';
@@ -19,39 +19,23 @@ import {Banner} from '../../Components/UI/Banner';
 import {NEW_MATCH_SCREEN_KEY} from '../NewMatch/NewMatch';
 import {Button} from '../../Components/UI/Button';
 
-import auth from '@react-native-firebase/auth';
-import {Header} from '../../Components/Home/Header';
 import {DailyExercise} from '../../Components/Home/DailyExercise';
 import {sortByDate} from '../../Utils/sorts';
 import {useIAP, requestSubscription} from 'react-native-iap';
 import {SubscriptionContext} from '../../Context/SubscriptionContext';
+import {HomeHeader} from '../../Components/Home/HomeHeader';
+import {PROMOTIONAL_SUBSCRIPTION_SCREEN_KEY} from '../PromotionalSubscription/PromotionalSubscription';
 
 export const HOME_SCREEN_KEY = 'homeScreen';
 
 export const HomeScreen: FunctionComponent = () => {
   const {finishedMatches, loadingFinishedMatches} = useGetFinishedMatches();
   const {liveMatches, loadingLiveMatches} = useGetLiveMatches();
-  const {subscriptions} = useIAP();
+
   const {isUserWithActiveSubscription, isChecking, isExpired} =
     useContext(SubscriptionContext);
 
   console.log(isExpired);
-
-  const handleSubscription = async () => {
-    try {
-      await requestSubscription(subscriptions[0].productId);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const logOut = async () => {
-    try {
-      await auth().signOut();
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const renderItem = ({item}) => (
     <LiveMatchResume key={item?.id} match={item} />
@@ -62,15 +46,17 @@ export const HomeScreen: FunctionComponent = () => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[t.relative]}>
-        <Header />
+        <HomeHeader />
         <WelcomeMessage />
         {!isUserWithActiveSubscription && !isChecking && (
           <Banner
             mainColor="warning"
-            onPress={() => handleSubscription()}
+            onPress={() =>
+              openScreenWithPush(PROMOTIONAL_SUBSCRIPTION_SCREEN_KEY)
+            }
             title="PadelPro Premium"
             subtitle="Hazte premium para poder gestionar más jugadores y acceder a cientos de ejercicios para poder realizar con tus alumnos."
-            ctaText="ADQUIRIR"
+            ctaText="SABER MÁS"
             imageSrc="https://news.mondoiberica.com.es/wp-content/uploads/2021/03/Excelente-aspecto-este%CC%81tico-1-1024x471.jpg"
             style={[t.mB5]}
           />
@@ -118,7 +104,6 @@ export const HomeScreen: FunctionComponent = () => {
                 <Text>No tienes ningún partido finalizado</Text>
               )}
             </View>
-            <Button title="Salir" onPress={() => logOut()} />
           </View>
         </View>
       </ScrollView>

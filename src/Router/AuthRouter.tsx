@@ -3,13 +3,15 @@ import {LoadingModal} from '../Components/Common/LoadingModal';
 import {AuthContext} from '../Context/AuthContex';
 import {LoadingModalContext} from '../Context/LoadngModalContext';
 import {useAuth} from './hooks/useAuth';
-import {usePayments} from '../Lib/Payments/hooks/usePayments';
+
 import {SignInRouter} from './SignInRouter';
 import {SignOutRouter} from './SignOutRouter';
-import {SubscriptionProvider} from '../Context/SubscriptionContext';
+
+import {usePayments} from '../Lib/Payments/hooks/usePayments';
 
 const AuthRouter = () => {
   useAuth();
+  usePayments();
 
   const {isVisible, text} = useContext(LoadingModalContext);
   const {user} = useContext(AuthContext);
@@ -25,9 +27,7 @@ const AuthRouter = () => {
   return (
     <>
       <LoadingModal text={text} isVisible={isVisible} />
-      <SubscriptionProvider>
-        <SignInRouter />
-      </SubscriptionProvider>
+      <SignInRouter />
     </>
   );
 };

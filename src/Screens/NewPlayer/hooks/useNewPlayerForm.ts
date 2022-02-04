@@ -1,6 +1,5 @@
-import {useCallback, useContext, useEffect, useRef, useState} from 'react';
+import {useContext, useEffect, useRef, useState} from 'react';
 import {playerQuery} from '../../../Api/queries';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import firestore from '@react-native-firebase/firestore';
 import {useAddDocument} from '../../../Hooks/useAddDocument';
 import {popScreen} from '../../../Router/utils/actions';
@@ -12,6 +11,7 @@ import {useUpdateDocument} from '../../../Hooks/useUpdateDocument';
 import {LoadingModalContext} from '../../../Context/LoadngModalContext';
 import {AuthContext} from '../../../Context/AuthContex';
 import {timeout} from '../../../Utils/timeout';
+import {useCameraOrLibrary} from '../../../Hooks/useCamerOrLibrary';
 
 export const useNewPlayerForm = playerId => {
   const init = {
@@ -29,17 +29,8 @@ export const useNewPlayerForm = playerId => {
   const [playerPosition, setPlayerPosition] = useState();
   const [initialValues, setInitialValues] = useState(init);
 
-  const [response, setResponse] = useState<any>(null);
   const {uploadCloudinary} = useUploadCloudinaryImage();
-
-  const onImagePress = useCallback(({type, options}) => {
-    if (type === 'capture') {
-      launchCamera(options, setResponse);
-    } else {
-      launchImageLibrary(options, setResponse);
-    }
-  }, []);
-
+  const {response, onImagePress} = useCameraOrLibrary();
   const {addDocument, loading: loadingAddDocument} =
     useAddDocument(playerQuery);
 

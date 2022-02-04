@@ -16,15 +16,6 @@ export const LoginModal = ({isModalVisible, onBackdropPress}) => {
   const [password, setPassword] = useState();
   const {loginFormRef, onGoogleButtonPress, onAppleButtonPress} = useLogin();
 
-  // const {
-  //   loginAccount,
-  //   resetPassword,
-  //   onGoogleButtonPress,
-  //   onAppleButtonPress,
-  //   loading,
-  //   error,
-  // } = useLogin();
-
   return (
     <Modal isVisible={isModalVisible} onBackdropPress={onBackdropPress}>
       <View style={[t.bgWhite, t.pX6, t.pY4, t.roundedSm]}>

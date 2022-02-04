@@ -5,7 +5,7 @@ export const SubscriptionContext = createContext();
 export const SubscriptionProvider = ({children}) => {
   const [isExpired, setIsExpired] = useState(true);
   const [oldPurchases, setOldPurchases] = useState();
-  const [isChecking, setIsChecking] = useState();
+  const [isChecking, setIsChecking] = useState(true);
 
   const isUserWithActiveSubscription = oldPurchases && !isExpired;
 

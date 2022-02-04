@@ -11,7 +11,7 @@ export const WelcomeMessage = () => {
   });
 
   return (
-    <View style={[t.mB5, t.pR10]}>
+    <View style={[t.mT10, t.mB5, t.pR10]}>
       <Text style={[t.text2xl, t.mB2, t.fontSansBold]}>Hoy</Text>
       <Text style={[t.textXl, t.fontSans]}>
         {capitalize(date.split(' ')[0]) +

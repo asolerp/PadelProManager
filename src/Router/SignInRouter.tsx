@@ -14,8 +14,6 @@ import {usePayments} from '../Lib/Payments/hooks/usePayments';
 const Stack = createNativeStackNavigator();
 
 export const SignInRouter = () => {
-  usePayments();
-
   return (
     <NavigationContainer
       ref={navigationRef}

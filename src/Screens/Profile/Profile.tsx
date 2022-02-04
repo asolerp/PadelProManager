@@ -7,7 +7,8 @@ import {Input} from '../../Components/UI/Input';
 import t from '../../Theme/theme';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {format} from 'date-fns';
-import {useNewPlayerForm} from './hooks/useNewPlayerForm';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+
 import {Formik} from 'formik';
 import {DATE_FORM} from '../../Utils/date-ext';
 
@@ -15,26 +16,26 @@ import {Button} from '../../Components/UI/Button';
 import {HDivider} from '../../Components/UI/HDivider';
 import {ImageSelector} from '../../Components/NewPlayer/ImageSelector';
 import {Select} from '../../Components/UI/Select';
-import {cateogries, gender, lateralidad} from '../../Utils/lists';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {gender} from '../../Utils/lists';
 
-export const NEW_PLAYER_SCREEN_KEY = 'newPlayerScreen';
+import {provincias} from '../../Utils/provincias-espanolas';
+import {municipios} from '../../Utils/municipios-espanoles';
+import {useEditProfile} from './hooks/useEditProfile';
+import {sortByLabel} from '../../Utils/sorts';
+import {ProfileSettings} from '../../Components/Profile/ProfileSettings';
 
-export const NewPlayerScreen = ({route}) => {
-  const {edit, playerId} = route?.params;
+export const PROFILE_SCREEN_KEY = 'profileScreen';
 
+export const ProfileScreen = () => {
+  const [show, setShow] = useState(false);
   const {
-    handleCreateNewPlayer,
-    handleUpdatePlayer,
+    handleUpdateProfile,
     handleSubmitForm,
-    newPlayerFormRef,
+    profileFormRef,
     initialValues,
     onImagePress,
     response,
-    loading,
-  } = useNewPlayerForm(playerId);
-
-  const [show, setShow] = useState(false);
+  } = useEditProfile();
 
   const showDatePicker = () => {
     setShow(true);
@@ -46,16 +47,14 @@ export const NewPlayerScreen = ({route}) => {
 
   return (
     <ScreenLayout edges={['top', 'right', 'left', 'bottom']}>
-      <Header withBack title={`${edit ? 'Editar' : 'Nuevo'} jugador`} />
+      <Header withBack title={'Mi perfil'} rightSide={<ProfileSettings />} />
       <KeyboardAwareScrollView>
         <Formik
-          innerRef={newPlayerFormRef}
+          innerRef={profileFormRef}
           validateOnBlur={false}
           enableReinitialize={true}
           initialValues={initialValues}
-          onSubmit={values =>
-            edit ? handleUpdatePlayer(values) : handleCreateNewPlayer(values)
-          }>
+          onSubmit={values => handleUpdateProfile(values)}>
           {({
             handleChange,
             touched,
@@ -144,17 +143,6 @@ export const NewPlayerScreen = ({route}) => {
                 </View>
                 <View style={[t.flexRow, t.mB4]}>
                   <Select
-                    list={lateralidad}
-                    placeholder="Lateralidad"
-                    value={lateralidad?.find(s => s.value === values.hand)}
-                    name="hand"
-                    error={errors.hand}
-                    onBlur={handleBlur('hand')}
-                    onChange={v => setFieldValue('hand', v)}
-                    label="Lateralidad"
-                    style={[t.flex1, t.mR3]}
-                  />
-                  <Select
                     list={gender}
                     placeholder="Género"
                     value={gender?.find(s => s.value === values.gender)}
@@ -166,16 +154,32 @@ export const NewPlayerScreen = ({route}) => {
                     style={[t.flex1]}
                   />
                 </View>
-                <View style={[t.flexRow, t.mB4, t.w44]}>
+                <View style={[t.flexRow, t.mB4]}>
                   <Select
-                    list={cateogries}
-                    placeholder="Categoría"
-                    value={cateogries?.find(s => s.value === values.category)}
-                    name="category"
-                    error={errors.category}
-                    onBlur={handleBlur('category')}
-                    onChange={v => setFieldValue('category', v)}
-                    label="Categoría"
+                    list={provincias.sort(sortByLabel)}
+                    placeholder="Provincia"
+                    value={provincias?.find(s => s.value === values.provincia)}
+                    name="provincia"
+                    error={errors.provincia}
+                    onBlur={handleBlur('provincia')}
+                    onChange={v => setFieldValue('provincia', v)}
+                    label="Provincia"
+                    style={[t.flex1, t.mR3]}
+                  />
+                  <Select
+                    list={municipios
+                      .filter(
+                        munici =>
+                          munici?.value?.substring(0, 2) === values.provincia,
+                      )
+                      .sort(sortByLabel)}
+                    placeholder="Municipio"
+                    value={municipios?.find(s => s.value === values.municipio)}
+                    name="municipio"
+                    error={errors.municipio}
+                    onBlur={handleBlur('municipio')}
+                    onChange={v => setFieldValue('municipio', v)}
+                    label="Municipio"
                     style={[t.flex1]}
                   />
                 </View>
@@ -188,8 +192,7 @@ export const NewPlayerScreen = ({route}) => {
       <Button
         active
         size="lg"
-        loading={loading}
-        title={`${edit ? 'Editar' : 'Crear'}`}
+        title={'Guardar'}
         style={[t.mT3]}
         onPress={handleSubmitForm}
       />

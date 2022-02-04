@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import {ScrollView, View} from 'react-native';
+import {View} from 'react-native';
 import {Header} from '../../Components/Layout/Header';
 import {ScreenLayout} from '../../Components/Layout/ScreenLayout';
 import {Input} from '../../Components/UI/Input';
@@ -18,7 +18,7 @@ import {Select} from '../../Components/UI/Select';
 import {cateogries, rounds, sex} from '../../Utils/lists';
 import {newMatchValidationSchema} from './utils/validation';
 import {LoadingModal} from '../../Components/Common/LoadingModal';
-
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 export const NEW_MATCH_SCREEN_KEY = 'newMatchScreen';
 
 export const NewMatchScreen = () => {
@@ -44,7 +44,7 @@ export const NewMatchScreen = () => {
     <ScreenLayout edges={['top', 'right', 'left', 'bottom']}>
       <Header withBack title="Nuevo partido" />
       <LoadingModal text="Creando nuevo partido..." isVisible={loading} />
-      <ScrollView>
+      <KeyboardAwareScrollView>
         <Formik
           innerRef={newMatchFormRef}
           validationSchema={newMatchValidationSchema}
@@ -155,7 +155,7 @@ export const NewMatchScreen = () => {
             </>
           )}
         </Formik>
-      </ScrollView>
+      </KeyboardAwareScrollView>
       <HDivider />
       <Button
         active

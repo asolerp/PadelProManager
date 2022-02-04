@@ -15,10 +15,8 @@ export const usePayments = () => {
 
   const {
     connected,
-    subscriptions,
     currentPurchase,
     getSubscriptions,
-    finishTransaction,
     purchaseHistories,
     getPurchaseHistories,
   } = useIAP();
@@ -68,6 +66,7 @@ export const usePayments = () => {
   );
 
   useEffect(() => {
+    console.log('CHECK OLD PURCHASES');
     if (purchaseHistories?.length > 0) {
       setOldPurchases(true);
       const receipt =
@@ -81,6 +80,7 @@ export const usePayments = () => {
   }, [purchaseHistories, setIsExpired, setOldPurchases, validateReceipt]);
 
   useEffect(() => {
+    console.log('NEW PURCHASE');
     const checkCurrentPurchase = async purchase => {
       try {
         if (purchase) {
@@ -95,5 +95,5 @@ export const usePayments = () => {
       }
     };
     checkCurrentPurchase(currentPurchase);
-  }, [currentPurchase, validateReceipt]);
+  }, [currentPurchase]);
 };
