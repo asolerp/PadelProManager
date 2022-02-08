@@ -8,7 +8,7 @@ import {useUploadCloudinaryImage} from '../../../Hooks/useUploadCloudinaryImage'
 import {firebaseIDGenerator} from '../../../Utils/firebaseIDGenerator';
 import {emptyStats} from '../utils/emptyStats';
 import {useUpdateDocument} from '../../../Hooks/useUpdateDocument';
-import {LoadingModalContext} from '../../../Context/LoadngModalContext';
+import {LoadingModalContext} from '../../../Context/LoadingModalContext';
 import {AuthContext} from '../../../Context/AuthContex';
 import {timeout} from '../../../Utils/timeout';
 import {useCameraOrLibrary} from '../../../Hooks/useCamerOrLibrary';
@@ -70,22 +70,36 @@ export const useNewPlayerForm = playerId => {
     setText('Creando nuevo jugador...');
     const id = firebaseIDGenerator();
     try {
-      await uploadCloudinary(
-        response?.assets?.[0],
-        `PadelPro/users/${id}/avatar`,
-        async url =>
-          await addDocument({
-            docId: id,
-            data: {...values, coach: [user?.id], profileImg: url},
-            callback: async () =>
-              await firestore()
-                .collection('players')
-                .doc(id)
-                .collection('stats')
-                .doc('global')
-                .set(emptyStats),
-          }),
-      );
+      if (response?.assets?.length > 0) {
+        await uploadCloudinary(
+          response?.assets?.[0],
+          `PadelPro/users/${id}/avatar`,
+          async url =>
+            await addDocument({
+              docId: id,
+              data: {...values, coach: [user?.id], profileImg: url},
+              callback: async () =>
+                await firestore()
+                  .collection('players')
+                  .doc(id)
+                  .collection('stats')
+                  .doc('global')
+                  .set(emptyStats),
+            }),
+        );
+      } else {
+        addDocument({
+          docId: id,
+          data: {...values, coach: [user?.id]},
+          callback: async () =>
+            await firestore()
+              .collection('players')
+              .doc(id)
+              .collection('stats')
+              .doc('global')
+              .set(emptyStats),
+        });
+      }
     } catch (err) {
       console.log(err);
     } finally {

@@ -53,7 +53,8 @@ export const MatchInfo: React.FC<MatchInfoProps> = ({
   category,
   tournamentName,
 }) => {
-  const matchDay = format(new Date(date), 'iii d MMMM yyyy', {locale: es});
+  const matchDay =
+    date && format(new Date(date), 'iii d MMMM yyyy', {locale: es});
   return (
     <Animated.View entering={LightSpeedInLeft}>
       <View style={[t.flexRow, t.justifyBetween, t.mY2]}>

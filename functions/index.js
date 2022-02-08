@@ -1,6 +1,6 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-const {firestore} = require('firebase-admin');
+const firebase_tools = require('firebase-tools');
 const {getStatsUpdateObject} = require('./utils/getStatsUpdateObject');
 const axios = require('axios');
 
@@ -115,32 +115,126 @@ exports.updatePlayerInMatch = functions.firestore
     }
   });
 
-exports.validateReceipt = functions.https.onCall(async d => {
-  const data = JSON.stringify({
-    'receipt-data': d['receipt-data'],
-    password: d.password,
-    'exclude-old-transactions': true,
+exports.recursiveDelete = functions
+  .runWith({
+    timeoutSeconds: 540,
+    memory: '2GB',
+  })
+  .https.onCall(async (data, context) => {
+    const {path} = data;
+    console.log(
+      `User ${context.auth.uid} has requested to delete path ${path}`,
+    );
+
+    // Run a recursive delete on the given document or collection path.
+    // The 'token' must be set in the functions config, and can be generated
+    // at the command line by running 'firebase login:ci'.
+    await firebase_tools.firestore.delete(path, {
+      project: process.env.GCLOUD_PROJECT,
+      recursive: true,
+      yes: true,
+      token: functions.config().fb.token,
+    });
+
+    return {
+      path: path,
+    };
   });
 
-  console.log('[[BODY]]', d);
+async function validateAndStoreReceipt(url, body, userSnapshot) {
+  console.log('[[VALIDATE AND STORE RECEIPT]]');
+  return await axios
+    .post(url, body)
+    .then(result => {
+      return result.data;
+    })
+    .then(data => {
+      console.log('DATA', data);
+      if (data.status === 21007) {
+        // Retry with sandbox URL
+        return validateAndStoreReceipt(
+          'https://sandbox.itunes.apple.com/verifyReceipt',
+          body,
+          userSnapshot,
+        );
+      }
 
-  const result = await axios.post(
-    'https://sandbox.itunes.apple.com/verifyReceipt',
-    data,
-  );
+      // Process the result
+      if (data.status !== 0) {
+        return false;
+      }
 
-  console.log('[[RESULT]]', result.data);
+      const latestReceiptInfo = data.latest_receipt_info[0];
+      const expireDate = Number(latestReceiptInfo.expires_date_ms);
+      const isSubscribed = expireDate > Date.now();
 
-  const receiptData = result.data.latest_receipt_info[0];
-  const expiry = receiptData.expires_date_ms;
+      const status = {
+        isSubscribed: isSubscribed,
+        expireDate: expireDate,
+      };
 
-  console.log('EXPIRY', expiry);
+      const appleSubscription = {
+        receipt: data.latest_receipt,
+        productId: latestReceiptInfo.product_id,
+        originalTransactionId: latestReceiptInfo.original_transaction_id,
+      };
 
-  const expired = Date.now() > expiry;
+      // Update the user document!
+      return userSnapshot.ref.update({
+        status: status,
+        appleSubscription: appleSubscription,
+      });
+    });
+}
 
-  console.log('EXPIRED', expired);
+exports.validateReceipt = functions
+  .runWith({
+    timeoutSeconds: 540,
+    memory: '2GB',
+  })
+  .https.onCall(async (data, context) => {
+    console.log('[[AUTH]]', context.auth.uid);
 
-  return {
-    isExpired: expired,
-  };
-});
+    if (!context.auth) {
+      throw new functions.https.HttpsError(
+        'permission-denied',
+        'The function must be called while authenticated.',
+      );
+    }
+    console.log('[[RECEIPT]]', data.receipt);
+    if (!data.receipt) {
+      throw new functions.https.HttpsError(
+        'permission-denied',
+        'receipt is required',
+      );
+    }
+
+    // First we fetch the user
+    const userSnapshot = await admin
+      .firestore()
+      .collection('users')
+      .doc(context.auth.uid)
+      .get();
+    if (!userSnapshot.exists) {
+      throw new functions.https.HttpsError(
+        'not-found',
+        'No user document found.',
+      );
+    }
+
+    console.log('[[USER]]', userSnapshot.data());
+
+    const body = JSON.stringify({
+      'receipt-data': data.receipt,
+      password: data.password,
+      'exclude-old-transactions': true,
+    });
+
+    console.log('[[BODY]]', body);
+
+    return validateAndStoreReceipt(
+      'https://buy.itunes.apple.com/verifyReceipt',
+      body,
+      userSnapshot,
+    );
+  });

@@ -21,7 +21,7 @@ interface Props {
 }
 
 export const LiveMatchResume: React.FC<Props> = ({match}) => {
-  const matchDay = format(new Date(match.date.toDate()), DATE_MATCH, {
+  const matchDay = format(new Date(match?.date.toDate()), DATE_MATCH, {
     locale: es,
   });
 
@@ -69,7 +69,7 @@ export const LiveMatchResume: React.FC<Props> = ({match}) => {
         </View>
         <View style={[t.flex3, t.flexRow, t.itemsCenter, t.justifyBetween]}>
           <Text style={[t.textBase, t.fontSansBold, t.textWhite, t.w10]}>
-            {resultGame(match?.game).split('-')[0]}
+            {match?.game && resultGame(match?.game).split('-')[0]}
           </Text>
           <Text style={[setNumber]}>{match?.game.s1t1}</Text>
           <Text style={[setNumber]}>{match?.game.s2t1}</Text>

@@ -27,6 +27,8 @@ export const Avatar: React.FC<Props> = ({
 }) => {
   return (
     <PressableOpacity
+      disabledOpacity={0.4}
+      disabled={disabled}
       style={[
         t.mX1,
         style,
@@ -34,7 +36,6 @@ export const Avatar: React.FC<Props> = ({
         t.justifyCenter,
         t.itemsCenter,
         t.borderWhite,
-        disabled && t.opacity40,
       ]}
       onPress={onPress}>
       <ImageBackground

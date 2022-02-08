@@ -1,9 +1,8 @@
-import {format, parse, parseISO, toDate} from 'date-fns';
 import {useContext, useRef, useState} from 'react';
-import {matchQuery} from '../../../Api/queries';
+
 import {AuthContext} from '../../../Context/AuthContex';
 import {NewMatchContext} from '../../../Context/NewMatchContext';
-import {useAddDocument} from '../../../Hooks/useAddDocument';
+
 import {popScreen} from '../../../Router/utils/actions';
 import {timeout} from '../../../Utils/timeout';
 import {useAddNewMatch} from './useAddNewMatch';
@@ -61,13 +60,51 @@ export const useNewMatchForm = () => {
         },
       },
       playersId: [
-        selectedPlayers?.['1']?.id || null,
-        selectedPlayers?.['2']?.id || null,
-        selectedPlayers?.['3']?.id || null,
-        selectedPlayers?.['4']?.id || null,
+        !selectedPlayers?.['1']
+          ? null
+          : selectedPlayers?.['1']?.id !== -1
+          ? selectedPlayers?.['1']?.id
+          : null,
+        !selectedPlayers?.['2']
+          ? null
+          : selectedPlayers?.['2']?.id !== -1
+          ? selectedPlayers?.['2']?.id
+          : null,
+        !selectedPlayers?.['3']
+          ? null
+          : selectedPlayers?.['3']?.id !== -1
+          ? selectedPlayers?.['3']?.id
+          : null,
+        !selectedPlayers?.['4']
+          ? null
+          : selectedPlayers?.['4']?.id !== -1
+          ? selectedPlayers?.['4']?.id
+          : null,
       ].filter(pId => pId !== null),
-      t1: [selectedPlayers?.['1'] || null, selectedPlayers?.['2'] || null],
-      t2: [selectedPlayers?.['3'] || null, selectedPlayers?.['4'] || null],
+      t1: [
+        !selectedPlayers?.['1']
+          ? null
+          : selectedPlayers?.['1']?.id !== -1
+          ? selectedPlayers?.['1']
+          : null,
+        !selectedPlayers?.['2']
+          ? null
+          : selectedPlayers?.['2']?.id !== -1
+          ? selectedPlayers?.['2']
+          : null,
+      ],
+      t2: [
+        !selectedPlayers?.['3']
+          ? null
+          : selectedPlayers?.['3']?.id !== -1
+          ? selectedPlayers?.['3']
+          : null,
+        !selectedPlayers?.['4']
+          ? null
+          : selectedPlayers?.['4']?.id !== -1
+          ? selectedPlayers?.['4']
+          : null,
+      ],
     };
 
     setLoading(true);

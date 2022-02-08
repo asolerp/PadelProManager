@@ -3,7 +3,7 @@ import {Picker} from '@react-native-picker/picker';
 
 import {BottomModal} from '../Modal/BottomModal';
 import {Input} from './Input';
-import {Text, View} from 'react-native';
+import {Pressable, Keyboard} from 'react-native';
 import t from '../../Theme/theme';
 import {HDivider} from './HDivider';
 import {Button} from './Button';
@@ -23,18 +23,22 @@ export const Select = ({
   const [localValue, setLocalValue] = useState();
 
   return (
-    <View style={[style]}>
+    <Pressable style={[style]} onPress={() => Keyboard.dismiss()}>
       <BottomModal
+        title={label}
         swipeDirection={null}
         isVisible={isVisible}
         onClose={() => setIsVisible(false)}>
         <>
-          <Text style={[t.fontSansBold, t.text2xl, t.textCenter]}>{label}</Text>
           <Picker
             selectedValue={localValue}
             onValueChange={(itemValue, itemIndex) => setLocalValue(itemValue)}>
             {list?.map(element => (
-              <Picker.Item label={element?.label} value={element.value} />
+              <Picker.Item
+                key={element.value}
+                label={element?.label}
+                value={element.value}
+              />
             ))}
           </Picker>
           <HDivider />
@@ -56,11 +60,14 @@ export const Select = ({
         value={value?.label}
         name={name}
         error={error}
-        onPressIn={() => setIsVisible(true)}
+        onPressIn={() => {
+          Keyboard.dismiss();
+          setIsVisible(true);
+        }}
         onBlur={onBlur}
         label={label}
         style={[t.flex2]}
       />
-    </View>
+    </Pressable>
   );
 };

@@ -19,6 +19,9 @@ export const mapPointsToNumber = {
 const generateSet = (game, sets, team) => {
   const isTiebreak = game?.tiebreak;
   const teamSetGame = game?.[`winsSetTeam${team}`] + 1;
+
+  console.log(Number(game?.[`s${sets}t${team}`]) + 1, 'SETS');
+
   return {
     ...game,
     team1: 0,
@@ -26,10 +29,11 @@ const generateSet = (game, sets, team) => {
     team1Tiebreak: 0,
     team2Tiebreak: 0,
     tiebreak: false,
-    set: game.set + 1,
+    set: game?.set + 1,
     [`winsSetTeam${team}`]: teamSetGame,
-    [`s${sets}t${team}`]: game?.[`s${sets}t${team}`] + 1,
+    [`s${sets}t${team}`]: Number(game?.[`s${sets}t${team}`]) + 1,
     finished: getIsMatchFinished(teamSetGame),
+    winMatch: getIsMatchFinished(teamSetGame) && team,
     info: {
       text: isTiebreak
         ? `Pareja ${team} gana el tiebreak ${game?.team1Tiebreak}-${game?.team2Tiebreak}!`
@@ -41,13 +45,13 @@ const generateSet = (game, sets, team) => {
 const getIsMatchFinished = teamSet => teamSet === 2;
 
 const checkSetState = (game, firstTeamToCheck, seconTeamToCheck) => {
-  const sets = game[`s${game.set}${firstTeamToCheck}`] + 1;
+  const sets = game[`s${game?.set}${firstTeamToCheck}`] + 1;
   if (sets >= 6) {
-    if (game[`s${game.set}${firstTeamToCheck}`] === 7) {
+    if (game[`s${game?.set}${firstTeamToCheck}`] === 7) {
       // firstTeamToCheck wins tiebreak
       return generateSet(game, game?.set, 1);
     }
-    if (game[`s${game.set}${seconTeamToCheck}`] === 6) {
+    if (game[`s${game?.set}${seconTeamToCheck}`] === 6) {
       // We are in tiebreak
       return {
         ...game,
@@ -55,11 +59,11 @@ const checkSetState = (game, firstTeamToCheck, seconTeamToCheck) => {
         team2: 0,
         team1Tiebreak: 0,
         team2Tiebreak: 0,
-        [`s${game.set}${firstTeamToCheck}`]: sets,
+        [`s${game?.set}${firstTeamToCheck}`]: sets,
         tiebreak: true,
       };
     }
-    if (sets - game[`s${game.set}${seconTeamToCheck}`] >= 2) {
+    if (sets - game[`s${game?.set}${seconTeamToCheck}`] >= 2) {
       // firstTeamToCheck wins set
       return generateSet(game, game?.set, 1);
     }
@@ -69,12 +73,12 @@ const checkSetState = (game, firstTeamToCheck, seconTeamToCheck) => {
     team1: 0,
     team2: 0,
     service:
-      game.service === firstTeamToCheck ? seconTeamToCheck : firstTeamToCheck,
-    [`s${game.set}${firstTeamToCheck}`]:
-      game[`s${game.set}${firstTeamToCheck}`] + 1,
+      game?.service === firstTeamToCheck ? seconTeamToCheck : firstTeamToCheck,
+    [`s${game?.set}${firstTeamToCheck}`]:
+      game[`s${game?.set}${firstTeamToCheck}`] + 1,
     info: {
       text:
-        game.service === firstTeamToCheck
+        game?.service === firstTeamToCheck
           ? `🔥 Pareja ${firstTeamToCheck[1]} gana el juego! 🔥`
           : `Break para la pareja ${firstTeamToCheck[1]} 💪🚀 !!`,
     },
@@ -82,21 +86,20 @@ const checkSetState = (game, firstTeamToCheck, seconTeamToCheck) => {
 };
 
 const checkResultTiebreak = game => {
-  switch (game.team1Tiebreak - game.team2Tiebreak) {
+  switch (game?.team1Tiebreak - game?.team2Tiebreak) {
     case 1:
       return;
     case -1:
       return;
     default:
-      if (game.team1Tiebreak > game.team2Tiebreak) {
-        return generateSet(game, game.set, 1);
+      if (game?.team1Tiebreak > game?.team2Tiebreak) {
+        return generateSet(game, game?.set, 1);
       }
-      return generateSet(game, game.set, 2);
+      return generateSet(game, game?.set, 2);
   }
 };
 
 const checkWhoServesTB = (service, points) => {
-  console.log(service, points);
   if (service === 't1') {
     if (points % 2 !== 0) {
       return 't2';
@@ -110,7 +113,7 @@ const checkWhoServesTB = (service, points) => {
 };
 
 const checkResult = game => {
-  switch (game.team1 - game.team2) {
+  switch (game?.team1 - game?.team2) {
     case 1:
       return {
         ...game,
@@ -122,7 +125,7 @@ const checkResult = game => {
         ['team2']: 4,
       };
     default:
-      if (game.team1 > game.team2) {
+      if (game?.team1 > game?.team2) {
         return checkSetState(game, 't1', 't2');
       }
       return checkSetState(game, 't2', 't1');
@@ -130,17 +133,17 @@ const checkResult = game => {
 };
 
 export const resultGame = game => {
-  if (game.tiebreak) {
-    return `${game.team1Tiebreak}-${game.team2Tiebreak}`;
+  if (game?.tiebreak) {
+    return `${game?.team1Tiebreak}-${game?.team2Tiebreak}`;
   } else {
-    if (game.team1 === 0 && game.team2 === 0) {
+    if (game?.team1 === 0 && game?.team2 === 0) {
       return '0-0';
     }
-    if (game.team1 >= 4 || game.team2 >= 4) {
-      if (game.team1 === game.team2) {
+    if (game?.team1 >= 4 || game?.team2 >= 4) {
+      if (game?.team1 === game?.team2) {
         return '40-40';
       }
-      switch (game.team1 - game.team2) {
+      switch (game?.team1 - game?.team2) {
         case 1:
           return 'ADV-40';
         case -1:
@@ -151,14 +154,14 @@ export const resultGame = game => {
     }
   }
 
-  return `${mapPoints[game.team1]}-${mapPoints[game.team2]}`;
+  return `${mapPoints[game?.team1]}-${mapPoints[game?.team2]}`;
 };
 
 export const tennisGameLogic = (game, winPointTeam) => {
   const teamWinPoint = winPointTeam;
   const teamLosePoint = winPointTeam === 'team1' ? 'team2' : 'team1';
 
-  if (game.tiebreak) {
+  if (game?.tiebreak) {
     const newGameState = {
       ...game,
       [`${teamWinPoint}Tiebreak`]: game?.[`${teamWinPoint}Tiebreak`] + 1,

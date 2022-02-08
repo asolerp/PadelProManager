@@ -76,7 +76,6 @@ export const PlayersSelector = () => {
   };
 
   const handleSavePlayer = player => {
-    console.log(playerPosition);
     setSelectedPlayers({
       ...selectedPlayers,
       [playerPosition]: {...player},
@@ -111,7 +110,7 @@ export const PlayersSelector = () => {
               t.justifyCenter,
               t.itemsCenter,
             ]}>
-            {selectedPlayers?.['1'] && (
+            {selectedPlayers?.['1']?.hand && selectedPlayers?.['1']?.category && (
               <>
                 <Chip
                   text={categoryParse[selectedPlayers?.['1']?.category]}
@@ -132,7 +131,7 @@ export const PlayersSelector = () => {
               t.justifyCenter,
               t.itemsCenter,
             ]}>
-            {selectedPlayers?.['2'] && (
+            {selectedPlayers?.['2']?.hand && selectedPlayers?.['2']?.category && (
               <>
                 <Chip
                   text={categoryParse[selectedPlayers?.['2']?.category]}
@@ -223,7 +222,7 @@ export const PlayersSelector = () => {
               t.justifyCenter,
               t.itemsCenter,
             ]}>
-            {selectedPlayers?.['3'] && (
+            {selectedPlayers?.['3']?.hand && selectedPlayers?.['3']?.category && (
               <>
                 <Chip
                   text={categoryParse[selectedPlayers?.['3']?.category]}
@@ -244,7 +243,7 @@ export const PlayersSelector = () => {
               t.justifyCenter,
               t.itemsCenter,
             ]}>
-            {selectedPlayers?.['4'] && (
+            {selectedPlayers?.['4']?.hand && selectedPlayers?.['4']?.category && (
               <>
                 <Chip
                   text={categoryParse[selectedPlayers?.['4']?.category]}

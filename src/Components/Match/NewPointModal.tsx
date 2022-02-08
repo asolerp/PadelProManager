@@ -24,7 +24,8 @@ import {
   VOLEA_REVES,
   WINNER,
 } from './utils/constants';
-import debounce from 'lodash.debounce';
+
+import {LiveResult} from './LiveResult';
 
 export const NewPointModal = ({match, loading, onSavePoint}) => {
   const {
@@ -36,6 +37,7 @@ export const NewPointModal = ({match, loading, onSavePoint}) => {
     handlePressResult,
     isTypePointActive,
     handlePressPlayer,
+    cleanNewPointForm,
     isWinPointTeamActive,
     handlePressTypePoint,
     handlePressRemoveStat,
@@ -51,29 +53,31 @@ export const NewPointModal = ({match, loading, onSavePoint}) => {
 
   const handlerSavePoint = point => {
     onSavePoint(point);
+    cleanNewPointForm();
   };
-
-  const debouncedSavePoint = useCallback(debounce(handlerSavePoint, 300), []);
 
   const handleSavePoint = point => {
     if (hasSavePointError) {
       return showError.no_team();
     }
     if (isPointWithoutStatistic) {
-      return debouncedSavePoint({
+      return handlerSavePoint({
         winPointTeam,
         points: [{info: 'Punto sin estádística'}],
       });
     } else {
-      return debouncedSavePoint({points: point, winPointTeam});
+      return handlerSavePoint({points: point, winPointTeam});
     }
   };
 
   return (
     <View style={[t.mB3]}>
+      <View style={[t.mY5]}>
+        <LiveResult game={match?.game} />
+      </View>
       <View style={[t.mB5]}>
         <Text style={[t.fontSansBold, t.mB5, t.text2xl]}>Resumen punto</Text>
-        {pointStats.length === 0 && !winPointTeam && (
+        {pointStats?.length === 0 && !winPointTeam && (
           <Text style={[t.fontSansMedium, t.textBase]}>
             No hay niguna estadística añadida{' '}
           </Text>

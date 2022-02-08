@@ -12,12 +12,15 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {openScreenWithPush} from '../../Router/utils/actions';
 import {NEW_PLAYER_SCREEN_KEY} from '../NewPlayer/NewPlayer';
 import PressableOpacity from '../../Components/UI/PressableOpacity';
+import {useCheckPermissions} from '../../Hooks/useCheckPermissions';
 
 export const PLAYERS_SCREEN_KEY = 'playersScreen';
 
 export const Players = () => {
   const {players, loadingPlayers} = useGetPlayers();
   const {search, setSearch, filteredList} = useSearch({list: players});
+  const {handleCheckCreateNewPlayer} = useCheckPermissions();
+
   const renderItem = ({item}) => <PlayerItem item={item} />;
 
   return (
@@ -26,7 +29,11 @@ export const Players = () => {
         title="Mis jugadores"
         rightSide={
           <PressableOpacity
-            onPress={() => openScreenWithPush(NEW_PLAYER_SCREEN_KEY)}>
+            onPress={() =>
+              handleCheckCreateNewPlayer(() =>
+                openScreenWithPush(NEW_PLAYER_SCREEN_KEY),
+              )
+            }>
             <Icon name="ios-add-circle-outline" size={25} />
           </PressableOpacity>
         }

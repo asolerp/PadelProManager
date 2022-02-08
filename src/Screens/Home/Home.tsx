@@ -35,8 +35,6 @@ export const HomeScreen: FunctionComponent = () => {
   const {isUserWithActiveSubscription, isChecking, isExpired} =
     useContext(SubscriptionContext);
 
-  console.log(isExpired);
-
   const renderItem = ({item}) => (
     <LiveMatchResume key={item?.id} match={item} />
   );

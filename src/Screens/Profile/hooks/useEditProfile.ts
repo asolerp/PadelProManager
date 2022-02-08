@@ -1,7 +1,7 @@
 import {useContext, useEffect, useRef, useState} from 'react';
 import {userQuery} from '../../../Api/queries';
 import {AuthContext} from '../../../Context/AuthContex';
-import {LoadingModalContext} from '../../../Context/LoadngModalContext';
+import {LoadingModalContext} from '../../../Context/LoadingModalContext';
 import {useCameraOrLibrary} from '../../../Hooks/useCamerOrLibrary';
 import {useUpdateDocument} from '../../../Hooks/useUpdateDocument';
 import {useUploadCloudinaryImage} from '../../../Hooks/useUploadCloudinaryImage';

@@ -22,10 +22,9 @@ const TEAM1 = 't1';
 const TEAM2 = 't2';
 
 export const LiveResult: React.FC<LiveResultProps> = ({game}) => {
-  const {service, s1t1, s1t2, s2t1, s2t2, s3t1, s3t2} = game;
-
   const result = resultGame(game).split('-');
-  const isT1Serving = team => (team === service ? t.opacity100 : t.opacity30);
+  const isT1Serving = team =>
+    team === game?.service ? t.opacity100 : t.opacity30;
 
   return (
     <View style={[t.justifyCenter, t.itemsCenter]}>
@@ -48,7 +47,7 @@ export const LiveResult: React.FC<LiveResultProps> = ({game}) => {
           style={[
             t.fontSansMedium,
             t.opacity30,
-          ]}>{`${s1t1}-${s1t2},${s2t1}-${s2t2},${s3t1}-${s3t2}`}</Text>
+          ]}>{`${game?.s1t1}-${game?.s1t2},${game?.s2t1}-${game?.s2t2},${game?.s3t1}-${game?.s3t2}`}</Text>
       </View>
     </View>
   );

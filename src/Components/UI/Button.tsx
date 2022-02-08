@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
@@ -36,6 +36,7 @@ export const Button: React.FC<Props> = ({
 }) => {
   const capitalizedSize = capitalize(size);
   const textSize = t?.[`text${capitalizedSize}`];
+  const [state, setState] = useState(false);
 
   const disabledStyles = disabled ? [t.opacity50] : [t.opacity100];
 
@@ -53,9 +54,24 @@ export const Button: React.FC<Props> = ({
     white: active ? t.textGray700 : t.textGray700,
   };
 
+  useEffect(() => {
+    if (state) {
+      setTimeout(() => {
+        setState(false);
+      }, 500);
+    }
+  }, [state]);
+
   return (
     <PressableOpacity
-      onPress={!disabled ? onPress : () => {}}
+      onPress={
+        !disabled
+          ? () => {
+              !state && onPress();
+              setState(true);
+            }
+          : () => {}
+      }
       style={[
         t.justifyCenter,
         t.itemsCenter,

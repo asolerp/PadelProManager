@@ -10,9 +10,11 @@ import {shortName} from '../../Utils/parsers';
 import {useGetPlayers} from '../../Hooks/useGetPlayers';
 import {Banner} from '../UI/Banner';
 import {NEW_PLAYER_SCREEN_KEY} from '../../Screens/NewPlayer/NewPlayer';
+import {useCheckPermissions} from '../../Hooks/useCheckPermissions';
 
 export const MyPlayers = () => {
   const {players} = useGetPlayers();
+  const {handleCheckCreateNewPlayer} = useCheckPermissions();
 
   const PlayerItem = ({item}: {item: PlayerType}) => (
     <Player
@@ -51,7 +53,11 @@ export const MyPlayers = () => {
                 imageStyle={[t.w16, t.h16]}
                 style={[t.mX2]}
                 name="Crear jugador"
-                onPress={() => openScreenWithPush(NEW_PLAYER_SCREEN_KEY)}
+                onPress={() =>
+                  handleCheckCreateNewPlayer(() =>
+                    openScreenWithPush(NEW_PLAYER_SCREEN_KEY),
+                  )
+                }
               />
             }
             showsHorizontalScrollIndicator={false}

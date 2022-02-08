@@ -150,7 +150,9 @@ export const NewMatchScreen = () => {
                     />
                   </View>
                 )}
-                <PlayersSelector />
+                <View style={[t.mT5]}>
+                  <PlayersSelector />
+                </View>
               </View>
             </>
           )}

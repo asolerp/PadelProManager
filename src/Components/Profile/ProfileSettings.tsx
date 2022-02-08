@@ -11,6 +11,7 @@ import {playerQuery} from '../../Api/queries';
 
 import PressableOpacity from '../UI/PressableOpacity';
 import auth from '@react-native-firebase/auth';
+import {HDivider} from '../UI/HDivider';
 
 export const ProfileSettings = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -26,11 +27,11 @@ export const ProfileSettings = () => {
 
   return (
     <>
-      <BottomModal isVisible={isVisible} onClose={() => setIsVisible(false)}>
+      <BottomModal
+        isVisible={isVisible}
+        onClose={() => setIsVisible(false)}
+        title="Opciones">
         <>
-          <Text style={[t.fontSansBold, t.text2xl, t.mB5, t.textCenter]}>
-            Opciones
-          </Text>
           <View>
             <ListItem
               onPress={() => {
@@ -42,12 +43,11 @@ export const ProfileSettings = () => {
                   },
                 });
               }}
-              iconName="ios-trash"
+              iconName="ios-card-outline"
               title="Subscripciones"
-              textStyle={[t.textErrorDark]}
             />
             <ListItem
-              iconName="ios-pencil"
+              iconName="ios-exit-outline"
               title="Logout"
               onPress={() => logOut()}
             />

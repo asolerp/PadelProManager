@@ -36,23 +36,33 @@ export const PlayerItem = ({
               </Text>
               <View style={[t.flexRow, t.itemsCenter]}>
                 <View style={[t.flexRow, t.itemsCenter, t.mR2]}>
-                  <Text style={[t.fontSans, t.textXs, t.textGray800, t.mR1]}>
-                    Categoría:
-                  </Text>
-                  <Chip
-                    mainColor={colorByCategory[item?.category || 3]}
-                    text={`${categoryParse[item?.category || 3]}`}
-                    style={[t.mR1]}
-                  />
+                  {item?.category && (
+                    <>
+                      <Text
+                        style={[t.fontSans, t.textXs, t.textGray800, t.mR1]}>
+                        Categoría:
+                      </Text>
+                      <Chip
+                        mainColor={colorByCategory[item?.category || 3]}
+                        text={`${categoryParse[item?.category || 3]}`}
+                        style={[t.mR1]}
+                      />
+                    </>
+                  )}
                 </View>
                 <View style={[t.flexRow, t.itemsCenter]}>
-                  <Text style={[t.fontSans, t.textXs, t.textGray800, t.mR1]}>
-                    Mano:
-                  </Text>
-                  <Chip
-                    mainColor={colorByHand[item?.hand || 'right']}
-                    text={`${handParse[item?.hand || 'right']}`}
-                  />
+                  {item?.hand && (
+                    <>
+                      <Text
+                        style={[t.fontSans, t.textXs, t.textGray800, t.mR1]}>
+                        Mano:
+                      </Text>
+                      <Chip
+                        mainColor={colorByHand[item?.hand || 'right']}
+                        text={`${handParse[item?.hand || 'right']}`}
+                      />
+                    </>
+                  )}
                 </View>
               </View>
             </View>

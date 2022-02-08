@@ -32,18 +32,15 @@ export const MatchSettings = ({match}) => {
         match={match}
       />
       <BottomModal
+        title="Opciones"
         isVisible={isVisible}
         onClose={() => setIsModalVisible(false)}>
         <>
-          <Text style={[t.fontSansBold, t.text2xl, t.mB5, t.textCenter]}>
-            Opciones de partido
-          </Text>
           <View>
             <ListItem
               iconName="ios-pencil"
               title="Editar resultado"
               onPress={async () => {
-                console.log('hola');
                 setIsModalVisible(false);
                 openModal();
               }}
@@ -68,8 +65,7 @@ export const MatchSettings = ({match}) => {
                   onAccept: async () => {
                     setIsModalVisible(false);
                     popScreen();
-                    await timeout(1000);
-                    // await setIsVisible(true);
+                    await timeout(500);
                     await handleDeleteMatch();
                   },
                 })

@@ -16,11 +16,19 @@ export const useNewPoint = () => {
   const [resultPoint, setResultPoint] = useState();
   const [typePoint, setTypePoint] = useState();
 
-  const isPointWithoutStatistic = winPointTeam && pointStats.length === 0;
+  const isPointWithoutStatistic = winPointTeam && pointStats?.length === 0;
   const isWinPointTeamActive = team => team === winPointTeam;
   const isPlayerActive = player => player?.id && player?.id === playerStat?.id;
   const isResultActive = result => resultPoint === result;
   const isTypePointActive = type => typePoint === type;
+
+  const cleanNewPointForm = () => {
+    setWinPointTeam(null),
+      setPointStats([]),
+      setPlayerStat(null),
+      setResultPoint(null),
+      setTypePoint(null);
+  };
 
   const hasPointStatErrors = useCallback(
     newPoint => {
@@ -33,7 +41,7 @@ export const useNewPoint = () => {
       if (!typePoint) {
         return 'no_point';
       }
-      if (pointStats.some(stat => stat?.result === newPoint.result)) {
+      if (pointStats.some(stat => stat?.result === newPoint?.result)) {
         return 'duplicated_result';
       }
       if (pointStats.some(stat => stat?.player?.id === newPoint?.player?.id)) {
@@ -112,6 +120,7 @@ export const useNewPoint = () => {
     winPointTeam,
     isPlayerActive,
     isResultActive,
+    cleanNewPointForm,
     handlePressResult,
     hasSavePointError,
     handlePressPlayer,

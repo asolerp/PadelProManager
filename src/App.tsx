@@ -3,10 +3,11 @@ import type {FunctionComponent} from 'react';
 
 import AuthRouter from './Router/AuthRouter';
 import {StatusBar} from 'react-native';
-import {LoadingModalProvider} from './Context/LoadngModalContext';
+import {LoadingModalProvider} from './Context/LoadingModalContext';
 import {AuthProvider} from './Context/AuthContex';
 import {withIAPContext} from 'react-native-iap';
 import {SubscriptionProvider} from './Context/SubscriptionContext';
+import {PremiumModalProvider} from './Context/PremiumModalContext';
 
 const App: FunctionComponent = () => {
   return (
@@ -14,9 +15,11 @@ const App: FunctionComponent = () => {
       <StatusBar animated={true} barStyle="dark-content" />
       <AuthProvider>
         <LoadingModalProvider>
-          <SubscriptionProvider>
-            <AuthRouter />
-          </SubscriptionProvider>
+          <PremiumModalProvider>
+            <SubscriptionProvider>
+              <AuthRouter />
+            </SubscriptionProvider>
+          </PremiumModalProvider>
         </LoadingModalProvider>
       </AuthProvider>
     </>

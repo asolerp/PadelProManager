@@ -1268,10 +1268,10 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-14.2.3.tgz#6a90b39cdc17ad87317cec5b9502d7f340bf05af"
   integrity sha512-ktsS314Hu7N6BT7YrhC+K9/gTpwuXVgeLUuMYzNXhd0oFb3iy6S97kfOOKdz2oyHEDjEmBiI4IWDPTvm77HdNA==
 
-"@react-native-firebase/functions@^14.2.2":
-  version "14.2.3"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/functions/-/functions-14.2.3.tgz#5a1a9415997b734942bce79779338ba8828a0b9a"
-  integrity sha512-7lhQbyZtG4dBm+RJrkIb8JOUV8Ra5jorns/zkqYcw0q4x3A7JI5Hb0ZcHRufrYLM5hZOaZpgX72znk8iK7pRZA==
+"@react-native-firebase/functions@^14.3.0":
+  version "14.3.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/functions/-/functions-14.3.0.tgz#dec66ab90373f89893738b893d62cd342c0889f2"
+  integrity sha512-bGKe+kuZhITapUgDw8ihWjuQ2a1JPQanofBG38VbHRK5BZ1DjKwTAuXJPLRHLKM+BQ+b//ga39GjvhLHOWBC2g==
 
 "@react-native-firebase/messaging@^14.3.0":
   version "14.3.0"

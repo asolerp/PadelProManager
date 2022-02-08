@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {SubscriptionContext} from '../../Context/SubscriptionContext';
-import {HomeScreen} from '../Home/Home';
+import {TabStack} from '../../Stacks/TabStack';
+
 import {LoadingPage} from '../LoadingPage/LoadingPage';
 
 export const LAUNCH_SCREEN_KEY = 'launchScreen';
@@ -18,5 +19,5 @@ export const LaunchScreen = () => {
     return <LoadingPage />;
   }
 
-  return <HomeScreen />;
+  return <TabStack />;
 };

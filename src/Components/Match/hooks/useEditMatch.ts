@@ -3,6 +3,12 @@ import {matchQuery} from '../../../Api/queries';
 import {useAddDocument} from '../../../Hooks/useAddDocument';
 import {useUpdateDocument} from '../../../Hooks/useUpdateDocument';
 import {mapPoints, mapPointsToNumber} from '../../../Utils/gameLogic';
+import {
+  getNumberOfSetsWonByTeam,
+  getSetOfMatch,
+  getStatusMatch,
+  getWhoWonMatch,
+} from '../utils/editGameLogic';
 export const useEditMatch = ({match}) => {
   const [editedMatch, setEditedMatch] = useState({});
 
@@ -31,12 +37,20 @@ export const useEditMatch = ({match}) => {
   }, [match]);
 
   const handleEditMatch = async () => {
+    const matchEdited = {
+      ...editedMatch,
+      team1: mapPointsToNumber[editedMatch?.team1],
+      team2: mapPointsToNumber[editedMatch?.team2],
+      set: getSetOfMatch(editedMatch),
+      ...getNumberOfSetsWonByTeam(editedMatch),
+    };
+
     try {
       await updateDocument(match?.id, {
         game: {
-          ...editedMatch,
-          team1: mapPointsToNumber[editedMatch?.team1],
-          team2: mapPointsToNumber[editedMatch?.team2],
+          ...matchEdited,
+          finished: getStatusMatch(matchEdited),
+          winMatch: getStatusMatch(matchEdited) && getWhoWonMatch(matchEdited),
         },
       });
       await Promise.all([
@@ -50,7 +64,7 @@ export const useEditMatch = ({match}) => {
         addDocument({
           data: {
             date: new Date(),
-            alert: `Nuevo resultado: ${editedMatch?.team1}:${editedMatch?.team2} ${editedMatch?.s1t1}-${editedMatch?.s1t2},${editedMatch?.s2t1}-${editedMatch?.s2t2},${editedMatch?.s3t1}-${editedMatch?.s3t2}`,
+            alert: `Nuevo resultado: ${matchEdited?.team1}:${matchEdited?.team2} ${matchEdited?.s1t1}-${matchEdited?.s1t2},${matchEdited?.s2t1}-${matchEdited?.s2t2},${matchEdited?.s3t1}-${matchEdited?.s3t2}`,
             type: 'info',
           },
         }),

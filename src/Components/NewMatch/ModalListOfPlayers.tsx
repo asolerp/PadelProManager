@@ -13,6 +13,15 @@ import {useModalList} from './hooks/useModalList';
 import {PlayerItem} from '../Players/PlayerItem';
 import PressableOpacity from '../UI/PressableOpacity';
 
+import {DEFAULT_PROFILE_IMAGE} from '../../Utils/constants';
+
+const emptyPlayer = {
+  id: -1,
+  firstName: 'Jugador sin seguimiento',
+  secondName: '',
+  profileImg: DEFAULT_PROFILE_IMAGE,
+};
+
 export const ModalListOfPlayers = ({
   selectedPlayers,
   isVisible,
@@ -62,20 +71,26 @@ export const ModalListOfPlayers = ({
         onChangeText={setSearch}
         style={[t.mT5]}
       />
-      {filteredList?.length > 0 ? (
+      {filteredList && (
         <FlatList
+          ListHeaderComponent={
+            <PlayerItem
+              onPress={() => handlePressPlayer(emptyPlayer)}
+              item={emptyPlayer}
+              rightSide={
+                <RadioButton
+                  onPress={() => handlePressPlayer(emptyPlayer)}
+                  active={emptyPlayer?.id === player?.id}
+                />
+              }
+            />
+          }
           showsVerticalScrollIndicator={false}
           data={filteredList}
           renderItem={renderItem}
           keyExtractor={item => item?.id}
           contentContainerStyle={[t.flex1, t.mT8]}
         />
-      ) : (
-        <View style={[t.flexGrow, t.justifyCenter, t.itemsCenter]}>
-          <Text style={[t.fontSans]}>
-            No tienes más jugadores para seleccionar
-          </Text>
-        </View>
       )}
 
       <HDivider />

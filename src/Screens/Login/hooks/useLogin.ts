@@ -73,9 +73,7 @@ export const useLogin = () => {
 
   const onGoogleButtonPress = async () => {
     try {
-      console.log('hola');
       const {idToken} = await GoogleSignin.signIn();
-      console.log(idToken, 'idToken');
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
       await auth().signInWithCredential(googleCredential);
     } catch (e) {

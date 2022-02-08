@@ -1,21 +1,17 @@
-import React, {createContext, useState} from 'react';
+import React, {createContext, useContext, useState} from 'react';
+import {AuthContext} from './AuthContex';
 
 export const SubscriptionContext = createContext();
 
 export const SubscriptionProvider = ({children}) => {
-  const [isExpired, setIsExpired] = useState(true);
-  const [oldPurchases, setOldPurchases] = useState();
+  const {user} = useContext(AuthContext);
   const [isChecking, setIsChecking] = useState(true);
 
-  const isUserWithActiveSubscription = oldPurchases && !isExpired;
+  const isUserWithActiveSubscription = user?.status?.isSubscribed;
 
   const value = {
-    isExpired,
-    setIsExpired,
     isChecking,
     setIsChecking,
-    oldPurchases,
-    setOldPurchases,
     isUserWithActiveSubscription,
   };
   return (

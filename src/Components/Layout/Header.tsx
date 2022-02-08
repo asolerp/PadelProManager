@@ -25,31 +25,33 @@ export const Header: React.FC<Props> = ({
   rightSide,
 }) => {
   return (
-    <View style={[t.flexRow, t.itemsCenter, t.z20, t?.[position]]}>
-      <View style={[t.w10, t.itemsStart]}>
-        {withBack && !leftSide ? (
-          <PressableOpacity onPress={popScreen} style={[t.roundedFull, t.p1]}>
-            <Icon
-              name="ios-chevron-back"
-              size={30}
-              color={mode === 'default' ? 'black' : 'white'}
-            />
-          </PressableOpacity>
-        ) : (
-          leftSide
-        )}
+    <>
+      <View style={[t.flexRow, t.itemsCenter, t.z20, t?.[position]]}>
+        <View style={[t.w10, t.itemsStart]}>
+          {withBack && !leftSide ? (
+            <PressableOpacity onPress={popScreen}>
+              <Icon
+                name="ios-chevron-back"
+                size={30}
+                color={mode === 'default' ? 'black' : 'white'}
+              />
+            </PressableOpacity>
+          ) : (
+            leftSide
+          )}
+        </View>
+        <View style={[t.flexGrow, t.itemsCenter]}>
+          <Text
+            style={[
+              t.fontSansBold,
+              t.text2xl,
+              mode === 'default' ? t.textBlack : t.textWhite,
+            ]}>
+            {title}
+          </Text>
+        </View>
+        <View style={[t.w10, t.itemsEnd]}>{!!rightSide && rightSide}</View>
       </View>
-      <View style={[t.flexGrow, t.itemsCenter]}>
-        <Text
-          style={[
-            t.fontSansBold,
-            t.text2xl,
-            mode === 'default' ? t.textBlack : t.textWhite,
-          ]}>
-          {title}
-        </Text>
-      </View>
-      <View style={[t.w10, t.itemsEnd]}>{!!rightSide && rightSide}</View>
-    </View>
+    </>
   );
 };

@@ -83,7 +83,7 @@ export const MatchScreen: React.FC = ({route}) => {
           match={match}
           loading={loading}
           onSavePoint={point => {
-            handleSavePoint(point, () => setIsModalVisible(false));
+            handleSavePoint(point);
           }}
         />
       </BottomModal>
@@ -94,7 +94,9 @@ export const MatchScreen: React.FC = ({route}) => {
               {isMatchFinished ? (
                 <>{!isExpanded && <FinishedMatchHeader match={match} />}</>
               ) : (
-                <MatchHeader match={match} />
+                <View style={[t.mT10]}>
+                  <MatchHeader match={match} />
+                </View>
               )}
             </View>
             {!isExpanded && (

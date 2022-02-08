@@ -8,14 +8,26 @@ import firestore from '@react-native-firebase/firestore';
 
 import {ERROR_FORCED, NONFORCED, WINNER} from '../utils/constants';
 import {Alert} from 'react-native';
+import useRecursiveDelete from '../../../Hooks/useRecursiveDelete';
+import {useContext} from 'react';
+import {LoadingModalContext} from '../../../Context/LoadingModalContext';
+import {popScreen} from '../../../Router/utils/actions';
 
 export const useLiveMatch = match => {
   const query = firestore().collection('matches');
   const {updateDocument, loading: loadingUpdate} = useUpdateDocument(query);
-  const {deleteDocument} = useDeleteDocument(query);
+  const {setIsVisible: setIsVisibleLoading, setText} =
+    useContext(LoadingModalContext);
   const {addDocument, loading: loadingAdd} = useAddDocument(
     query.doc(match?.id).collection('history'),
   );
+
+  const {recursiveDelete} = useRecursiveDelete({
+    path: `matches/${match?.id}`,
+    callback: () => {
+      setIsVisibleLoading(false);
+    },
+  });
 
   const handleWhoStarts = async team => {
     await updateDocument(match?.id, {
@@ -24,12 +36,17 @@ export const useLiveMatch = match => {
   };
 
   const handleDeleteMatch = async () => {
-    await deleteDocument({docId: match?.id});
+    setText('Eliminando partida...');
+    setIsVisibleLoading(true);
+    try {
+      recursiveDelete();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleSavePoint = async (stats, callback) => {
     let error = false;
-
     stats?.points?.forEach(st => {
       if (st?.result === NONFORCED) {
         if (st?.player?.team === stats?.winPointTeam) {
@@ -42,7 +59,6 @@ export const useLiveMatch = match => {
         }
       }
     });
-
     if (!error) {
       const newStateGame = tennisGameLogic(match?.game, stats?.winPointTeam);
       try {
@@ -54,6 +70,15 @@ export const useLiveMatch = match => {
             gameState: newStateGame,
           },
         });
+        if (newStateGame?.winMatch) {
+          await addDocument({
+            data: {
+              date: new Date(),
+              alert: `Partido finalizado, Gana el equipo ${newStateGame?.winMatch}`,
+              type: 'info',
+            },
+          });
+        }
         delete newStateGame.info;
         await updateDocument(match?.id, {
           game: newStateGame,
@@ -87,7 +112,7 @@ export const useLiveMatch = match => {
       } catch (err) {
         console.log(err);
       } finally {
-        callback();
+        callback && callback();
       }
     } else {
       Alert.alert('Error', 'Punto incorrecto, revisa los datos introducidos');

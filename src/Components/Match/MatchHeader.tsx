@@ -9,7 +9,7 @@ import {PLAYER_SCREEN_KEY} from '../../Screens/Player/Player';
 
 export const MatchHeader = ({match}) => {
   return (
-    <View style={[t.flexRow, t.mT10, t.justifyBetween]}>
+    <View style={[t.flexRow, t.justifyBetween]}>
       <View style={[t.flexRow, t.flexGrow, t.justifyCenter]}>
         {match?.t1?.map((player, i) => (
           <Avatar
@@ -30,7 +30,7 @@ export const MatchHeader = ({match}) => {
         <LiveResult game={match?.game} />
       </View>
       <View style={[t.flexRow, t.flexGrow, t.justifyCenter]}>
-        {match.t2.map((player, i) => (
+        {match?.t2.map((player, i) => (
           <Avatar
             key={i}
             disabled={!player?.id}

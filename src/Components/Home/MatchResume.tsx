@@ -33,7 +33,7 @@ export const MatchResume: React.FC<Props> = ({match}) => {
         }
         style={[t.wFull, t.flexRow, t.justifyCenter, t.itemsCenter, t.mB2]}>
         <View style={[t.justifyCenter]}>
-          <Result won result={match.game} />
+          <Result won result={match?.game} />
         </View>
         <View>
           <View style={[t.justifyEnd, t.mT1]}>
@@ -72,7 +72,7 @@ export const MatchResume: React.FC<Props> = ({match}) => {
                 {capitalizeText(matchDay)}
               </Text>
               <Text style={[t.opacity30, t.fontSansMedium, t.textXs]}>
-                {match.club}
+                {match?.club}
               </Text>
             </View>
           </View>

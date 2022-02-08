@@ -2,7 +2,6 @@ import {useEffect, useCallback, useContext} from 'react';
 import auth from '@react-native-firebase/auth';
 
 import firestore from '@react-native-firebase/firestore';
-import messaging from '@react-native-firebase/messaging';
 import {AuthContext} from '../../Context/AuthContex';
 
 const DEFAULT_PHOTOURL =

@@ -4,7 +4,7 @@ import {popScreen} from '../../../Router/utils/actions';
 import {useUpdateDocument} from '../../../Hooks/useUpdateDocument';
 import {matchQuery} from '../../../Api/queries';
 import {timeout} from '../../../Utils/timeout';
-import {LoadingModalContext} from '../../../Context/LoadngModalContext';
+import {LoadingModalContext} from '../../../Context/LoadingModalContext';
 import {useAddDocument} from '../../../Hooks/useAddDocument';
 
 export const useSavePlayersStats = match => {
