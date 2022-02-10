@@ -2,18 +2,23 @@ import {useContext, useRef, useState} from 'react';
 
 import {AuthContext} from '../../../Context/AuthContex';
 import {NewMatchContext} from '../../../Context/NewMatchContext';
+import {usePermissions} from '../../../Hooks/usePermissions';
 
 import {popScreen} from '../../../Router/utils/actions';
 import {timeout} from '../../../Utils/timeout';
+import {useGetPlayerId} from '../../Player/hooks/useGetPlayerId';
+import {matchTeam1, matchTeam2, playersId} from '../utils/matchStructure';
 import {useAddNewMatch} from './useAddNewMatch';
 
 export const useNewMatchForm = () => {
   const newMatchFormRef = useRef();
   const {user} = useContext(AuthContext);
   const [playerPosition, setPlayerPosition] = useState();
+  const {player} = useGetPlayerId();
   const [loading, setLoading] = useState(false);
   const {selectedPlayers} = useContext(NewMatchContext);
   const {addNewMatch, loading: loadingAddMatch} = useAddNewMatch();
+  const {isCoach} = usePermissions();
 
   const handleCreateNewMatch = async values => {
     const {club, category, date, sex, round = '', tournamentName = ''} = values;
@@ -26,7 +31,8 @@ export const useNewMatchForm = () => {
       club,
       round,
       sex,
-      coachId: user?.id,
+      coachId: isCoach && user?.id,
+      owner: user?.id,
       tournamentName,
       state: 'live',
       category: category,
@@ -59,52 +65,9 @@ export const useNewMatchForm = () => {
           team2: {},
         },
       },
-      playersId: [
-        !selectedPlayers?.['1']
-          ? null
-          : selectedPlayers?.['1']?.id !== -1
-          ? selectedPlayers?.['1']?.id
-          : null,
-        !selectedPlayers?.['2']
-          ? null
-          : selectedPlayers?.['2']?.id !== -1
-          ? selectedPlayers?.['2']?.id
-          : null,
-        !selectedPlayers?.['3']
-          ? null
-          : selectedPlayers?.['3']?.id !== -1
-          ? selectedPlayers?.['3']?.id
-          : null,
-        !selectedPlayers?.['4']
-          ? null
-          : selectedPlayers?.['4']?.id !== -1
-          ? selectedPlayers?.['4']?.id
-          : null,
-      ].filter(pId => pId !== null),
-      t1: [
-        !selectedPlayers?.['1']
-          ? null
-          : selectedPlayers?.['1']?.id !== -1
-          ? selectedPlayers?.['1']
-          : null,
-        !selectedPlayers?.['2']
-          ? null
-          : selectedPlayers?.['2']?.id !== -1
-          ? selectedPlayers?.['2']
-          : null,
-      ],
-      t2: [
-        !selectedPlayers?.['3']
-          ? null
-          : selectedPlayers?.['3']?.id !== -1
-          ? selectedPlayers?.['3']
-          : null,
-        !selectedPlayers?.['4']
-          ? null
-          : selectedPlayers?.['4']?.id !== -1
-          ? selectedPlayers?.['4']
-          : null,
-      ],
+      playersId: isCoach ? playersId(selectedPlayers) : [player?.id],
+      t1: isCoach ? matchTeam1(selectedPlayers) : [player, null],
+      t2: isCoach ? matchTeam2(selectedPlayers) : [null, null],
     };
 
     setLoading(true);

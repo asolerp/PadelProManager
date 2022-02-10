@@ -1,6 +1,8 @@
 import {useContext, useState} from 'react';
 import functions from '@react-native-firebase/functions';
-import {popScreen} from '../../../Router/utils/actions';
+import firebase from '@react-native-firebase/app';
+import firestore from '@react-native-firebase/firestore';
+
 import {useUpdateDocument} from '../../../Hooks/useUpdateDocument';
 import {matchQuery} from '../../../Api/queries';
 import {timeout} from '../../../Utils/timeout';
@@ -16,6 +18,9 @@ export const useSavePlayersStats = match => {
   const {addDocument} = useAddDocument(
     matchQuery.doc(match?.id).collection('history'),
   );
+
+  const winTeam = match?.game?.winMatch;
+  const loseTeam = match?.game?.winMatch === 1 ? 2 : 1;
 
   const savePlayersStatsHandler = async () => {
     setText('Guardando stats de jugadores...');
@@ -35,6 +40,38 @@ export const useSavePlayersStats = match => {
           type: 'info',
         },
       });
+      await Promise.all(
+        match?.[`t${winTeam}`]
+          .filter(p => p !== null)
+          .map(
+            async player =>
+              await firestore()
+                .collection('players')
+                .doc(player?.id)
+                .collection('stats')
+                .doc('global')
+                .update({
+                  tw: firebase.firestore.FieldValue.increment(1),
+                  tm: firebase.firestore.FieldValue.increment(1),
+                }),
+          ),
+      );
+      await Promise.all(
+        match?.[`t${loseTeam}`]
+          .filter(p => p !== null)
+          .map(
+            async player =>
+              await firestore()
+                .collection('players')
+                .doc(player?.id)
+                .collection('stats')
+                .doc('global')
+                .update({
+                  tl: firebase.firestore.FieldValue.increment(1),
+                  tm: firebase.firestore.FieldValue.increment(1),
+                }),
+          ),
+      );
     } catch (err) {
       setError(err);
     } finally {

@@ -6,20 +6,23 @@ import {SubscriptionContext} from '../Context/SubscriptionContext';
 
 export const usePermissions = () => {
   const {user} = useContext(AuthContext);
-  const {isUserWithActiveSubscription} = useContext(SubscriptionContext);
+  const {isSubscribed} = useContext(SubscriptionContext);
 
   const [players] = useCollectionData(
     playerQuery.where('coach', 'array-contains', user?.id),
   );
 
   const playersOfUser = players?.length;
-
-  const permissionCreateNewPlayer =
-    playersOfUser === 0 || isUserWithActiveSubscription;
-
-  console.log(permissionCreateNewPlayer);
+  const isCoach = user?.role === 'coach';
+  const getIsOwner = matchOwnerId => {
+    console.log(matchOwnerId === user?.id);
+    return matchOwnerId === user?.id;
+  };
+  const permissionCreateNewPlayer = playersOfUser === 0 || isSubscribed;
 
   return {
+    isCoach,
+    getIsOwner,
     permissionCreateNewPlayer,
   };
 };

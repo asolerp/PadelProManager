@@ -4,18 +4,19 @@ import {Image} from 'react-native';
 import {AuthContext} from '../../Context/AuthContex';
 import {SubscriptionContext} from '../../Context/SubscriptionContext';
 import {openScreenWithPush} from '../../Router/utils/actions';
-import {PLAYER_SCREEN_KEY} from '../../Screens/Player/Player';
+
 import {PROFILE_SCREEN_KEY} from '../../Screens/Profile/Profile';
 import t from '../../Theme/theme';
 import {Header} from '../Layout';
 import {Avatar} from '../UI/Avatar';
 
-export const HomeHeader = () => {
+export const HomeHeader = ({position}) => {
   const {user} = useContext(AuthContext);
-  const {isUserWithActiveSubscription} = useContext(SubscriptionContext);
+  const {isSubscribed} = useContext(SubscriptionContext);
   return (
     <Header
-      title={isUserWithActiveSubscription && 'PREMIUM'}
+      position={position}
+      title={isSubscribed && 'PREMIUM'}
       leftSide={
         <Image
           resizeMode="contain"

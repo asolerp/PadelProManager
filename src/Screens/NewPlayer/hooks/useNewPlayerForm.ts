@@ -50,7 +50,6 @@ export const useNewPlayerForm = playerId => {
           async url =>
             await updateDocument(playerId, {
               ...values,
-              coach: [user?.id],
               profileImg: url,
             }),
         );

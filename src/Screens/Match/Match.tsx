@@ -11,10 +11,6 @@ import {MatchInfo} from '../../Components/Match/MatchInfo';
 
 import {MatchTabs} from '../../Components/Match/MatchTabs';
 import {AddButton} from '../../Components/UI/AddButton';
-import {BottomModal} from '../../Components/Modal/BottomModal';
-
-import {NewPointModal} from '../../Components/Match/NewPointModal';
-import {useLiveMatch} from '../../Components/Match/hooks/useLiveMatch';
 
 import {useSavePlayersStats} from './hooks/useSavePlayerStats';
 import {FinishedMatchHeader} from '../../Components/Match/FinishedMatchHeader';
@@ -23,6 +19,9 @@ import {MatchSettings} from '../../Components/Match/MatchSettings';
 import {LoadingModal} from '../../Components/Common/LoadingModal';
 import {ServiceModal} from '../../Components/Match/ServiceModal';
 import {FinishedMatchModal} from '../../Components/Match/FinishedMatchModal';
+import {openScreenWithPush} from '../../Router/utils/actions';
+import {NEW_POINT_SCREEN_KEY} from '../NewPoint/NewPoint';
+import {usePermissions} from '../../Hooks/usePermissions';
 
 export const MATCH_SCREEN_KEY = 'matchScreen';
 
@@ -37,14 +36,18 @@ export const MatchScreen: React.FC = ({route}) => {
     isMatchFinished,
     isStartTeamAssigned,
   } = useGetMatch(matchId);
-  const {handleSavePoint, loading} = useLiveMatch(match);
+
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const {getIsOwner} = usePermissions();
+
+  const isOnwer = getIsOwner(match?.owner);
+  const showAddPointButton = !isMatchFinished && !isGameFinished && isOnwer;
+
   const {loading: loadingSaveStats, savePlayersStatsHandler} =
-    useSavePlayersStats();
+    useSavePlayersStats(match);
 
   return (
-    <ScreenLayout>
+    <ScreenLayout edges={['top', 'left', 'right', 'bottom']}>
       <LoadingModal
         isVisible={loadingSaveStats}
         text="Guardando stats de jugad@res"
@@ -52,14 +55,14 @@ export const MatchScreen: React.FC = ({route}) => {
 
       <FinishedMatchModal
         isVisible={isGameFinished && !isMatchFinished}
-        onAccept={() => savePlayersStatsHandler({match})}
+        onAccept={() => savePlayersStatsHandler()}
       />
       <ServiceModal isVisible={isStartTeamAssigned} match={match} />
       {!loadingMatch && (
         <Header
           withBack
           title={match?.tournamentName || 'Partida'}
-          rightSide={<MatchSettings match={match} />}
+          rightSide={isOnwer && <MatchSettings match={match} />}
         />
       )}
       {isMatchFinished && (
@@ -69,24 +72,17 @@ export const MatchScreen: React.FC = ({route}) => {
           onPress={() => setIsExpanded(old => !old)}
         />
       )}
-      {!isMatchFinished && !isGameFinished && (
+      {showAddPointButton && (
         <AddButton
           iconName="tennisball"
           style={[t.bgSuccessLight]}
-          onPress={() => setIsModalVisible(true)}
+          onPress={() =>
+            openScreenWithPush(NEW_POINT_SCREEN_KEY, {
+              matchId: match?.id,
+            })
+          }
         />
       )}
-      <BottomModal
-        isVisible={isModalVisible}
-        onClose={() => setIsModalVisible(false)}>
-        <NewPointModal
-          match={match}
-          loading={loading}
-          onSavePoint={point => {
-            handleSavePoint(point);
-          }}
-        />
-      </BottomModal>
       <View style={[t.flex1]}>
         {!loadingMatch && (
           <>

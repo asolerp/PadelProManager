@@ -13,7 +13,7 @@ export const AddButton = ({onPress, iconName, style}) => {
         t.h14,
         t.absolute,
         t.right5,
-        t.bottom10,
+        t.bottom5,
         t.roundedFull,
         t.justifyCenter,
         t.itemsCenter,

@@ -63,23 +63,14 @@ export const HistoricRoute = ({match, pointsHistory}) => {
         />
       </View>
       <View style={[t.mT5, t.flexGrow, t.itemsCenter, t.justifyCenter]}>
-        <View style={[t.flex1, t.flexGrow, t.wFull]}>
-          {historyList?.length > 0 ? (
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              data={historyList}
-              renderItem={renderItem}
-              keyExtractor={item => item.id}
-              style={[t.wFull, t.pT8]}
-            />
-          ) : (
-            <View style={[t.flexGrow, t.justifyCenter, t.itemsCenter]}>
-              <Text style={[t.fontSansMedium, t.textLg]}>🎾</Text>
-              <Text style={[t.fontSansMedium, t.textLg]}>
-                ¡Empieza el partido!
-              </Text>
-            </View>
-          )}
+        <View style={[t.flexGrow, t.wFull]}>
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            data={historyList}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            style={[t.wFull]}
+          />
         </View>
       </View>
     </>

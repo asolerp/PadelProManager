@@ -39,9 +39,7 @@ export const PointType: React.FC<Props> = ({
         border,
         bg,
       ]}>
-      <Icon name="tennisball" size={25} style={[t.mB1, textColor]} />
-      <Text
-        style={[t.fontSansMedium, t.textXs, textColor, t.textCenter, t.maxW12]}>
+      <Text style={[t.fontSansBold, t.textBase, textColor, t.textCenter]}>
         {children}
       </Text>
     </PressableOpacity>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text} from 'react-native';
 import t from '../../Theme/theme';
 import {Avatar} from '../UI/Avatar';
@@ -15,17 +15,24 @@ import {
   handParse,
 } from '../../Utils/parsers';
 import PressableOpacity from '../UI/PressableOpacity';
+import {SubscriptionContext} from '../../Context/SubscriptionContext';
 
 export const PlayerItem = ({
   item,
+  index,
   onPress = () =>
     openScreenWithPush(PLAYER_SCREEN_KEY, {
       playerId: item?.id,
     }),
   rightSide,
 }) => {
+  const {isSubscribed} = useContext(SubscriptionContext);
+
   return (
-    <PressableOpacity onPress={onPress}>
+    <PressableOpacity
+      onPress={onPress}
+      disabled={!isSubscribed && index > 0}
+      disabledOpacity={0.5}>
       <View style={[t.pY2]}>
         <View style={[t.flexRow, t.itemsCenter, t.justifyBetween]}>
           <View style={[t.flexRow, t.itemsCenter]}>

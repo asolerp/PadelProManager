@@ -1,13 +1,16 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {SubscriptionContext} from '../../Context/SubscriptionContext';
-import {TabStack} from '../../Stacks/TabStack';
+import {AuthContext} from '../../Context/AuthContex';
+
+import {CoachStack} from '../../Stacks/CoachStack';
+import {PlayerStack} from '../../Stacks/PlayerStack';
 
 import {LoadingPage} from '../LoadingPage/LoadingPage';
+import {RoleSelector} from '../RoleSelector/RoleSelector';
 
 export const LAUNCH_SCREEN_KEY = 'launchScreen';
 export const LaunchScreen = () => {
   const [loaded, setLoaded] = useState(false);
-  const {isChecking} = useContext(SubscriptionContext);
+  const {user} = useContext(AuthContext);
 
   useEffect(() => {
     setTimeout(() => {
@@ -15,9 +18,17 @@ export const LaunchScreen = () => {
     }, 2000);
   }, []);
 
-  if (isChecking || !loaded) {
+  if (!loaded) {
     return <LoadingPage />;
   }
 
-  return <TabStack />;
+  if (!user?.role) {
+    return <RoleSelector />;
+  }
+
+  if (user?.role === 'coach') {
+    return <CoachStack />;
+  }
+
+  return <PlayerStack />;
 };

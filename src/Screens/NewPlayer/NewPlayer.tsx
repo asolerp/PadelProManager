@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import {View} from 'react-native';
 import {Header} from '../../Components/Layout/Header';
@@ -10,19 +10,24 @@ import {format} from 'date-fns';
 import {useNewPlayerForm} from './hooks/useNewPlayerForm';
 import {Formik} from 'formik';
 import {DATE_FORM} from '../../Utils/date-ext';
-
+import Icon from 'react-native-vector-icons/Ionicons';
 import {Button} from '../../Components/UI/Button';
 import {HDivider} from '../../Components/UI/HDivider';
 import {ImageSelector} from '../../Components/NewPlayer/ImageSelector';
 import {Select} from '../../Components/UI/Select';
 import {cateogries, gender, lateralidad} from '../../Utils/lists';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {AuthContext} from '../../Context/AuthContex';
+import {usePermissions} from '../../Hooks/usePermissions';
+import PressableOpacity from '../../Components/UI/PressableOpacity';
+import {useLogout} from '../../Hooks/useLogout';
 
 export const NEW_PLAYER_SCREEN_KEY = 'newPlayerScreen';
 
 export const NewPlayerScreen = ({route}) => {
   const {edit, playerId} = route?.params;
-
+  const {isCoach} = usePermissions();
+  const {logout} = useLogout();
   const {
     handleCreateNewPlayer,
     handleUpdatePlayer,
@@ -46,7 +51,17 @@ export const NewPlayerScreen = ({route}) => {
 
   return (
     <ScreenLayout edges={['top', 'right', 'left', 'bottom']}>
-      <Header withBack title={`${edit ? 'Editar' : 'Nuevo'} jugador`} />
+      <Header
+        withBack
+        title={isCoach ? `${edit ? 'Editar' : 'Nuevo'} jugador` : 'Mi perfil'}
+        rightSide={
+          !isCoach && (
+            <PressableOpacity onPress={() => logout()}>
+              <Icon name="ios-exit-outline" size={30} />
+            </PressableOpacity>
+          )
+        }
+      />
       <KeyboardAwareScrollView>
         <Formik
           innerRef={newPlayerFormRef}
@@ -89,7 +104,7 @@ export const NewPlayerScreen = ({route}) => {
                 <View style={[t.flexRow, t.mB4]}>
                   <Input
                     placeholder="Nombre"
-                    value={values.firstName}
+                    value={values?.firstName}
                     name="firstName"
                     error={errors.firstName}
                     onBlur={handleBlur('firstName')}
@@ -99,7 +114,7 @@ export const NewPlayerScreen = ({route}) => {
                   />
                   <Input
                     placeholder="Apellidos"
-                    value={values.secondName}
+                    value={values?.secondName}
                     name="secondName"
                     error={errors.secondName}
                     onBlur={handleBlur('secondName')}
@@ -111,7 +126,7 @@ export const NewPlayerScreen = ({route}) => {
                 <View style={[t.flexRow, t.mB4]}>
                   <Input
                     placeholder="Email"
-                    value={values.email}
+                    value={values?.email}
                     name="email"
                     error={errors.email}
                     onBlur={handleBlur('email')}
@@ -123,7 +138,7 @@ export const NewPlayerScreen = ({route}) => {
                 <View style={[t.flexRow, t.mB4]}>
                   <Input
                     placeholder="Teléfono"
-                    value={values.phone}
+                    value={values?.phone}
                     name="phone"
                     error={errors.phone}
                     keyboardType="numeric"
@@ -146,7 +161,7 @@ export const NewPlayerScreen = ({route}) => {
                   <Select
                     list={lateralidad}
                     placeholder="Lateralidad"
-                    value={lateralidad?.find(s => s.value === values.hand)}
+                    value={lateralidad?.find(s => s.value === values?.hand)}
                     name="hand"
                     error={errors.hand}
                     onBlur={handleBlur('hand')}
@@ -157,7 +172,7 @@ export const NewPlayerScreen = ({route}) => {
                   <Select
                     list={gender}
                     placeholder="Género"
-                    value={gender?.find(s => s.value === values.gender)}
+                    value={gender?.find(s => s.value === values?.gender)}
                     name="gender"
                     error={errors.gender}
                     onBlur={handleBlur('gender')}
@@ -170,7 +185,7 @@ export const NewPlayerScreen = ({route}) => {
                   <Select
                     list={cateogries}
                     placeholder="Categoría"
-                    value={cateogries?.find(s => s.value === values.category)}
+                    value={cateogries?.find(s => s.value === values?.category)}
                     name="category"
                     error={errors.category}
                     onBlur={handleBlur('category')}

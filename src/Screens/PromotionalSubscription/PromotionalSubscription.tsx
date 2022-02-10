@@ -6,9 +6,9 @@ import {Header} from '../../Components/Layout';
 import {ContainerWithBg} from '../../Components/UI/ContainerWithBg';
 import t from '../../Theme/theme';
 import {Button} from '../../Components/UI/Button';
-import {useIAP, requestSubscription} from 'react-native-iap';
-import {openScreenWithPush, popScreen} from '../../Router/utils/actions';
-import {HOME_SCREEN_KEY} from '../Home/Home';
+
+import {useGetProducts} from './hooks/useGetProducts';
+import {usePayProduct} from './hooks/usePayProduct';
 
 export const PROMOTIONAL_SUBSCRIPTION_SCREEN_KEY = 'promotionalSubscription';
 
@@ -24,16 +24,8 @@ const Service = ({iconName, title}) => {
 };
 
 export const PromotionalSubscription = () => {
-  const {subscriptions} = useIAP();
-
-  const handleSubscription = async () => {
-    try {
-      await requestSubscription(subscriptions[0].productId);
-      popScreen();
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const {packages} = useGetProducts();
+  const {makePayment} = usePayProduct();
 
   return (
     <>
@@ -73,14 +65,14 @@ export const PromotionalSubscription = () => {
                     t.mB5,
                     t.textCenter,
                   ]}>
-                  Tan solo por 4,99€ al mes
+                  Tan solo por {packages?.[0]?.product?.price_string} al mes
                 </Text>
                 <Button
                   title="Acerse premium ahora"
                   type="white"
                   textStyle={[t.textLg]}
                   style={[t.pY4]}
-                  onPress={() => handleSubscription()}
+                  onPress={() => makePayment(packages?.[0])}
                 />
                 <View style={[t.justifyCenter, t.itemsCenter, t.mT5]}>
                   <Text

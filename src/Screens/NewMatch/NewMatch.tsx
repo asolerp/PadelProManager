@@ -19,6 +19,7 @@ import {cateogries, rounds, sex} from '../../Utils/lists';
 import {newMatchValidationSchema} from './utils/validation';
 import {LoadingModal} from '../../Components/Common/LoadingModal';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {usePermissions} from '../../Hooks/usePermissions';
 export const NEW_MATCH_SCREEN_KEY = 'newMatchScreen';
 
 export const NewMatchScreen = () => {
@@ -31,6 +32,7 @@ export const NewMatchScreen = () => {
   } = useNewMatchForm();
 
   const [show, setShow] = useState(false);
+  const {isCoach} = usePermissions();
 
   const showDatePicker = () => {
     setShow(true);
@@ -44,7 +46,7 @@ export const NewMatchScreen = () => {
     <ScreenLayout edges={['top', 'right', 'left', 'bottom']}>
       <Header withBack title="Nuevo partido" />
       <LoadingModal text="Creando nuevo partido..." isVisible={loading} />
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView style={[t.mT5]}>
         <Formik
           innerRef={newMatchFormRef}
           validationSchema={newMatchValidationSchema}
@@ -150,9 +152,11 @@ export const NewMatchScreen = () => {
                     />
                   </View>
                 )}
-                <View style={[t.mT5]}>
-                  <PlayersSelector />
-                </View>
+                {isCoach && (
+                  <View style={[t.mT5]}>
+                    <PlayersSelector />
+                  </View>
+                )}
               </View>
             </>
           )}

@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, Keyboard} from 'react-native';
 import t from '../../Theme/theme';
 import {mapPoints} from '../../Utils/gameLogic';
+import {shortName} from '../../Utils/parsers';
 import {NormalModal} from '../Modal/NormalModal';
 import {Button} from '../UI/Button';
 import {Input} from '../UI/Input';
@@ -10,8 +11,6 @@ import {useEditMatch} from './hooks/useEditMatch';
 export const EditResultModal = ({isVisible, onClose, match}) => {
   //   const [visible, setVisible] = useState(isVisible);
   const {editedMatch, setEditedMatch, handleEditMatch} = useEditMatch({match});
-
-  console.log(editedMatch);
 
   return (
     <NormalModal isVisible={isVisible} onClose={onClose}>
@@ -24,9 +23,21 @@ export const EditResultModal = ({isVisible, onClose, match}) => {
             <View style={[t.flexRow, t.itemsCenter, t.justifyBetween]}>
               <View>
                 <View style={[t.h8]} />
-                <View style={[t.mR3]}>
-                  <Text style={[t.fontSansMedium]}>A.Soler</Text>
-                  <Text style={[t.fontSansMedium]}>A.Horrac</Text>
+                <View style={[t.mR3, t.w16]}>
+                  <Text style={[t.fontSansMedium]}>
+                    {shortName(
+                      1,
+                      match?.t1?.[0]?.firstName,
+                      match?.t1?.[0]?.secondName,
+                    )}
+                  </Text>
+                  <Text style={[t.fontSansMedium]}>
+                    {shortName(
+                      2,
+                      match?.t1?.[1]?.firstName,
+                      match?.t1?.[1]?.secondName,
+                    )}
+                  </Text>
                 </View>
               </View>
               <View style={[t.justifyCenter, t.itemsCenter]}>
@@ -70,9 +81,21 @@ export const EditResultModal = ({isVisible, onClose, match}) => {
           </View>
           <View style={[{width: '95%'}, t.mB3]}>
             <View style={[t.flexRow, t.itemsCenter, t.justifyBetween]}>
-              <View style={[t.mR3]}>
-                <Text style={[t.fontSansMedium]}>A.Soler</Text>
-                <Text style={[t.fontSansMedium]}>A.Horrac</Text>
+              <View style={[t.mR3, t.w16]}>
+                <Text style={[t.fontSansMedium]}>
+                  {shortName(
+                    3,
+                    match?.t2?.[0]?.firstName,
+                    match?.t2?.[0]?.secondName,
+                  )}
+                </Text>
+                <Text style={[t.fontSansMedium]}>
+                  {shortName(
+                    4,
+                    match?.t2?.[1]?.firstName,
+                    match?.t2?.[1]?.secondName,
+                  )}
+                </Text>
               </View>
               <Input
                 keyboardType="numeric"

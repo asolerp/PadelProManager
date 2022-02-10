@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
 import {View, Text, processColor} from 'react-native';
 import {RadarChart} from 'react-native-charts-wrapper';
@@ -7,7 +7,7 @@ import {Stat} from '../../Components/Player/Stat';
 import {Avatar as PlayerAvatar} from '../../Components/UI/Avatar';
 import t from '../../Theme/theme';
 import {MatchResume} from '../../Components/Home/MatchResume';
-
+import {AuthContext} from '../../Context/AuthContex';
 import {useGetPlayer} from './hooks/useGetPlayer';
 import {Header} from '../../Components/Layout/Header';
 import {legend, xAxis} from '../../Utils/graphParams';
@@ -23,12 +23,17 @@ import {
 import {Chip} from '../../Components/UI/Chip';
 import {PlayerSettings} from '../../Components/Player/PlayerSettings';
 
+import {PlayerHeader} from '../../Components/Player/PlayerHeader';
+
 export const PLAYER_SCREEN_KEY = 'playerScreen';
 
 export const PlayerScreen = ({route}) => {
-  const {playerId} = route.params;
-  const {player, tw, tl, tm, graphData, loading} = useGetPlayer(playerId);
-  const {matches} = useGetMatches(playerId);
+  const {user} = useContext(AuthContext);
+
+  const {player, tw, tl, tm, graphData, loading} = useGetPlayer(
+    route?.params?.playerId,
+  );
+  const {matches} = useGetMatches(player?.id);
   const renderItem = ({item}) => <MatchResume match={item} />;
 
   return (
@@ -36,8 +41,9 @@ export const PlayerScreen = ({route}) => {
       <Header
         withBack
         position="absolute"
-        rightSide={<PlayerSettings playerId={playerId} />}
+        rightSide={<PlayerSettings playerId={player?.id} />}
       />
+
       <FlatList
         ListHeaderComponent={
           <>
@@ -55,20 +61,36 @@ export const PlayerScreen = ({route}) => {
                     <Text style={[t.fontSans, t.textXs, t.textGray800, t.mR1]}>
                       Categoría:
                     </Text>
-                    <Chip
-                      mainColor={colorByCategory[player?.category || 3]}
-                      text={`${categoryParse[player?.category || 3]}`}
-                      style={[t.mR1]}
-                    />
+                    {player?.category ? (
+                      <Chip
+                        mainColor={colorByCategory[player?.category || 3]}
+                        text={`${categoryParse[player?.category || 3]}`}
+                        style={[t.mR1]}
+                      />
+                    ) : (
+                      <Chip
+                        mainColor="error"
+                        text="Sin definir"
+                        style={[t.mR1]}
+                      />
+                    )}
                   </View>
                   <View style={[t.flexRow, t.itemsCenter]}>
                     <Text style={[t.fontSans, t.textXs, t.textGray800, t.mR1]}>
                       Mano:
                     </Text>
-                    <Chip
-                      mainColor={colorByHand[player?.hand || 'right']}
-                      text={`${handParse[player?.hand || 'right']}`}
-                    />
+                    {player?.hand ? (
+                      <Chip
+                        mainColor={colorByHand[player?.hand || 'right']}
+                        text={`${handParse[player?.hand || 'right']}`}
+                      />
+                    ) : (
+                      <Chip
+                        mainColor="error"
+                        text="Sin definir"
+                        style={[t.mR1]}
+                      />
+                    )}
                   </View>
                 </View>
                 <View style={[t.flexRow, t.justifyBetween, t.w60, t.mT5]}>

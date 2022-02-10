@@ -1,29 +1,15 @@
 import React, {useState} from 'react';
-import {Text, View} from 'react-native';
+import {Linking, View} from 'react-native';
 import {BottomModal} from '../Modal/BottomModal';
 import {ListItem} from '../UI/ListItem';
 import Icon from 'react-native-vector-icons/Ionicons';
-import t from '../../Theme/theme';
-import {popScreen} from '../../Router/utils/actions';
-
-import {useDeleteDocument} from '../../Hooks/useDeleteDocument';
-import {playerQuery} from '../../Api/queries';
 
 import PressableOpacity from '../UI/PressableOpacity';
-import auth from '@react-native-firebase/auth';
-import {HDivider} from '../UI/HDivider';
+import {useLogout} from '../../Hooks/useLogout';
 
 export const ProfileSettings = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const {deleteDocument, loading} = useDeleteDocument(playerQuery);
-
-  const logOut = async () => {
-    try {
-      await auth().signOut();
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const {logout} = useLogout();
 
   return (
     <>
@@ -35,13 +21,7 @@ export const ProfileSettings = () => {
           <View>
             <ListItem
               onPress={() => {
-                deleteDocument({
-                  docId: playerId,
-                  callback: () => {
-                    setIsVisible(false);
-                    popScreen();
-                  },
-                });
+                Linking.openURL('https://apps.apple.com/account/subscriptions');
               }}
               iconName="ios-card-outline"
               title="Subscripciones"
@@ -49,7 +29,7 @@ export const ProfileSettings = () => {
             <ListItem
               iconName="ios-exit-outline"
               title="Logout"
-              onPress={() => logOut()}
+              onPress={() => logout()}
             />
           </View>
         </>

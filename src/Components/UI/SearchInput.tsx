@@ -51,7 +51,11 @@ export const SearchInput: React.FC<Props> = ({
             selectedValue={localValue}
             onValueChange={itemValue => setLocalValue(itemValue)}>
             {list?.map(element => (
-              <Picker.Item label={element?.label} value={element.value} />
+              <Picker.Item
+                key={element.value}
+                label={element?.label}
+                value={element.value}
+              />
             ))}
           </Picker>
           <HDivider />

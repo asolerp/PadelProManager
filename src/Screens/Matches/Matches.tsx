@@ -10,7 +10,7 @@ import {NEW_MATCH_SCREEN_KEY} from '../NewMatch/NewMatch';
 import {useGetMatches} from '../../Hooks/useGetMatches';
 import {MatchResume} from '../../Components/Home/MatchResume';
 import {FlatList} from 'react-native-gesture-handler';
-import {AuthContext} from '../../Context/AuthContex';
+
 import {sortByDate} from '../../Utils/sorts';
 import {SearchInput} from '../../Components/UI/SearchInput';
 import {searchOptions} from '../../Utils/lists';
@@ -19,8 +19,6 @@ import PressableOpacity from '../../Components/UI/PressableOpacity';
 export const MATCHES_SCREE_KEY = 'matchesScreen';
 
 export const Matches = () => {
-  const {user} = useContext(AuthContext);
-
   const {matches, setSearch, setSearchOption, search, searchOption} =
     useGetMatches();
 

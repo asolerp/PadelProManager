@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View} from 'react-native';
 
 import t from '../../Theme/theme';
@@ -6,8 +6,10 @@ import {Avatar} from '../UI/Avatar';
 import {LiveResult} from './LiveResult';
 import {openScreenWithPush} from '../../Router/utils/actions';
 import {PLAYER_SCREEN_KEY} from '../../Screens/Player/Player';
+import {SubscriptionContext} from '../../Context/SubscriptionContext';
 
 export const MatchHeader = ({match}) => {
+  const {isSubscribed} = useContext(SubscriptionContext);
   return (
     <View style={[t.flexRow, t.justifyBetween]}>
       <View style={[t.flexRow, t.flexGrow, t.justifyCenter]}>
@@ -19,6 +21,7 @@ export const MatchHeader = ({match}) => {
             name={player?.secondName || `Jug ${i + 1}`}
             onPress={() =>
               player?.id &&
+              isSubscribed &&
               openScreenWithPush(PLAYER_SCREEN_KEY, {
                 playerId: player?.id,
               })

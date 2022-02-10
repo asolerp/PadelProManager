@@ -3,7 +3,7 @@ import React, {FunctionComponent, useContext} from 'react';
 import {ScreenLayout, Header} from '../../Components/Layout';
 import {View, Text, ScrollView, Image} from 'react-native';
 import t from '../../Theme/theme';
-import {LiveMatchResume} from '../../Components/Home/LiveMatchResume';
+import {LiveMatchResume} from '../../Components/Common/LiveMatchResume';
 import {MatchResume} from '../../Components/Home/MatchResume';
 
 import {openScreenWithPush} from '../../Router/utils/actions';
@@ -17,11 +17,10 @@ import {WelcomeMessage} from '../../Components/Home/WelcomeMessage';
 
 import {Banner} from '../../Components/UI/Banner';
 import {NEW_MATCH_SCREEN_KEY} from '../NewMatch/NewMatch';
-import {Button} from '../../Components/UI/Button';
 
 import {DailyExercise} from '../../Components/Home/DailyExercise';
 import {sortByDate} from '../../Utils/sorts';
-import {useIAP, requestSubscription} from 'react-native-iap';
+
 import {SubscriptionContext} from '../../Context/SubscriptionContext';
 import {HomeHeader} from '../../Components/Home/HomeHeader';
 import {PROMOTIONAL_SUBSCRIPTION_SCREEN_KEY} from '../PromotionalSubscription/PromotionalSubscription';
@@ -30,10 +29,9 @@ export const HOME_SCREEN_KEY = 'homeScreen';
 
 export const HomeScreen: FunctionComponent = () => {
   const {finishedMatches, loadingFinishedMatches} = useGetFinishedMatches();
-  const {liveMatches, loadingLiveMatches} = useGetLiveMatches();
 
-  const {isUserWithActiveSubscription, isChecking, isExpired} =
-    useContext(SubscriptionContext);
+  const {isSubscribed} = useContext(SubscriptionContext);
+  const {liveMatches, loadingLiveMatches} = useGetLiveMatches();
 
   const renderItem = ({item}) => (
     <LiveMatchResume key={item?.id} match={item} />
@@ -46,7 +44,7 @@ export const HomeScreen: FunctionComponent = () => {
         contentContainerStyle={[t.relative]}>
         <HomeHeader />
         <WelcomeMessage />
-        {!isUserWithActiveSubscription && !isChecking && (
+        {!isSubscribed && (
           <Banner
             mainColor="warning"
             onPress={() =>

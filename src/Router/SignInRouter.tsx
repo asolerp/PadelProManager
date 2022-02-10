@@ -9,7 +9,6 @@ import {
 
 import {MainStack} from '../Stacks/MainStack';
 import {MAIN_STACK_KEY} from './utils/routerKeys';
-import {usePayments} from '../Lib/Payments/hooks/usePayments';
 
 const Stack = createNativeStackNavigator();
 

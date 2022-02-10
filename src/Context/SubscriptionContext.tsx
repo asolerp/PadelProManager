@@ -4,15 +4,16 @@ import {AuthContext} from './AuthContex';
 export const SubscriptionContext = createContext();
 
 export const SubscriptionProvider = ({children}) => {
-  const {user} = useContext(AuthContext);
   const [isChecking, setIsChecking] = useState(true);
+  const [isSubscribed, setIsSubscribed] = useState(false);
 
-  const isUserWithActiveSubscription = user?.status?.isSubscribed;
+  console.log(isSubscribed, 'isSubscribed');
 
   const value = {
     isChecking,
     setIsChecking,
-    isUserWithActiveSubscription,
+    isSubscribed,
+    setIsSubscribed,
   };
   return (
     <SubscriptionContext.Provider value={value}>

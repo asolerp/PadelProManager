@@ -1,21 +1,20 @@
 import {tennisGameLogic} from '../../../Utils/gameLogic';
 import {useUpdateDocument} from '../../../Hooks/useUpdateDocument';
 import {useAddDocument} from '../../../Hooks/useAddDocument';
-import {useDeleteDocument} from '../../../Hooks/useDeleteDocument';
 
 import firebase from '@react-native-firebase/app';
 import firestore from '@react-native-firebase/firestore';
 
-import {ERROR_FORCED, NONFORCED, WINNER} from '../utils/constants';
+import {ERROR_FORCED, NONFORCED, WINNER} from '../../../Utils/constants';
 import {Alert} from 'react-native';
 import useRecursiveDelete from '../../../Hooks/useRecursiveDelete';
 import {useContext} from 'react';
 import {LoadingModalContext} from '../../../Context/LoadingModalContext';
-import {popScreen} from '../../../Router/utils/actions';
 
 export const useLiveMatch = match => {
   const query = firestore().collection('matches');
   const {updateDocument, loading: loadingUpdate} = useUpdateDocument(query);
+
   const {setIsVisible: setIsVisibleLoading, setText} =
     useContext(LoadingModalContext);
   const {addDocument, loading: loadingAdd} = useAddDocument(
@@ -61,6 +60,7 @@ export const useLiveMatch = match => {
     });
     if (!error) {
       const newStateGame = tennisGameLogic(match?.game, stats?.winPointTeam);
+
       try {
         await addDocument({
           data: {
@@ -82,7 +82,6 @@ export const useLiveMatch = match => {
         delete newStateGame.info;
         await updateDocument(match?.id, {
           game: newStateGame,
-          state: newStateGame.finished ? 'finished' : 'live',
           [`statistics.s${newStateGame.set}.count`]:
             firebase.firestore.FieldValue.increment(1),
           ['statistics.total.count']:

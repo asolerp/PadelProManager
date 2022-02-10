@@ -21,59 +21,17 @@ import {
   LaunchScreen,
   LAUNCH_SCREEN_KEY,
 } from '../Screens/LaunchScreen/LaunchScreen';
-import {ProfileScreen, PROFILE_SCREEN_KEY} from '../Screens/Profile/Profile';
 
 const Stack = createNativeStackNavigator();
 
 export const MainStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Group>
-        <Stack.Screen
-          options={{headerShown: false}}
-          name={LAUNCH_SCREEN_KEY}
-          component={LaunchScreen}
-        />
-        <Stack.Screen
-          options={{headerShown: false}}
-          name={TAB_STACK_KEY}
-          component={TabStack}
-        />
-        <Stack.Screen
-          options={{headerShown: false}}
-          name={PROMOTIONAL_SUBSCRIPTION_SCREEN_KEY}
-          component={PromotionalSubscription}
-        />
-        <Stack.Screen
-          options={{headerShown: false}}
-          name={PLAYER_SCREEN_KEY}
-          component={PlayerScreen}
-        />
-        <Stack.Screen
-          options={{headerShown: false}}
-          name={MATCH_SCREEN_KEY}
-          component={MatchScreen}
-        />
-        <Stack.Screen
-          options={{headerShown: false}}
-          name={NEW_MATCH_SCREEN_KEY}>
-          {() => (
-            <NewMatchProvider>
-              <NewMatchScreen />
-            </NewMatchProvider>
-          )}
-        </Stack.Screen>
-        <Stack.Screen
-          options={{headerShown: false}}
-          name={NEW_PLAYER_SCREEN_KEY}
-          component={NewPlayerScreen}
-        />
-        <Stack.Screen
-          options={{headerShown: false}}
-          name={PROFILE_SCREEN_KEY}
-          component={ProfileScreen}
-        />
-      </Stack.Group>
+      <Stack.Screen
+        options={{headerShown: false}}
+        name={LAUNCH_SCREEN_KEY}
+        component={LaunchScreen}
+      />
     </Stack.Navigator>
   );
 };

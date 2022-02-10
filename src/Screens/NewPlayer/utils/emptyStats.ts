@@ -8,6 +8,7 @@ export const emptyStats = {
     br: 0,
     bj: 0,
     sm: 0,
+    gl: 0,
   },
   nf: {
     fd: 0,
@@ -18,6 +19,7 @@ export const emptyStats = {
     br: 0,
     bj: 0,
     sm: 0,
+    gl: 0,
   },
   w: {
     fd: 0,
@@ -28,6 +30,7 @@ export const emptyStats = {
     br: 0,
     bj: 0,
     sm: 0,
+    gl: 0,
   },
   tl: 0,
   tm: 0,

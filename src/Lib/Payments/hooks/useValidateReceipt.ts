@@ -1,28 +1,38 @@
 import {useContext} from 'react';
 import {AuthContext} from '../../../Context/AuthContex';
 import functions from '@react-native-firebase/functions';
-import {SubscriptionContext} from '../../../Context/SubscriptionContext';
+import {LoadingModalContext} from '../../../Context/LoadingModalContext';
+import {useUpdateDocument} from '../../../Hooks/useUpdateDocument';
+import {userQuery} from '../../../Api/queries';
 
 export const useValidateReceipt = () => {
   const {user} = useContext(AuthContext);
-  const {setIsChecking} = useContext(SubscriptionContext);
+  const {setText, setIsVisible} = useContext(LoadingModalContext);
+  const {updateDocument} = useUpdateDocument(userQuery);
+
+  const invalidateReceipt = () => {
+    updateDocument(user?.id, {
+      ['status.isSubscribed']: false,
+    });
+  };
 
   const validateReceipt = async receipt => {
     const validateFn = functions().httpsCallable('validateReceipt');
-    // setIsChecking(true);
+    setText('Comprobando suscripción...');
+    setIsVisible(true);
     try {
       await validateFn({
         receipt,
-        password: 'b9c74702d40b423a9b1f6e3d6d457c22',
       });
     } catch (err) {
       console.log(err);
     } finally {
-      //   setIsChecking(false);
+      setIsVisible(false);
     }
   };
 
   return {
+    invalidateReceipt,
     validateReceipt,
   };
 };

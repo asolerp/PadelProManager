@@ -21,7 +21,9 @@ export const Players = () => {
   const {search, setSearch, filteredList} = useSearch({list: players});
   const {handleCheckCreateNewPlayer} = useCheckPermissions();
 
-  const renderItem = ({item}) => <PlayerItem item={item} />;
+  const renderItem = ({item, index}) => (
+    <PlayerItem item={item} index={index} />
+  );
 
   return (
     <ScreenLayout>

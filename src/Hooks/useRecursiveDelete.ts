@@ -14,7 +14,6 @@ const useRecursiveDelete = ({path, callback}) => {
       console.log(err);
     } finally {
       setLoading(false);
-      console.log('Borrado');
       callback && callback();
     }
   };

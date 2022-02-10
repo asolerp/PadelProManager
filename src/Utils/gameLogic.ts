@@ -20,8 +20,6 @@ const generateSet = (game, sets, team) => {
   const isTiebreak = game?.tiebreak;
   const teamSetGame = game?.[`winsSetTeam${team}`] + 1;
 
-  console.log(Number(game?.[`s${sets}t${team}`]) + 1, 'SETS');
-
   return {
     ...game,
     team1: 0,

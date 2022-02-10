@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, useWindowDimensions} from 'react-native';
 
 import {TabView, TabBar} from 'react-native-tab-view';
+import {usePermissions} from '../../Hooks/usePermissions';
 
 import t from '../../Theme/theme';
 
@@ -11,12 +12,25 @@ import {StatisticsRoute} from './Tabs/StatisticsRoute';
 
 export const MatchTabs = ({match, notes, pointsHistory}) => {
   const layout = useWindowDimensions();
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    {key: 'notes', title: 'Notas'},
-    {key: 'statistics', title: 'Estadísticas'},
-    {key: 'historic', title: 'Histórioco'},
-  ]);
+  const [index, setIndex] = useState(0);
+  const {getIsOwner} = usePermissions();
+  const [routes, setRoutes] = useState<any>();
+
+  useEffect(() => {
+    const isOnwer = getIsOwner(match?.owner);
+    if (isOnwer) {
+      setRoutes([
+        {key: 'notes', title: 'Notas'},
+        {key: 'statistics', title: 'Estadísticas'},
+        {key: 'historic', title: 'Histórioco'},
+      ]);
+    } else {
+      setRoutes([
+        {key: 'statistics', title: 'Estadísticas'},
+        {key: 'historic', title: 'Histórioco'},
+      ]);
+    }
+  }, [match?.owner]);
 
   const renderScene = ({route}) => {
     switch (route.key) {
@@ -38,28 +52,37 @@ export const MatchTabs = ({match, notes, pointsHistory}) => {
   };
 
   return (
-    <TabView
-      renderTabBar={props => (
-        <TabBar
-          {...props}
-          style={{backgroundColor: null}}
-          indicatorStyle={{backgroundColor: null}}
-          renderLabel={({route, focused}) => {
-            const isFocused = focused ? t.opacity100 : t.opacity30;
-            return (
-              <Text
-                style={[t.fontSansBold, t.textBlack, t.textBase, isFocused]}>
-                {route.title}
-              </Text>
-            );
-          }}
+    <>
+      {routes && (
+        <TabView
+          renderTabBar={props => (
+            <TabBar
+              {...props}
+              style={{backgroundColor: null}}
+              indicatorStyle={{backgroundColor: null}}
+              renderLabel={({route, focused}) => {
+                const isFocused = focused ? t.opacity100 : t.opacity30;
+                return (
+                  <Text
+                    style={[
+                      t.fontSansBold,
+                      t.textBlack,
+                      t.textBase,
+                      isFocused,
+                    ]}>
+                    {route.title}
+                  </Text>
+                );
+              }}
+            />
+          )}
+          navigationState={{index, routes}}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={{width: layout.width}}
+          style={[t.bgWhite]}
         />
       )}
-      navigationState={{index, routes}}
-      renderScene={renderScene}
-      onIndexChange={setIndex}
-      initialLayout={{width: layout.width}}
-      style={[t.bgWhite]}
-    />
+    </>
   );
 };
