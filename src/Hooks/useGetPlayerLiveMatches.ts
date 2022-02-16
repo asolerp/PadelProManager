@@ -15,8 +15,6 @@ export const useGetPlayerLiveMatches = playerId => {
     idField: 'id',
   });
 
-  console.log(liveMatches);
-
   return {
     liveMatches,
     loadingLiveMatches,

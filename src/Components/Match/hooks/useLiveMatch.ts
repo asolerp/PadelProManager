@@ -7,7 +7,7 @@ import firestore from '@react-native-firebase/firestore';
 
 import {ERROR_FORCED, NONFORCED, WINNER} from '../../../Utils/constants';
 import {Alert} from 'react-native';
-import useRecursiveDelete from '../../../Hooks/useRecursiveDelete';
+import {useRecursiveDelete} from '../../../Hooks/useRecursiveDelete';
 import {useContext} from 'react';
 import {LoadingModalContext} from '../../../Context/LoadingModalContext';
 
@@ -23,24 +23,29 @@ export const useLiveMatch = match => {
 
   const {recursiveDelete} = useRecursiveDelete({
     path: `matches/${match?.id}`,
-    callback: () => {
-      setIsVisibleLoading(false);
-    },
   });
 
-  const handleWhoStarts = async team => {
-    await updateDocument(match?.id, {
-      'game.service': team,
-    });
-  };
-
-  const handleDeleteMatch = async () => {
-    setText('Eliminando partida...');
-    setIsVisibleLoading(true);
+  const handleWhoStarts = async (team, callback) => {
     try {
-      recursiveDelete();
+      await updateDocument(match?.id, {
+        'game.service': team,
+      });
     } catch (err) {
       console.log(err);
+    } finally {
+      callback && callback();
+    }
+  };
+
+  const handleDeleteMatch = async (callback?: () => void) => {
+    setText('Eliminando partida...');
+    try {
+      setIsVisibleLoading(true);
+      await recursiveDelete(callback);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsVisibleLoading(false);
     }
   };
 

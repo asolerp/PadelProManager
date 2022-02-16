@@ -8,9 +8,6 @@ const recursiveDelete = functions
   })
   .https.onCall(async (data, context) => {
     const {path} = data;
-    console.log(
-      `User ${context.auth.uid} has requested to delete path ${path}`,
-    );
 
     if (!context.auth) {
       throw new functions.https.HttpsError(

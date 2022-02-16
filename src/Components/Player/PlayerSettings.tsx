@@ -9,7 +9,7 @@ import {NEW_PLAYER_SCREEN_KEY} from '../../Screens/NewPlayer/NewPlayer';
 
 import {LoadingModal} from '../Common/LoadingModal';
 import PressableOpacity from '../UI/PressableOpacity';
-import useRecursiveDelete from '../../Hooks/useRecursiveDelete';
+import {useRecursiveDelete} from '../../Hooks/useRecursiveDelete';
 import {showError} from './utils/alertErrorMessages';
 import {LoadingModalContext} from '../../Context/LoadingModalContext';
 import {timeout} from '../../Utils/timeout';

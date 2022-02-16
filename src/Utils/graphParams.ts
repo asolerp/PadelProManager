@@ -15,5 +15,6 @@ export const xAxis = {
     'Bajada Revés',
     'Bandeja',
     'Smatch',
+    'Globo',
   ],
 };

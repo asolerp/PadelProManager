@@ -9,6 +9,7 @@ import {HDivider} from './HDivider';
 import {Button} from './Button';
 
 export const Select = ({
+  empty,
   value,
   label,
   name,
@@ -24,37 +25,42 @@ export const Select = ({
 
   return (
     <Pressable style={[style]} onPress={() => Keyboard.dismiss()}>
-      <BottomModal
-        title={label}
-        swipeDirection={null}
-        isVisible={isVisible}
-        onClose={() => setIsVisible(false)}>
-        <>
-          <Picker
-            selectedValue={localValue}
-            onValueChange={(itemValue, itemIndex) => setLocalValue(itemValue)}>
-            {list?.map(element => (
-              <Picker.Item
-                key={element.value}
-                label={element?.label}
-                value={element.value}
-              />
-            ))}
-          </Picker>
-          <HDivider />
-          <Button
-            active
-            title="Guardar"
-            style={[t.mT3, t.mB3]}
-            textStyle={[t.textLg]}
-            onPress={() => {
-              onChange(localValue);
-              setIsVisible(false);
-            }}
-          />
-        </>
-      </BottomModal>
+      {isVisible && (
+        <BottomModal
+          title={label}
+          swipeDirection={null}
+          isVisible={true}
+          onClose={() => setIsVisible(false)}>
+          <>
+            <Picker
+              selectedValue={localValue}
+              onValueChange={(itemValue, itemIndex) =>
+                setLocalValue(itemValue)
+              }>
+              {list?.map(element => (
+                <Picker.Item
+                  key={element.value}
+                  label={element?.label}
+                  value={element.value}
+                />
+              ))}
+            </Picker>
+            <HDivider />
+            <Button
+              active
+              title="Guardar"
+              style={[t.mT3, t.mB3]}
+              textStyle={[t.textLg]}
+              onPress={() => {
+                onChange(localValue);
+                setIsVisible(false);
+              }}
+            />
+          </>
+        </BottomModal>
+      )}
       <Input
+        empty={empty}
         editable={false}
         placeholder={placeholder}
         value={value?.label}

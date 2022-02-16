@@ -3,19 +3,15 @@ import {useDocumentData} from 'react-firebase-hooks/firestore';
 import {playerQuery} from '../../../Api/queries';
 import {radarGraphDataGenerator} from '../../../Utils/radaGraphDataGenerator';
 
-import {useGetPlayerId} from '../../Player/hooks/useGetPlayerId';
+import {useGetPlayerByUserId} from '../../../Hooks/useGetPlayerByUserId';
 
 export const useGetPlayer = () => {
-  const {player: p} = useGetPlayerId();
-  const queryPlayer = useMemo(() => playerQuery.doc(p?.id), [p?.id]);
+  const {player, loading: loadingPlayer} = useGetPlayerByUserId();
   const queryStats = useMemo(
-    () => playerQuery.doc(p?.id).collection('stats').doc('global'),
-    [p?.id],
+    () => playerQuery.doc(player?.id).collection('stats').doc('global'),
+    [player?.id],
   );
 
-  const [player, loadingPlayer, errorPlayer] = useDocumentData(queryPlayer, {
-    idField: 'id',
-  });
   const [stats, loadingStats, errorStats] = useDocumentData(queryStats);
 
   const [graphData, setGraphData] = useState();
@@ -31,7 +27,7 @@ export const useGetPlayer = () => {
   const tm = stats?.tm;
 
   const loading = loadingStats || loadingPlayer;
-  const error = errorPlayer || errorStats;
+  const error = errorStats;
 
   return {player, error, loading, tw, tl, tm, graphData};
 };

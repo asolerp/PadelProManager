@@ -22,6 +22,10 @@ import {usePayments} from '../Lib/Payments/hooks/usePayments';
 
 import {ProfileScreen, PROFILE_SCREEN_KEY} from '../Screens/Profile/Profile';
 import {NewPoint, NEW_POINT_SCREEN_KEY} from '../Screens/NewPoint/NewPoint';
+import {
+  NewSessionScreen,
+  NEW_SESSION_SCREEN_KEY,
+} from '../Screens/NewSession/NewSession';
 
 const Stack = createNativeStackNavigator();
 
@@ -75,6 +79,11 @@ export const CoachStack = () => {
           options={{headerShown: false}}
           name={NEW_POINT_SCREEN_KEY}
           component={NewPoint}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name={NEW_SESSION_SCREEN_KEY}
+          component={NewSessionScreen}
         />
       </Stack.Group>
     </Stack.Navigator>

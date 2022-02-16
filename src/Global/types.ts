@@ -6,6 +6,21 @@ export interface PlayerType {
   team?: string;
 }
 
+export interface UserType {
+  id?: string;
+  email?: string;
+  firstName?: string;
+  secondName: string;
+  gender?: 'male' | 'female';
+  municipio?: string;
+  phone?: string;
+  photoURL?: string;
+  profileImg?: string;
+  provincia?: string;
+  role?: 'player' | 'coach';
+  token?: string;
+}
+
 export interface GameType {
   service: string;
   team1: number;

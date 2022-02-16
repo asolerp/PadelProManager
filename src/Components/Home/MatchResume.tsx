@@ -84,6 +84,11 @@ export const MatchResume: React.FC<Props> = ({match}) => {
               <Chip mainColor="error" text="Live" />
             </View>
           )}
+          {match?.state === 'finished' && (
+            <View style={[t.itemsStart, t.mY1]}>
+              <Chip mainColor="primary" text="Finalizado" />
+            </View>
+          )}
           <Icon name="chevron-right" size={15} color="black" style={[t.mL3]} />
         </View>
       </PressableOpacity>

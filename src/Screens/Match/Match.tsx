@@ -27,15 +27,8 @@ export const MATCH_SCREEN_KEY = 'matchScreen';
 
 export const MatchScreen: React.FC = ({route}) => {
   const {matchId} = route.params;
-  const {
-    notes,
-    match,
-    history,
-    loadingMatch,
-    isGameFinished,
-    isMatchFinished,
-    isStartTeamAssigned,
-  } = useGetMatch(matchId);
+  const {notes, match, history, loadingMatch, isGameFinished, isMatchFinished} =
+    useGetMatch(matchId);
 
   const [isExpanded, setIsExpanded] = useState(false);
   const {getIsOwner} = usePermissions();
@@ -57,7 +50,7 @@ export const MatchScreen: React.FC = ({route}) => {
         isVisible={isGameFinished && !isMatchFinished}
         onAccept={() => savePlayersStatsHandler()}
       />
-      <ServiceModal isVisible={isStartTeamAssigned} match={match} />
+      {!loadingMatch && <ServiceModal match={match} />}
       {!loadingMatch && (
         <Header
           withBack

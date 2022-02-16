@@ -23,13 +23,9 @@ import {
 import {Chip} from '../../Components/UI/Chip';
 import {PlayerSettings} from '../../Components/Player/PlayerSettings';
 
-import {PlayerHeader} from '../../Components/Player/PlayerHeader';
-
 export const PLAYER_SCREEN_KEY = 'playerScreen';
 
 export const PlayerScreen = ({route}) => {
-  const {user} = useContext(AuthContext);
-
   const {player, tw, tl, tm, graphData, loading} = useGetPlayer(
     route?.params?.playerId,
   );
@@ -43,7 +39,6 @@ export const PlayerScreen = ({route}) => {
         position="absolute"
         rightSide={<PlayerSettings playerId={player?.id} />}
       />
-
       <FlatList
         ListHeaderComponent={
           <>

@@ -19,6 +19,8 @@ export const useStatistics = ({team1, team2, statistics}) => {
   const [t2Tbj, setT2Tbj] = useState();
   const [t1Tsm, setT1Tsm] = useState();
   const [t2Tsm, setT2Tsm] = useState();
+  const [t1Tgl, setT1Tgl] = useState();
+  const [t2Tgl, setT2Tgl] = useState();
   const [dataP1, setDataP1] = useState();
   const [dataP2, setDataP2] = useState();
   const [dataP3, setDataP3] = useState();
@@ -106,6 +108,17 @@ export const useStatistics = ({team1, team2, statistics}) => {
         getStatisticCount(statistics?.[activeSet]?.team2?.global?.w?.sm) +
           getStatisticCount(statistics?.[activeSet]?.team2?.global?.ef?.sm),
       );
+
+      // Globo
+      setT1Tgl(
+        getStatisticCount(statistics?.[activeSet]?.team1?.global?.w?.gl) +
+          getStatisticCount(statistics?.[activeSet]?.team1?.global?.ef?.gl),
+      );
+      setT2Tgl(
+        getStatisticCount(statistics?.[activeSet]?.team2?.global?.w?.gl) +
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.ef?.gl),
+      );
+
       setDataP1(
         radarGraphDataGenerator(
           statistics?.[activeSet]?.team1?.players?.[team1?.[0]?.id],
@@ -152,6 +165,8 @@ export const useStatistics = ({team1, team2, statistics}) => {
     t2Tbj,
     t1Tsm,
     t2Tsm,
+    t1Tgl,
+    t2Tgl,
     activeSet,
     totalPoints,
     handleSetActiveSet,

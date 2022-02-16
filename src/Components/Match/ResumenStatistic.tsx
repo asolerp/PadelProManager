@@ -16,6 +16,7 @@ export const ResumenStatistic = ({statistics}) => {
     brW,
     bjW,
     smW,
+    glW,
     vdEf,
     vrEf,
     fdEf,
@@ -24,6 +25,7 @@ export const ResumenStatistic = ({statistics}) => {
     brEf,
     bjEf,
     smEf,
+    glEf,
     vdNf,
     vrNf,
     fdNf,
@@ -32,6 +34,7 @@ export const ResumenStatistic = ({statistics}) => {
     brNf,
     bjNf,
     smNf,
+    glNf,
     totalW,
     totalEf,
     totalNf,
@@ -69,6 +72,9 @@ export const ResumenStatistic = ({statistics}) => {
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
               <Chip text="SM" mainColor="secondary" />
             </View>
+            <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
+              <Chip text="GL" mainColor="success" />
+            </View>
             <View style={[t.itemsCenter, t.justifyCenter, t.mL3]}>
               <Text style={[t.fontSansBold]}>Total</Text>
             </View>
@@ -100,6 +106,9 @@ export const ResumenStatistic = ({statistics}) => {
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
               <Text style={[t.fontSansMedium, t.textSuccess]}>{smW}</Text>
+            </View>
+            <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
+              <Text style={[t.fontSansMedium, t.textSuccess]}>{glW}</Text>
             </View>
             <View
               style={[
@@ -143,6 +152,9 @@ export const ResumenStatistic = ({statistics}) => {
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
               <Text style={[t.fontSansMedium, t.textInfo]}>{smEf}</Text>
             </View>
+            <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
+              <Text style={[t.fontSansMedium, t.textInfo]}>{glEf}</Text>
+            </View>
             <View
               style={[
                 {width: CELL_SIZE},
@@ -184,6 +196,9 @@ export const ResumenStatistic = ({statistics}) => {
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
               <Text style={[t.fontSansMedium, t.textError]}>{smNf}</Text>
+            </View>
+            <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
+              <Text style={[t.fontSansMedium, t.textError]}>{glNf}</Text>
             </View>
             <View
               style={[

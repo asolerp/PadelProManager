@@ -2,12 +2,12 @@ import firestore from '@react-native-firebase/firestore';
 import {useMemo, useState} from 'react';
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 
-import {useGetPlayerId} from '../Screens/Player/hooks/useGetPlayerId';
+import {useGetPlayerByUserId} from '../Hooks/useGetPlayerByUserId';
 import {removeAccents} from '../Utils/removeAccents';
 import {sortByClubName} from '../Utils/sorts';
 
 export const useGetPlayerMatches = () => {
-  const {player} = useGetPlayerId();
+  const {player} = useGetPlayerByUserId();
   const [search, setSearch] = useState();
   const [searchOption, setSearchOption] = useState('name');
 

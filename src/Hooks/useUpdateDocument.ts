@@ -1,10 +1,5 @@
 import {useState} from 'react';
 
-interface HookProps {
-  docId?: string;
-  data: any;
-}
-
 export const useUpdateDocument = query => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
@@ -17,12 +12,11 @@ export const useUpdateDocument = query => {
     setLoading(true);
     try {
       await query.doc(docId).update(update);
-      setLoading(false);
     } catch (err) {
       console.log(err);
       setError(err);
-      setLoading(false);
     } finally {
+      setLoading(false);
       callback && callback();
     }
   };

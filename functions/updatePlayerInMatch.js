@@ -23,7 +23,6 @@ const updatePlayerInMatch = functions.firestore
         const indexT2 = match?.t2?.findIndex(
           p => p?.id === context.params.playerId,
         );
-        console.log(indexT1, indexT2, '[[INDEXS]]');
         indexT1 !== -1
           ? (match.t1[indexT1] = {
               ...playerAfter,

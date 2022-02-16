@@ -44,14 +44,14 @@ export const Button: React.FC<Props> = ({
     success: [active ? t.bgSuccess : t.bgWhite, t.borderSuccessDark],
     error: [active ? t.bgError : t.bgWhite, t.borderErrorDark],
     info: [active ? t.bgInfo : t.bgWhite, t.borderInfoDark],
-    white: [active ? t.bgWhite : t.bgWhite, t.border0],
+    white: [active ? t.bgWhite : t.bgTransparent, t.borderWhite],
   };
 
   const parseTextTypeColor = {
     success: active ? t.textWhite : t.textSuccessDark,
     error: active ? t.textWhite : t.textErrorDark,
     info: active ? t.textWhite : t.textInfoDark,
-    white: active ? t.textGray700 : t.textGray700,
+    white: active ? t.textGray700 : t.textWhite,
   };
 
   useEffect(() => {
@@ -60,10 +60,13 @@ export const Button: React.FC<Props> = ({
         setState(false);
       }, 500);
     }
+    return () => setState(false);
   }, [state]);
 
   return (
     <PressableOpacity
+      disabled={disabled}
+      disabledOpacity={0.5}
       onPress={
         !disabled
           ? () => {
@@ -82,7 +85,6 @@ export const Button: React.FC<Props> = ({
         size === 'lg' || size === 'xl' ? t.pY3 : t.pY2,
         t.shadow,
         style,
-        disabled && t.opacity50,
       ]}>
       {loading ? (
         <ActivityIndicator color="white" />

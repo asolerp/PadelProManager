@@ -1,37 +1,37 @@
 import React, {useContext} from 'react';
 
-import {Image} from 'react-native';
+import {View} from 'react-native';
 import {AuthContext} from '../../Context/AuthContex';
-import {SubscriptionContext} from '../../Context/SubscriptionContext';
+
 import {openScreenWithPush} from '../../Router/utils/actions';
 
 import {PROFILE_SCREEN_KEY} from '../../Screens/Profile/Profile';
 import t from '../../Theme/theme';
 import {Header} from '../Layout';
 import {Avatar} from '../UI/Avatar';
+import {WelcomeMessage} from './WelcomeMessage';
 
-export const HomeHeader = ({position}) => {
+interface Props {
+  position?: 'absolute' | 'relative';
+}
+
+export const HomeHeader: React.FC<Props> = ({position}) => {
   const {user} = useContext(AuthContext);
-  const {isSubscribed} = useContext(SubscriptionContext);
+
   return (
-    <Header
-      position={position}
-      title={isSubscribed && 'PREMIUM'}
-      leftSide={
-        <Image
-          resizeMode="contain"
-          source={require('../../Assets/logo.png')}
-          style={[t.h10, t.w8]}
-        />
-      }
-      rightSide={
-        <Avatar
-          imageStyle={[t.w10, t.h10]}
-          style={[t.mX2]}
-          img={user?.profileImg}
-          onPress={() => openScreenWithPush(PROFILE_SCREEN_KEY)}
-        />
-      }
-    />
+    <View style={[t.mB10]}>
+      <Header
+        position={position}
+        leftSide={<WelcomeMessage />}
+        rightSide={
+          <Avatar
+            imageStyle={[t.w12, t.h12]}
+            style={[t.mX2]}
+            img={user?.profileImg}
+            onPress={() => openScreenWithPush(PROFILE_SCREEN_KEY)}
+          />
+        }
+      />
+    </View>
   );
 };

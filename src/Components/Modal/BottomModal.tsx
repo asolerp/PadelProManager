@@ -30,7 +30,7 @@ export const BottomModal = ({
             t.pB8,
           ]}>
           <View style={[t.itemsCenter]}>
-            <View style={[t.w10, t.h1, t.bgGray500, t.roundedFull, t.mB2]} />
+            <View style={[t.w10, t.h2, t.bgGray200, t.roundedFull, t.mB2]} />
           </View>
           {title && (
             <View>

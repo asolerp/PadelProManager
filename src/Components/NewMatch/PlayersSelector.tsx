@@ -63,6 +63,13 @@ export const PlayersSelector = () => {
   const {playerPosition, setPlayerPosition} = useNewMatchForm();
   const {selectedPlayers, setSelectedPlayers} = useContext(NewMatchContext);
 
+  const handleSavePlayer = player => {
+    setSelectedPlayers({
+      ...selectedPlayers,
+      [playerPosition]: {...player},
+    });
+  };
+
   const handlePressAddPlayer = pos => {
     setPlayerPosition(pos);
     setIsVisible(true);
@@ -72,13 +79,6 @@ export const PlayersSelector = () => {
     setSelectedPlayers({
       ...selectedPlayers,
       [pos]: undefined,
-    });
-  };
-
-  const handleSavePlayer = player => {
-    setSelectedPlayers({
-      ...selectedPlayers,
-      [playerPosition]: {...player},
     });
   };
 

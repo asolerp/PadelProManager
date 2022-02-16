@@ -50,8 +50,6 @@ const newUserChecker = functions.auth.user().onCreate(async user => {
 
   if (findPlayer.docs.length > 0) {
     const player = findPlayer.docs[0];
-    console.log('UID', user?.uid);
-    console.log('PLAYER', player);
     await admin
       .firestore()
       .collection('players')
@@ -60,6 +58,7 @@ const newUserChecker = functions.auth.user().onCreate(async user => {
   } else {
     const id = firebaseIDGenerator();
     await admin.firestore().collection('players').doc(id).set({
+      id: user?.uid,
       email: user?.email,
     });
     await admin

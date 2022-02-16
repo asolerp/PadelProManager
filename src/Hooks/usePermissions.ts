@@ -15,7 +15,6 @@ export const usePermissions = () => {
   const playersOfUser = players?.length;
   const isCoach = user?.role === 'coach';
   const getIsOwner = matchOwnerId => {
-    console.log(matchOwnerId === user?.id);
     return matchOwnerId === user?.id;
   };
   const permissionCreateNewPlayer = playersOfUser === 0 || isSubscribed;

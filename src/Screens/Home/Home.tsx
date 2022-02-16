@@ -13,7 +13,6 @@ import {MyPlayers} from '../../Components/Home/MyPlayers';
 import {FlatList} from 'react-native-gesture-handler';
 import {useGetLiveMatches} from '../../Hooks/useGetLiveMatches';
 import {useGetFinishedMatches} from '../../Hooks/useGetFinishedMatches';
-import {WelcomeMessage} from '../../Components/Home/WelcomeMessage';
 
 import {Banner} from '../../Components/UI/Banner';
 import {NEW_MATCH_SCREEN_KEY} from '../NewMatch/NewMatch';
@@ -24,6 +23,8 @@ import {sortByDate} from '../../Utils/sorts';
 import {SubscriptionContext} from '../../Context/SubscriptionContext';
 import {HomeHeader} from '../../Components/Home/HomeHeader';
 import {PROMOTIONAL_SUBSCRIPTION_SCREEN_KEY} from '../PromotionalSubscription/PromotionalSubscription';
+import {useGetDaySessions} from '../../Components/Home/hooks/useGetDaySessions';
+import {MyTodaySessions} from '../../Components/Home/MyTodaySessions';
 
 export const HOME_SCREEN_KEY = 'homeScreen';
 
@@ -43,7 +44,6 @@ export const HomeScreen: FunctionComponent = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[t.relative]}>
         <HomeHeader />
-        <WelcomeMessage />
         {!isSubscribed && (
           <Banner
             mainColor="warning"
@@ -58,6 +58,9 @@ export const HomeScreen: FunctionComponent = () => {
           />
         )}
         <View>
+          <View style={[t.mB7]}>
+            <MyTodaySessions />
+          </View>
           <View style={[t.mB7]}>
             <MyPlayers />
           </View>

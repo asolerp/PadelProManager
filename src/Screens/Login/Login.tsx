@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Text, View, Image} from 'react-native';
+import {Text, View, Image, StatusBar} from 'react-native';
 
 import {ContainerWithBg} from '../../Components/UI/ContainerWithBg';
 import t from '../../Theme/theme';
@@ -16,6 +16,7 @@ export const LoginScreen = () => {
 
   return (
     <>
+      <StatusBar barStyle="light-content" />
       <LoginModal
         isModalVisible={isLoginModalOpen}
         onBackdropPress={() => setIsLoginModalOpen(false)}

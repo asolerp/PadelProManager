@@ -27,7 +27,7 @@ export const Header: React.FC<Props> = ({
   return (
     <>
       <View style={[t.flexRow, t.itemsCenter, t.z20, t?.[position]]}>
-        <View style={[t.w10, t.itemsStart]}>
+        <View style={[t.minW10, t.itemsStart]}>
           {withBack && !leftSide ? (
             <PressableOpacity onPress={popScreen}>
               <Icon
@@ -50,7 +50,7 @@ export const Header: React.FC<Props> = ({
             {title}
           </Text>
         </View>
-        <View style={[t.w10, t.itemsEnd]}>{!!rightSide && rightSide}</View>
+        <View style={[t.minW10, t.itemsEnd]}>{!!rightSide && rightSide}</View>
       </View>
     </>
   );

@@ -6,7 +6,7 @@ import {usePermissions} from '../../../Hooks/usePermissions';
 
 import {popScreen} from '../../../Router/utils/actions';
 import {timeout} from '../../../Utils/timeout';
-import {useGetPlayerId} from '../../Player/hooks/useGetPlayerId';
+import {useGetPlayerByUserId} from '../../../Hooks/useGetPlayerByUserId';
 import {matchTeam1, matchTeam2, playersId} from '../utils/matchStructure';
 import {useAddNewMatch} from './useAddNewMatch';
 
@@ -14,7 +14,7 @@ export const useNewMatchForm = () => {
   const newMatchFormRef = useRef();
   const {user} = useContext(AuthContext);
   const [playerPosition, setPlayerPosition] = useState();
-  const {player} = useGetPlayerId();
+  const {player} = useGetPlayerByUserId();
   const [loading, setLoading] = useState(false);
   const {selectedPlayers} = useContext(NewMatchContext);
   const {addNewMatch, loading: loadingAddMatch} = useAddNewMatch();

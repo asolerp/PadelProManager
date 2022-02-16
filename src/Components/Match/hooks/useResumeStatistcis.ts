@@ -8,6 +8,7 @@ export const useResumeStatistics = ({statistics}) => {
     br: dataSet?.values?.[5]?.value || 0,
     bj: dataSet?.values?.[6]?.value || 0,
     sm: dataSet?.values?.[7]?.value || 0,
+    gl: dataSet?.values?.[8]?.value || 0,
   });
 
   const {
@@ -19,9 +20,10 @@ export const useResumeStatistics = ({statistics}) => {
     br: brW,
     bj: bjW,
     sm: smW,
+    gl: glW,
   } = generateResumen(statistics?.[0]);
 
-  const totalW = vdW + vrW + fdW + frW + bdW + brW + bjW + smW;
+  const totalW = vdW + vrW + fdW + frW + bdW + brW + bjW + smW + glW;
 
   const {
     vd: vdEf,
@@ -32,9 +34,10 @@ export const useResumeStatistics = ({statistics}) => {
     br: brEf,
     bj: bjEf,
     sm: smEf,
+    gl: glEf,
   } = generateResumen(statistics?.[2]);
 
-  const totalEf = vdEf + vrEf + fdEf + frEf + bdEf + brEf + bjEf + smEf;
+  const totalEf = vdEf + vrEf + fdEf + frEf + bdEf + brEf + bjEf + smEf + glEf;
 
   const {
     vd: vdNf,
@@ -45,9 +48,10 @@ export const useResumeStatistics = ({statistics}) => {
     br: brNf,
     bj: bjNf,
     sm: smNf,
+    gl: glNf,
   } = generateResumen(statistics?.[1]);
 
-  const totalNf = vdNf + vrNf + fdNf + frNf + bdNf + brNf + bjNf + smNf;
+  const totalNf = vdNf + vrNf + fdNf + frNf + bdNf + brNf + bjNf + smNf + glNf;
 
   return {
     vdW,
@@ -58,6 +62,7 @@ export const useResumeStatistics = ({statistics}) => {
     brW,
     bjW,
     smW,
+    glW,
     vdEf,
     vrEf,
     fdEf,
@@ -66,6 +71,7 @@ export const useResumeStatistics = ({statistics}) => {
     brEf,
     bjEf,
     smEf,
+    glEf,
     vdNf,
     vrNf,
     fdNf,
@@ -74,6 +80,7 @@ export const useResumeStatistics = ({statistics}) => {
     brNf,
     bjNf,
     smNf,
+    glNf,
     totalW,
     totalEf,
     totalNf,

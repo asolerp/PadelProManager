@@ -1,10 +1,10 @@
 import {capitalize} from './parsers';
 
 export const capitalizeText = text => {
-  const splitedText = text.split(' ');
+  const splitedText = text?.split(' ');
   let result = '';
 
-  splitedText.forEach(word => {
+  splitedText?.forEach(word => {
     result += capitalize(word) + ' ';
   });
 

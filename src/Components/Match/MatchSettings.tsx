@@ -24,60 +24,73 @@ export const MatchSettings = ({match}) => {
     setEditModalVisible(true);
   };
 
+  const onDeleteMatch = async () => {
+    setIsModalVisible(false);
+    popScreen();
+    await timeout(500);
+    await handleDeleteMatch();
+  };
+
+  const onFinishMatch = async () => {
+    setIsModalVisible(false);
+    await timeout(500);
+    await savePlayersStatsHandler();
+  };
+
   return (
     <>
-      <EditResultModal
-        isVisible={editModalVisible}
-        onClose={() => setEditModalVisible(false)}
-        match={match}
-      />
-      <BottomModal
-        title="Opciones"
-        isVisible={isVisible}
-        onClose={() => setIsModalVisible(false)}>
-        <>
-          <View>
-            <ListItem
-              iconName="ios-pencil"
-              title="Editar resultado"
-              onPress={async () => {
-                setIsModalVisible(false);
-                openModal();
-              }}
-            />
-            {match?.state !== 'finished' && (
+      {editModalVisible && (
+        <EditResultModal
+          isVisible={true}
+          onClose={() => setEditModalVisible(false)}
+          match={match}
+        />
+      )}
+      {isVisible && (
+        <BottomModal
+          title="Opciones"
+          isVisible={true}
+          onClose={() => setIsModalVisible(false)}>
+          <>
+            <View>
               <ListItem
-                iconName="tennisball"
-                title="Finalizar partido"
+                iconName="ios-pencil"
+                title="Editar resultado"
+                onPress={async () => {
+                  setIsModalVisible(false);
+                  openModal();
+                }}
+              />
+              {match?.state !== 'finished' && (
+                <ListItem
+                  iconName="tennisball"
+                  title="Finalizar partido"
+                  onPress={() =>
+                    infoAlert.finish_match({
+                      onAccept: async () => {
+                        await onFinishMatch();
+                      },
+                    })
+                  }
+                />
+              )}
+              <ListItem
                 onPress={() =>
-                  infoAlert.finish_match({
-                    onAccept: () => {
-                      setIsModalVisible(false);
-                      savePlayersStatsHandler();
+                  showError.delete_match({
+                    onAccept: async () => {
+                      await onDeleteMatch();
                     },
                   })
                 }
+                iconName="ios-trash"
+                iconColor="#d32f2f"
+                title="Eliminar partida"
+                textStyle={[t.textErrorDark]}
               />
-            )}
-            <ListItem
-              onPress={() =>
-                showError.delete_match({
-                  onAccept: async () => {
-                    setIsModalVisible(false);
-                    popScreen();
-                    await timeout(500);
-                    await handleDeleteMatch();
-                  },
-                })
-              }
-              iconName="ios-trash"
-              iconColor="#d32f2f"
-              title="Eliminar partida"
-              textStyle={[t.textErrorDark]}
-            />
-          </View>
-        </>
-      </BottomModal>
+            </View>
+          </>
+        </BottomModal>
+      )}
       <PressableOpacity onPress={() => setIsModalVisible(true)}>
         <Icon name="ios-settings-sharp" size={22} />
       </PressableOpacity>

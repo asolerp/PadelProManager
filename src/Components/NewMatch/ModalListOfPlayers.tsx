@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, FlatList} from 'react-native';
+import {FlatList} from 'react-native';
 import {useGetPlayers} from '../../Hooks/useGetPlayers';
 import t from '../../Theme/theme';
 import {FullModal} from '../Modal/FullModal';
@@ -23,8 +23,10 @@ const emptyPlayer = {
 };
 
 export const ModalListOfPlayers = ({
+  withEmpyPlayer = true,
   selectedPlayers,
   isVisible,
+  multiple,
   onClose,
   onSave,
 }) => {
@@ -33,6 +35,7 @@ export const ModalListOfPlayers = ({
   const {
     player,
     search,
+    players: playersSelected,
     setPlayer,
     setSearch,
     filteredList,
@@ -40,6 +43,7 @@ export const ModalListOfPlayers = ({
   } = useModalList({
     selectedPlayers,
     list: players,
+    multiple,
   });
 
   const renderItem = ({item}) => (
@@ -49,7 +53,11 @@ export const ModalListOfPlayers = ({
       rightSide={
         <RadioButton
           onPress={() => handlePressPlayer(item)}
-          active={item.id === player?.id}
+          active={
+            multiple
+              ? playersSelected.some(p => p.id === item.id)
+              : item.id === player?.id
+          }
         />
       }
     />
@@ -74,16 +82,20 @@ export const ModalListOfPlayers = ({
       {filteredList && (
         <FlatList
           ListHeaderComponent={
-            <PlayerItem
-              onPress={() => handlePressPlayer(emptyPlayer)}
-              item={emptyPlayer}
-              rightSide={
-                <RadioButton
+            <>
+              {withEmpyPlayer && (
+                <PlayerItem
                   onPress={() => handlePressPlayer(emptyPlayer)}
-                  active={emptyPlayer?.id === player?.id}
+                  item={emptyPlayer}
+                  rightSide={
+                    <RadioButton
+                      onPress={() => handlePressPlayer(emptyPlayer)}
+                      active={emptyPlayer?.id === player?.id}
+                    />
+                  }
                 />
-              }
-            />
+              )}
+            </>
           }
           showsVerticalScrollIndicator={false}
           data={filteredList}
@@ -96,12 +108,12 @@ export const ModalListOfPlayers = ({
       <HDivider />
       <Button
         onPress={() => {
-          onSave(player);
+          onSave(player || playersSelected);
           setPlayer(null);
           onClose();
         }}
         active
-        disabled={!player}
+        disabled={!player && playersSelected?.length === 0}
         title="Guardar"
         style={[t.mT4]}
         textStyle={[t.textLg]}

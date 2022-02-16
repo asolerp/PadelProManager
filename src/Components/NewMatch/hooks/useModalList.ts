@@ -4,20 +4,30 @@ import {removeAccents} from '../../../Utils/removeAccents';
 import {sortByName} from '../../../Utils/sorts';
 import {isSameUser, onlyInLeft} from '../utils/onlyInLeft';
 
-export const useModalList = ({selectedPlayers, list}) => {
+export const useModalList = ({selectedPlayers, list, multiple}) => {
   const [search, setSearch] = useState();
   const [player, setPlayer] = useState<PlayerType>();
+  const [players, setPlayers] = useState<PlayerType[]>([]);
 
   const formatedSelectedPlayers =
     selectedPlayers &&
     Object.entries(selectedPlayers)?.map(([_, value]) => value);
 
   const handlePressPlayer = p => {
-    if (p) {
-      if (p?.id === player?.id) {
-        return setPlayer(null);
+    if (multiple) {
+      if (p) {
+        if (players.find(pl => pl.id === p.id)) {
+          return setPlayers(players.filter(pl => pl.id !== p.id));
+        }
+        return setPlayers(old => old.concat(p));
       }
-      return setPlayer(p);
+    } else {
+      if (p) {
+        if (p?.id === player?.id) {
+          return setPlayer(null);
+        }
+        return setPlayer(p);
+      }
     }
   };
 
@@ -39,6 +49,7 @@ export const useModalList = ({selectedPlayers, list}) => {
   return {
     search,
     player,
+    players,
     setPlayer,
     setSearch,
     filteredList,

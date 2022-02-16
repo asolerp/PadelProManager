@@ -8,7 +8,6 @@ export const useCheckPermissions = () => {
   const {permissionCreateNewPlayer} = usePermissions();
 
   const handleCheckCreateNewPlayer = callback => {
-    console.log(permissionCreateNewPlayer);
     if (permissionCreateNewPlayer) {
       callback();
     } else {

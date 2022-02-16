@@ -28,7 +28,7 @@ const AuthRouter = () => {
 
   return (
     <>
-      <LoadingModal text={text} isVisible={isVisible} />
+      {isVisible && <LoadingModal text={text} isVisible={true} />}
       <PremiumModal isVisible={visiblePremiumModal} />
       <SignInRouter />
     </>

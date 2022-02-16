@@ -1,6 +1,6 @@
 import {Alert} from 'react-native';
 export const infoAlert = {
-  finish_match: ({onAccept, onCancel}) =>
+  finish_match: ({onAccept, onCancel}: any) =>
     Alert.alert('Atención', '¿Seguro que quiere finalizar el partido?', [
       {
         text: 'Cancel',
@@ -16,7 +16,7 @@ export const infoAlert = {
 };
 
 export const showError = {
-  delete_match: ({onAccept, onCancel}) =>
+  delete_match: ({onAccept, onCancel}: any) =>
     Alert.alert(
       'Atención',
       '¿Seguro que quieres eliminar el partido? No se podrá recuperar',

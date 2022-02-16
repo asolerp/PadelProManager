@@ -1,12 +1,19 @@
 import React, {createContext, useEffect, useMemo, useState} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import {useDocumentData} from 'react-firebase-hooks/firestore';
-import {userQuery} from '../Api/queries';
+import {UserType} from '../Global/types';
 
-export const AuthContext = createContext();
+interface SubscriptionContextInterface {
+  user: UserType;
+  setUser: React.Dispatch<UserType>;
+}
+
+export const AuthContext = createContext<SubscriptionContextInterface | null>(
+  null,
+);
 
 export const AuthProvider = ({children}) => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<UserType>();
 
   const query = useMemo(
     () => firestore().collection('users').doc(user?.id),

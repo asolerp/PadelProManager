@@ -17,6 +17,7 @@ export const radarGraphDataGenerator = (playerStatistics: any) => {
           {value: w?.br || 0},
           {value: w?.bj || 0},
           {value: w?.sm || 0},
+          {value: w?.gl || 0},
         ],
         label: 'Winners',
         config: {
@@ -38,6 +39,7 @@ export const radarGraphDataGenerator = (playerStatistics: any) => {
           {value: nf?.br || 0},
           {value: nf?.bj || 0},
           {value: nf?.sm || 0},
+          {value: nf?.gl || 0},
         ],
         label: 'Errores no forzados',
         config: {
@@ -57,6 +59,7 @@ export const radarGraphDataGenerator = (playerStatistics: any) => {
           {value: ef?.br || 0},
           {value: ef?.bj || 0},
           {value: ef?.sm || 0},
+          {value: ef?.gl || 0},
         ],
         label: 'Errors forced',
         config: {
