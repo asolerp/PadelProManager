@@ -13,7 +13,6 @@ const validateAndStoreReceipt = async (url, body, userSnapshot) => {
         // Retry with sandbox URL
         return validateAndStoreReceipt(URL_IAP_TEST, body, userSnapshot);
       }
-
       // Process the result
       if (data.status !== 0) {
         return false;
@@ -37,10 +36,14 @@ const validateAndStoreReceipt = async (url, body, userSnapshot) => {
       };
 
       // Update the user document!
-      return userSnapshot.ref.update({
+      userSnapshot.ref.update({
         status: status,
         appleSubscription: appleSubscription,
       });
+
+      return {
+        status,
+      };
     });
 };
 

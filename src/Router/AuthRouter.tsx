@@ -7,12 +7,13 @@ import {useAuth} from './hooks/useAuth';
 import {SignInRouter} from './SignInRouter';
 import {SignOutRouter} from './SignOutRouter';
 
-// import {usePayments} from '../Lib/Payments/hooks/usePayments';
 import {PremiumModal} from '../Components/Common/PremiumModal';
 import {PremiumModalContext} from '../Context/PremiumModalContext';
+import {useIAPayments} from '../Lib/Payments/hooks/useIAPayments';
 
 const AuthRouter = () => {
   useAuth();
+  useIAPayments();
 
   const {isVisible, text} = useContext(LoadingModalContext);
   const {isVisible: visiblePremiumModal} = useContext(PremiumModalContext);

@@ -11,18 +11,16 @@ import {useGetPlayers} from '../../Hooks/useGetPlayers';
 import {Banner} from '../UI/Banner';
 import {NEW_PLAYER_SCREEN_KEY} from '../../Screens/NewPlayer/NewPlayer';
 import {useCheckPermissions} from '../../Hooks/useCheckPermissions';
-import {SubscriptionContext} from '../../Context/SubscriptionContext';
+
 import {sortByName} from '../../Utils/sorts';
 
 export const MyPlayers = () => {
   const {players} = useGetPlayers();
   const {handleCheckCreateNewPlayer} = useCheckPermissions();
-  const {isSubscribed} = useContext(SubscriptionContext);
 
   const PlayerItem = ({item, index}: {item: PlayerType}) => {
     return (
       <Player
-        disabled={!isSubscribed && index > 0}
         imageStyle={[t.w16, t.h16]}
         style={[t.mX2]}
         img={item.profileImg}

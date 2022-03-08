@@ -1,7 +1,15 @@
 import React, {createContext, useState} from 'react';
 import {GENERAL_LIMIT} from '../Utils/permissionsErrors';
 
-export const PremiumModalContext = createContext();
+interface PremiumModalContextInterface {
+  isVisible: boolean;
+  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  messageType: string;
+  setMessageType: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export const PremiumModalContext =
+  createContext<PremiumModalContextInterface | null>(null);
 
 export const PremiumModalProvider = ({children}) => {
   const [isVisible, setIsVisible] = useState(false);

@@ -19,6 +19,7 @@ export const useNewMatchForm = () => {
   const {selectedPlayers} = useContext(NewMatchContext);
   const {addNewMatch, loading: loadingAddMatch} = useAddNewMatch();
   const {isCoach} = usePermissions();
+  const [errorPlayers, setErrorPlayers] = useState(false);
 
   const handleCreateNewMatch = async values => {
     const {club, category, date, sex, round = '', tournamentName = ''} = values;
@@ -46,6 +47,8 @@ export const useNewMatchForm = () => {
         s2t2: 0,
         s3t1: 0,
         s3t2: 0,
+        winsSetTeam1: 0,
+        winsSetTeam2: 0,
       },
       statistics: {
         s1: {
@@ -83,8 +86,13 @@ export const useNewMatchForm = () => {
     }
   };
 
-  const handleSubmitForm = () => {
-    newMatchFormRef?.current.handleSubmit();
+  const handleSubmitForm = values => {
+    if (selectedPlayers.lenght < 4) {
+      setErrorPlayers(true);
+    } else {
+      setErrorPlayers(false);
+      handleCreateNewMatch(values);
+    }
   };
 
   const initialValues = {
@@ -103,6 +111,7 @@ export const useNewMatchForm = () => {
     newMatchFormRef,
     playerPosition,
     initialValues,
+    errorPlayers,
     loading: loading || loadingAddMatch,
   };
 };

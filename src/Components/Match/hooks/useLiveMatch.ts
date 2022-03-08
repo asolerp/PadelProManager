@@ -10,15 +10,24 @@ import {Alert} from 'react-native';
 import {useRecursiveDelete} from '../../../Hooks/useRecursiveDelete';
 import {useContext} from 'react';
 import {LoadingModalContext} from '../../../Context/LoadingModalContext';
+import {popScreen} from '../../../Router/utils/actions';
+import {useDocumentData} from 'react-firebase-hooks/firestore';
 
-export const useLiveMatch = match => {
+export const useLiveMatch = matchId => {
   const query = firestore().collection('matches');
+  const matchQuery = firestore().collection('matches').doc(matchId);
   const {updateDocument, loading: loadingUpdate} = useUpdateDocument(query);
+
+  const [match] = useDocumentData(matchQuery, {
+    idField: 'id',
+  });
+
+  console.log('MATCH', matchId, match);
 
   const {setIsVisible: setIsVisibleLoading, setText} =
     useContext(LoadingModalContext);
   const {addDocument, loading: loadingAdd} = useAddDocument(
-    query.doc(match?.id).collection('history'),
+    matchQuery.collection('history'),
   );
 
   const {recursiveDelete} = useRecursiveDelete({
@@ -46,6 +55,7 @@ export const useLiveMatch = match => {
       console.log(err);
     } finally {
       setIsVisibleLoading(false);
+      popScreen();
     }
   };
 
@@ -64,6 +74,7 @@ export const useLiveMatch = match => {
       }
     });
     if (!error) {
+      console.log('GAME', match?.game);
       const newStateGame = tennisGameLogic(match?.game, stats?.winPointTeam);
 
       try {

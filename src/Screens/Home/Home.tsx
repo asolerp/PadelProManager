@@ -1,7 +1,7 @@
 import React, {FunctionComponent, useContext} from 'react';
 
-import {ScreenLayout, Header} from '../../Components/Layout';
-import {View, Text, ScrollView, Image} from 'react-native';
+import {ScreenLayout} from '../../Components/Layout';
+import {View, Text, ScrollView, ActivityIndicator} from 'react-native';
 import t from '../../Theme/theme';
 import {LiveMatchResume} from '../../Components/Common/LiveMatchResume';
 import {MatchResume} from '../../Components/Home/MatchResume';
@@ -23,7 +23,7 @@ import {sortByDate} from '../../Utils/sorts';
 import {SubscriptionContext} from '../../Context/SubscriptionContext';
 import {HomeHeader} from '../../Components/Home/HomeHeader';
 import {PROMOTIONAL_SUBSCRIPTION_SCREEN_KEY} from '../PromotionalSubscription/PromotionalSubscription';
-import {useGetDaySessions} from '../../Components/Home/hooks/useGetDaySessions';
+
 import {MyTodaySessions} from '../../Components/Home/MyTodaySessions';
 
 export const HOME_SCREEN_KEY = 'homeScreen';

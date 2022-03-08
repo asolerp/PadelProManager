@@ -21,9 +21,10 @@ export const useValidateReceipt = () => {
     setText('Comprobando suscripción...');
     setIsVisible(true);
     try {
-      await validateFn({
+      const result = await validateFn({
         receipt,
       });
+      return result?.data;
     } catch (err) {
       console.log(err);
     } finally {

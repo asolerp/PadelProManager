@@ -32,7 +32,10 @@ export const ImageSelector = ({
   };
   return (
     <>
-      <BottomModal isVisible={isVisible} onClose={() => setIsVisible(false)}>
+      <BottomModal
+        title={''}
+        isVisible={isVisible}
+        onClose={() => setIsVisible(false)}>
         <View style={[t.mB3]}>
           <ListItem
             iconName="ios-camera"

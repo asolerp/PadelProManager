@@ -1,5 +1,6 @@
 import Purchase from 'react-native-purchases';
-import {popScreen} from '../../../Router/utils/actions';
+import {openStack} from '../../../Router/utils/actions';
+import {TAB_STACK_KEY} from '../../../Router/utils/routerKeys';
 import {ENTITLEMENT_ID} from '../../../Utils/constants';
 export const usePayProduct = () => {
   const makePayment = async purchasePackage => {
@@ -7,7 +8,7 @@ export const usePayProduct = () => {
     if (
       typeof purchaserInfo.entitlements.active[ENTITLEMENT_ID] !== 'undefined'
     ) {
-      popScreen();
+      openStack(TAB_STACK_KEY);
     }
   };
 

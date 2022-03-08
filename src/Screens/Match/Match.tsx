@@ -43,7 +43,7 @@ export const MatchScreen: React.FC = ({route}) => {
     <ScreenLayout edges={['top', 'left', 'right', 'bottom']}>
       <LoadingModal
         isVisible={loadingSaveStats}
-        text="Guardando stats de jugad@res"
+        text="Guardando stats de jugadores"
       />
 
       <FinishedMatchModal

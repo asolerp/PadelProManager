@@ -1,7 +1,7 @@
 import format from 'date-fns/format';
 import React from 'react';
 
-import {Text, View} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 import t from '../../Theme/theme';
 import {HOUR_FORMAT} from '../../Utils/date-ext';
 import {Avatar} from '../UI/Avatar';
@@ -25,7 +25,7 @@ export const RenderItem = ({item, onPress, style}) => {
         style={[
           t.p3,
           {height: item.height},
-          t.bgWhite,
+          styles.container,
           t.roundedSm,
           t.shadow,
           style,
@@ -69,3 +69,11 @@ export const RenderItem = ({item, onPress, style}) => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#79e4f720',
+    borderWidth: 2,
+    borderColor: '#79e4f7',
+  },
+});

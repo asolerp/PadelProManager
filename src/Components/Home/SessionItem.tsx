@@ -1,7 +1,7 @@
 import format from 'date-fns/format';
 import React from 'react';
 
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import t from '../../Theme/theme';
 import {HOUR_FORMAT} from '../../Utils/date-ext';
 import {Avatar} from '../UI/Avatar';
@@ -24,12 +24,13 @@ export const SessionItem = ({item, style}) => {
         style={[
           t.p3,
           {height: item.height},
-          t.bgWhite,
+          styles.container,
           t.roundedSm,
           t.shadow,
           style,
         ]}>
-        <View style={[t.flexRow, t.itemsStart, t.justifyBetween]}>
+        <View
+          style={[t.flexRow, t.itemsStart, t.itemsCenter, t.justifyBetween]}>
           <View>
             {item?.club && (
               <Text style={[t.fontSansMedium, t.textXs, t.textGray600, t.mB1]}>
@@ -42,9 +43,7 @@ export const SessionItem = ({item, style}) => {
             <Text style={[t.fontSansMedium, t.textXs, t.textGray800]}>
               {item?.description}
             </Text>
-          </View>
-          {!!item?.startTime && !!item?.endTime && (
-            <View style={[t.itemsEnd]}>
+            <View style={[t.flexRow, t.mT2]}>
               <Chip
                 style={[t.mB2]}
                 mainColor="primary"
@@ -53,13 +52,18 @@ export const SessionItem = ({item, style}) => {
                   HOUR_FORMAT,
                 )}`}
               />
+            </View>
+          </View>
+          {!!item?.startTime && !!item?.endTime && (
+            <View style={[t.itemsEnd]}>
               <View>
                 {item?.players && (
                   <View style={[t.flexRow]}>
                     {item?.players?.map(p => (
                       <Avatar
+                        key={p?.id}
                         img={p?.profileImg}
-                        imageStyle={[t.w8, t.h8]}
+                        imageStyle={[t.w12, t.h12]}
                         style={[t._mL4]}
                       />
                     ))}
@@ -74,3 +78,11 @@ export const SessionItem = ({item, style}) => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#79e4f730',
+    borderWidth: 2,
+    borderColor: '#79e4f7',
+  },
+});

@@ -44,9 +44,15 @@ const validateReceipt = functions
       'exclude-old-transactions': true,
     });
 
-    console.log('[[BODY]]', body);
+    const result = await validateAndStoreReceipt(
+      URL_IAP_PRODUCTION,
+      body,
+      userSnapshot,
+    );
 
-    return validateAndStoreReceipt(URL_IAP_PRODUCTION, body, userSnapshot);
+    console.log('RESULT', result);
+
+    return result;
   });
 
 module.exports = {

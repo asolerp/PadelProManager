@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import {BottomModal} from '../Modal/BottomModal';
 import {ListItem} from '../UI/ListItem';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -9,7 +9,6 @@ import {infoAlert, showError} from './utils/alertErrorMessages';
 import {useLiveMatch} from './hooks/useLiveMatch';
 import {timeout} from '../../Utils/timeout';
 
-import {popScreen} from '../../Router/utils/actions';
 import {EditResultModal} from './EditResultModal';
 import PressableOpacity from '../UI/PressableOpacity';
 
@@ -17,7 +16,7 @@ export const MatchSettings = ({match}) => {
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [isVisible, setIsModalVisible] = useState(false);
   const {savePlayersStatsHandler} = useSavePlayersStats(match);
-  const {handleDeleteMatch} = useLiveMatch(match);
+  const {handleDeleteMatch} = useLiveMatch(match?.id);
 
   const openModal = async () => {
     await timeout(500);
@@ -26,7 +25,6 @@ export const MatchSettings = ({match}) => {
 
   const onDeleteMatch = async () => {
     setIsModalVisible(false);
-    popScreen();
     await timeout(500);
     await handleDeleteMatch();
   };

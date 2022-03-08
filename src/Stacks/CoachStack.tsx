@@ -18,8 +18,6 @@ import {
   PROMOTIONAL_SUBSCRIPTION_SCREEN_KEY,
 } from '../Screens/PromotionalSubscription/PromotionalSubscription';
 
-import {usePayments} from '../Lib/Payments/hooks/usePayments';
-
 import {ProfileScreen, PROFILE_SCREEN_KEY} from '../Screens/Profile/Profile';
 import {NewPoint, NEW_POINT_SCREEN_KEY} from '../Screens/NewPoint/NewPoint';
 import {
@@ -30,7 +28,6 @@ import {
 const Stack = createNativeStackNavigator();
 
 export const CoachStack = () => {
-  usePayments();
   return (
     <Stack.Navigator>
       <Stack.Group>

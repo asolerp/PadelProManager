@@ -14,9 +14,16 @@ export const PROMOTIONAL_SUBSCRIPTION_SCREEN_KEY = 'promotionalSubscription';
 
 const Service = ({iconName, title}) => {
   return (
-    <View style={[t.flexCol, t.justifyCenter, t.itemsCenter, t.w20]}>
+    <View style={[t.flexCol, t.justifyCenter, t.itemsCenter, t.w44, t.mB5]}>
       <Icon name={iconName} color="white" size={80} />
-      <Text style={[t.fontSansMedium, t.textBase, t.textGray500, t.textCenter]}>
+      <Text
+        style={[
+          t.fontSansMedium,
+          t.textBase,
+          t.textGray500,
+          t.textCenter,
+          t.w24,
+        ]}>
         {title}
       </Text>
     </View>
@@ -32,31 +39,22 @@ export const PromotionalSubscription = () => {
       <StatusBar barStyle="light-content" />
       <ContainerWithBg backgroundColor="Gray900" opacity={80}>
         <>
-          <Header withBack mode="black" title="PREMIUM" />
+          <Header mode="dark" title="PADEL PRO MANAGER" />
           <View style={[t.flexGrow, t.itemsCenter, t.justifyCenter]}>
             <View style={[t.wFull, t.pY5]}>
-              <Text
-                style={[
-                  t.fontSansBold,
-                  t.text2xl,
-                  t.textWhite,
-                  t.mB10,
-                  t.textCenter,
-                ]}>
-                ¡Actualiza tu cuenta!
-              </Text>
-              <View style={[t.flexRow, t.justifyBetween]}>
+              <View style={[t.flexRow, t.flexWrap, t.justifyBetween, t.mT5]}>
                 <Service
                   iconName="people-circle-sharp"
-                  title="Jugadores ilimitados"
+                  title="Gestión de jugadores"
                 />
-                <Service iconName="tennisball" title="Partidas ilimitadas" />
+                <Service iconName="tennisball" title="Análisis de partidas" />
                 <Service
                   iconName="ios-easel-sharp"
                   title="Acceso a ejercicios"
                 />
+                <Service iconName="ios-calendar" title="Gestión de agenda" />
               </View>
-              <View style={[t.mY10]}>
+              <View style={[t.mY5]}>
                 <Text
                   style={[
                     t.fontSansBold,
@@ -68,12 +66,15 @@ export const PromotionalSubscription = () => {
                   Tan solo por {packages?.[0]?.product?.price_string} al mes
                 </Text>
                 <Button
+                  active
                   title="Acerse premium ahora"
                   type="white"
                   textStyle={[t.textLg]}
                   style={[t.pY4]}
                   onPress={() => makePayment(packages?.[0])}
                 />
+              </View>
+              <View>
                 <View style={[t.justifyCenter, t.itemsCenter, t.mT5]}>
                   <Text
                     style={[

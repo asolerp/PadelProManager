@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import {BottomModal} from '../Modal/BottomModal';
 import {ListItem} from '../UI/ListItem';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -23,7 +23,11 @@ export const PlayerSettings = ({playerId}) => {
     setText('Eliminando jugador...');
     setIsVisibleLoading(true);
     try {
-      recursiveDelete();
+      recursiveDelete(() => {
+        setIsVisible(false);
+        setIsVisibleLoading(false);
+        popScreen();
+      });
     } catch (err) {
       console.log(err);
     }
@@ -31,11 +35,6 @@ export const PlayerSettings = ({playerId}) => {
 
   const {recursiveDelete, loading} = useRecursiveDelete({
     path: `players/${playerId}`,
-    callback: () => {
-      setIsVisible(false);
-      setIsVisibleLoading(false);
-      popScreen();
-    },
   });
 
   return (

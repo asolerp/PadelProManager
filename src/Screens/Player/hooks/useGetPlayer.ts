@@ -6,6 +6,9 @@ import {radarGraphDataGenerator} from '../../../Utils/radaGraphDataGenerator';
 export const useGetPlayer = (playerId: string) => {
   const [player, loadingPlayer, errorPlayer] = useDocumentData(
     playerQuery.doc(playerId),
+    {
+      idField: 'id',
+    },
   );
   const [stats, loadingStats, errorStats] = useDocumentData(
     playerQuery.doc(playerId).collection('stats').doc('global'),

@@ -15,8 +15,8 @@ export const MyTodaySessions = () => {
         Mis sesiones de hoy
       </Text>
       {sessions?.length > 0 ? (
-        sessions?.map((session, index) => (
-          <View style={[{marginHorizontal: 2}]}>
+        sessions?.map(session => (
+          <View key={session?.id} style={[{marginHorizontal: 2}]}>
             <SessionItem item={session} style={[t.mY2]} />
           </View>
         ))

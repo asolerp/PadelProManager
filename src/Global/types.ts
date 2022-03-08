@@ -19,6 +19,7 @@ export interface UserType {
   provincia?: string;
   role?: 'player' | 'coach';
   token?: string;
+  loggedIn: boolean;
 }
 
 export interface GameType {

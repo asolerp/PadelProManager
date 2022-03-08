@@ -43,11 +43,12 @@ const generateSet = (game, sets, team) => {
 const getIsMatchFinished = teamSet => teamSet === 2;
 
 const checkSetState = (game, firstTeamToCheck, seconTeamToCheck) => {
+  const mainTeam = firstTeamToCheck[1];
   const sets = game[`s${game?.set}${firstTeamToCheck}`] + 1;
   if (sets >= 6) {
     if (game[`s${game?.set}${firstTeamToCheck}`] === 7) {
       // firstTeamToCheck wins tiebreak
-      return generateSet(game, game?.set, 1);
+      return generateSet(game, game?.set, mainTeam);
     }
     if (game[`s${game?.set}${seconTeamToCheck}`] === 6) {
       // We are in tiebreak
@@ -63,7 +64,7 @@ const checkSetState = (game, firstTeamToCheck, seconTeamToCheck) => {
     }
     if (sets - game[`s${game?.set}${seconTeamToCheck}`] >= 2) {
       // firstTeamToCheck wins set
-      return generateSet(game, game?.set, 1);
+      return generateSet(game, game?.set, mainTeam);
     }
   }
   return {
@@ -156,6 +157,8 @@ export const resultGame = game => {
 };
 
 export const tennisGameLogic = (game, winPointTeam) => {
+  console.log(winPointTeam);
+
   const teamWinPoint = winPointTeam;
   const teamLosePoint = winPointTeam === 'team1' ? 'team2' : 'team1';
 

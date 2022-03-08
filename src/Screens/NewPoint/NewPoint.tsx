@@ -151,7 +151,7 @@ export const NewPoint = ({route}) => {
           </Text>
           <View style={[t.flexRow, t.justifyBetween, t.itemsCenter]}>
             {match?.t1?.map((player: PlayerType, i: number) => (
-              <View key={player?.id || i}>
+              <View key={`${player?.id}-${i}`}>
                 <Avatar
                   disabled={!player?.id}
                   onPress={() => handlePressPlayer(player, 'team1')}
@@ -163,7 +163,7 @@ export const NewPoint = ({route}) => {
             ))}
             <Text style={[t.textXl, t.fontSansBold, t.mB5]}>vs</Text>
             {match?.t2?.map((player: PlayerType, i: number) => (
-              <View key={player?.id || i}>
+              <View key={`${player?.id}-${i}`}>
                 <Avatar
                   disabled={!player?.id}
                   key={player?.id}

@@ -13,6 +13,7 @@ export const MatchHeader = ({match}) => {
   return (
     <View style={[t.flexRow, t.justifyBetween]}>
       <View style={[t.flexRow, t.flexGrow, t.justifyCenter]}>
+        {console.log(match?.t1)}
         {match?.t1?.map((player, i) => (
           <Avatar
             key={i}

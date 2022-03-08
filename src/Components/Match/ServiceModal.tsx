@@ -6,14 +6,15 @@ import {Button} from '../UI/Button';
 import {useLiveMatch} from './hooks/useLiveMatch';
 
 export const ServiceModal = ({match}) => {
-  const {handleWhoStarts} = useLiveMatch(match);
+  const {handleWhoStarts} = useLiveMatch(match?.id);
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   useEffect(() => {
     if (!match?.game?.service) {
-      setIsVisible(true);
+      setTimeout(() => {
+        setIsVisible(true);
+      }, 1000);
     }
-    return () => setIsVisible(false);
   }, [match]);
 
   return (
@@ -35,7 +36,7 @@ export const ServiceModal = ({match}) => {
               active
               title="Pareja 2"
               type="success"
-              onPress={() => handleWhoStarts('t2', () => setIsVisible(true))}
+              onPress={() => handleWhoStarts('t2', () => setIsVisible(false))}
             />
           </View>
         </View>

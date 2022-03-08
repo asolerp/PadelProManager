@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Image, View, Text} from 'react-native';
+import {Image, View} from 'react-native';
 import {ScreenLayout} from '../../Components/Layout';
 import t from '../../Theme/theme';
 

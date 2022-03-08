@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
 import {Header} from '../../Components/Layout/Header';
 import {ScreenLayout} from '../../Components/Layout/ScreenLayout';
 import {Input} from '../../Components/UI/Input';
@@ -8,7 +8,7 @@ import t from '../../Theme/theme';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {format} from 'date-fns';
 import {useNewMatchForm} from './hooks/useNewMatchForm';
-import {Formik} from 'formik';
+
 import {DATE_FORM} from '../../Utils/date-ext';
 import {PlayersSelector} from '../../Components/NewMatch/PlayersSelector';
 import {Button} from '../../Components/UI/Button';
@@ -16,20 +16,28 @@ import {HDivider} from '../../Components/UI/HDivider';
 import {SwitchInput} from '../../Components/UI/SwitchInput';
 import {Select} from '../../Components/UI/Select';
 import {cateogries, rounds, sex} from '../../Utils/lists';
-import {newMatchValidationSchema} from './utils/validation';
+
 import {LoadingModal} from '../../Components/Common/LoadingModal';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {usePermissions} from '../../Hooks/usePermissions';
+import {useForm, Controller} from 'react-hook-form';
+
 export const NEW_MATCH_SCREEN_KEY = 'newMatchScreen';
 
 export const NewMatchScreen = () => {
+  const {initialValues, handleSubmitForm, errorPlayers, loading} =
+    useNewMatchForm();
+
   const {
-    initialValues,
-    handleCreateNewMatch,
-    handleSubmitForm,
-    newMatchFormRef,
-    loading,
-  } = useNewMatchForm();
+    watch,
+    control,
+    setValue,
+    handleSubmit,
+    formState: {errors},
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: initialValues,
+  });
 
   const [show, setShow] = useState(false);
   const {isCoach} = usePermissions();
@@ -42,125 +50,166 @@ export const NewMatchScreen = () => {
     setShow(false);
   };
 
+  const watchTournament = watch('tournament', false);
+
   return (
     <ScreenLayout edges={['top', 'right', 'left', 'bottom']}>
       <Header withBack title="Nuevo partido" />
       <LoadingModal text="Creando nuevo partido..." isVisible={loading} />
       <KeyboardAwareScrollView style={[t.mT5]}>
-        <Formik
-          innerRef={newMatchFormRef}
-          validationSchema={newMatchValidationSchema}
-          validateOnBlur={false}
-          initialValues={initialValues}
-          onSubmit={values => handleCreateNewMatch(values)}>
-          {({
-            handleChange,
-            touched,
-            handleBlur,
-            values,
-            errors,
-            setFieldValue,
-          }) => (
-            <>
-              <DateTimePickerModal
-                isVisible={show}
-                mode="date"
-                date={new Date()}
-                locale="es-ES"
-                display="inline"
-                onConfirm={date => {
-                  setFieldValue('date', format(date, DATE_FORM));
-                  setShow(false);
+        <>
+          <DateTimePickerModal
+            isVisible={show}
+            mode="date"
+            date={new Date()}
+            locale="es-ES"
+            display="inline"
+            onConfirm={date => {
+              setValue('date', format(date, DATE_FORM));
+              setShow(false);
+            }}
+            onCancel={hideDatePicker}
+          />
+          <View style={[t.flexGrow, t.mT5]}>
+            <View style={[t.flexRow, t.justifyBetween, t.mB4]}>
+              <Controller
+                control={control}
+                rules={{
+                  required: 'La fecha es obligatoria',
                 }}
-                onCancel={hideDatePicker}
-              />
-              <View style={[t.flexGrow, t.mT5]}>
-                <View style={[t.flexRow, t.justifyBetween, t.mB4]}>
+                render={({field: {onBlur, value}, fieldState: {error}}) => (
                   <Input
                     editable={false}
-                    name="date"
-                    value={values?.date}
+                    value={value}
                     onPressIn={() => showDatePicker()}
                     placeholder="Fecha del partido"
-                    error={errors.date}
-                    onBlur={handleBlur('date')}
+                    error={error?.message}
+                    onBlur={onBlur}
                     style={[t.flex1, t.mR3]}
                   />
+                )}
+                name="date"
+              />
+              <Controller
+                control={control}
+                rules={{
+                  required: 'El nombre del club es obligatorio',
+                }}
+                render={({
+                  field: {onChange, onBlur, value},
+                  fieldState: {error},
+                }) => (
                   <Input
                     placeholder="Club"
-                    value={values.club}
-                    name="club"
-                    error={errors.club}
-                    onBlur={handleBlur('club')}
-                    onChangeText={handleChange('club')}
-                    touched={touched.club}
-                    label="Club"
+                    value={value}
+                    error={error?.message}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
                     style={[t.flex1]}
                   />
-                </View>
-                <View style={[t.flexRow, t.justifyBetween, t.mB4]}>
+                )}
+                name="club"
+              />
+            </View>
+            <View style={[t.flexRow, t.justifyBetween, t.mB4]}>
+              <Controller
+                control={control}
+                rules={{
+                  required: 'La categoría es obligatoria',
+                }}
+                render={({field: {onBlur, value}, fieldState: {error}}) => (
                   <Select
                     list={cateogries}
                     placeholder="Categoría"
-                    value={cateogries?.find(c => c.value === values.category)}
-                    name="category"
-                    error={errors.category}
-                    onBlur={handleBlur('category')}
-                    onChange={v => setFieldValue('category', v)}
+                    value={cateogries?.find(c => c.value === Number(value))}
+                    error={error?.message}
+                    onBlur={onBlur}
+                    onChange={v => setValue('category', v)}
                     label="Categoría"
                     style={[t.flex1, t.mR3]}
                   />
+                )}
+                name="category"
+              />
+              <Controller
+                control={control}
+                rules={{
+                  required: 'El tipo de partida es obligatoria',
+                }}
+                render={({field: {onBlur, value}, fieldState: {error}}) => (
                   <Select
                     list={sex}
                     placeholder="Masculino / Femenino / Mixtos"
-                    value={sex?.find(s => s.value === values.sex)}
+                    value={sex?.find(s => s.value === value)}
                     name="sex"
-                    error={errors.category}
-                    onBlur={handleBlur('sex')}
-                    onChange={v => setFieldValue('sex', v)}
+                    error={error?.message}
+                    onBlur={onBlur}
+                    onChange={v => setValue('sex', v)}
                     label="Género"
                     style={[t.flex2]}
                   />
-                </View>
+                )}
+                name="sex"
+              />
+            </View>
+            <Controller
+              control={control}
+              render={({field: {onBlur, value}}) => (
                 <SwitchInput
                   label="Torneo"
-                  onValueChange={v => setFieldValue('tournament', v)}
-                  value={values.tournament}
+                  onBlur={onBlur}
+                  onValueChange={v => setValue('tournament', v)}
+                  value={value}
                 />
-                {values?.tournament && (
-                  <View style={[t.flexRow, t.mB3]}>
+              )}
+              name="tournament"
+            />
+            {watchTournament && (
+              <View style={[t.flexRow, t.mB3]}>
+                <Controller
+                  control={control}
+                  render={({
+                    field: {onChange, onBlur, value},
+                    fieldState: {error},
+                  }) => (
                     <Input
                       placeholder="Nombre del torneo"
-                      value={values.tournamentName}
-                      name="tournamentName"
-                      error={errors.tournamentName}
-                      onBlur={handleBlur('tournamentName')}
-                      onChangeText={handleChange('tournamentName')}
+                      value={value}
+                      error={error?.message}
+                      onBlur={onBlur}
+                      onChangeText={onChange}
                       label="Nombre del torneo"
                       style={[t.flex2, t.mR3]}
                     />
+                  )}
+                  name="tournamentName"
+                />
+                <Controller
+                  control={control}
+                  render={({field: {onBlur, value}}) => (
                     <Select
                       list={rounds}
                       placeholder="Ronda"
-                      value={rounds?.find(r => r.value === values.round)}
-                      name="round"
+                      value={rounds?.find(r => r.value === Number(value))}
                       error={errors.round}
-                      onBlur={handleBlur('round')}
-                      onChange={v => setFieldValue('round', v)}
+                      onBlur={onBlur}
+                      onChange={v => setValue('round', v)}
                       label="Ronda"
                       style={[t.flex1]}
                     />
-                  </View>
-                )}
-                {isCoach && (
-                  <View style={[t.mT5]}>
-                    <PlayersSelector />
-                  </View>
-                )}
+                  )}
+                  name="round"
+                />
               </View>
-            </>
-          )}
-        </Formik>
+            )}
+            {isCoach && (
+              <View style={[t.mT5]}>
+                <PlayersSelector />
+                {errorPlayers && <Text>Selecciona todos los jugadores</Text>}
+              </View>
+            )}
+          </View>
+        </>
       </KeyboardAwareScrollView>
       <HDivider />
       <Button
@@ -169,7 +218,7 @@ export const NewMatchScreen = () => {
         loading={loading}
         title="Crear"
         style={[t.mT3]}
-        onPress={handleSubmitForm}
+        onPress={handleSubmit(handleSubmitForm)}
       />
     </ScreenLayout>
   );
