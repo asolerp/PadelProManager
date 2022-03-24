@@ -23,6 +23,9 @@ import {ModalListOfPlayers} from '../../Components/NewMatch/ModalListOfPlayers';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import {PlayerChip} from '../../Components/NewSession/PlayerChip';
+import {useDeleteSession} from './hooks/useDeleteSession';
+import {CalendarType} from '../../Components/NewSession/CalendarType';
+import {WeekRep} from '../../Components/NewSession/WeekRep';
 
 export const NEW_SESSION_SCREEN_KEY = 'newSession';
 
@@ -30,18 +33,30 @@ export const NewSessionScreen = ({route}) => {
   const {startDate, session} = route?.params;
 
   const {
-    newSessionFormRef,
+    repDays,
+    sessionColor,
     initialValues,
+    startDateParsed,
+    setSessionColor,
+    selectedPlayers,
+    handleSetRepDays,
     handleSubmitForm,
-    handleSaveNewSession,
+    newSessionFormRef,
+    setStartDateParsed,
+    setSelectedPlayers,
+    handleSubmitSessionForm,
+    loading: loadingCreateUpdate,
   } = useNewSessionForm({startDate, session});
+
+  const {handleDelete, loading} = useDeleteSession(
+    session?.id,
+    session?.internalId,
+  );
 
   const [show, setShow] = useState(false);
   const [mode, setMode] = useState('date');
   const [timeInput, setTimeInput] = useState();
-  const [isVisible, setIsVisible] = useState();
-
-  const [selectedPlayers, setSelectedPlayers] = useState();
+  const [isVisible, setIsVisible] = useState<boolean>();
 
   const handleSavePlayer = players => {
     setSelectedPlayers(players);
@@ -73,7 +88,7 @@ export const NewSessionScreen = ({route}) => {
       />
       <View style={[t.mT5]}>
         <Header
-          title={'Nueva sesión'}
+          title={session ? 'Editar sesión' : 'Nueva sesión'}
           rightSide={
             <PressableOpacity onPress={() => popScreen()}>
               <Icon name="ios-close" size={30} />
@@ -81,15 +96,24 @@ export const NewSessionScreen = ({route}) => {
           }
         />
       </View>
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView
+        style={[t.flex1]}
+        showsVerticalScrollIndicator={false}>
+        {!session && (
+          <View style={[t.mT8, t.mB3]}>
+            <Text style={[t.textLg, t.fontSans, t.textGray600]}>
+              Crear una sesión y compártela con tus jugadores. Te ayudamos a que
+              te organices para que te puedas dedicar a lo que más importa, tus
+              jugadores.
+            </Text>
+          </View>
+        )}
         <Formik
           innerRef={newSessionFormRef}
           validateOnBlur={false}
           enableReinitialize={true}
           initialValues={initialValues}
-          onSubmit={values =>
-            handleSaveNewSession({...values, players: selectedPlayers})
-          }>
+          onSubmit={values => handleSubmitSessionForm(values)}>
           {({
             setFieldValue,
             handleChange,
@@ -102,10 +126,11 @@ export const NewSessionScreen = ({route}) => {
               <DateTimePickerModal
                 isVisible={show}
                 mode={mode}
-                date={new Date()}
+                date={startDateParsed}
                 locale="es-ES"
                 display="spinner"
                 onConfirm={date => {
+                  setStartDateParsed(date);
                   setFieldValue(
                     timeInput,
                     format(date, mode === 'date' ? DATE_FORM : HOUR_FORMAT),
@@ -190,16 +215,61 @@ export const NewSessionScreen = ({route}) => {
                     onPressIn={() => setIsVisible(true)}
                   />
                 </View>
+                <View
+                  style={[
+                    t.p3,
+                    t.flexRow,
+                    t.mB4,
+                    {borderWidth: 1},
+                    t.borderGray400,
+                    t.roundedSm,
+                    t.itemsCenter,
+                    t.justifyBetween,
+                  ]}>
+                  <Text style={[t.fontSans, t.textBase, t.textGray600]}>
+                    Color calendario
+                  </Text>
+                  <View style={[t.flexRow]}>
+                    <CalendarType
+                      color="blue"
+                      active={sessionColor === 'blue'}
+                      onPress={() => setSessionColor('blue')}
+                    />
+                    <CalendarType
+                      color="yellow"
+                      active={sessionColor === 'yellow'}
+                      onPress={() => setSessionColor('yellow')}
+                    />
+                    <CalendarType
+                      color="red"
+                      active={sessionColor === 'red'}
+                      onPress={() => setSessionColor('red')}
+                    />
+                  </View>
+                </View>
+                <WeekRep onPressDay={handleSetRepDays} activeDays={repDays} />
               </View>
             </>
           )}
         </Formik>
       </KeyboardAwareScrollView>
       <HDivider />
+      {session && (
+        <Button
+          disabled={loading || loadingCreateUpdate}
+          type="error"
+          size="lg"
+          title="Eliminar"
+          style={[t.mT3]}
+          onPress={() => handleDelete(repDays)}
+        />
+      )}
       <Button
+        loading={loading || loadingCreateUpdate}
+        disabled={loadingCreateUpdate}
         active
         size="lg"
-        title="Crear"
+        title={session ? 'Editar' : 'Crear'}
         style={[t.mT3]}
         onPress={handleSubmitForm}
       />

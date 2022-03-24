@@ -1,6 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
+import {View, FlatList} from 'react-native';
 import {Header, ScreenLayout} from '../../Components/Layout';
 import {useSearch} from '../../Components/Players/hooks/useSearch';
 import {PlayerItem} from '../../Components/Players/PlayerItem';

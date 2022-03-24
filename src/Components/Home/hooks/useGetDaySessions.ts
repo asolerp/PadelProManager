@@ -1,21 +1,30 @@
+import {format} from 'date-fns';
 import {useContext, useMemo} from 'react';
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 import {sessionQuery} from '../../../Api/queries';
 import {AuthContext} from '../../../Context/AuthContex';
 
 export const useGetDaySessions = () => {
-  const {user} = useContext(AuthContext);
-  const query = useMemo(() => {
-    const start = new Date();
-    start.setHours(0, 0, 0, 0);
+  const {user, isCoach} = useContext(AuthContext);
 
-    const end = new Date(start.getTime());
-    end.setHours(23, 59, 59, 999);
+  const start = new Date();
+  start.setHours(0, 0, 0, 0);
+  const parsedStart = Number(format(start, 'T'));
 
-    return sessionQuery(user?.id)
-      .where('startTime', '>=', start)
-      .where('startTime', '<=', end);
-  }, [user?.id]);
+  const end = new Date(start.getTime());
+  end.setHours(23, 59, 59, 999);
+  const parsedEnd = Number(format(end, 'T'));
+
+  const query = isCoach
+    ? sessionQuery
+        .where('coachId', '==', user?.id)
+        .where('date', '>=', parsedStart)
+        .where('date', '<=', parsedEnd)
+    : sessionQuery
+        .where('playersEmail', 'array-contains', user?.email)
+        .where('date', '>=', parsedStart)
+        .where('date', '<=', parsedEnd);
+
   const [sessions, loading] = useCollectionData(query, {
     idField: 'id',
   });

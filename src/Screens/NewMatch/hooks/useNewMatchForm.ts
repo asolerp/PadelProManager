@@ -6,15 +6,27 @@ import {usePermissions} from '../../../Hooks/usePermissions';
 
 import {popScreen} from '../../../Router/utils/actions';
 import {timeout} from '../../../Utils/timeout';
-import {useGetPlayerByUserId} from '../../../Hooks/useGetPlayerByUserId';
-import {matchTeam1, matchTeam2, playersId} from '../utils/matchStructure';
+
+import {
+  matchTeam1,
+  matchTeam2,
+  playersEmails,
+  playersId,
+} from '../utils/matchStructure';
 import {useAddNewMatch} from './useAddNewMatch';
+
+const emptyPlayer = {
+  firstName: 'Jugador sin segumiento',
+  id: -1,
+  profileImg:
+    'https://media.babolat.com//image/upload/f_auto,q_auto,c_scale,w_456,h_420/Website_content/Padel_landing_page/02092020-Launch/Product%20block%20right%20-%20balls/balls-range-new.jpg',
+  secondName: '',
+};
 
 export const useNewMatchForm = () => {
   const newMatchFormRef = useRef();
   const {user} = useContext(AuthContext);
   const [playerPosition, setPlayerPosition] = useState();
-  const {player} = useGetPlayerByUserId();
   const [loading, setLoading] = useState(false);
   const {selectedPlayers} = useContext(NewMatchContext);
   const {addNewMatch, loading: loadingAddMatch} = useAddNewMatch();
@@ -68,9 +80,10 @@ export const useNewMatchForm = () => {
           team2: {},
         },
       },
-      playersId: isCoach ? playersId(selectedPlayers) : [player?.id],
-      t1: isCoach ? matchTeam1(selectedPlayers) : [player, null],
-      t2: isCoach ? matchTeam2(selectedPlayers) : [null, null],
+      playersEmail: isCoach ? playersEmails(selectedPlayers) : [user?.email],
+      playersId: isCoach ? playersId(selectedPlayers) : [user?.id],
+      t1: isCoach ? matchTeam1(selectedPlayers) : [user, emptyPlayer],
+      t2: isCoach ? matchTeam2(selectedPlayers) : [emptyPlayer, emptyPlayer],
     };
 
     setLoading(true);
@@ -87,7 +100,7 @@ export const useNewMatchForm = () => {
   };
 
   const handleSubmitForm = values => {
-    if (selectedPlayers.lenght < 4) {
+    if (selectedPlayers?.length < 4 && isCoach) {
       setErrorPlayers(true);
     } else {
       setErrorPlayers(false);
@@ -105,13 +118,14 @@ export const useNewMatchForm = () => {
   };
 
   return {
+    loading: loading || loadingAddMatch,
     handleCreateNewMatch,
     setPlayerPosition,
     handleSubmitForm,
+    selectedPlayers,
     newMatchFormRef,
     playerPosition,
     initialValues,
     errorPlayers,
-    loading: loading || loadingAddMatch,
   };
 };

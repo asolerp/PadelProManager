@@ -65,6 +65,8 @@ export const MatchInfo: React.FC<MatchInfoProps> = ({
         <InfoElement label="Categoría" align="center">
           <View
             style={[
+              t.w6,
+              t.h6,
               t.roundedFull,
               t.bgInfo,
               t.justifyCenter,

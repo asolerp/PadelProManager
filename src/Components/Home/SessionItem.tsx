@@ -1,30 +1,34 @@
 import format from 'date-fns/format';
-import React from 'react';
+import React, {useContext} from 'react';
 
 import {View, Text, StyleSheet} from 'react-native';
 import t from '../../Theme/theme';
 import {HOUR_FORMAT} from '../../Utils/date-ext';
+import {colorParser} from '../../Utils/sessionParsers';
 import {Avatar} from '../UI/Avatar';
 import {Chip} from '../UI/Chip';
 import {HDivider} from '../UI/HDivider';
+import {AuthContext} from '../../Context/AuthContex';
 import PressableOpacity from '../UI/PressableOpacity';
+import {openScreenWithPush} from '../../Router/utils/actions';
+import {NEW_SESSION_SCREEN_KEY} from '../../Screens/NewSession/NewSession';
 
 export const SessionItem = ({item, style}) => {
-  const startTime = new Date(
-    item?.startTime?._seconds * 1000 + item?.startTime?._nanoseconds / 1000000,
-  );
-
-  const endTime = new Date(
-    item?.endTime?._seconds * 1000 + item?.endTime?._nanoseconds / 1000000,
-  );
+  const {isCoach} = useContext(AuthContext);
+  const startTime = new Date(item?.startTime);
+  const endTime = new Date(item?.endTime);
 
   return (
     <>
       <PressableOpacity
+        onPress={() =>
+          isCoach && openScreenWithPush(NEW_SESSION_SCREEN_KEY, {session: item})
+        }
         style={[
           t.p3,
           {height: item.height},
           styles.container,
+          colorParser[item?.color],
           t.roundedSm,
           t.shadow,
           style,

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {View, Text, ImageBackground, ViewStyle} from 'react-native';
+import {View, Text, ImageBackground, ViewStyle, Dimensions} from 'react-native';
 import {Button} from '../UI/Button';
 import t from '../../Theme/theme';
 import {capitalize} from '../../Utils/parsers';
@@ -34,7 +34,13 @@ export const Banner: React.FC<Props> = ({
     <ImageBackground
       source={{uri: imageSrc}}
       imageStyle={[t.roundedLg, t.opacity50]}
-      style={[t.wFull, t.h48, t.relative, t.shadow, style]}>
+      style={[
+        {width: Dimensions.get('window').width - 32},
+        t.h48,
+        t.relative,
+        t.shadow,
+        style,
+      ]}>
       <View
         style={[
           t.wFull,

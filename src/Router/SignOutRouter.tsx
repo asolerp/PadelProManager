@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
@@ -6,12 +6,17 @@ import {
   onNavigatorReady,
   onNavigatorStateChange,
 } from './utils/actions';
-
+import RNBootSplash from 'react-native-bootsplash';
 import {LoginScreen, LOGIN_SCREEN_KEY} from '../Screens/Login/Login';
 
 const Stack = createNativeStackNavigator();
 
 export const SignOutRouter = () => {
+  useEffect(() => {
+    (async () => {
+      await RNBootSplash.hide({fade: true});
+    })();
+  });
   return (
     <NavigationContainer
       ref={navigationRef}

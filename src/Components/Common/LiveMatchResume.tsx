@@ -6,11 +6,12 @@ import {format} from 'date-fns';
 import {shortName} from '../../Utils/parsers';
 import {openScreenWithPush} from '../../Router/utils/actions';
 import {MATCH_SCREEN_KEY} from '../../Screens/Match/Match';
-import {resultGame} from '../../Utils/gameLogic';
+
 import {DATE_MATCH} from '../../Utils/date-ext';
 import {es} from 'date-fns/locale';
 import {capitalizeText} from '../../Utils/capitalizeText';
 import PressableOpacity from '../UI/PressableOpacity';
+import {resultGame} from '../../Utils/resultGame';
 
 const cardLabel = [t.textBase, t.fontSansBold, t.textWhite, t.opacity70];
 const cardInfo = [t.textBase, t.fontSansBold, t.textWhite];

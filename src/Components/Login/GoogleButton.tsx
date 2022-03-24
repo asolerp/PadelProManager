@@ -10,6 +10,7 @@ export const GoogleButton = ({onPress}) => {
       <View
         style={[
           t.flexRow,
+          t.bgWhite,
           t.itemsCenter,
           t.p2,
           t.h12,
@@ -23,7 +24,7 @@ export const GoogleButton = ({onPress}) => {
           style={[t.w5, t.h5]}
         />
         <View style={[t.flex1, t.itemsCenter]}>
-          <Text>Continuar con Google</Text>
+          <Text style={[t.fontSansMedium]}>Continuar con Google</Text>
         </View>
       </View>
     </PressableOpacity>

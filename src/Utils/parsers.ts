@@ -18,6 +18,10 @@ export const capitalize = str => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
+export const firstSurname = str => {
+  return str.split(' ')[0];
+};
+
 export const colorByCategory = {
   1: 'primary',
   2: 'secondary',
@@ -43,4 +47,16 @@ export const handParse = {
 export const colorByHand = {
   left: 'primary',
   right: 'warning',
+};
+
+export const ddmmyyyyDashToDate = ddmmyyyy => {
+  const dateParts = ddmmyyyy?.split('-');
+  const date = new Date(+dateParts[0], dateParts[1] - 1, +dateParts[2]);
+  return date;
+};
+
+export const ddmmyyyyToDate = ddmmyyyy => {
+  const dateParts = ddmmyyyy?.split('/');
+  const date = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+  return date;
 };

@@ -30,8 +30,9 @@ export const RoleSelector = () => {
             ¿Cual es tu rol?
           </Text>
           <Text style={[t.fontSansBold, t.textLg, t.textWhite, t.textGray400]}>
-            PadelPro sirve tanto para entrenadores como jugadores. A
-            continuación te explicamos que incluye cada uno:
+            Padel Pro Manager sirve tanto para entrenadores como para jugadores.
+            A continuación te explicamos que funcionalidades incluye cada uno de
+            los roles:
           </Text>
           <View style={[t.mT10, t.flexRow, t.wFull, t.justifyAround]}>
             <View style={[t.itemsCenter]}>
@@ -90,14 +91,15 @@ export const RoleSelector = () => {
               <Text
                 style={[t.fontSansMedium, t.textBase, t.textGray400, t.mY3]}>
                 Los entrenadores pueden llevar el seguimiento de muchos
-                jugadores, guardar sus estadísticas de partidos. Tambíen tienen
-                acceso a un gran número de ejercicios.
+                jugadores, guardar sus estadísticas de partidos y programar
+                sesiones de entrenamiento.
               </Text>
             )}
             {role === 'player' && (
               <Text
                 style={[t.fontSansMedium, t.textBase, t.textGray400, t.mY3]}>
-                Los jugadores pueden llevar un control de sus partidos.
+                Los jugadores pueden llevar un control de sus partidos y los
+                gestionados por sus entrenadores.
               </Text>
             )}
           </View>
@@ -106,7 +108,7 @@ export const RoleSelector = () => {
               onPress={() => handleUpdateRole(role)}
               disabled={!role}
               active
-              title="Guardar"
+              title="Continuar"
               size="xl"
               type="white"
             />

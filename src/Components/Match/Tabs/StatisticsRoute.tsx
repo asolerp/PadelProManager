@@ -2,6 +2,7 @@ import React from 'react';
 import {ScrollView, View} from 'react-native';
 import t from '../../../Theme/theme';
 import {PlayerRadarGraph} from '../../Common/PlayerRadarGraph';
+import {BarChart} from '../BarChart';
 import {useStatistics} from '../hooks/useStatistics';
 import {SetSelector} from '../SetSelector';
 import {StatisticItem} from '../StatisticItem';
@@ -18,6 +19,8 @@ export const StatisticsRoute = ({team1, team2, statistics}) => {
     t2Tsm,
     t1Tbp,
     t2Tbp,
+    t1GP,
+    t2GP,
     t1Tf,
     t2Tf,
     t1Tw,
@@ -30,6 +33,10 @@ export const StatisticsRoute = ({team1, team2, statistics}) => {
     t2Tv,
     activeSet,
     totalPoints,
+    totalGoldPoints,
+    totalWPerPlayer,
+    totalEFPerPlayer,
+    totalNFPerPlayer,
     handleSetActiveSet,
   } = useStatistics({
     team1,
@@ -39,10 +46,27 @@ export const StatisticsRoute = ({team1, team2, statistics}) => {
 
   return (
     <>
-      <SetSelector active={activeSet} setActive={handleSetActiveSet} />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[t.itemsCenter, t.pX3, t.mT5]}>
+        <BarChart
+          players={{
+            p1: team1?.[0],
+            p2: team1?.[1],
+            p3: team2?.[0],
+            p4: team2?.[1],
+          }}
+          winners={totalWPerPlayer}
+          errorForced={totalEFPerPlayer}
+          nonForced={totalNFPerPlayer}
+        />
+        <SetSelector active={activeSet} setActive={handleSetActiveSet} />
+        <StatisticItem
+          label="👑 Puntos de oro 👑"
+          t1PointCount={t1GP}
+          t2PointCount={t2GP}
+          totalCount={totalGoldPoints}
+        />
         <StatisticItem
           label="Winners"
           t1PointCount={t1Tw}

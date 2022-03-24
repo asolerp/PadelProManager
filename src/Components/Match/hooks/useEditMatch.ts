@@ -1,8 +1,12 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {matchQuery} from '../../../Api/queries';
+import {LoadingModalContext} from '../../../Context/LoadingModalContext';
+
 import {useAddDocument} from '../../../Hooks/useAddDocument';
 import {useUpdateDocument} from '../../../Hooks/useUpdateDocument';
-import {mapPoints, mapPointsToNumber} from '../../../Utils/gameLogic';
+import {MAP_POINTS, MAP_POINTS_TO_NUMBER} from '../../../Utils/constants';
+
+import {timeout} from '../../../Utils/timeout';
 import {
   getNumberOfSetsWonByTeam,
   getSetOfMatch,
@@ -12,7 +16,9 @@ import {
 export const useEditMatch = ({match}) => {
   const [editedMatch, setEditedMatch] = useState({});
 
-  const {updateDocument, loading} = useUpdateDocument(matchQuery);
+  const {setIsVisible: setIsVisibleLoading, setText} =
+    useContext(LoadingModalContext);
+  const {updateDocument} = useUpdateDocument(matchQuery);
   const {addDocument} = useAddDocument(
     matchQuery.doc(match?.id).collection('history'),
   );
@@ -23,8 +29,8 @@ export const useEditMatch = ({match}) => {
         match?.game;
       setEditedMatch({
         service,
-        team1: mapPoints[team1],
-        team2: mapPoints[team2],
+        team1: MAP_POINTS[team1],
+        team2: MAP_POINTS[team2],
         s1t1,
         s2t1,
         s3t1,
@@ -37,15 +43,17 @@ export const useEditMatch = ({match}) => {
   }, [match]);
 
   const handleEditMatch = async () => {
+    setText('Actualizando resultado...');
     const matchEdited = {
       ...editedMatch,
-      team1: mapPointsToNumber[editedMatch?.team1],
-      team2: mapPointsToNumber[editedMatch?.team2],
+      team1: MAP_POINTS_TO_NUMBER[editedMatch?.team1],
+      team2: MAP_POINTS_TO_NUMBER[editedMatch?.team2],
       set: getSetOfMatch(editedMatch),
       ...getNumberOfSetsWonByTeam(editedMatch),
     };
 
     try {
+      setIsVisibleLoading(true);
       await updateDocument(match?.id, {
         game: {
           ...matchEdited,
@@ -71,6 +79,9 @@ export const useEditMatch = ({match}) => {
       ]);
     } catch (err) {
       console.log(err);
+    } finally {
+      await timeout(1000);
+      setIsVisibleLoading(false);
     }
   };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import t from '../../Theme/theme';
-import {resultGame} from '../../Utils/gameLogic';
+import {resultGame} from '../../Utils/resultGame';
 import {Chip} from '../UI/Chip';
 
 interface LiveResultProps {

@@ -4,20 +4,13 @@ import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import t from '../../Theme/theme';
 import {HOUR_FORMAT} from '../../Utils/date-ext';
+import {colorParser} from '../../Utils/sessionParsers';
 import {Avatar} from '../UI/Avatar';
 import {Chip} from '../UI/Chip';
 import {HDivider} from '../UI/HDivider';
 import PressableOpacity from '../UI/PressableOpacity';
 
 export const RenderItem = ({item, onPress, style}) => {
-  const startTime = new Date(
-    item?.startTime?._seconds * 1000 + item?.startTime?._nanoseconds / 1000000,
-  );
-
-  const endTime = new Date(
-    item?.endTime?._seconds * 1000 + item?.endTime?._nanoseconds / 1000000,
-  );
-
   return (
     <>
       <PressableOpacity
@@ -26,6 +19,7 @@ export const RenderItem = ({item, onPress, style}) => {
           t.p3,
           {height: item.height},
           styles.container,
+          colorParser[item?.color],
           t.roundedSm,
           t.shadow,
           style,
@@ -46,8 +40,8 @@ export const RenderItem = ({item, onPress, style}) => {
           <View style={[t.flexRow, t.itemsCenter, t.justifyBetween]}>
             <Chip
               mainColor="info"
-              text={`${format(startTime, HOUR_FORMAT)} - ${format(
-                endTime,
+              text={`${format(Number(item?.startTime), HOUR_FORMAT)} - ${format(
+                Number(item?.endTime),
                 HOUR_FORMAT,
               )}`}
             />
@@ -72,8 +66,6 @@ export const RenderItem = ({item, onPress, style}) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#79e4f720',
     borderWidth: 2,
-    borderColor: '#79e4f7',
   },
 });

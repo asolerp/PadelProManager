@@ -76,10 +76,9 @@ export const PlayersSelector = () => {
   };
 
   const handlePressRemovePlayer = pos => {
-    setSelectedPlayers({
-      ...selectedPlayers,
-      [pos]: undefined,
-    });
+    const copySelectedPlayers = {...selectedPlayers};
+    delete copySelectedPlayers[pos];
+    setSelectedPlayers(copySelectedPlayers);
   };
 
   return (
@@ -93,6 +92,12 @@ export const PlayersSelector = () => {
       <Text style={[t.fontSansBold, t.textLg, t.mB2]}>
         Seleccionar jugadores
       </Text>
+      <View style={[t.mB4]}>
+        <Text style={[t.textLg, t.fontSans, t.textGray600]}>
+          Selecciona que jugadores van a jugar el partido. Añade los jugadores
+          sin seguimiento necesarios para llenar todos los huecos
+        </Text>
+      </View>
       <View
         style={[
           {backgroundColor: FIELD_COLOR},

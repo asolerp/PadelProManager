@@ -1,6 +1,6 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
 import {Header} from '../../Components/Layout/Header';
 import {ScreenLayout} from '../../Components/Layout/ScreenLayout';
 import {Input} from '../../Components/UI/Input';
@@ -17,7 +17,7 @@ import {ImageSelector} from '../../Components/NewPlayer/ImageSelector';
 import {Select} from '../../Components/UI/Select';
 import {cateogries, gender, lateralidad} from '../../Utils/lists';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {AuthContext} from '../../Context/AuthContex';
+
 import {usePermissions} from '../../Hooks/usePermissions';
 import PressableOpacity from '../../Components/UI/PressableOpacity';
 import {useLogout} from '../../Hooks/useLogout';
@@ -62,10 +62,19 @@ export const NewPlayerScreen = ({route}) => {
           )
         }
       />
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView
+        style={[t.flex1]}
+        showsVerticalScrollIndicator={false}>
+        <View style={[t.mT8]}>
+          <Text style={[t.textLg, t.fontSans, t.textGray600]}>
+            Crea un nuevo jugador para empezar a llevar un seguimiento de su
+            evolución. Comparte sesiones de entrenamiento y registra sus
+            partidos.
+          </Text>
+        </View>
         <Formik
           innerRef={newPlayerFormRef}
-          validateOnBlur={false}
+          validateOnBlur={true}
           enableReinitialize={true}
           initialValues={initialValues}
           onSubmit={values =>
@@ -101,28 +110,25 @@ export const NewPlayerScreen = ({route}) => {
                     values?.secondName?.[0]?.toUpperCase() || ''
                   }`}
                 />
-                <View style={[t.flexRow, t.mB4]}>
-                  <Input
-                    placeholder="Nombre"
-                    value={values?.firstName}
-                    name="firstName"
-                    error={errors.firstName}
-                    onBlur={handleBlur('firstName')}
-                    onChangeText={handleChange('firstName')}
-                    touched={touched.firstName}
-                    style={[t.flex1, t.mR3]}
-                  />
-                  <Input
-                    placeholder="Apellidos"
-                    value={values?.secondName}
-                    name="secondName"
-                    error={errors.secondName}
-                    onBlur={handleBlur('secondName')}
-                    onChangeText={handleChange('secondName')}
-                    touched={touched.secondName}
-                    style={[t.flex1]}
-                  />
-                </View>
+                <Input
+                  placeholder="Nombre"
+                  value={values?.firstName}
+                  error={errors.firstName}
+                  onBlur={handleBlur('firstName')}
+                  onChangeText={handleChange('firstName')}
+                  touched={touched.firstName}
+                  style={[t.flex1, t.mB4]}
+                />
+                <Input
+                  placeholder="Apellidos"
+                  value={values?.secondName}
+                  name="secondName"
+                  error={errors.secondName}
+                  onBlur={handleBlur('secondName')}
+                  onChangeText={handleChange('secondName')}
+                  touched={touched.secondName}
+                  style={[t.flex1, t.mB4]}
+                />
                 <View style={[t.flexRow, t.mB4]}>
                   <Input
                     placeholder="Email"

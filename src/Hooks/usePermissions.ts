@@ -9,7 +9,7 @@ export const usePermissions = () => {
   const {isSubscribed} = useContext(SubscriptionContext);
 
   const [players] = useCollectionData(
-    playerQuery.where('coach', 'array-contains', user?.id),
+    playerQuery(user?.id).where('coach', 'array-contains', user?.id),
   );
 
   const playersOfUser = players?.length;

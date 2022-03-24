@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, FlatList} from 'react-native';
 import t from '../../../Theme/theme';
 import {BottomModal} from '../../Modal/BottomModal';
 import {Button} from '../../UI/Button';
@@ -7,7 +7,6 @@ import {HDivider} from '../../UI/HDivider';
 import {Input} from '../../UI/Input';
 import {useNotes} from '../hooks/useNotes';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {FlatList} from 'react-native-gesture-handler';
 import PressableOpacity from '../../UI/PressableOpacity';
 
 export const NotesRoute = ({notes, matchId}) => {

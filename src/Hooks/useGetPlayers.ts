@@ -7,6 +7,8 @@ export const useGetPlayers = () => {
   const {user} = useContext(AuthContext);
 
   const query = firestore()
+    .collection('users')
+    .doc(user?.id)
     .collection('players')
     .where('coach', 'array-contains', user?.id);
   const [players, loading, error] = useCollectionData(query, {

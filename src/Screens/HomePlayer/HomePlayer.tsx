@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
 import {View, Text, processColor, ScrollView} from 'react-native';
 import {RadarChart} from 'react-native-charts-wrapper';
@@ -12,26 +12,29 @@ import {useGetPlayer} from './hooks/useGetPlayer';
 
 import {legend, xAxis} from '../../Utils/graphParams';
 import {ResumenStatistic} from '../../Components/Match/ResumenStatistic';
-
-import {useGetPlayerMatches} from '../../Hooks/useGetPlayerMatches';
+import {MyTodaySessions} from '../../Components/Home/MyTodaySessions';
 
 import {PlayerHeader} from '../../Components/HomePlayer/PlayerHeader';
-import {usePermissions} from '../../Hooks/usePermissions';
+
 import {PlayerLiveMatches} from '../../Components/Player/PlayerLiveMatches';
-import {WelcomeMessage} from '../../Components/Home/WelcomeMessage';
+
 import {Banner} from '../../Components/UI/Banner';
+import {AuthContext} from '../../Context/AuthContex';
 
 export const HOME_PLAYER_SCREEN_KEY = 'playerScreen';
 
 export const HomePlayerScreen = () => {
-  const {player, tw, tl, tm, graphData, loading} = useGetPlayer();
+  const {user} = useContext(AuthContext);
+  const {tw, tl, tm, graphData, loading} = useGetPlayer();
 
   return (
     <ScreenLayout>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <PlayerHeader playerId={player?.id} />
-
-        {!player?.coach && (
+        <PlayerHeader />
+        <View style={[t.mB5]}>
+          <MyTodaySessions />
+        </View>
+        {!user?.coach && (
           <Banner
             mainColor="warning"
             onPress={() => {}}
@@ -83,7 +86,7 @@ export const HomePlayerScreen = () => {
             <Text style={[t.text2xl, t.fontSansBold, t.mB5]}>
               Partidos activos
             </Text>
-            {player?.id && <PlayerLiveMatches playerId={player?.id} />}
+            <PlayerLiveMatches userEmail={user?.email} />
           </View>
         </View>
       </ScrollView>

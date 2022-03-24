@@ -1,18 +1,18 @@
-import React, {useContext} from 'react';
+import React from 'react';
 
-import {View, Text, processColor} from 'react-native';
+import {View, Text, FlatList, processColor} from 'react-native';
 import {RadarChart} from 'react-native-charts-wrapper';
 import {ScreenLayout} from '../../Components/Layout/ScreenLayout';
 import {Stat} from '../../Components/Player/Stat';
 import {Avatar as PlayerAvatar} from '../../Components/UI/Avatar';
 import t from '../../Theme/theme';
 import {MatchResume} from '../../Components/Home/MatchResume';
-import {AuthContext} from '../../Context/AuthContex';
+
 import {useGetPlayer} from './hooks/useGetPlayer';
 import {Header} from '../../Components/Layout/Header';
 import {legend, xAxis} from '../../Utils/graphParams';
 import {ResumenStatistic} from '../../Components/Match/ResumenStatistic';
-import {FlatList} from 'react-native-gesture-handler';
+
 import {useGetMatches} from '../../Hooks/useGetMatches';
 import {
   categoryParse,

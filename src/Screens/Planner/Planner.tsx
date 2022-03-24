@@ -3,33 +3,80 @@ import {format} from 'date-fns';
 import React, {useCallback, useState} from 'react';
 import {ActivityIndicator, Text, View} from 'react-native';
 
-import {Agenda} from 'react-native-calendars';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {Agenda, LocaleConfig} from 'react-native-calendars';
 
 import {RenderItem} from '../../Components/Planner/RenderItem';
 import {AddButton} from '../../Components/UI/AddButton';
 
 import {HDivider} from '../../Components/UI/HDivider';
-import PressableOpacity from '../../Components/UI/PressableOpacity';
+
 import {useGetSessions} from '../../Hooks/useGetSessions';
 import {openScreenWithPush} from '../../Router/utils/actions';
 
 import t from '../../Theme/theme';
 import {DATE_FORM} from '../../Utils/date-ext';
+import {newContentChecker} from '../../Utils/newContentChecker';
 import {NEW_SESSION_SCREEN_KEY} from '../NewSession/NewSession';
+import {Header, ScreenLayout} from '../../Components/Layout';
+import {es} from 'date-fns/locale';
+import {capitalize} from '../../Utils/parsers';
+
+LocaleConfig.locales.es = {
+  monthNames: [
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre',
+  ],
+  monthNamesShort: [
+    'Janv.',
+    'Févr.',
+    'Mars',
+    'Avril',
+    'Mai',
+    'Juin',
+    'Juil.',
+    'Août',
+    'Sept.',
+    'Oct.',
+    'Nov.',
+    'Déc.',
+  ],
+  dayNames: [
+    'Domingo',
+    'Lunes',
+    'Martes',
+    'Miércoles',
+    'Jueves',
+    'Viernes',
+    'Sábado',
+  ],
+  dayNamesShort: ['Dom.', 'Lun.', 'Mar.', 'Mier.', 'Jue.', 'Vie.', 'Sab.'],
+  today: 'Hoy',
+};
+LocaleConfig.defaultLocale = 'es';
 
 export const Planner = () => {
-  const {sessions, markers, getSessions, loading} = useGetSessions();
+  const {sessions, markers, getSessions} = useGetSessions();
   const [selectedDate, setSelectedDate] = useState();
+  const [fetching, setFetching] = useState(true);
 
   useFocusEffect(
     useCallback(() => {
-      getSessions();
+      getSessions(() => setFetching(false));
     }, []),
   );
 
   return (
-    <SafeAreaView edges={['top']} style={[t.flexGrow, t.bgWhite]}>
+    <ScreenLayout>
       <AddButton
         iconName="ios-calendar"
         style={[t.bgSuccessLight]}
@@ -39,6 +86,9 @@ export const Planner = () => {
           })
         }
       />
+      <View style={[t.mB5]}>
+        <Header title="Calendario" />
+      </View>
       <Agenda
         items={sessions}
         selected={format(new Date(), 'yyyy-MM-dd')}
@@ -47,17 +97,13 @@ export const Planner = () => {
         }
         renderItem={item => {
           return (
-            item && (
-              <View>
-                <RenderItem
-                  item={item}
-                  style={[t.mR1, t.mY3]}
-                  onPress={() =>
-                    openScreenWithPush(NEW_SESSION_SCREEN_KEY, {session: item})
-                  }
-                />
-              </View>
-            )
+            <RenderItem
+              item={item}
+              style={[t.mR3, t.mY3]}
+              onPress={() =>
+                openScreenWithPush(NEW_SESSION_SCREEN_KEY, {session: item})
+              }
+            />
           );
         }}
         // Specify how each date should be rendered. day can be undefined if the item is not first in that day
@@ -71,7 +117,11 @@ export const Planner = () => {
                       {format(new Date(day), 'dd')}
                     </Text>
                     <Text style={[t.fontSans, t.textXs, t.textGray800]}>
-                      {format(new Date(day), 'EEEE')}
+                      {capitalize(
+                        format(new Date(day), 'EEEE', {
+                          locale: es,
+                        }),
+                      )}
                     </Text>
                   </View>
                 </>
@@ -85,8 +135,8 @@ export const Planner = () => {
         renderEmptyDate={() => {
           return (
             <>
-              <View style={[t.h14, t.mY3]}>
-                <Text style={(t.fontSansBold, t.textBase)}>
+              <View style={[t.h14, t.mY3, t.justifyCenter, t.itemsCenter]}>
+                <Text style={(t.fontSansBold, t.textXs)}>
                   No tienes niguna clase este día.
                 </Text>
               </View>
@@ -98,7 +148,7 @@ export const Planner = () => {
         renderEmptyData={() => {
           return (
             <View style={[t.flexGrow, t.itemsCenter, t.justifyCenter, t.pX12]}>
-              {loading ? (
+              {fetching ? (
                 <ActivityIndicator size="large" />
               ) : (
                 <Text style={(t.fontSansBold, t.textXl, t.textCenter)}>
@@ -110,7 +160,7 @@ export const Planner = () => {
         }}
         // Specify your item comparison function for increased performance
         rowHasChanged={(r1, r2) => {
-          return r1.text !== r2.text;
+          return newContentChecker(r1, r2);
         }}
         // Hide knob button. Default = false
         hideKnob={false}
@@ -139,10 +189,9 @@ export const Planner = () => {
           t.hFull,
           {
             backgroundColor: 'white',
-            paddingHorizontal: 10,
           },
         ]}
       />
-    </SafeAreaView>
+    </ScreenLayout>
   );
 };

@@ -39,7 +39,6 @@ export const PromotionalSubscription = () => {
       <StatusBar barStyle="light-content" />
       <ContainerWithBg backgroundColor="Gray900" opacity={80}>
         <>
-          <Header mode="dark" title="PADEL PRO MANAGER" />
           <View style={[t.flexGrow, t.itemsCenter, t.justifyCenter]}>
             <View style={[t.wFull, t.pY5]}>
               <View style={[t.flexRow, t.flexWrap, t.justifyBetween, t.mT5]}>
@@ -47,7 +46,7 @@ export const PromotionalSubscription = () => {
                   iconName="people-circle-sharp"
                   title="Gestión de jugadores"
                 />
-                <Service iconName="tennisball" title="Análisis de partidas" />
+                <Service iconName="tennisball" title="Análisis de partidos" />
                 <Service
                   iconName="ios-easel-sharp"
                   title="Acceso a ejercicios"
@@ -58,6 +57,16 @@ export const PromotionalSubscription = () => {
                 <Text
                   style={[
                     t.fontSansBold,
+                    t.textLg,
+                    t.textWhite,
+                    t.mB5,
+                    t.textCenter,
+                  ]}>
+                  ¡1 mes gratis!
+                </Text>
+                <Text
+                  style={[
+                    t.fontSansBold,
                     t.text2xl,
                     t.textWhite,
                     t.mB5,
@@ -65,6 +74,7 @@ export const PromotionalSubscription = () => {
                   ]}>
                   Tan solo por {packages?.[0]?.product?.price_string} al mes
                 </Text>
+
                 <Button
                   active
                   title="Acerse premium ahora"

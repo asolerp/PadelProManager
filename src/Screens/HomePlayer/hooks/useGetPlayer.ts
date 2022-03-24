@@ -1,15 +1,15 @@
-import {useEffect, useMemo, useState} from 'react';
+import {useContext, useEffect, useMemo, useState} from 'react';
 import {useDocumentData} from 'react-firebase-hooks/firestore';
-import {playerQuery} from '../../../Api/queries';
+import {userQuery} from '../../../Api/queries';
 import {radarGraphDataGenerator} from '../../../Utils/radaGraphDataGenerator';
 
-import {useGetPlayerByUserId} from '../../../Hooks/useGetPlayerByUserId';
+import {AuthContext} from '../../../Context/AuthContex';
 
 export const useGetPlayer = () => {
-  const {player, loading: loadingPlayer} = useGetPlayerByUserId();
+  const {user} = useContext(AuthContext);
   const queryStats = useMemo(
-    () => playerQuery.doc(player?.id).collection('stats').doc('global'),
-    [player?.id],
+    () => userQuery.doc(user?.id).collection('stats').doc('global'),
+    [user?.id],
   );
 
   const [stats, loadingStats, errorStats] = useDocumentData(queryStats);
@@ -26,8 +26,8 @@ export const useGetPlayer = () => {
   const tl = stats?.tl;
   const tm = stats?.tm;
 
-  const loading = loadingStats || loadingPlayer;
+  const loading = loadingStats;
   const error = errorStats;
 
-  return {player, error, loading, tw, tl, tm, graphData};
+  return {user, error, loading, tw, tl, tm, graphData};
 };

@@ -1,21 +1,3 @@
-export const mapPoints = {
-  0: '0',
-  1: '15',
-  2: '30',
-  3: '40',
-  4: 'ADV',
-  5: '0',
-};
-
-export const mapPointsToNumber = {
-  0: 0,
-  15: 1,
-  30: 2,
-  40: 3,
-  ADV: 4,
-  5: 0,
-};
-
 const generateSet = (game, sets, team) => {
   const isTiebreak = game?.tiebreak;
   const teamSetGame = game?.[`winsSetTeam${team}`] + 1;
@@ -75,6 +57,8 @@ const checkSetState = (game, firstTeamToCheck, seconTeamToCheck) => {
       game?.service === firstTeamToCheck ? seconTeamToCheck : firstTeamToCheck,
     [`s${game?.set}${firstTeamToCheck}`]:
       game[`s${game?.set}${firstTeamToCheck}`] + 1,
+    breakpoint:
+      game?.service !== firstTeamToCheck && `team${firstTeamToCheck[1]}`,
     info: {
       text:
         game?.service === firstTeamToCheck
@@ -112,53 +96,18 @@ const checkWhoServesTB = (service, points) => {
 };
 
 const checkResult = game => {
-  switch (game?.team1 - game?.team2) {
-    case 1:
-      return {
-        ...game,
-        ['team1']: 4,
-      };
-    case -1:
-      return {
-        ...game,
-        ['team2']: 4,
-      };
-    default:
-      if (game?.team1 > game?.team2) {
-        return checkSetState(game, 't1', 't2');
-      }
+  if (game?.team1 > 3 || game?.team2 > 3) {
+    if (game?.team1 > game?.team2) {
+      return checkSetState(game, 't1', 't2');
+    } else {
       return checkSetState(game, 't2', 't1');
-  }
-};
-
-export const resultGame = game => {
-  if (game?.tiebreak) {
-    return `${game?.team1Tiebreak}-${game?.team2Tiebreak}`;
+    }
   } else {
-    if (game?.team1 === 0 && game?.team2 === 0) {
-      return '0-0';
-    }
-    if (game?.team1 >= 4 || game?.team2 >= 4) {
-      if (game?.team1 === game?.team2) {
-        return '40-40';
-      }
-      switch (game?.team1 - game?.team2) {
-        case 1:
-          return 'ADV-40';
-        case -1:
-          return '40-ADV';
-        default:
-          break;
-      }
-    }
+    return game;
   }
-
-  return `${mapPoints[game?.team1]}-${mapPoints[game?.team2]}`;
 };
 
-export const tennisGameLogic = (game, winPointTeam) => {
-  console.log(winPointTeam);
-
+const tennisGameLogic = (game, winPointTeam) => {
   const teamWinPoint = winPointTeam;
   const teamLosePoint = winPointTeam === 'team1' ? 'team2' : 'team1';
 
@@ -186,17 +135,14 @@ export const tennisGameLogic = (game, winPointTeam) => {
       [`${teamWinPoint}`]: game?.[`${teamWinPoint}`] + 1,
     };
 
-    if (newGameState.team1 >= 4 || newGameState.team2 >= 4) {
-      if (newGameState.team1 !== newGameState.team2) {
-        return checkResult(newGameState);
-      }
-      return {
-        ...game,
-        team1: 3,
-        team2: 3,
-      };
+    if (newGameState.team1 >= 3 || newGameState.team2 >= 3) {
+      return checkResult(newGameState);
     } else {
-      return {...game, [`${teamWinPoint}`]: game?.[`${teamWinPoint}`] + 1};
+      return newGameState;
     }
   }
+};
+
+module.exports = {
+  tennisGameLogic,
 };

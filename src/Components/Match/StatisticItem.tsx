@@ -15,9 +15,13 @@ export const StatisticItem = ({
   return (
     <View style={[t.wFull, t.mB3]}>
       <View style={[t.flexRow, t.justifyBetween, t.mB2]}>
-        <Text>{t1PointCount || 0}</Text>
+        <Text style={[t.w10]}>
+          {t1PointCount || 0} / {totalCount || 0}
+        </Text>
         <Text>{label}</Text>
-        <Text>{t2PointCount || 0}</Text>
+        <Text style={[t.w10, t.textRight]}>
+          {t2PointCount || 0} / {totalCount || 0}
+        </Text>
       </View>
       <View style={[t.flexRow]}>
         <ProgressBar

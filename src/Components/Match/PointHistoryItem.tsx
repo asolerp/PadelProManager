@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import t from '../../Theme/theme';
-import {resultGame} from '../../Utils/gameLogic';
+import {resultGame} from '../../Utils/resultGame';
 import {shortName} from '../../Utils/parsers';
 import {HDivider} from '../UI/HDivider';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -21,7 +21,7 @@ import PressableOpacity from '../UI/PressableOpacity';
 
 export const PointHistoryItem = ({match, pointHistory}) => {
   const {s1t1, s1t2, s2t1, s2t2, s3t1, s3t2, set, service} =
-    pointHistory?.gameState;
+    pointHistory && pointHistory?.gameState;
 
   const {
     handleAddAsFavorite,

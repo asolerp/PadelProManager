@@ -2,14 +2,14 @@ import firestore from '@react-native-firebase/firestore';
 import {useMemo} from 'react';
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 
-export const useGetPlayerLiveMatches = playerId => {
+export const useGetPlayerLiveMatches = userEmail => {
   const query = useMemo(
     () =>
       firestore()
         .collection('matches')
-        .where('playersId', 'array-contains', playerId)
+        .where('playersEmail', 'array-contains', userEmail)
         .where('state', '==', 'live'),
-    [playerId],
+    [userEmail],
   );
   const [liveMatches, loadingLiveMatches, error] = useCollectionData(query, {
     idField: 'id',

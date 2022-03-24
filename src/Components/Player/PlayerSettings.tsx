@@ -13,8 +13,10 @@ import {useRecursiveDelete} from '../../Hooks/useRecursiveDelete';
 import {showError} from './utils/alertErrorMessages';
 import {LoadingModalContext} from '../../Context/LoadingModalContext';
 import {timeout} from '../../Utils/timeout';
+import {AuthContext} from '../../Context/AuthContex';
 
 export const PlayerSettings = ({playerId}) => {
+  const {user} = useContext(AuthContext);
   const [isVisible, setIsVisible] = useState(false);
   const {setIsVisible: setIsVisibleLoading, setText} =
     useContext(LoadingModalContext);
@@ -34,7 +36,7 @@ export const PlayerSettings = ({playerId}) => {
   };
 
   const {recursiveDelete, loading} = useRecursiveDelete({
-    path: `players/${playerId}`,
+    path: `users/${user?.id}/players/${playerId}`,
   });
 
   return (

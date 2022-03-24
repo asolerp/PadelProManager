@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
 import {Image, View} from 'react-native';
 
@@ -6,15 +6,14 @@ import t from '../../Theme/theme';
 import {Header} from '../Layout';
 
 import {openScreenWithPush} from '../../Router/utils/actions';
-import {NEW_PLAYER_SCREEN_KEY} from '../../Screens/NewPlayer/NewPlayer';
 
-import {useGetPlayerByUserId} from '../../Hooks/useGetPlayerByUserId';
 import {Avatar} from '../UI/Avatar';
 import {WelcomeMessage} from './WelcomeMessage';
+import {PROFILE_SCREEN_KEY} from '../../Screens/Profile/Profile';
+import {AuthContext} from '../../Context/AuthContex';
 
-export const PlayerHeader = ({position, playerId}) => {
-  const {player} = useGetPlayerByUserId();
-
+export const PlayerHeader = ({position}) => {
+  const {user} = useContext(AuthContext);
   return (
     <View style={[t.mB10]}>
       <Header
@@ -24,10 +23,9 @@ export const PlayerHeader = ({position, playerId}) => {
           <Avatar
             imageStyle={[t.w12, t.h12]}
             style={[t.mX2]}
-            img={player?.profileImg}
+            img={user?.profileImg}
             onPress={() =>
-              openScreenWithPush(NEW_PLAYER_SCREEN_KEY, {
-                playerId: player?.id,
+              openScreenWithPush(PROFILE_SCREEN_KEY, {
                 edit: true,
               })
             }

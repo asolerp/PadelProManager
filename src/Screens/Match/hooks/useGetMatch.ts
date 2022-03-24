@@ -2,13 +2,14 @@ import {
   useCollectionData,
   useDocumentData,
 } from 'react-firebase-hooks/firestore';
-import firestore from '@react-native-firebase/firestore';
+
 import {useEffect, useState} from 'react';
+import {matchQuery} from '../../../Api/queries';
 
 export const useGetMatch = (matchId: string) => {
   const [isFinished, setIsFinished] = useState<boolean>(false);
 
-  const query = firestore().collection('matches').doc(matchId);
+  const query = matchQuery.doc(matchId);
 
   const [match, loadingMatch, errorMatch] = useDocumentData(query, {
     idField: 'id',

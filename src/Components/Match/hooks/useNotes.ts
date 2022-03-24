@@ -1,5 +1,6 @@
-import firestore from '@react-native-firebase/firestore';
 import {useState} from 'react';
+import {matchQuery} from '../../../Api/queries';
+
 import {useAddDocument} from '../../../Hooks/useAddDocument';
 import {useDeleteDocument} from '../../../Hooks/useDeleteDocument';
 
@@ -7,10 +8,7 @@ export const useNotes = matchId => {
   const [title, setTitle] = useState<string>();
   const [description, setDescription] = useState<string>();
 
-  const notesQuery = firestore()
-    .collection('matches')
-    .doc(matchId)
-    .collection('notes');
+  const notesQuery = matchQuery.doc(matchId).collection('notes');
 
   const {addDocument} = useAddDocument(notesQuery);
   const {deleteDocument} = useDeleteDocument(notesQuery);

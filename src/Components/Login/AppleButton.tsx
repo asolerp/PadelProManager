@@ -9,6 +9,7 @@ export const AppleButton = ({onPress}) => {
       <View
         style={[
           t.flexRow,
+          t.bgWhite,
           t.itemsCenter,
           t.p3,
           t.border,
@@ -21,7 +22,7 @@ export const AppleButton = ({onPress}) => {
           style={[t.w5, t.h5]}
         />
         <View style={[t.flex1, t.itemsCenter]}>
-          <Text>Continuar con Apple</Text>
+          <Text style={[t.fontSansMedium]}>Continuar con Apple</Text>
         </View>
       </View>
     </PressableOpacity>

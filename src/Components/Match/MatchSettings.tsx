@@ -16,7 +16,7 @@ export const MatchSettings = ({match}) => {
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [isVisible, setIsModalVisible] = useState(false);
   const {savePlayersStatsHandler} = useSavePlayersStats(match);
-  const {handleDeleteMatch} = useLiveMatch(match?.id);
+  const {handleDeleteMatch} = useLiveMatch(match);
 
   const openModal = async () => {
     await timeout(500);

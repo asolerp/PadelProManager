@@ -1,9 +1,9 @@
-import firestore from '@react-native-firebase/firestore';
 import {useContext, useState} from 'react';
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 import {AuthContext} from '../Context/AuthContex';
 import {removeAccents} from '../Utils/removeAccents';
 import {sortByClubName} from '../Utils/sorts';
+import {matchQuery} from '../Api/queries';
 
 export const useGetMatches = (playerId?: string) => {
   const {user} = useContext(AuthContext);
@@ -11,11 +11,10 @@ export const useGetMatches = (playerId?: string) => {
   const [searchOption, setSearchOption] = useState('name');
 
   const query = playerId
-    ? firestore()
-        .collection('matches')
+    ? matchQuery
         .where('coachId', '==', user?.id)
         .where('playersId', 'array-contains', playerId)
-    : firestore().collection('matches').where('coachId', '==', user?.id);
+    : matchQuery.where('coachId', '==', user?.id);
 
   const [matches, loading, error] = useCollectionData(query, {
     idField: 'id',

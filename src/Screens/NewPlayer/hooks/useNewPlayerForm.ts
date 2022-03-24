@@ -1,6 +1,6 @@
 import {useContext, useEffect, useRef, useState} from 'react';
 import {playerQuery} from '../../../Api/queries';
-import firestore from '@react-native-firebase/firestore';
+
 import {useAddDocument} from '../../../Hooks/useAddDocument';
 import {popScreen} from '../../../Router/utils/actions';
 
@@ -14,6 +14,7 @@ import {timeout} from '../../../Utils/timeout';
 import {useCameraOrLibrary} from '../../../Hooks/useCamerOrLibrary';
 
 export const useNewPlayerForm = playerId => {
+  const {user} = useContext(AuthContext);
   const init = {
     firstName: '',
     secondName: '',
@@ -31,11 +32,11 @@ export const useNewPlayerForm = playerId => {
 
   const {uploadCloudinary} = useUploadCloudinaryImage();
   const {response, onImagePress} = useCameraOrLibrary();
-  const {addDocument, loading: loadingAddDocument} =
-    useAddDocument(playerQuery);
+  const {addDocument, loading: loadingAddDocument} = useAddDocument(
+    playerQuery(user?.id),
+  );
 
-  const {user} = useContext(AuthContext);
-  const {updateDocument} = useUpdateDocument(playerQuery);
+  const {updateDocument} = useUpdateDocument(playerQuery(user?.id));
   const {setIsVisible, setText} = useContext(LoadingModalContext);
 
   const handleUpdatePlayer = async values => {
@@ -78,8 +79,7 @@ export const useNewPlayerForm = playerId => {
               docId: id,
               data: {...values, coach: [user?.id], profileImg: url},
               callback: async () =>
-                await firestore()
-                  .collection('players')
+                await playerQuery(user?.id)
                   .doc(id)
                   .collection('stats')
                   .doc('global')
@@ -91,8 +91,7 @@ export const useNewPlayerForm = playerId => {
           docId: id,
           data: {...values, coach: [user?.id]},
           callback: async () =>
-            await firestore()
-              .collection('players')
+            await playerQuery(user?.id)
               .doc(id)
               .collection('stats')
               .doc('global')
@@ -113,11 +112,8 @@ export const useNewPlayerForm = playerId => {
 
   useEffect(() => {
     const getPlayerInfo = async () => {
-      const playerQuery = await firestore()
-        .collection('players')
-        .doc(playerId)
-        .get();
-      const player = playerQuery.data();
+      const playerRef = await playerQuery(user?.id).doc(playerId).get();
+      const player = playerRef.data();
       setInitialValues(player);
     };
     if (playerId) {

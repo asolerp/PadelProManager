@@ -1,8 +1,9 @@
 import React from 'react';
 import {View, Text, Keyboard} from 'react-native';
 import t from '../../Theme/theme';
-import {mapPoints} from '../../Utils/gameLogic';
+
 import {shortName} from '../../Utils/parsers';
+
 import {NormalModal} from '../Modal/NormalModal';
 import {Button} from '../UI/Button';
 import {Input} from '../UI/Input';
@@ -125,9 +126,9 @@ export const EditResultModal = ({isVisible, onClose, match}) => {
         <Button
           title="Editar"
           active
-          onPress={() => {
-            handleEditMatch();
+          onPress={async () => {
             onClose();
+            handleEditMatch();
           }}
         />
       </>

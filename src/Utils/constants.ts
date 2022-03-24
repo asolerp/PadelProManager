@@ -19,3 +19,17 @@ export const BAJADA_REVES = 'br';
 export const BANDEJA = 'bj';
 export const SMASH = 'sm';
 export const GLOBO = 'gl';
+
+export const MAP_POINTS = {
+  0: '0',
+  1: '15',
+  2: '30',
+  3: '40',
+};
+
+export const MAP_POINTS_TO_NUMBER = {
+  0: 0,
+  15: 1,
+  30: 2,
+  40: 3,
+};

@@ -26,7 +26,7 @@ export const Header: React.FC<Props> = ({
 }) => {
   return (
     <>
-      <View style={[t.flexRow, t.itemsCenter, t.z20, t?.[position]]}>
+      <View style={[t.flexRow, t.pB3, t.itemsCenter, t.z20, t?.[position]]}>
         <View style={[t.minW10, t.itemsStart]}>
           {withBack && !leftSide ? (
             <PressableOpacity onPress={popScreen}>

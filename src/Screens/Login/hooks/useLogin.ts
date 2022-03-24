@@ -64,7 +64,7 @@ export const useLogin = () => {
       setLoading(true);
       await auth().signInWithEmailAndPassword(email, password);
     } catch (err) {
-      console.log('ERROR', err);
+      console.log(err);
       errorSetter(getErrorInfo(err.code));
     } finally {
       setLoading(false);

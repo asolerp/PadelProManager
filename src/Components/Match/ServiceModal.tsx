@@ -6,7 +6,7 @@ import {Button} from '../UI/Button';
 import {useLiveMatch} from './hooks/useLiveMatch';
 
 export const ServiceModal = ({match}) => {
-  const {handleWhoStarts} = useLiveMatch(match?.id);
+  const {handleWhoStarts} = useLiveMatch(match);
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   useEffect(() => {

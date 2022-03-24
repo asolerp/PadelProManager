@@ -7,14 +7,14 @@ import {useGetDaySessions} from './hooks/useGetDaySessions';
 import {SessionItem} from './SessionItem';
 
 export const MyTodaySessions = () => {
-  const {sessions} = useGetDaySessions();
+  const {sessions, loading} = useGetDaySessions();
 
   return (
     <View>
       <Text style={[t.text2xl, t.fontSansBold, t.mB2]}>
         Mis sesiones de hoy
       </Text>
-      {sessions?.length > 0 ? (
+      {sessions?.length > 0 && !loading ? (
         sessions?.map(session => (
           <View key={session?.id} style={[{marginHorizontal: 2}]}>
             <SessionItem item={session} style={[t.mY2]} />

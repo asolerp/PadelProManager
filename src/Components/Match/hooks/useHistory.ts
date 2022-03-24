@@ -1,18 +1,15 @@
 import {useUpdateDocument} from '../../../Hooks/useUpdateDocument';
-import firestore from '@react-native-firebase/firestore';
+
 import firebase from '@react-native-firebase/app';
 import {useState} from 'react';
+import {matchQuery} from '../../../Api/queries';
 
 export const useHistory = matchId => {
   const [comment, setComment] = useState();
 
-  const query = firestore().collection('matches');
-  const historyQuery = firestore()
-    .collection('matches')
-    .doc(matchId)
-    .collection('history');
+  const historyQuery = matchQuery.doc(matchId).collection('history');
 
-  const {updateDocument} = useUpdateDocument(query);
+  const {updateDocument} = useUpdateDocument(matchQuery);
   const {updateDocument: updateHistoryPoint} = useUpdateDocument(historyQuery);
 
   const handleAddComment = (pointHistoryId, callback) => {

@@ -3,10 +3,12 @@ import React from 'react';
 import {View, Text, Image} from 'react-native';
 import t from '../../Theme/theme';
 
-import ExerciseIllustration from '../../Assets/SVG/exercises/01.svg';
 import {Chip} from '../UI/Chip';
+import {useGetDailyExercise} from './hooks/useGetDailyExercise';
 
 export const DailyExercise = () => {
+  const {dailyExercise} = useGetDailyExercise();
+
   return (
     <View style={[t.mB5]}>
       <Text style={[t.text2xl, t.fontSansBold, t.mB5]}>Ejercicio del día</Text>
@@ -14,27 +16,30 @@ export const DailyExercise = () => {
         <View style={[t.flex2, t.pR1]}>
           <View style={[t.flexRow, t.itemsCenter, t.mB2]}>
             <Text style={[t.fontSansBold, t.mR2]}>Nivel:</Text>
-            <Chip text="Básico" mainColor="warning" />
+            <Chip text={dailyExercise?.level} mainColor="warning" />
           </View>
           <Text style={[t.fontSans, t.mB2]}>
-            <Text style={[t.fontSansBold]}>Objetivo:</Text> Control de golpe
-            contra muro
+            <Text style={[t.fontSansBold]}>Objetivo:</Text>{' '}
+            {dailyExercise?.objective}
           </Text>
           <Text style={[t.fontSans, t.mB2]}>
-            <Text style={[t.fontSansBold]}>Descripción:</Text> Ubicado el
-            jugador sobre la línea de saque, realizará golpes cortos de derecha
-            con un bote contra la parded de fondo
+            <Text style={[t.fontSansBold]}>Descripción:</Text>{' '}
+            {dailyExercise?.description}
           </Text>
           <View style={[t.flexRow, t.itemsCenter]}>
             <Text style={[t.fontSansBold, t.mR2]}>Duración:</Text>
-            <Chip text="1 minuto" />
+            <Chip
+              text={`${dailyExercise?.duration} minuto${
+                dailyExercise?.duration > 1 ? 's' : ''
+              }`}
+            />
           </View>
         </View>
         <View style={[t.flex1]}>
           <Image
             resizeMode="contain"
             source={{
-              uri: 'https://res.cloudinary.com/enalbis/image/upload/v1643810017/PadelPro/exercises/01/01_kooqas_uilrjw.png',
+              uri: dailyExercise?.image?.url,
             }}
             style={[t.h48]}
           />

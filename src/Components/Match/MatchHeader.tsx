@@ -6,23 +6,22 @@ import {Avatar} from '../UI/Avatar';
 import {LiveResult} from './LiveResult';
 import {openScreenWithPush} from '../../Router/utils/actions';
 import {PLAYER_SCREEN_KEY} from '../../Screens/Player/Player';
-import {SubscriptionContext} from '../../Context/SubscriptionContext';
+import {firstSurname} from '../../Utils/parsers';
 
 export const MatchHeader = ({match}) => {
-  const {isSubscribed} = useContext(SubscriptionContext);
+  const avatarPressable = player => player?.id && player?.id !== -1;
+
   return (
     <View style={[t.flexRow, t.justifyBetween]}>
       <View style={[t.flexRow, t.flexGrow, t.justifyCenter]}>
-        {console.log(match?.t1)}
         {match?.t1?.map((player, i) => (
           <Avatar
             key={i}
             disabled={!player?.id}
             img={player?.profileImg}
-            name={player?.secondName || `Jug ${i + 1}`}
+            name={firstSurname(player?.secondName) || `Jug ${i + 1}`}
             onPress={() =>
-              player?.id &&
-              isSubscribed &&
+              avatarPressable(player) &&
               openScreenWithPush(PLAYER_SCREEN_KEY, {
                 playerId: player?.id,
               })
@@ -39,9 +38,9 @@ export const MatchHeader = ({match}) => {
             key={i}
             disabled={!player?.id}
             img={player?.profileImg}
-            name={player?.secondName || `Jug ${i + 3}`}
+            name={firstSurname(player?.secondName) || `Jug ${i + 3}`}
             onPress={() =>
-              player?.id &&
+              avatarPressable(player) &&
               openScreenWithPush(PLAYER_SCREEN_KEY, {
                 playerId: player?.id,
               })

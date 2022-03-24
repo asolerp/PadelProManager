@@ -19,9 +19,8 @@ const getCalendar = functions
 
     const calendarRef = await admin
       .firestore()
-      .collection('users')
-      .doc(context?.auth?.uid)
       .collection('sessions')
+      .where('coachId', '==', context?.auth?.uid)
       .get();
 
     const sessions = calendarRef.docs.map(doc => ({id: doc.id, ...doc.data()}));

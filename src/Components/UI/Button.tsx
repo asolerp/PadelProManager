@@ -16,7 +16,7 @@ interface Props extends ButtonProps {
   title: string;
   active?: boolean;
   loading?: boolean;
-  type?: 'error' | 'success' | 'info' | 'white';
+  type?: 'error' | 'success' | 'info' | 'white' | 'inform';
   size?: 'xs' | 'sm' | 'md' | 'base' | 'lg' | 'xl';
   onPress?: () => void;
   rightSide?: React.ReactNode;
@@ -43,14 +43,16 @@ export const Button: React.FC<Props> = ({
   const parseBgTypeColors = {
     success: [active ? t.bgSuccess : t.bgWhite, t.borderSuccessDark],
     error: [active ? t.bgError : t.bgWhite, t.borderErrorDark],
-    info: [active ? t.bgInfo : t.bgWhite, t.borderInfoDark],
+    info: [active ? t.bgGray900 : t.bgWhite, t.borderGray900],
+    inform: [active ? t.bgInfo : t.bgWhite, t.borderInfoDark],
     white: [active ? t.bgWhite : t.bgTransparent, t.borderWhite],
   };
 
   const parseTextTypeColor = {
     success: active ? t.textWhite : t.textSuccessDark,
     error: active ? t.textWhite : t.textErrorDark,
-    info: active ? t.textWhite : t.textInfoDark,
+    info: active ? t.textWhite : t.textGray900,
+    inform: active ? t.textWhite : t.textInfoDark,
     white: active ? t.textGray700 : t.textWhite,
   };
 

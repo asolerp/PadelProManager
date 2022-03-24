@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Linking, View} from 'react-native';
 import {BottomModal} from '../Modal/BottomModal';
 import {ListItem} from '../UI/ListItem';
@@ -6,8 +6,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import PressableOpacity from '../UI/PressableOpacity';
 import {useLogout} from '../../Hooks/useLogout';
+import {AuthContext} from '../../Context/AuthContex';
 
 export const ProfileSettings = () => {
+  const {isCoach} = useContext(AuthContext);
   const [isVisible, setIsVisible] = useState(false);
   const {logout} = useLogout();
 
@@ -19,13 +21,17 @@ export const ProfileSettings = () => {
         title="Opciones">
         <>
           <View>
-            <ListItem
-              onPress={() => {
-                Linking.openURL('https://apps.apple.com/account/subscriptions');
-              }}
-              iconName="ios-card-outline"
-              title="Subscripciones"
-            />
+            {isCoach && (
+              <ListItem
+                onPress={() => {
+                  Linking.openURL(
+                    'https://apps.apple.com/account/subscriptions',
+                  );
+                }}
+                iconName="ios-card-outline"
+                title="Subscripciones"
+              />
+            )}
             <ListItem
               iconName="ios-exit-outline"
               title="Logout"

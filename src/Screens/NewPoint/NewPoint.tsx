@@ -1,8 +1,8 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 import {PlayerType} from '../../Global/types';
 import t from '../../Theme/theme';
-import {shortName} from '../../Utils/parsers';
+import {firstSurname, shortName} from '../../Utils/parsers';
 import {Avatar} from '../../Components/UI/Avatar';
 import {Button} from '../../Components/UI/Button';
 import {Chip} from '../../Components/UI/Chip';
@@ -29,7 +29,6 @@ import {
 
 import {LiveResult} from '../../Components/Match/LiveResult';
 import {HDivider} from '../../Components/UI/HDivider';
-import {ScrollView} from 'react-native-gesture-handler';
 import {useLiveMatch} from '../../Components/Match/hooks/useLiveMatch';
 import {useGetMatch} from '../Match/hooks/useGetMatch';
 
@@ -132,14 +131,14 @@ export const NewPoint = ({route}) => {
           <View style={[t.flexRow]}>
             <Button
               title="Gana T1"
-              type="info"
+              type="inform"
               style={[t.mR2]}
               active={isWinPointTeamActive(TEAM1)}
               onPress={() => handlePressWinPointTeam(TEAM1)}
             />
             <Button
               title="Gana T2"
-              type="info"
+              type="inform"
               active={isWinPointTeamActive(TEAM2)}
               onPress={() => handlePressWinPointTeam(TEAM2)}
             />
@@ -153,11 +152,15 @@ export const NewPoint = ({route}) => {
             {match?.t1?.map((player: PlayerType, i: number) => (
               <View key={`${player?.id}-${i}`}>
                 <Avatar
-                  disabled={!player?.id}
+                  disabled={!player?.id || player?.id === -1}
                   onPress={() => handlePressPlayer(player, 'team1')}
                   active={isPlayerActive(player)}
                   img={player?.profileImg}
-                  name={shortName(i + 1, player?.firstName, player?.secondName)}
+                  name={shortName(
+                    i + 1,
+                    player?.firstName,
+                    firstSurname(player?.secondName),
+                  )}
                 />
               </View>
             ))}
@@ -165,12 +168,16 @@ export const NewPoint = ({route}) => {
             {match?.t2?.map((player: PlayerType, i: number) => (
               <View key={`${player?.id}-${i}`}>
                 <Avatar
-                  disabled={!player?.id}
+                  disabled={!player?.id || player?.id === -1}
                   key={player?.id}
                   onPress={() => handlePressPlayer(player, 'team2')}
                   active={isPlayerActive(player)}
                   img={player?.profileImg}
-                  name={shortName(i + 3, player?.firstName, player?.secondName)}
+                  name={shortName(
+                    i + 3,
+                    player?.firstName,
+                    firstSurname(player?.secondName),
+                  )}
                 />
               </View>
             ))}
@@ -187,7 +194,7 @@ export const NewPoint = ({route}) => {
             />
             <Button
               title="Fuerza error"
-              type="info"
+              type="inform"
               style={[t.mR2]}
               active={isResultActive(ERROR_FORCED)}
               onPress={() => handlePressResult(ERROR_FORCED)}
@@ -262,7 +269,7 @@ export const NewPoint = ({route}) => {
         <Button
           active={!match?.game?.finished}
           size="lg"
-          disabled={match?.game?.finished}
+          disabled={match?.game?.finished || loading}
           title="Guardar punto"
           loading={loading}
           onPress={() => handleSavePoint(pointStats)}

@@ -16,6 +16,7 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		D305AE0D278CE26D007BA8EC /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = D305AE0C278CE26D007BA8EC /* File.swift */; };
 		D305AE112792BC3B007BA8EC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D305AE102792BC3B007BA8EC /* GoogleService-Info.plist */; };
+		D370C05327EA33D5005B3B00 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D370C05227EA33D5005B3B00 /* BootSplash.storyboard */; };
 		D38F80822787AAF7000C2ED3 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = D38F80812787AAF7000C2ED3 /* fonts */; };
 		D3C42B9927AC0B880051AE65 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3C42B9827AC0B880051AE65 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
@@ -50,6 +51,7 @@
 		D305AE0B278CE26D007BA8EC /* PadelProManager-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PadelProManager-Bridging-Header.h"; sourceTree = "<group>"; };
 		D305AE0C278CE26D007BA8EC /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		D305AE102792BC3B007BA8EC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D370C05227EA33D5005B3B00 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = PadelProManager/BootSplash.storyboard; sourceTree = "<group>"; };
 		D38F80812787AAF7000C2ED3 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		D3C42B9827AC0B880051AE65 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -101,6 +103,7 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				D370C05227EA33D5005B3B00 /* BootSplash.storyboard */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -258,6 +261,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D370C05327EA33D5005B3B00 /* BootSplash.storyboard in Resources */,
 				D38F80822787AAF7000C2ED3 /* fonts in Resources */,
 				D305AE112792BC3B007BA8EC /* GoogleService-Info.plist in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
@@ -517,7 +521,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 070320221800;
+				CURRENT_PROJECT_VERSION = 210320221228;
 				DEVELOPMENT_TEAM = Y86MT47MC7;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PadelProManager/Info.plist;
@@ -545,7 +549,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 070320221800;
+				CURRENT_PROJECT_VERSION = 210320221228;
 				DEVELOPMENT_TEAM = Y86MT47MC7;
 				INFOPLIST_FILE = PadelProManager/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

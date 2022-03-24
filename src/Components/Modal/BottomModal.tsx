@@ -4,7 +4,15 @@ import Modal from 'react-native-modal';
 import t from '../../Theme/theme';
 import {HDivider} from '../UI/HDivider';
 
-export const BottomModal = ({
+interface BottomModalProps {
+  title?: string;
+  onClose: () => void;
+  children: React.ReactNode;
+  isVisible: boolean;
+  swipeDirection?: Array<'down' | 'up' | 'left' | 'right'>;
+}
+
+export const BottomModal: React.FC<BottomModalProps> = ({
   title,
   onClose,
   children,

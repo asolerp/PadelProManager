@@ -13,6 +13,8 @@ export const useStatistics = ({team1, team2, statistics}) => {
   const [t2Tv, setT2Tv] = useState();
   const [t1Tf, setT1Tf] = useState();
   const [t2Tf, setT2Tf] = useState();
+  const [t1GP, setT1GP] = useState();
+  const [t2GP, setT2GP] = useState();
   const [t1Tbp, setT1Tbp] = useState();
   const [t2Tbp, setT2Tbp] = useState();
   const [t1Tbj, setT1Tbj] = useState();
@@ -25,6 +27,10 @@ export const useStatistics = ({team1, team2, statistics}) => {
   const [dataP2, setDataP2] = useState();
   const [dataP3, setDataP3] = useState();
   const [dataP4, setDataP4] = useState();
+  const [totalGoldPoints, setTotalGoldPoints] = useState();
+  const [totalWPerPlayer, setTotalWPerPlayer] = useState();
+  const [totalEFPerPlayer, setTotalEFPerPlayer] = useState();
+  const [totalNFPerPlayer, setTotalNFPerPlayer] = useState();
   const [totalPoints, setTotalPoints] = useState();
 
   const getStatisticCount = stat => stat || 0;
@@ -35,6 +41,10 @@ export const useStatistics = ({team1, team2, statistics}) => {
 
   useEffect(() => {
     if (statistics && activeSet) {
+      // Gold Points
+      setT1GP(statistics?.[activeSet]?.team1?.global?.breakpoint);
+      setT2GP(statistics?.[activeSet]?.team2?.global?.breakpoint);
+
       // Winners
       setT1Tw(statistics?.[activeSet]?.team1?.global?.w?.count);
       setT2Tw(statistics?.[activeSet]?.team2?.global?.w?.count);
@@ -120,26 +130,50 @@ export const useStatistics = ({team1, team2, statistics}) => {
       );
 
       setDataP1(
-        radarGraphDataGenerator(
-          statistics?.[activeSet]?.team1?.players?.[team1?.[0]?.id],
-        ),
+        team1?.[0]?.id !== -1 &&
+          radarGraphDataGenerator(
+            statistics?.[activeSet]?.team1?.players?.[team1?.[0]?.id],
+          ),
       );
       setDataP2(
-        radarGraphDataGenerator(
-          statistics?.[activeSet]?.team1?.players?.[team1?.[1]?.id],
-        ),
+        team1?.[1]?.id !== -1 &&
+          radarGraphDataGenerator(
+            statistics?.[activeSet]?.team1?.players?.[team1?.[1]?.id],
+          ),
       );
       setDataP3(
-        radarGraphDataGenerator(
-          statistics?.[activeSet]?.team2?.players?.[team2?.[0]?.id],
-        ),
+        team2?.[0]?.id !== -1 &&
+          radarGraphDataGenerator(
+            statistics?.[activeSet]?.team2?.players?.[team2?.[0]?.id],
+          ),
       );
       setDataP4(
-        radarGraphDataGenerator(
-          statistics?.[activeSet]?.team2?.players?.[team2?.[1]?.id],
-        ),
+        team2?.[1]?.id !== -1 &&
+          radarGraphDataGenerator(
+            statistics?.[activeSet]?.team2?.players?.[team2?.[1]?.id],
+          ),
       );
 
+      setTotalWPerPlayer({
+        p1: statistics?.total?.team1?.players?.[team1?.[0]?.id]?.w?.count,
+        p2: statistics?.total?.team1?.players?.[team1?.[1]?.id]?.w?.count,
+        p3: statistics?.total?.team2?.players?.[team2?.[0]?.id]?.w?.count,
+        p4: statistics?.total?.team2?.players?.[team2?.[1]?.id]?.w?.count,
+      });
+      setTotalEFPerPlayer({
+        p1: statistics?.total?.team1?.players?.[team1?.[0]?.id]?.ef?.count,
+        p2: statistics?.total?.team1?.players?.[team1?.[1]?.id]?.ef?.count,
+        p3: statistics?.total?.team2?.players?.[team2?.[0]?.id]?.ef?.count,
+        p4: statistics?.total?.team2?.players?.[team2?.[1]?.id]?.ef?.count,
+      });
+      setTotalNFPerPlayer({
+        p1: statistics?.total?.team1?.players?.[team1?.[0]?.id]?.nf?.count,
+        p2: statistics?.total?.team1?.players?.[team1?.[1]?.id]?.nf?.count,
+        p3: statistics?.total?.team2?.players?.[team2?.[0]?.id]?.nf?.count,
+        p4: statistics?.total?.team2?.players?.[team2?.[1]?.id]?.nf?.count,
+      });
+
+      setTotalGoldPoints(statistics?.[activeSet]?.breakpoint);
       setTotalPoints(statistics?.[activeSet]?.count);
     }
   }, [statistics, activeSet, team1, team2]);
@@ -149,6 +183,8 @@ export const useStatistics = ({team1, team2, statistics}) => {
     dataP2,
     dataP3,
     dataP4,
+    t1GP,
+    t2GP,
     t1Tw,
     t2Tw,
     t1Tnf,
@@ -169,6 +205,10 @@ export const useStatistics = ({team1, team2, statistics}) => {
     t2Tgl,
     activeSet,
     totalPoints,
+    totalGoldPoints,
+    totalWPerPlayer,
+    totalEFPerPlayer,
+    totalNFPerPlayer,
     handleSetActiveSet,
   };
 };

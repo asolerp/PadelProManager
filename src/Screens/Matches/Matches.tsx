@@ -1,5 +1,5 @@
-import React, {useContext} from 'react';
-import {View, Text} from 'react-native';
+import React from 'react';
+import {View, Text, FlatList} from 'react-native';
 import {Header} from '../../Components/Layout/Header';
 import {ScreenLayout} from '../../Components/Layout/ScreenLayout';
 import t from '../../Theme/theme';
@@ -9,7 +9,6 @@ import {openScreenWithPush} from '../../Router/utils/actions';
 import {NEW_MATCH_SCREEN_KEY} from '../NewMatch/NewMatch';
 import {useGetMatches} from '../../Hooks/useGetMatches';
 import {MatchResume} from '../../Components/Home/MatchResume';
-import {FlatList} from 'react-native-gesture-handler';
 
 import {sortByDate} from '../../Utils/sorts';
 import {SearchInput} from '../../Components/UI/SearchInput';

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import {View} from 'react-native';
 import {Header} from '../../Components/Layout/Header';
@@ -16,17 +16,19 @@ import {Button} from '../../Components/UI/Button';
 import {HDivider} from '../../Components/UI/HDivider';
 import {ImageSelector} from '../../Components/NewPlayer/ImageSelector';
 import {Select} from '../../Components/UI/Select';
-import {gender} from '../../Utils/lists';
+import {gender, lateralidad} from '../../Utils/lists';
 
 import {provincias} from '../../Utils/provincias-espanolas';
 import {municipios} from '../../Utils/municipios-espanoles';
 import {useEditProfile} from './hooks/useEditProfile';
 import {sortByLabel} from '../../Utils/sorts';
 import {ProfileSettings} from '../../Components/Profile/ProfileSettings';
+import {AuthContext} from '../../Context/AuthContex';
 
 export const PROFILE_SCREEN_KEY = 'profileScreen';
 
 export const ProfileScreen = () => {
+  const {isCoach} = useContext(AuthContext);
   const [show, setShow] = useState(false);
   const {
     handleUpdateProfile,
@@ -85,28 +87,28 @@ export const ProfileScreen = () => {
                     values?.secondName?.[0]?.toUpperCase() || ''
                   }`}
                 />
-                <View style={[t.flexRow, t.mB4]}>
-                  <Input
-                    placeholder="Nombre"
-                    value={values.firstName}
-                    name="firstName"
-                    error={errors.firstName}
-                    onBlur={handleBlur('firstName')}
-                    onChangeText={handleChange('firstName')}
-                    touched={touched.firstName}
-                    style={[t.flex1, t.mR3]}
-                  />
-                  <Input
-                    placeholder="Apellidos"
-                    value={values.secondName}
-                    name="secondName"
-                    error={errors.secondName}
-                    onBlur={handleBlur('secondName')}
-                    onChangeText={handleChange('secondName')}
-                    touched={touched.secondName}
-                    style={[t.flex1]}
-                  />
-                </View>
+
+                <Input
+                  placeholder="Nombre"
+                  value={values.firstName}
+                  name="firstName"
+                  error={errors.firstName}
+                  onBlur={handleBlur('firstName')}
+                  onChangeText={handleChange('firstName')}
+                  touched={touched.firstName}
+                  style={[t.flex1, t.mB4]}
+                />
+                <Input
+                  placeholder="Apellidos"
+                  value={values.secondName}
+                  name="secondName"
+                  error={errors.secondName}
+                  onBlur={handleBlur('secondName')}
+                  onChangeText={handleChange('secondName')}
+                  touched={touched.secondName}
+                  style={[t.flex1, t.mB4]}
+                />
+
                 <View style={[t.flexRow, t.mB4]}>
                   <Input
                     placeholder="Email"
@@ -151,8 +153,21 @@ export const ProfileScreen = () => {
                     onBlur={handleBlur('gender')}
                     onChange={v => setFieldValue('gender', v)}
                     label="Género"
-                    style={[t.flex1]}
+                    style={[t.flex1, !isCoach && t.mR3]}
                   />
+                  {!isCoach && (
+                    <Select
+                      list={lateralidad}
+                      placeholder="Lateralidad"
+                      value={lateralidad?.find(s => s.value === values?.hand)}
+                      name="hand"
+                      error={errors.hand}
+                      onBlur={handleBlur('hand')}
+                      onChange={v => setFieldValue('hand', v)}
+                      label="Lateralidad"
+                      style={[t.flex1]}
+                    />
+                  )}
                 </View>
                 <View style={[t.flexRow, t.mB4]}>
                   <Select

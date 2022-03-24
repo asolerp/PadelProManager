@@ -1,17 +1,19 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useContext} from 'react';
 import {useDocumentData} from 'react-firebase-hooks/firestore';
-import {playerQuery} from '../../../Api/queries';
+import {playerQuery, userQuery} from '../../../Api/queries';
 import {radarGraphDataGenerator} from '../../../Utils/radaGraphDataGenerator';
+import {AuthContext} from '../../../Context/AuthContex';
 
 export const useGetPlayer = (playerId: string) => {
+  const {user} = useContext(AuthContext);
   const [player, loadingPlayer, errorPlayer] = useDocumentData(
-    playerQuery.doc(playerId),
+    playerQuery(user?.id).doc(playerId),
     {
       idField: 'id',
     },
   );
   const [stats, loadingStats, errorStats] = useDocumentData(
-    playerQuery.doc(playerId).collection('stats').doc('global'),
+    playerQuery(user?.id).doc(playerId).collection('stats').doc('global'),
   );
 
   const [graphData, setGraphData] = useState();

@@ -9,15 +9,13 @@ const validateReceipt = functions
     memory: '2GB',
   })
   .https.onCall(async (data, context) => {
-    console.log('[[AUTH]]', context.auth.uid);
-
     if (!context.auth) {
       throw new functions.https.HttpsError(
         'permission-denied',
         'The function must be called while authenticated.',
       );
     }
-    console.log('[[RECEIPT]]', data.receipt);
+
     if (!data.receipt) {
       throw new functions.https.HttpsError(
         'permission-denied',
@@ -49,8 +47,6 @@ const validateReceipt = functions
       body,
       userSnapshot,
     );
-
-    console.log('RESULT', result);
 
     return result;
   });

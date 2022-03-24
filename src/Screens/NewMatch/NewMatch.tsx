@@ -25,19 +25,26 @@ import {useForm, Controller} from 'react-hook-form';
 export const NEW_MATCH_SCREEN_KEY = 'newMatchScreen';
 
 export const NewMatchScreen = () => {
-  const {initialValues, handleSubmitForm, errorPlayers, loading} =
-    useNewMatchForm();
+  const {
+    handleSubmitForm,
+    selectedPlayers,
+    initialValues,
+    errorPlayers,
+    loading,
+  } = useNewMatchForm();
 
   const {
     watch,
     control,
     setValue,
     handleSubmit,
-    formState: {errors},
+    formState: {errors, isValid},
   } = useForm({
     mode: 'onChange',
     defaultValues: initialValues,
   });
+
+  console.log(isValid);
 
   const [show, setShow] = useState(false);
   const {isCoach} = usePermissions();
@@ -56,8 +63,16 @@ export const NewMatchScreen = () => {
     <ScreenLayout edges={['top', 'right', 'left', 'bottom']}>
       <Header withBack title="Nuevo partido" />
       <LoadingModal text="Creando nuevo partido..." isVisible={loading} />
-      <KeyboardAwareScrollView style={[t.mT5]}>
+      <KeyboardAwareScrollView
+        style={[t.flex1, t.mT5]}
+        showsVerticalScrollIndicator={false}>
         <>
+          <View>
+            <Text style={[t.textLg, t.fontSans, t.textGray600]}>
+              La creación de partidos te permetirá registrar todos los golpes de
+              tus jugadores para poder analizarlos a posteriori.
+            </Text>
+          </View>
           <DateTimePickerModal
             isVisible={show}
             mode="date"
@@ -65,7 +80,7 @@ export const NewMatchScreen = () => {
             locale="es-ES"
             display="inline"
             onConfirm={date => {
-              setValue('date', format(date, DATE_FORM));
+              setValue('date', format(date, DATE_FORM), {shouldValidate: true});
               setShow(false);
             }}
             onCancel={hideDatePicker}
@@ -124,7 +139,9 @@ export const NewMatchScreen = () => {
                     value={cateogries?.find(c => c.value === Number(value))}
                     error={error?.message}
                     onBlur={onBlur}
-                    onChange={v => setValue('category', v)}
+                    onChange={v =>
+                      setValue('category', v, {shouldValidate: true})
+                    }
                     label="Categoría"
                     style={[t.flex1, t.mR3]}
                   />
@@ -144,7 +161,7 @@ export const NewMatchScreen = () => {
                     name="sex"
                     error={error?.message}
                     onBlur={onBlur}
-                    onChange={v => setValue('sex', v)}
+                    onChange={v => setValue('sex', v, {shouldValidate: true})}
                     label="Género"
                     style={[t.flex2]}
                   />
@@ -203,7 +220,7 @@ export const NewMatchScreen = () => {
               </View>
             )}
             {isCoach && (
-              <View style={[t.mT5]}>
+              <View style={[t.mY5]}>
                 <PlayersSelector />
                 {errorPlayers && <Text>Selecciona todos los jugadores</Text>}
               </View>
@@ -215,6 +232,7 @@ export const NewMatchScreen = () => {
       <Button
         active
         size="lg"
+        disabled={!isValid || Object.keys(selectedPlayers)?.length < 4}
         loading={loading}
         title="Crear"
         style={[t.mT3]}

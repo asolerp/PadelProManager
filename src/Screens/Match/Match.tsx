@@ -22,6 +22,8 @@ import {FinishedMatchModal} from '../../Components/Match/FinishedMatchModal';
 import {openScreenWithPush} from '../../Router/utils/actions';
 import {NEW_POINT_SCREEN_KEY} from '../NewPoint/NewPoint';
 import {usePermissions} from '../../Hooks/usePermissions';
+import {MatchHeaderSkeleton} from '../../Components/Match/skeleton/MatchHeaderSkeleton';
+import {MatchInfoSkeleton} from '../../Components/Match/skeleton/MatchInfoSkeleton';
 
 export const MATCH_SCREEN_KEY = 'matchScreen';
 
@@ -84,25 +86,40 @@ export const MatchScreen: React.FC = ({route}) => {
                 <>{!isExpanded && <FinishedMatchHeader match={match} />}</>
               ) : (
                 <View style={[t.mT10]}>
-                  <MatchHeader match={match} />
+                  {match?.game ? (
+                    <MatchHeader match={match} />
+                  ) : (
+                    <MatchHeaderSkeleton />
+                  )}
                 </View>
               )}
             </View>
             {!isExpanded && (
               <>
                 <HDivider />
-                <MatchInfo
-                  tournamentName={match?.tournamentName}
-                  round={match?.round}
-                  club={match?.club}
-                  date={match?.date.toDate()}
-                  category={match?.category}
-                />
+                {match?.game ? (
+                  <MatchInfo
+                    tournamentName={match?.tournamentName}
+                    round={match?.round}
+                    club={match?.club}
+                    date={match?.date.toDate()}
+                    category={match?.category}
+                  />
+                ) : (
+                  <MatchInfoSkeleton />
+                )}
+
                 <HDivider />
               </>
             )}
             <View style={[t.flexGrow, t.mT5]}>
-              <MatchTabs match={match} pointsHistory={history} notes={notes} />
+              {match && (
+                <MatchTabs
+                  match={match}
+                  pointsHistory={history}
+                  notes={notes}
+                />
+              )}
             </View>
           </>
         )}
