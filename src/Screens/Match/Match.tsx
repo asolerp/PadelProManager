@@ -85,7 +85,7 @@ export const MatchScreen: React.FC = ({route}) => {
               {isMatchFinished ? (
                 <>{!isExpanded && <FinishedMatchHeader match={match} />}</>
               ) : (
-                <View style={[t.mT10]}>
+                <View style={[t.mT5]}>
                   {match?.game ? (
                     <MatchHeader match={match} />
                   ) : (

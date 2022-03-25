@@ -7,6 +7,7 @@ import t from '../Theme/theme';
 import {View} from 'react-native';
 import {Players} from '../Screens/Players/Players';
 import {Planner} from '../Screens/Planner/Planner';
+import {Training} from '../Screens/Training/Training';
 
 const Tab = createBottomTabNavigator();
 
@@ -44,6 +45,23 @@ export const TabStack = () => {
               style={[t.roundedFull, t.p2, focused ? t.bgBlack : t.bgWhite]}>
               <Icon
                 name="ios-calendar"
+                size={20}
+                color={focused ? 'white' : 'black'}
+                focused={focused}
+              />
+            </View>
+          ),
+        })}
+      />
+      <Tab.Screen
+        name="Training"
+        component={Training}
+        options={() => ({
+          tabBarIcon: ({focused}) => (
+            <View
+              style={[t.roundedFull, t.p2, focused ? t.bgBlack : t.bgWhite]}>
+              <Icon
+                name="ios-easel-sharp"
                 size={20}
                 color={focused ? 'white' : 'black'}
                 focused={focused}

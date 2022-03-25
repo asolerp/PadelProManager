@@ -4,6 +4,15 @@ export const DEFAULT_PROFILE_IMAGE =
 export const API_KEY = 'appl_mfWpYYTqARmthVFzFeLqxBLvgdt';
 export const ENTITLEMENT_ID = 'com.padelpro.499.1m';
 
+export const DERECHA_REVES = 'derecha-reves';
+export const DERECHA = 'derecha';
+export const REVES = 'reves';
+export const VOLEA = 'volea';
+export const PARED = 'pared';
+export const SAQUE = 'saque';
+export const BANDEJAS = 'bandeja';
+export const REMATE = 'remate';
+
 export const WINNER = 'w';
 export const NONFORCED = 'nf';
 export const ERROR_FORCED = 'ef';

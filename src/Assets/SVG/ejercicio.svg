@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="496.834" height="752.286" viewBox="0 0 496.834 752.286">
+  <defs>
+    <filter id="Elipse_36" x="57.64" y="34.143" width="56" height="56" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Elipse_37" x="340.64" y="633.143" width="56" height="56" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-2"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Componente_3_1" data-name="Componente 3 – 1" transform="translate(0.5 0.5)">
+    <g id="Grupo_48" data-name="Grupo 48" transform="translate(-1115.86 -164.357)">
+      <g id="Grupo_47" data-name="Grupo 47" transform="translate(367 -1)">
+        <g id="Trazado_48" data-name="Trazado 48" transform="translate(769 189)" fill="#0083b0">
+          <path d="M 454.5 702.5 L 0.5 702.5 L 0.5 0.5 L 454.5 0.5 L 454.5 702.5 Z" stroke="none"/>
+          <path d="M 1 1 L 1 702 L 454 702 L 454 1 L 1 1 M 0 0 L 455 0 L 455 703 L 0 703 L 0 0 Z" stroke="none" fill="#fff"/>
+        </g>
+        <line id="Línea_25" data-name="Línea 25" x2="454" transform="translate(769.5 540.5)" fill="none" stroke="#fff" stroke-width="5"/>
+        <line id="Línea_26" data-name="Línea 26" x2="454" transform="translate(769.5 341.5)" fill="none" stroke="#fff" stroke-width="3"/>
+        <line id="Línea_27" data-name="Línea 27" x2="455" transform="translate(769 739.5)" fill="none" stroke="#fff" stroke-width="3"/>
+        <line id="Línea_28" data-name="Línea 28" y2="398" transform="translate(996.5 341.5)" fill="none" stroke="#fff" stroke-width="1"/>
+        <path id="Trazado_49" data-name="Trazado 49" d="M3181.622-1121H3160.86v215.643h491.389V-1121h-17.126l.356,190.234-453.46-.219Z" transform="translate(-2412 1822)" fill="#313131" stroke="#707070" stroke-width="1"/>
+        <path id="Trazado_50" data-name="Trazado 50" d="M3182.114-1121H3160.86v215.643h491.389V-1121h-17.126l.516,190.809-453.373.412Z" transform="translate(4405.555 -740) rotate(180)" fill="#313131" stroke="#707070" stroke-width="1"/>
+      </g>
+      <g transform="matrix(1, 0, 0, 1, 1115.36, 163.86)" filter="url(#Elipse_36)">
+        <circle id="Elipse_36-2" data-name="Elipse 36" cx="19" cy="19" r="19" transform="translate(66.64 40.14)" fill="#fff"/>
+      </g>
+      <g transform="matrix(1, 0, 0, 1, 1115.36, 163.86)" filter="url(#Elipse_37)">
+        <circle id="Elipse_37-2" data-name="Elipse 37" cx="19" cy="19" r="19" transform="translate(349.64 639.14)" fill="#fff"/>
+      </g>
+    </g>
+    <g id="Group_100" data-name="Group 100" transform="matrix(0.485, 0.875, -0.875, 0.485, 188.961, -4.63)">
+      <g id="Group_97" data-name="Group 97" transform="translate(41.33 125.542)">
+        <path id="Path_20" data-name="Path 20" d="M10,0,7.019,3.594,5.771,5.1a1,1,0,0,1-1.537,0L0,0" transform="matrix(-0.035, -0.999, 0.999, -0.035, 603.81, 10.188)" fill="none" stroke="#fff258" stroke-linecap="round" stroke-width="2"/>
+        <path id="Path_21" data-name="Path 21" d="M10,0,7.979,2.437,7.019,3.594l-.361.435L5.771,5.1a1,1,0,0,1-1.537,0L2.84,3.412,0,0" transform="matrix(-0.035, -0.999, 0.999, -0.035, 603.81, 10.188)" fill="none" stroke="#fff258" stroke-linecap="round" stroke-width="2"/>
+        <path id="Path_22" data-name="Path 22" d="M10,0,7.019,3.594,5.771,5.1a1,1,0,0,1-1.537,0L0,0" transform="translate(5.454 0) rotate(88)" fill="none" stroke="#fff258" stroke-linecap="round" stroke-width="2"/>
+        <g id="arrows_dark_arrow_1" data-name="arrows dark/arrow 1" transform="translate(1.056 5.455)">
+          <path id="Line" d="M.5,1.5H607.141" transform="translate(-0.5 -1.5)" fill="none" stroke="#fff258" stroke-linecap="square" stroke-miterlimit="10" stroke-width="3"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

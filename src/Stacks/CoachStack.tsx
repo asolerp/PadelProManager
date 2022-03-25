@@ -18,6 +18,8 @@ import {
   PROMOTIONAL_SUBSCRIPTION_SCREEN_KEY,
 } from '../Screens/PromotionalSubscription/PromotionalSubscription';
 
+import {EXERCICES_SCREEN_KEY, Exercices} from '../Screens/Exercices/Exercicies';
+
 import {ProfileScreen, PROFILE_SCREEN_KEY} from '../Screens/Profile/Profile';
 import {NewPoint, NEW_POINT_SCREEN_KEY} from '../Screens/NewPoint/NewPoint';
 import {
@@ -69,6 +71,11 @@ export const CoachStack = () => {
           options={{headerShown: false}}
           name={PROFILE_SCREEN_KEY}
           component={ProfileScreen}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name={EXERCICES_SCREEN_KEY}
+          component={Exercices}
         />
       </Stack.Group>
       <Stack.Group screenOptions={{presentation: 'modal'}}>

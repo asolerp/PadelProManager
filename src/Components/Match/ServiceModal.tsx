@@ -28,6 +28,7 @@ export const ServiceModal = ({match}) => {
           <View style={[t.flexRow, t.mT3, t.justifyBetween]}>
             <Button
               active
+              type="inform"
               title="Pareja 1"
               style={[t.mR3]}
               onPress={() => handleWhoStarts('t1', () => setIsVisible(false))}
