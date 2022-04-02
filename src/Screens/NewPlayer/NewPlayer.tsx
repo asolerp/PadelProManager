@@ -66,11 +66,12 @@ export const NewPlayerScreen = ({route}) => {
           )
         }
       />
+      <HDivider />
       <KeyboardAwareScrollView
-        style={[t.flex1]}
+        style={[t.flex1, t.pX4]}
         showsVerticalScrollIndicator={false}>
         {!edit && (
-          <View style={[t.mT8]}>
+          <View style={[t.mT5]}>
             <Text style={[t.textLg, t.fontSans, t.textGray600]}>
               Crea un nuevo jugador para empezar a llevar un seguimiento de su
               evolución. Comparte sesiones de entrenamiento y registra sus
@@ -143,144 +144,140 @@ export const NewPlayerScreen = ({route}) => {
               )}
               name="secondName"
             />
-            <View style={[t.flexRow, t.mB4]}>
-              <Controller
-                control={control}
-                rules={{
-                  required: 'El email es obligatorio',
-                }}
-                render={({
-                  field: {onChange, onBlur, value},
-                  fieldState: {error},
-                }) => (
-                  <Input
-                    placeholder="Email"
-                    value={value}
-                    error={error?.message}
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    style={[t.flex1]}
-                  />
-                )}
-                name="email"
-              />
-            </View>
-            <View style={[t.flexRow, t.mB4]}>
-              <Controller
-                control={control}
-                rules={{
-                  required: 'El teléfono es obligatorio',
-                }}
-                render={({
-                  field: {onChange, onBlur, value},
-                  fieldState: {error},
-                }) => (
-                  <Input
-                    keyboardType="numeric"
-                    placeholder="Teléfono"
-                    value={value}
-                    error={error?.message}
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    style={[t.flex1, t.mR3]}
-                  />
-                )}
-                name="phone"
-              />
-              <Controller
-                control={control}
-                render={({field: {onBlur, value}, fieldState: {error}}) => (
-                  <Input
-                    editable={false}
-                    placeholder="Cumpleaños"
-                    onPressIn={() => showDatePicker()}
-                    value={value}
-                    error={error?.message}
-                    onBlur={onBlur}
-                    style={[t.flex1]}
-                  />
-                )}
-                name="birthDate"
-              />
-            </View>
-            <View style={[t.flexRow, t.mB4]}>
-              <Controller
-                control={control}
-                rules={{
-                  required: 'La lateralidad es obligatoria',
-                }}
-                render={({field: {onBlur, value}, fieldState: {error}}) => (
-                  <Select
-                    list={lateralidad}
-                    placeholder="Lateralidad"
-                    value={lateralidad?.find(s => s.value === value)}
-                    name="hand"
-                    error={error?.message}
-                    onBlur={onBlur}
-                    onChange={v => setValue('hand', v, {shouldValidate: true})}
-                    label="Lateralidad"
-                    style={[t.flex1, t.mR3]}
-                  />
-                )}
-                name="hand"
-              />
-              <Controller
-                control={control}
-                render={({field: {onBlur, value}, fieldState: {error}}) => (
-                  <Select
-                    list={gender}
-                    placeholder="Género"
-                    value={lateralidad?.find(s => s.value === value)}
-                    name="gender"
-                    error={error?.message}
-                    onBlur={onBlur}
-                    onChange={v =>
-                      setValue('gender', v, {shouldValidate: true})
-                    }
-                    label="Género"
-                    style={[t.flex1]}
-                  />
-                )}
-                name="gender"
-              />
-            </View>
-            <View style={[t.flexRow, t.mB4, t.w44]}>
-              <Controller
-                control={control}
-                rules={{
-                  required: 'La categoría es obligatoria',
-                }}
-                render={({field: {onBlur, value}, fieldState: {error}}) => (
-                  <Select
-                    list={cateogries}
-                    placeholder="Categoría"
-                    value={cateogries?.find(s => s.value === value)}
-                    name="category"
-                    error={error?.message}
-                    onBlur={onBlur}
-                    onChange={v =>
-                      setValue('category', v, {shouldValidate: true})
-                    }
-                    label="Categoría"
-                    style={[t.flex1]}
-                  />
-                )}
-                name="category"
-              />
-            </View>
+
+            <Controller
+              control={control}
+              rules={{
+                required: 'El email es obligatorio',
+              }}
+              render={({
+                field: {onChange, onBlur, value},
+                fieldState: {error},
+              }) => (
+                <Input
+                  placeholder="Email"
+                  value={value}
+                  error={error?.message}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  style={[t.flex1, t.mB4]}
+                />
+              )}
+              name="email"
+            />
+
+            <Controller
+              control={control}
+              rules={{
+                required: 'El teléfono es obligatorio',
+              }}
+              render={({
+                field: {onChange, onBlur, value},
+                fieldState: {error},
+              }) => (
+                <Input
+                  keyboardType="numeric"
+                  placeholder="Teléfono"
+                  value={value}
+                  error={error?.message}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  style={[t.flex1, t.mB4]}
+                />
+              )}
+              name="phone"
+            />
+            <Controller
+              control={control}
+              render={({field: {onBlur, value}, fieldState: {error}}) => (
+                <Input
+                  editable={false}
+                  placeholder="Cumpleaños"
+                  onPressIn={() => showDatePicker()}
+                  value={value}
+                  error={error?.message}
+                  onBlur={onBlur}
+                  style={[t.flex1, t.mB4]}
+                />
+              )}
+              name="birthDate"
+            />
+
+            <Controller
+              control={control}
+              rules={{
+                required: 'La lateralidad es obligatoria',
+              }}
+              render={({field: {onBlur, value}, fieldState: {error}}) => (
+                <Select
+                  list={lateralidad}
+                  placeholder="Lateralidad"
+                  value={lateralidad?.find(s => s.value === value)}
+                  name="hand"
+                  error={error?.message}
+                  onBlur={onBlur}
+                  onChange={v => setValue('hand', v, {shouldValidate: true})}
+                  label="Lateralidad"
+                  style={[t.flex1, t.mB4]}
+                />
+              )}
+              name="hand"
+            />
+            <Controller
+              control={control}
+              render={({field: {onBlur, value}, fieldState: {error}}) => (
+                <Select
+                  list={gender}
+                  placeholder="Género"
+                  value={lateralidad?.find(s => s.value === value)}
+                  name="gender"
+                  error={error?.message}
+                  onBlur={onBlur}
+                  onChange={v => setValue('gender', v, {shouldValidate: true})}
+                  label="Género"
+                  style={[t.flex1, t.mB4]}
+                />
+              )}
+              name="gender"
+            />
+
+            <Controller
+              control={control}
+              rules={{
+                required: 'La categoría es obligatoria',
+              }}
+              render={({field: {onBlur, value}, fieldState: {error}}) => (
+                <Select
+                  list={cateogries}
+                  placeholder="Categoría"
+                  value={cateogries?.find(s => s.value === value)}
+                  name="category"
+                  error={error?.message}
+                  onBlur={onBlur}
+                  onChange={v =>
+                    setValue('category', v, {shouldValidate: true})
+                  }
+                  label="Categoría"
+                  style={[t.flex1, t.mB4]}
+                />
+              )}
+              name="category"
+            />
           </View>
         </>
       </KeyboardAwareScrollView>
       <HDivider />
-      <Button
-        active
-        disabled={!isValid}
-        size="lg"
-        loading={loading}
-        title={`${edit ? 'Editar' : 'Crear'}`}
-        style={[t.mT3, t.mB3]}
-        onPress={handleSubmit(handleSubmitForm)}
-      />
+      <View style={[t.pX4]}>
+        <Button
+          active
+          disabled={!isValid}
+          size="lg"
+          loading={loading}
+          title={`${edit ? 'Editar' : 'Crear'}`}
+          style={[t.mT3, t.mB3]}
+          onPress={handleSubmit(handleSubmitForm)}
+        />
+      </View>
     </ScreenLayout>
   );
 };

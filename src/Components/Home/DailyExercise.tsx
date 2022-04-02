@@ -11,7 +11,7 @@ export const DailyExercise = () => {
 
   return (
     <View style={[t.mB5]}>
-      <Text style={[t.text2xl, t.fontSansBold, t.mB5]}>Ejercicio del día</Text>
+      <Text style={[t.textXl, t.fontSansBold, t.mB5]}>Ejercicio del día</Text>
       <View style={[t.flexRow, t.itemsCenter]}>
         <View style={[t.flex2, t.pR1]}>
           <View style={[t.flexRow, t.itemsCenter, t.mB2]}>

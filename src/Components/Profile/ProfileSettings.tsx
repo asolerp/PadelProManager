@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import PressableOpacity from '../UI/PressableOpacity';
 import {useLogout} from '../../Hooks/useLogout';
 import {AuthContext} from '../../Context/AuthContex';
+import t from '../../Theme/theme';
 
 export const ProfileSettings = () => {
   const {isCoach} = useContext(AuthContext);
@@ -41,7 +42,7 @@ export const ProfileSettings = () => {
         </>
       </BottomModal>
       <PressableOpacity onPress={() => setIsVisible(true)}>
-        <Icon name="ios-settings-sharp" size={22} />
+        <Icon name="ios-settings-sharp" size={25} />
       </PressableOpacity>
     </>
   );

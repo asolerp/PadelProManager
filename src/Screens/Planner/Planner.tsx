@@ -88,6 +88,7 @@ export const Planner = () => {
       />
       <View style={[t.mB5]}>
         <Header title="Calendario" />
+        <HDivider />
       </View>
       <Agenda
         items={sessions}

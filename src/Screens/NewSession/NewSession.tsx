@@ -86,18 +86,18 @@ export const NewSessionScreen = ({route}) => {
         onClose={() => setIsVisible(false)}
         withEmpyPlayer={false}
       />
-      <View style={[t.mT5]}>
-        <Header
-          title={session ? 'Editar sesión' : 'Nueva sesión'}
-          rightSide={
-            <PressableOpacity onPress={() => popScreen()}>
-              <Icon name="ios-close" size={30} />
-            </PressableOpacity>
-          }
-        />
-      </View>
+
+      <Header
+        title={session ? 'Editar sesión' : 'Nueva sesión'}
+        rightSide={
+          <PressableOpacity onPress={() => popScreen()}>
+            <Icon name="ios-close" size={30} />
+          </PressableOpacity>
+        }
+      />
+      <HDivider />
       <KeyboardAwareScrollView
-        style={[t.flex1]}
+        style={[t.flex1, t.pX4]}
         showsVerticalScrollIndicator={false}>
         {!session && (
           <View style={[t.mT3]}>
@@ -264,25 +264,27 @@ export const NewSessionScreen = ({route}) => {
         </Formik>
       </KeyboardAwareScrollView>
       <HDivider />
-      {session && (
+      <View style={[t.pX4]}>
+        {session && (
+          <Button
+            disabled={loading || loadingCreateUpdate}
+            type="error"
+            size="lg"
+            title="Eliminar"
+            style={[t.mT3]}
+            onPress={() => handleDelete(repDays)}
+          />
+        )}
         <Button
-          disabled={loading || loadingCreateUpdate}
-          type="error"
+          loading={loading || loadingCreateUpdate}
+          disabled={loadingCreateUpdate}
+          active
           size="lg"
-          title="Eliminar"
-          style={[t.mT3]}
-          onPress={() => handleDelete(repDays)}
+          title={session ? 'Editar' : 'Crear'}
+          style={[t.mY3]}
+          onPress={handleSubmitForm}
         />
-      )}
-      <Button
-        loading={loading || loadingCreateUpdate}
-        disabled={loadingCreateUpdate}
-        active
-        size="lg"
-        title={session ? 'Editar' : 'Crear'}
-        style={[t.mY3]}
-        onPress={handleSubmitForm}
-      />
+      </View>
     </ScreenLayout>
   );
 };

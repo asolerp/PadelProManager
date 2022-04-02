@@ -19,46 +19,46 @@ export const Select = ({
   placeholder,
   list,
   style,
+  disabled,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [localValue, setLocalValue] = useState();
 
   return (
-    <Pressable style={[style]} onPress={() => Keyboard.dismiss()}>
-      {isVisible && (
-        <BottomModal
-          title={label}
-          swipeDirection={null}
-          isVisible={true}
-          onClose={() => setIsVisible(false)}>
-          <>
-            <Picker
-              selectedValue={localValue}
-              onValueChange={(itemValue, itemIndex) =>
-                setLocalValue(itemValue)
-              }>
-              {list?.map(element => (
-                <Picker.Item
-                  key={element.value}
-                  label={element?.label}
-                  value={element.value}
-                />
-              ))}
-            </Picker>
-            <HDivider />
-            <Button
-              active
-              title="Guardar"
-              style={[t.mT3, t.mB3]}
-              textStyle={[t.textLg]}
-              onPress={() => {
-                onChange(localValue);
-                setIsVisible(false);
-              }}
-            />
-          </>
-        </BottomModal>
-      )}
+    <Pressable
+      style={[style, disabled && t.opacity30]}
+      onPress={() => Keyboard.dismiss()}>
+      <BottomModal
+        title={label}
+        swipeDirection={null}
+        isVisible={isVisible}
+        onClose={() => setIsVisible(false)}>
+        <>
+          <Picker
+            selectedValue={localValue}
+            onValueChange={(itemValue, itemIndex) => setLocalValue(itemValue)}>
+            {list?.map(element => (
+              <Picker.Item
+                key={element.value}
+                label={element?.label}
+                value={element.value}
+              />
+            ))}
+          </Picker>
+          <HDivider />
+          <Button
+            active
+            title="Guardar"
+            style={[t.mT3, t.mB3]}
+            textStyle={[t.textLg]}
+            onPress={() => {
+              onChange(localValue);
+              setIsVisible(false);
+            }}
+          />
+        </>
+      </BottomModal>
+
       <Input
         empty={empty}
         editable={false}
@@ -68,7 +68,7 @@ export const Select = ({
         error={error}
         onPressIn={() => {
           Keyboard.dismiss();
-          setIsVisible(true);
+          !disabled && setIsVisible(true);
         }}
         onBlur={onBlur}
         label={label}

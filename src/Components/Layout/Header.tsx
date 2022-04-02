@@ -6,6 +6,7 @@ import t from '../../Theme/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {popScreen} from '../../Router/utils/actions';
 import PressableOpacity from '../UI/PressableOpacity';
+import {boolean} from 'yup';
 
 interface Props {
   title?: string;
@@ -14,6 +15,7 @@ interface Props {
   leftSide?: React.ReactNode;
   rightSide?: React.ReactNode;
   mode?: 'dark' | 'default';
+  withPadding?: boolean;
 }
 
 export const Header: React.FC<Props> = ({
@@ -21,12 +23,21 @@ export const Header: React.FC<Props> = ({
   title,
   position = 'relative',
   withBack,
+  withPadding = true,
   leftSide,
   rightSide,
 }) => {
   return (
     <>
-      <View style={[t.flexRow, t.pB3, t.itemsCenter, t.z20, t?.[position]]}>
+      <View
+        style={[
+          t.flexRow,
+          t.pB3,
+          withPadding && t.pX4,
+          t.itemsCenter,
+          t.z20,
+          t?.[position],
+        ]}>
         <View style={[t.minW10, t.itemsStart]}>
           {withBack && !leftSide ? (
             <PressableOpacity onPress={popScreen}>
@@ -34,6 +45,7 @@ export const Header: React.FC<Props> = ({
                 name="ios-chevron-back"
                 size={30}
                 color={mode === 'default' ? 'black' : 'white'}
+                style={[t._mL2]}
               />
             </PressableOpacity>
           ) : (
@@ -43,8 +55,8 @@ export const Header: React.FC<Props> = ({
         <View style={[t.flexGrow, t.itemsCenter]}>
           <Text
             style={[
-              t.fontSansBold,
-              t.text2xl,
+              t.fontSansMedium,
+              t.textXl,
               mode === 'default' ? t.textBlack : t.textWhite,
             ]}>
             {title}

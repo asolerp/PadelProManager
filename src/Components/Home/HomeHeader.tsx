@@ -21,6 +21,7 @@ export const HomeHeader: React.FC<Props> = ({position}) => {
   return (
     <View style={[t.mB10]}>
       <Header
+        withPadding={false}
         position={position}
         leftSide={<WelcomeMessage />}
         rightSide={

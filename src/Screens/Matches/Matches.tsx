@@ -14,6 +14,7 @@ import {sortByDate} from '../../Utils/sorts';
 import {SearchInput} from '../../Components/UI/SearchInput';
 import {searchOptions} from '../../Utils/lists';
 import PressableOpacity from '../../Components/UI/PressableOpacity';
+import {HDivider} from '../../Components/UI/HDivider';
 
 export const MATCHES_SCREE_KEY = 'matchesScreen';
 
@@ -34,13 +35,14 @@ export const Matches = () => {
           </PressableOpacity>
         }
       />
+      <HDivider />
       <SearchInput
         value={search}
         defaultOption={searchOption}
         onChangeText={setSearch}
         onChange={setSearchOption}
         list={searchOptions}
-        style={[t.mT10, t.mB5]}
+        style={[t.mT5, t.mB5, t.pX4]}
       />
       {matches?.length === 0 ? (
         <View style={[t.flexGrow, t.justifyCenter, t.itemsCenter]}>
@@ -53,6 +55,7 @@ export const Matches = () => {
             data={matches?.sort(sortByDate)}
             renderItem={renderItem}
             keyExtractor={item => item.id}
+            style={[t.pX4]}
           />
         </View>
       )}

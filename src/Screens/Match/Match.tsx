@@ -78,7 +78,8 @@ export const MatchScreen: React.FC = ({route}) => {
           }
         />
       )}
-      <View style={[t.flex1]}>
+      <HDivider />
+      <View style={[t.flex1, t.pX4]}>
         {!loadingMatch && (
           <>
             <View style={[t.mB5]}>

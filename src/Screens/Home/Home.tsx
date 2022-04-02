@@ -36,55 +36,51 @@ export const HomeScreen: FunctionComponent = () => {
 
   return (
     <ScreenLayout edges={['top', 'left', 'right']}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={[t.relative]}>
+      <ScrollView showsVerticalScrollIndicator={false} style={[t.flex1, t.pX4]}>
         <HomeHeader />
+        <View style={[t.mB7]}>
+          <MyTodaySessions />
+        </View>
+        <View style={[t.mB7]}>
+          <MyPlayers />
+        </View>
         <View>
-          <View style={[t.mB7]}>
-            <MyTodaySessions />
+          <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
+            Partidos activos
+          </Text>
+          <View style={[t.flexRow, t.justifyBetween, t.itemsCenter, t.mB7]}>
+            {liveMatches && (
+              <FlatList
+                horizontal
+                ListEmptyComponent={
+                  <Banner
+                    onPress={() => openScreenWithPush(NEW_MATCH_SCREEN_KEY)}
+                    ctaText="CREAR PARTIDA"
+                    title="Registra una partida"
+                    subtitle="Crea una partida con tus jugadores y registra todos sus golpes para después poder analizarlos."
+                  />
+                }
+                showsHorizontalScrollIndicator={false}
+                data={liveMatches?.sort(sortByDate)}
+                renderItem={renderItem}
+                keyExtractor={item => item.id}
+              />
+            )}
           </View>
-          <View style={[t.mB7]}>
-            <MyPlayers />
-          </View>
-          <View>
-            <Text style={[t.text2xl, t.fontSansBold, t.mB5]}>
-              Partidos activos
-            </Text>
-            <View style={[t.flexRow, t.justifyBetween, t.itemsCenter, t.mB7]}>
-              {liveMatches && (
-                <FlatList
-                  horizontal
-                  ListEmptyComponent={
-                    <Banner
-                      onPress={() => openScreenWithPush(NEW_MATCH_SCREEN_KEY)}
-                      ctaText="CREAR PARTIDA"
-                      title="Registra una partida"
-                      subtitle="Crea una partida con tus jugadores y registra todos sus golpes para después poder analizarlos."
-                    />
-                  }
-                  showsHorizontalScrollIndicator={false}
-                  data={liveMatches?.sort(sortByDate)}
-                  renderItem={renderItem}
-                  keyExtractor={item => item.id}
-                />
-              )}
-            </View>
-          </View>
-          <DailyExercise />
-          <View>
-            <Text style={[t.text2xl, t.fontSansBold, t.mB5]}>
-              Últimos partidos
-            </Text>
-            <View style={[t.mB5]}>
-              {!loadingFinishedMatches &&
-                finishedMatches
-                  // ?.sort(sortByDate)
-                  ?.map(match => <MatchResume key={match?.id} match={match} />)}
-              {finishedMatches?.length === 0 && (
-                <Text>No tienes ningún partido finalizado</Text>
-              )}
-            </View>
+        </View>
+        <DailyExercise />
+        <View>
+          <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
+            Últimos partidos
+          </Text>
+          <View style={[t.mB5]}>
+            {!loadingFinishedMatches &&
+              finishedMatches
+                // ?.sort(sortByDate)
+                ?.map(match => <MatchResume key={match?.id} match={match} />)}
+            {finishedMatches?.length === 0 && (
+              <Text>No tienes ningún partido finalizado</Text>
+            )}
           </View>
         </View>
       </ScrollView>

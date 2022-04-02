@@ -37,7 +37,7 @@ export const MyPlayers = () => {
   return (
     <View>
       <View>
-        <Text style={[t.text2xl, t.fontSansBold, t.mB5]}>Mis jugadores</Text>
+        <Text style={[t.textXl, t.fontSansBold, t.mB5]}>Mis jugadores</Text>
       </View>
       {players?.length === 0 ? (
         <Banner

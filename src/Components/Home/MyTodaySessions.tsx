@@ -11,9 +11,7 @@ export const MyTodaySessions = () => {
 
   return (
     <View>
-      <Text style={[t.text2xl, t.fontSansBold, t.mB2]}>
-        Mis sesiones de hoy
-      </Text>
+      <Text style={[t.textXl, t.fontSansBold, t.mB2]}>Mis sesiones de hoy</Text>
       {sessions?.length > 0 && !loading ? (
         sessions?.map(session => (
           <View key={session?.id} style={[{marginHorizontal: 2}]}>

@@ -44,9 +44,11 @@ export const SearchInput: React.FC<Props> = ({
         isVisible={isVisible}
         onClose={() => setIsVisible(false)}>
         <>
-          <Text style={[t.fontSansBold, t.text2xl, t.textCenter]}>
-            Buscar por...
-          </Text>
+          {list && (
+            <Text style={[t.fontSansBold, t.text2xl, t.textCenter]}>
+              Buscar por...
+            </Text>
+          )}
           <Picker
             selectedValue={localValue}
             onValueChange={itemValue => setLocalValue(itemValue)}>
@@ -83,9 +85,13 @@ export const SearchInput: React.FC<Props> = ({
             t.roundedSm,
             error ? t.borderErrorDark : t.borderGray400,
           ]}>
-          <PressableOpacity onPress={() => setIsVisible(true)} style={[t.mR3]}>
-            <Icon name="ios-chevron-down" size={20} />
-          </PressableOpacity>
+          {list && (
+            <PressableOpacity
+              onPress={() => setIsVisible(true)}
+              style={[t.mR3]}>
+              <Icon name="ios-chevron-down" size={20} />
+            </PressableOpacity>
+          )}
           <TextInput
             placeholder={`Buscar por ${searchOptions
               ?.find(s => s.value === localValue)

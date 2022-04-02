@@ -12,6 +12,8 @@ import {openScreenWithPush} from '../../Router/utils/actions';
 import {NEW_PLAYER_SCREEN_KEY} from '../NewPlayer/NewPlayer';
 import PressableOpacity from '../../Components/UI/PressableOpacity';
 import {useCheckPermissions} from '../../Hooks/useCheckPermissions';
+import {HDivider} from '../../Components/UI/HDivider';
+import {SearchInput} from '../../Components/UI/SearchInput';
 
 export const PLAYERS_SCREEN_KEY = 'playersScreen';
 
@@ -39,16 +41,18 @@ export const Players = () => {
           </PressableOpacity>
         }
       />
-      <View style={[t.mT10, t.mB3]}>
-        <Input
-          withLabel={false}
+      <HDivider />
+      <View style={[t.mB3, t.pX4]}>
+        <SearchInput
           value={search}
           onChangeText={setSearch}
+          style={[t.mT5]}
           placeholder="Nombre del jugador"
         />
       </View>
       {!loadingPlayers && (
         <FlatList
+          style={[t.pX4, t.mT3]}
           showsVerticalScrollIndicator={false}
           data={filteredList}
           renderItem={renderItem}

@@ -4,7 +4,7 @@ import {HomeScreen} from '../Screens/Home/Home';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Matches} from '../Screens/Matches/Matches';
 import t from '../Theme/theme';
-import {View} from 'react-native';
+import {Text} from 'react-native';
 import {Players} from '../Screens/Players/Players';
 import {Planner} from '../Screens/Planner/Planner';
 import {Training} from '../Screens/Training/Training';
@@ -24,15 +24,14 @@ export const TabStack = () => {
         component={HomeScreen}
         options={() => ({
           tabBarIcon: ({focused}) => (
-            <View
-              style={[t.roundedFull, t.p2, focused ? t.bgBlack : t.bgWhite]}>
+            <>
               <Icon
-                name="home"
+                name={focused ? 'ios-home' : 'ios-home-outline'}
                 size={20}
-                color={focused ? 'white' : 'black'}
                 focused={focused}
               />
-            </View>
+              <Text style={[t.fontSans, t.textXs]}>Hoy</Text>
+            </>
           ),
         })}
       />
@@ -41,15 +40,14 @@ export const TabStack = () => {
         component={Planner}
         options={() => ({
           tabBarIcon: ({focused}) => (
-            <View
-              style={[t.roundedFull, t.p2, focused ? t.bgBlack : t.bgWhite]}>
+            <>
               <Icon
-                name="ios-calendar"
+                name={focused ? 'ios-calendar' : 'ios-calendar-outline'}
                 size={20}
-                color={focused ? 'white' : 'black'}
                 focused={focused}
               />
-            </View>
+              <Text style={[t.fontSans, t.textXs]}>Agenda</Text>
+            </>
           ),
         })}
       />
@@ -58,15 +56,14 @@ export const TabStack = () => {
         component={Training}
         options={() => ({
           tabBarIcon: ({focused}) => (
-            <View
-              style={[t.roundedFull, t.p2, focused ? t.bgBlack : t.bgWhite]}>
+            <>
               <Icon
-                name="ios-easel-sharp"
+                name={focused ? 'ios-easel-sharp' : 'ios-easel-outline'}
                 size={20}
-                color={focused ? 'white' : 'black'}
                 focused={focused}
               />
-            </View>
+              <Text style={[t.fontSans, t.textXs]}>Ejercicios</Text>
+            </>
           ),
         })}
       />
@@ -75,15 +72,14 @@ export const TabStack = () => {
         component={Players}
         options={() => ({
           tabBarIcon: ({focused}) => (
-            <View
-              style={[t.roundedFull, t.p2, focused ? t.bgBlack : t.bgWhite]}>
+            <>
               <Icon
-                name="ios-person"
+                name={focused ? 'ios-person' : 'ios-person-outline'}
                 size={20}
-                color={focused ? 'white' : 'black'}
                 focused={focused}
               />
-            </View>
+              <Text style={[t.fontSans, t.textXs]}>Jugadores</Text>
+            </>
           ),
         })}
       />
@@ -92,15 +88,14 @@ export const TabStack = () => {
         component={Matches}
         options={() => ({
           tabBarIcon: ({focused}) => (
-            <View
-              style={[t.roundedFull, t.p2, focused ? t.bgBlack : t.bgWhite]}>
+            <>
               <Icon
-                name="tennisball"
+                name={focused ? 'ios-tennisball' : 'ios-tennisball-outline'}
                 size={20}
-                color={focused ? 'white' : 'black'}
                 focused={focused}
               />
-            </View>
+              <Text style={[t.fontSans, t.textXs]}>Partidos</Text>
+            </>
           ),
         })}
       />

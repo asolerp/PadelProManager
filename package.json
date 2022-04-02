@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "ios": "react-native run-ios --simulator='Ipad (9th generation)'",
+    "ios": "react-native run-ios --simulator='Alberto'",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint ."

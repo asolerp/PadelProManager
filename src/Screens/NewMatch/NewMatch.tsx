@@ -62,9 +62,10 @@ export const NewMatchScreen = () => {
   return (
     <ScreenLayout edges={['top', 'right', 'left', 'bottom']}>
       <Header withBack title="Nuevo partido" />
+      <HDivider />
       <LoadingModal text="Creando nuevo partido..." isVisible={loading} />
       <KeyboardAwareScrollView
-        style={[t.flex1, t.mT5]}
+        style={[t.flex1, t.mT5, t.pX4]}
         showsVerticalScrollIndicator={false}>
         <>
           <View>
@@ -87,89 +88,87 @@ export const NewMatchScreen = () => {
             onCancel={hideDatePicker}
           />
           <View style={[t.flexGrow, t.mT5]}>
-            <View style={[t.flexRow, t.justifyBetween, t.mB4]}>
-              <Controller
-                control={control}
-                rules={{
-                  required: 'La fecha es obligatoria',
-                }}
-                render={({field: {onBlur, value}, fieldState: {error}}) => (
-                  <Input
-                    editable={false}
-                    value={value}
-                    onPressIn={() => showDatePicker()}
-                    placeholder="Fecha del partido"
-                    error={error?.message}
-                    onBlur={onBlur}
-                    style={[t.flex1, t.mR3]}
-                  />
-                )}
-                name="date"
-              />
-              <Controller
-                control={control}
-                rules={{
-                  required: 'El nombre del club es obligatorio',
-                }}
-                render={({
-                  field: {onChange, onBlur, value},
-                  fieldState: {error},
-                }) => (
-                  <Input
-                    placeholder="Club"
-                    value={value}
-                    error={error?.message}
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    style={[t.flex1]}
-                  />
-                )}
-                name="club"
-              />
-            </View>
-            <View style={[t.flexRow, t.justifyBetween, t.mB4]}>
-              <Controller
-                control={control}
-                rules={{
-                  required: 'La categoría es obligatoria',
-                }}
-                render={({field: {onBlur, value}, fieldState: {error}}) => (
-                  <Select
-                    list={cateogries}
-                    placeholder="Categoría"
-                    value={cateogries?.find(c => c.value === Number(value))}
-                    error={error?.message}
-                    onBlur={onBlur}
-                    onChange={v =>
-                      setValue('category', v, {shouldValidate: true})
-                    }
-                    label="Categoría"
-                    style={[t.flex1, t.mR3]}
-                  />
-                )}
-                name="category"
-              />
-              <Controller
-                control={control}
-                rules={{
-                  required: 'El tipo de partida es obligatoria',
-                }}
-                render={({field: {onBlur, value}, fieldState: {error}}) => (
-                  <Select
-                    list={sex}
-                    placeholder="Sexo"
-                    value={sex?.find(s => s.value === value)}
-                    name="sex"
-                    error={error?.message}
-                    onBlur={onBlur}
-                    onChange={v => setValue('sex', v, {shouldValidate: true})}
-                    label="Género"
-                    style={[t.flex2]}
-                  />
-                )}
-                name="sex"
-              />
-            </View>
+            <Controller
+              control={control}
+              rules={{
+                required: 'La fecha es obligatoria',
+              }}
+              render={({field: {onBlur, value}, fieldState: {error}}) => (
+                <Input
+                  editable={false}
+                  value={value}
+                  onPressIn={() => showDatePicker()}
+                  placeholder="Fecha del partido"
+                  error={error?.message}
+                  onBlur={onBlur}
+                  style={[t.flex1, t.mB4]}
+                />
+              )}
+              name="date"
+            />
+            <Controller
+              control={control}
+              rules={{
+                required: 'El nombre del club es obligatorio',
+              }}
+              render={({
+                field: {onChange, onBlur, value},
+                fieldState: {error},
+              }) => (
+                <Input
+                  placeholder="Club"
+                  value={value}
+                  error={error?.message}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  style={[t.flex1, t.mB4]}
+                />
+              )}
+              name="club"
+            />
+
+            <Controller
+              control={control}
+              rules={{
+                required: 'La categoría es obligatoria',
+              }}
+              render={({field: {onBlur, value}, fieldState: {error}}) => (
+                <Select
+                  list={cateogries}
+                  placeholder="Categoría"
+                  value={cateogries?.find(c => c.value === Number(value))}
+                  error={error?.message}
+                  onBlur={onBlur}
+                  onChange={v =>
+                    setValue('category', v, {shouldValidate: true})
+                  }
+                  label="Categoría"
+                  style={[t.flex1, t.mB4]}
+                />
+              )}
+              name="category"
+            />
+            <Controller
+              control={control}
+              rules={{
+                required: 'El tipo de partida es obligatoria',
+              }}
+              render={({field: {onBlur, value}, fieldState: {error}}) => (
+                <Select
+                  list={sex}
+                  placeholder="Sexo"
+                  value={sex?.find(s => s.value === value)}
+                  name="sex"
+                  error={error?.message}
+                  onBlur={onBlur}
+                  onChange={v => setValue('sex', v, {shouldValidate: true})}
+                  label="Género"
+                  style={[t.flex1, t.mB4]}
+                />
+              )}
+              name="sex"
+            />
+
             <Controller
               control={control}
               render={({field: {onBlur, value}}) => (
@@ -183,7 +182,7 @@ export const NewMatchScreen = () => {
               name="tournament"
             />
             {watchTournament && (
-              <View style={[t.flexRow, t.mB3]}>
+              <>
                 <Controller
                   control={control}
                   render={({
@@ -197,7 +196,7 @@ export const NewMatchScreen = () => {
                       onBlur={onBlur}
                       onChangeText={onChange}
                       label="Nombre del torneo"
-                      style={[t.flex2, t.mR3]}
+                      style={[t.flex2, t.mB4]}
                     />
                   )}
                   name="tournamentName"
@@ -218,7 +217,7 @@ export const NewMatchScreen = () => {
                   )}
                   name="round"
                 />
-              </View>
+              </>
             )}
             {isCoach && (
               <View style={[t.mY5]}>

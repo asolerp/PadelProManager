@@ -49,9 +49,14 @@ export const ProfileScreen = () => {
 
   return (
     <ScreenLayout edges={['top', 'right', 'left', 'bottom']}>
-      <Header withBack title={'Mi perfil'} rightSide={<ProfileSettings />} />
+      <Header
+        withBack
+        title={'Datos personales'}
+        rightSide={<ProfileSettings />}
+      />
+      <HDivider />
       <KeyboardAwareScrollView
-        style={[t.flex1]}
+        style={[t.flex1, t.pX4]}
         showsVerticalScrollIndicator={false}>
         <Formik
           innerRef={profileFormRef}
@@ -111,108 +116,106 @@ export const ProfileScreen = () => {
                   style={[t.flex1, t.mB4]}
                 />
 
-                <View style={[t.flexRow, t.mB4]}>
-                  <Input
-                    placeholder="Email"
-                    value={values.email}
-                    name="email"
-                    error={errors.email}
-                    onBlur={handleBlur('email')}
-                    onChangeText={handleChange('email')}
-                    touched={touched.email}
-                    style={[t.flex3]}
-                  />
-                </View>
-                <View style={[t.flexRow, t.mB4]}>
-                  <Input
-                    placeholder="Teléfono"
-                    value={values.phone}
-                    name="phone"
-                    error={errors.phone}
-                    keyboardType="numeric"
-                    onBlur={handleBlur('phone')}
-                    onChangeText={handleChange('phone')}
-                    touched={touched.phone}
-                    style={[t.flex1, t.mR3]}
-                  />
-                  <Input
-                    editable={false}
-                    value={values?.birthDate}
-                    onPressIn={() => showDatePicker()}
-                    placeholder="Fecha de nacimiento"
-                    error={errors.birthDate}
-                    onBlur={handleBlur('birthDate')}
-                    style={[t.flex1]}
-                  />
-                </View>
-                <View style={[t.flexRow, t.mB4]}>
+                <Input
+                  placeholder="Email"
+                  value={values.email}
+                  name="email"
+                  error={errors.email}
+                  onBlur={handleBlur('email')}
+                  onChangeText={handleChange('email')}
+                  touched={touched.email}
+                  style={[t.flex1, t.mB4]}
+                />
+
+                <Input
+                  placeholder="Teléfono"
+                  value={values.phone}
+                  name="phone"
+                  error={errors.phone}
+                  keyboardType="numeric"
+                  onBlur={handleBlur('phone')}
+                  onChangeText={handleChange('phone')}
+                  touched={touched.phone}
+                  style={[t.flex1, t.mB4]}
+                />
+                <Input
+                  editable={false}
+                  value={values?.birthDate}
+                  onPressIn={() => showDatePicker()}
+                  placeholder="Fecha de nacimiento"
+                  error={errors.birthDate}
+                  onBlur={handleBlur('birthDate')}
+                  style={[t.flex1, t.mB4]}
+                />
+
+                <Select
+                  list={gender}
+                  placeholder="Género"
+                  value={gender?.find(s => s.value === values.gender)}
+                  name="gender"
+                  error={errors.gender}
+                  onBlur={handleBlur('gender')}
+                  onChange={v => setFieldValue('gender', v)}
+                  label="Género"
+                  style={[t.flex1, t.mB4]}
+                />
+                {!isCoach && (
                   <Select
-                    list={gender}
-                    placeholder="Género"
-                    value={gender?.find(s => s.value === values.gender)}
-                    name="gender"
-                    error={errors.gender}
-                    onBlur={handleBlur('gender')}
-                    onChange={v => setFieldValue('gender', v)}
-                    label="Género"
-                    style={[t.flex1, !isCoach && t.mR3]}
+                    list={lateralidad}
+                    placeholder="Lateralidad"
+                    value={lateralidad?.find(s => s.value === values?.hand)}
+                    name="hand"
+                    error={errors.hand}
+                    onBlur={handleBlur('hand')}
+                    onChange={v => setFieldValue('hand', v)}
+                    label="Lateralidad"
+                    style={[t.flex1, t.mB4]}
                   />
-                  {!isCoach && (
-                    <Select
-                      list={lateralidad}
-                      placeholder="Lateralidad"
-                      value={lateralidad?.find(s => s.value === values?.hand)}
-                      name="hand"
-                      error={errors.hand}
-                      onBlur={handleBlur('hand')}
-                      onChange={v => setFieldValue('hand', v)}
-                      label="Lateralidad"
-                      style={[t.flex1]}
-                    />
-                  )}
-                </View>
-                <View style={[t.flexRow, t.mB4]}>
-                  <Select
-                    list={provincias.sort(sortByLabel)}
-                    placeholder="Provincia"
-                    value={provincias?.find(s => s.value === values.provincia)}
-                    name="provincia"
-                    error={errors.provincia}
-                    onBlur={handleBlur('provincia')}
-                    onChange={v => setFieldValue('provincia', v)}
-                    label="Provincia"
-                    style={[t.flex1, t.mR3]}
-                  />
-                  <Select
-                    list={municipios
-                      .filter(
-                        munici =>
-                          munici?.value?.substring(0, 2) === values.provincia,
-                      )
-                      .sort(sortByLabel)}
-                    placeholder="Municipio"
-                    value={municipios?.find(s => s.value === values.municipio)}
-                    name="municipio"
-                    error={errors.municipio}
-                    onBlur={handleBlur('municipio')}
-                    onChange={v => setFieldValue('municipio', v)}
-                    label="Municipio"
-                    style={[t.flex1]}
-                  />
-                </View>
+                )}
+
+                <Select
+                  list={provincias.sort(sortByLabel)}
+                  placeholder="Provincia"
+                  value={provincias?.find(s => s.value === values.provincia)}
+                  name="provincia"
+                  error={errors.provincia}
+                  onBlur={handleBlur('provincia')}
+                  onChange={v => setFieldValue('provincia', v)}
+                  label="Provincia"
+                  style={[t.flex1, t.mB4]}
+                />
+                <Select
+                  disabled={!values.provincia}
+                  list={municipios
+                    .filter(
+                      munici =>
+                        munici?.value?.substring(0, 2) === values.provincia,
+                    )
+                    .sort(sortByLabel)}
+                  placeholder="Municipio"
+                  value={municipios?.find(s => s.value === values.municipio)}
+                  name="municipio"
+                  error={errors.municipio}
+                  onBlur={handleBlur('municipio')}
+                  onChange={v => setFieldValue('municipio', v)}
+                  label="Municipio"
+                  style={[t.flex1, t.mB4]}
+                />
               </View>
             </>
           )}
         </Formik>
       </KeyboardAwareScrollView>
       <HDivider />
-      <Button
-        active
-        size="lg"
-        title={'Guardar'}
-        style={[t.mT3]}
-        onPress={handleSubmitForm}
-      />
+      <View style={[t.pX4]}>
+        <Button
+          active
+          size="lg"
+          title={'Guardar'}
+          style={[t.mT3]}
+          onPress={handleSubmitForm}
+        />
+      </View>
     </ScreenLayout>
   );
 };
