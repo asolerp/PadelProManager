@@ -18,7 +18,7 @@ export const MyPlayers = () => {
   const {players} = useGetPlayers();
   const {handleCheckCreateNewPlayer} = useCheckPermissions();
 
-  const PlayerItem = ({item, index}: {item: PlayerType}) => {
+  const PlayerItem = ({item}: {item: PlayerType}) => {
     return (
       <Player
         imageStyle={[t.w16, t.h16]}
@@ -41,7 +41,7 @@ export const MyPlayers = () => {
       </View>
       {players?.length === 0 ? (
         <Banner
-          imageSrc="https://static3.lavozdigital.es/media/deportes/2020/09/06/v/juan-lebron-finales-kUmG--620x349@abc.jpg"
+          imageSrc="https://res.cloudinary.com/enalbis/image/upload/v1648630621/PadelPro/varios/juan-lebron-finales-kUmG--620x349_abc_lmxjgh.jpg"
           onPress={() => openScreenWithPush(NEW_PLAYER_SCREEN_KEY)}
           mainColor="info"
           ctaText="CREAR JUGADOR"

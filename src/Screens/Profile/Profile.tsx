@@ -50,7 +50,9 @@ export const ProfileScreen = () => {
   return (
     <ScreenLayout edges={['top', 'right', 'left', 'bottom']}>
       <Header withBack title={'Mi perfil'} rightSide={<ProfileSettings />} />
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView
+        style={[t.flex1]}
+        showsVerticalScrollIndicator={false}>
         <Formik
           innerRef={profileFormRef}
           validateOnBlur={false}

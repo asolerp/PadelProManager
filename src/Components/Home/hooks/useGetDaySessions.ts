@@ -1,5 +1,5 @@
 import {format} from 'date-fns';
-import {useContext, useMemo} from 'react';
+import {useContext} from 'react';
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 import {sessionQuery} from '../../../Api/queries';
 import {AuthContext} from '../../../Context/AuthContex';

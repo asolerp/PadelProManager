@@ -31,6 +31,7 @@ import {LiveResult} from '../../Components/Match/LiveResult';
 import {HDivider} from '../../Components/UI/HDivider';
 import {useLiveMatch} from '../../Components/Match/hooks/useLiveMatch';
 import {useGetMatch} from '../Match/hooks/useGetMatch';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 export const NEW_POINT_SCREEN_KEY = 'newPoint';
 
@@ -83,8 +84,10 @@ export const NewPoint = ({route}) => {
   };
 
   return (
-    <ScreenLayout style={[t.pB16]} edges={['left', 'right', 'bottom']}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+    <ScreenLayout edges={['left', 'right', 'bottom']}>
+      <KeyboardAwareScrollView
+        showsVerticalScrollIndicator={false}
+        style={[t.flex1, t.flexGrow]}>
         <View style={[t.flexRow, t.justifyBetween, t.itemsCenter, t.mY5]}>
           <LiveResult game={match?.game} />
           {match?.game?.finished ? (
@@ -263,19 +266,18 @@ export const NewPoint = ({route}) => {
             Globo
           </PointType>
         </View>
-      </ScrollView>
-      <View>
-        <HDivider style={[t.mY3]} />
-        <Button
-          active={!match?.game?.finished}
-          size="lg"
-          disabled={match?.game?.finished || loading}
-          title="Guardar punto"
-          loading={loading}
-          onPress={() => handleSavePoint(pointStats)}
-          textStyle={[t.fontSansBold]}
-        />
-      </View>
+      </KeyboardAwareScrollView>
+      <HDivider />
+      <Button
+        style={[t.mY3]}
+        active={!match?.game?.finished}
+        size="lg"
+        disabled={match?.game?.finished || loading}
+        title="Guardar punto"
+        loading={loading}
+        onPress={() => handleSavePoint(pointStats)}
+        textStyle={[t.fontSansBold]}
+      />
     </ScreenLayout>
   );
 };

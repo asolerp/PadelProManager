@@ -37,7 +37,7 @@ export const MatchResume: React.FC<Props> = ({match}) => {
         </View>
         <View>
           <View style={[t.justifyEnd, t.mT1]}>
-            <Text style={[t.fontSansMedium, t.textSm]}>
+            <Text ellipsizeMode="tail" style={[t.fontSansMedium, t.textSm]}>
               {shortName(
                 1,
                 match?.t1?.[0]?.firstName,

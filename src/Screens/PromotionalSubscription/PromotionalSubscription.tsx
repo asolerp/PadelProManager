@@ -1,14 +1,15 @@
 import React from 'react';
 
 import Icon from 'react-native-vector-icons/Ionicons';
-import {View, Text, StatusBar} from 'react-native';
-import {Header} from '../../Components/Layout';
+import {View, Text, StatusBar, ScrollView} from 'react-native';
+
 import {ContainerWithBg} from '../../Components/UI/ContainerWithBg';
 import t from '../../Theme/theme';
 import {Button} from '../../Components/UI/Button';
 
 import {useGetProducts} from './hooks/useGetProducts';
 import {usePayProduct} from './hooks/usePayProduct';
+import {useHideBootSplash} from '../../Hooks/useHideBootSplash';
 
 export const PROMOTIONAL_SUBSCRIPTION_SCREEN_KEY = 'promotionalSubscription';
 
@@ -32,21 +33,25 @@ const Service = ({iconName, title}) => {
 
 export const PromotionalSubscription = () => {
   const {packages} = useGetProducts();
-  const {makePayment} = usePayProduct();
+  const {handleMakePayment} = usePayProduct();
+
+  useHideBootSplash();
 
   return (
     <>
       <StatusBar barStyle="light-content" />
       <ContainerWithBg backgroundColor="Gray900" opacity={80}>
-        <>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={[t.flexGrow, t.itemsCenter, t.justifyCenter]}>
             <View style={[t.wFull, t.pY5]}>
-              <View style={[t.flexRow, t.flexWrap, t.justifyBetween, t.mT5]}>
+              <View style={[t.flexRow, t.justifyBetween, t.mT5]}>
                 <Service
                   iconName="people-circle-sharp"
                   title="Gestión de jugadores"
                 />
                 <Service iconName="tennisball" title="Análisis de partidos" />
+              </View>
+              <View style={[t.flexRow, t.justifyBetween, t.mT5]}>
                 <Service
                   iconName="ios-easel-sharp"
                   title="Acceso a ejercicios"
@@ -62,7 +67,7 @@ export const PromotionalSubscription = () => {
                     t.mB5,
                     t.textCenter,
                   ]}>
-                  ¡1 mes gratis!
+                  ¡Primer mes gratis!
                 </Text>
                 <Text
                   style={[
@@ -77,11 +82,11 @@ export const PromotionalSubscription = () => {
 
                 <Button
                   active
-                  title="Acerse premium ahora"
+                  title="Empezar prueba"
                   type="white"
                   textStyle={[t.textLg]}
                   style={[t.pY4]}
-                  onPress={() => makePayment(packages?.[0])}
+                  onPress={() => handleMakePayment(packages?.[0])}
                 />
               </View>
               <View>
@@ -131,7 +136,7 @@ export const PromotionalSubscription = () => {
               </View>
             </View>
           </View>
-        </>
+        </ScrollView>
       </ContainerWithBg>
     </>
   );

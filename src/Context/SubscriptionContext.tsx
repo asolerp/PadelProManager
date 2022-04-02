@@ -1,6 +1,4 @@
-import React, {createContext, useEffect, useState} from 'react';
-import {openScreenWithPush} from '../Router/utils/actions';
-import {PROMOTIONAL_SUBSCRIPTION_SCREEN_KEY} from '../Screens/PromotionalSubscription/PromotionalSubscription';
+import React, {createContext, useState} from 'react';
 
 interface SubscriptionContextInterface {
   isChecking: boolean;
@@ -16,12 +14,6 @@ export const SubscriptionProvider = ({children}) => {
   const [subscriptions, setSubscriptions] = useState();
   const [isChecking, setIsChecking] = useState<boolean>(false);
   const [isSubscribed, setIsSubscribed] = useState<boolean>();
-
-  // useEffect(() => {
-  //   if (isSubscribed === false) {
-  //     openScreenWithPush(PROMOTIONAL_SUBSCRIPTION_SCREEN_KEY);
-  //   }
-  // }, [isSubscribed]);
 
   const value = {
     isChecking,

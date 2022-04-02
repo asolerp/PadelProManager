@@ -21,6 +21,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {usePermissions} from '../../Hooks/usePermissions';
 import PressableOpacity from '../../Components/UI/PressableOpacity';
 import {useLogout} from '../../Hooks/useLogout';
+import {Controller, useForm} from 'react-hook-form';
 
 export const NEW_PLAYER_SCREEN_KEY = 'newPlayerScreen';
 
@@ -28,16 +29,19 @@ export const NewPlayerScreen = ({route}) => {
   const {edit, playerId} = route?.params;
   const {isCoach} = usePermissions();
   const {logout} = useLogout();
+  const {handleSubmitForm, initialValues, onImagePress, response, loading} =
+    useNewPlayerForm(playerId, edit);
+
   const {
-    handleCreateNewPlayer,
-    handleUpdatePlayer,
-    handleSubmitForm,
-    newPlayerFormRef,
-    initialValues,
-    onImagePress,
-    response,
-    loading,
-  } = useNewPlayerForm(playerId);
+    control,
+    setValue,
+    handleSubmit,
+    getValues,
+    formState: {errors, isValid},
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: initialValues,
+  });
 
   const [show, setShow] = useState(false);
 
@@ -65,154 +69,217 @@ export const NewPlayerScreen = ({route}) => {
       <KeyboardAwareScrollView
         style={[t.flex1]}
         showsVerticalScrollIndicator={false}>
-        <View style={[t.mT8]}>
-          <Text style={[t.textLg, t.fontSans, t.textGray600]}>
-            Crea un nuevo jugador para empezar a llevar un seguimiento de su
-            evolución. Comparte sesiones de entrenamiento y registra sus
-            partidos.
-          </Text>
-        </View>
-        <Formik
-          innerRef={newPlayerFormRef}
-          validateOnBlur={true}
-          enableReinitialize={true}
-          initialValues={initialValues}
-          onSubmit={values =>
-            edit ? handleUpdatePlayer(values) : handleCreateNewPlayer(values)
-          }>
-          {({
-            handleChange,
-            touched,
-            handleBlur,
-            values,
-            errors,
-            setFieldValue,
-          }) => (
-            <>
-              <DateTimePickerModal
-                isVisible={show}
-                mode="date"
-                date={new Date()}
-                locale="es-ES"
-                display="spinner"
-                onConfirm={date => {
-                  setFieldValue('birthDate', format(date, DATE_FORM));
-                  setShow(false);
-                }}
-                onCancel={hideDatePicker}
-              />
-              <View style={[t.flexGrow, t.mT10]}>
-                <ImageSelector
-                  imageSource={initialValues?.profileImg}
-                  onImagePress={onImagePress}
-                  imageSelected={response}
-                  name={`${values?.firstName?.[0]?.toUpperCase() || ''}${
-                    values?.secondName?.[0]?.toUpperCase() || ''
-                  }`}
-                />
+        {!edit && (
+          <View style={[t.mT8]}>
+            <Text style={[t.textLg, t.fontSans, t.textGray600]}>
+              Crea un nuevo jugador para empezar a llevar un seguimiento de su
+              evolución. Comparte sesiones de entrenamiento y registra sus
+              partidos.
+            </Text>
+          </View>
+        )}
+
+        <>
+          <DateTimePickerModal
+            isVisible={show}
+            mode="date"
+            date={new Date()}
+            locale="es-ES"
+            display="spinner"
+            onConfirm={date => {
+              setValue('birthDate', format(date, DATE_FORM), {
+                shouldValidate: true,
+              });
+              setShow(false);
+            }}
+            onCancel={hideDatePicker}
+          />
+          <View style={[t.flexGrow, t.mT10]}>
+            <ImageSelector
+              imageSource={initialValues?.profileImg}
+              onImagePress={onImagePress}
+              imageSelected={response}
+              name={`${getValues()?.firstName?.[0]?.toUpperCase() || ''}${
+                getValues()?.secondName?.[0]?.toUpperCase() || ''
+              }`}
+            />
+            <Controller
+              control={control}
+              rules={{
+                required: 'El nombre es obligatorio',
+              }}
+              render={({
+                field: {onChange, onBlur, value},
+                fieldState: {error},
+              }) => (
                 <Input
                   placeholder="Nombre"
-                  value={values?.firstName}
-                  error={errors.firstName}
-                  onBlur={handleBlur('firstName')}
-                  onChangeText={handleChange('firstName')}
-                  touched={touched.firstName}
+                  value={value}
+                  error={error?.message}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
                   style={[t.flex1, t.mB4]}
                 />
+              )}
+              name="firstName"
+            />
+            <Controller
+              control={control}
+              rules={{
+                required: 'El apellido es obligatorio',
+              }}
+              render={({
+                field: {onChange, onBlur, value},
+                fieldState: {error},
+              }) => (
                 <Input
                   placeholder="Apellidos"
-                  value={values?.secondName}
-                  name="secondName"
-                  error={errors.secondName}
-                  onBlur={handleBlur('secondName')}
-                  onChangeText={handleChange('secondName')}
-                  touched={touched.secondName}
+                  value={value}
+                  error={error?.message}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
                   style={[t.flex1, t.mB4]}
                 />
-                <View style={[t.flexRow, t.mB4]}>
+              )}
+              name="secondName"
+            />
+            <View style={[t.flexRow, t.mB4]}>
+              <Controller
+                control={control}
+                rules={{
+                  required: 'El email es obligatorio',
+                }}
+                render={({
+                  field: {onChange, onBlur, value},
+                  fieldState: {error},
+                }) => (
                   <Input
                     placeholder="Email"
-                    value={values?.email}
-                    name="email"
-                    error={errors.email}
-                    onBlur={handleBlur('email')}
-                    onChangeText={handleChange('email')}
-                    touched={touched.email}
-                    style={[t.flex3]}
-                  />
-                </View>
-                <View style={[t.flexRow, t.mB4]}>
-                  <Input
-                    placeholder="Teléfono"
-                    value={values?.phone}
-                    name="phone"
-                    error={errors.phone}
-                    keyboardType="numeric"
-                    onBlur={handleBlur('phone')}
-                    onChangeText={handleChange('phone')}
-                    touched={touched.phone}
-                    style={[t.flex1, t.mR3]}
-                  />
-                  <Input
-                    editable={false}
-                    value={values?.birthDate}
-                    onPressIn={() => showDatePicker()}
-                    placeholder="Fecha de nacimiento"
-                    error={errors.birthDate}
-                    onBlur={handleBlur('birthDate')}
+                    value={value}
+                    error={error?.message}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
                     style={[t.flex1]}
                   />
-                </View>
-                <View style={[t.flexRow, t.mB4]}>
+                )}
+                name="email"
+              />
+            </View>
+            <View style={[t.flexRow, t.mB4]}>
+              <Controller
+                control={control}
+                rules={{
+                  required: 'El teléfono es obligatorio',
+                }}
+                render={({
+                  field: {onChange, onBlur, value},
+                  fieldState: {error},
+                }) => (
+                  <Input
+                    keyboardType="numeric"
+                    placeholder="Teléfono"
+                    value={value}
+                    error={error?.message}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    style={[t.flex1, t.mR3]}
+                  />
+                )}
+                name="phone"
+              />
+              <Controller
+                control={control}
+                render={({field: {onBlur, value}, fieldState: {error}}) => (
+                  <Input
+                    editable={false}
+                    placeholder="Cumpleaños"
+                    onPressIn={() => showDatePicker()}
+                    value={value}
+                    error={error?.message}
+                    onBlur={onBlur}
+                    style={[t.flex1]}
+                  />
+                )}
+                name="birthDate"
+              />
+            </View>
+            <View style={[t.flexRow, t.mB4]}>
+              <Controller
+                control={control}
+                rules={{
+                  required: 'La lateralidad es obligatoria',
+                }}
+                render={({field: {onBlur, value}, fieldState: {error}}) => (
                   <Select
                     list={lateralidad}
                     placeholder="Lateralidad"
-                    value={lateralidad?.find(s => s.value === values?.hand)}
+                    value={lateralidad?.find(s => s.value === value)}
                     name="hand"
-                    error={errors.hand}
-                    onBlur={handleBlur('hand')}
-                    onChange={v => setFieldValue('hand', v)}
+                    error={error?.message}
+                    onBlur={onBlur}
+                    onChange={v => setValue('hand', v, {shouldValidate: true})}
                     label="Lateralidad"
                     style={[t.flex1, t.mR3]}
                   />
+                )}
+                name="hand"
+              />
+              <Controller
+                control={control}
+                render={({field: {onBlur, value}, fieldState: {error}}) => (
                   <Select
                     list={gender}
                     placeholder="Género"
-                    value={gender?.find(s => s.value === values?.gender)}
+                    value={lateralidad?.find(s => s.value === value)}
                     name="gender"
-                    error={errors.gender}
-                    onBlur={handleBlur('gender')}
-                    onChange={v => setFieldValue('gender', v)}
+                    error={error?.message}
+                    onBlur={onBlur}
+                    onChange={v =>
+                      setValue('gender', v, {shouldValidate: true})
+                    }
                     label="Género"
                     style={[t.flex1]}
                   />
-                </View>
-                <View style={[t.flexRow, t.mB4, t.w44]}>
+                )}
+                name="gender"
+              />
+            </View>
+            <View style={[t.flexRow, t.mB4, t.w44]}>
+              <Controller
+                control={control}
+                rules={{
+                  required: 'La categoría es obligatoria',
+                }}
+                render={({field: {onBlur, value}, fieldState: {error}}) => (
                   <Select
                     list={cateogries}
                     placeholder="Categoría"
-                    value={cateogries?.find(s => s.value === values?.category)}
+                    value={cateogries?.find(s => s.value === value)}
                     name="category"
-                    error={errors.category}
-                    onBlur={handleBlur('category')}
-                    onChange={v => setFieldValue('category', v)}
+                    error={error?.message}
+                    onBlur={onBlur}
+                    onChange={v =>
+                      setValue('category', v, {shouldValidate: true})
+                    }
                     label="Categoría"
                     style={[t.flex1]}
                   />
-                </View>
-              </View>
-            </>
-          )}
-        </Formik>
+                )}
+                name="category"
+              />
+            </View>
+          </View>
+        </>
       </KeyboardAwareScrollView>
       <HDivider />
       <Button
         active
+        disabled={!isValid}
         size="lg"
         loading={loading}
         title={`${edit ? 'Editar' : 'Crear'}`}
-        style={[t.mT3]}
-        onPress={handleSubmitForm}
+        style={[t.mT3, t.mB3]}
+        onPress={handleSubmit(handleSubmitForm)}
       />
     </ScreenLayout>
   );

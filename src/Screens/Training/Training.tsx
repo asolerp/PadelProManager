@@ -7,11 +7,9 @@ import {openScreenWithPush} from '../../Router/utils/actions';
 import t from '../../Theme/theme';
 import {
   BANDEJAS,
-  DERECHA,
   DERECHA_REVES,
   PARED,
   REMATE,
-  REVES,
   SAQUE,
   VOLEA,
 } from '../../Utils/constants';
@@ -36,29 +34,6 @@ export const Training = () => {
               openScreenWithPush(EXERCICES_SCREEN_KEY, {
                 title: 'Derecha & Revés',
                 group: DERECHA_REVES,
-              })
-            }
-          />
-          <View style={[t.mX2]} />
-          <AmazingButton
-            mainColor="info"
-            title="Derecha"
-            onPress={() =>
-              openScreenWithPush(EXERCICES_SCREEN_KEY, {
-                title: 'Derecha',
-                group: DERECHA,
-              })
-            }
-          />
-        </View>
-        <View style={[t.wFull, t.flexRow, t.justifyBetween, t.mB4]}>
-          <AmazingButton
-            mainColor="info"
-            title="Revés"
-            onPress={() =>
-              openScreenWithPush(EXERCICES_SCREEN_KEY, {
-                title: 'Revés',
-                group: REVES,
               })
             }
           />

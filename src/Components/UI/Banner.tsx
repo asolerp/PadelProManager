@@ -1,18 +1,17 @@
 import React from 'react';
 
-import {View, Text, ImageBackground, ViewStyle} from 'react-native';
+import {View, Text, ImageBackground, ViewStyle, Dimensions} from 'react-native';
 import {Button} from '../UI/Button';
 import t from '../../Theme/theme';
 import {capitalize} from '../../Utils/parsers';
 
 interface Props {
   title: string;
-  subtitle?: string;
-  ctaText?: string;
+  subtitle: string;
+  ctaText: string;
   onPress: () => void;
   imageSrc?: string;
   mainColor?: string;
-  size: 'small' | 'big';
   style?: ViewStyle[];
 }
 
@@ -25,14 +24,9 @@ export const Banner: React.FC<Props> = ({
   ctaText,
   onPress,
   style,
-  size = 'big',
   mainColor = 'success',
   imageSrc = DEFAULT_PROFILE_IMAGE,
 }) => {
-  const hight = {
-    small: t.h32,
-    big: t.h48,
-  };
   const capitalizedColor = capitalize(mainColor);
   const bg = t?.[`bg${capitalizedColor}Light`];
 
@@ -40,7 +34,13 @@ export const Banner: React.FC<Props> = ({
     <ImageBackground
       source={{uri: imageSrc}}
       imageStyle={[t.roundedLg, t.opacity50]}
-      style={[hight[size], t.flex1, t.relative, t.shadow, style]}>
+      style={[
+        {width: Dimensions.get('window').width - 32},
+        t.h48,
+        t.relative,
+        t.shadow,
+        style,
+      ]}>
       <View
         style={[
           t.wFull,
@@ -56,11 +56,9 @@ export const Banner: React.FC<Props> = ({
         <Text style={[t.fontSansBold, t.textWhite, t.text2xl, t.mB3]}>
           {title}
         </Text>
-        {subtitle && (
-          <Text style={[t.fontSansMedium, t.textWhite, t.textLg]}>
-            {subtitle}
-          </Text>
-        )}
+        <Text style={[t.fontSansMedium, t.textWhite, t.textLg]}>
+          {subtitle}
+        </Text>
         <View style={[t.flexGrow, t.justifyEnd, t.itemsCenter]}>
           <Button size="xs" title={ctaText} onPress={onPress} type="white" />
         </View>

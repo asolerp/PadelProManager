@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>PadelPro</string>
+	<string>Padel Pro</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -31,7 +31,7 @@
 			<string>PadelProManager</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.285595276470-38c4jh0dfh62rv1q9qkq1tvakpdmvhsq</string>
+				<string>com.googleusercontent.apps.285595276470-ur7ruc3ujal6lngf9ssen0m2mcrn7akq</string>
 			</array>
 		</dict>
 		<dict/>
@@ -73,6 +73,11 @@
 		<string>fonts/Foundation.ttf</string>
 		<string>fonts/MaterialCommunityIcons.ttf</string>
 		<string>fonts/MaterialIcons.ttf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>BootSplash</string>

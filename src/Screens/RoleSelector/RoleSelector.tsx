@@ -91,8 +91,9 @@ export const RoleSelector = () => {
               <Text
                 style={[t.fontSansMedium, t.textBase, t.textGray400, t.mY3]}>
                 Los entrenadores pueden llevar el seguimiento de muchos
-                jugadores, guardar sus estadísticas de partidos y programar
-                sesiones de entrenamiento.
+                jugadores, guardar sus estadísticas de partidos, programar
+                sesiones de entrenamiento y acceder a una biblioteca de
+                ejercicios.
               </Text>
             )}
             {role === 'player' && (

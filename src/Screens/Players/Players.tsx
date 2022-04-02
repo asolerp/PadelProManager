@@ -41,6 +41,7 @@ export const Players = () => {
       />
       <View style={[t.mT10, t.mB3]}>
         <Input
+          withLabel={false}
           value={search}
           onChangeText={setSearch}
           placeholder="Nombre del jugador"

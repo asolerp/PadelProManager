@@ -100,7 +100,7 @@ export const NewSessionScreen = ({route}) => {
         style={[t.flex1]}
         showsVerticalScrollIndicator={false}>
         {!session && (
-          <View style={[t.mT8, t.mB3]}>
+          <View style={[t.mT3]}>
             <Text style={[t.textLg, t.fontSans, t.textGray600]}>
               Crear una sesión y compártela con tus jugadores. Te ayudamos a que
               te organices para que te puedas dedicar a lo que más importa, tus
@@ -141,6 +141,16 @@ export const NewSessionScreen = ({route}) => {
               />
               <View style={[t.flexGrow, t.mT10]}>
                 <Input
+                  placeholder="Club"
+                  value={values?.club}
+                  name="club"
+                  error={errors.club}
+                  onBlur={handleBlur('club')}
+                  onChangeText={handleChange('club')}
+                  touched={touched.club}
+                  style={[t.flex1, t.mB3]}
+                />
+                <Input
                   placeholder="Nombre de la sesión"
                   value={values?.title}
                   name="title"
@@ -151,15 +161,15 @@ export const NewSessionScreen = ({route}) => {
                   style={[t.flex1, t.mB3]}
                 />
                 <Input
-                  placeholder="Descripción"
-                  value={values?.description}
-                  name="description"
-                  error={errors.description}
-                  onBlur={handleBlur('description')}
-                  onChangeText={handleChange('description')}
-                  touched={touched.description}
+                  placeholder="Notas para jugadores"
+                  value={values?.notes}
+                  name="notes"
+                  error={errors.notes}
+                  onBlur={handleBlur('notes')}
+                  onChangeText={handleChange('notes')}
+                  touched={touched.notes}
                   style={[t.flex1, t.mB3]}
-                  inputStyle={[t.h32]}
+                  inputStyle={[t.h20]}
                   multiline={true}
                   numberOfLines={5}
                 />
@@ -270,7 +280,7 @@ export const NewSessionScreen = ({route}) => {
         active
         size="lg"
         title={session ? 'Editar' : 'Crear'}
-        style={[t.mT3]}
+        style={[t.mY3]}
         onPress={handleSubmitForm}
       />
     </ScreenLayout>

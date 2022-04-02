@@ -40,7 +40,12 @@ const InfoElement: React.FC<InfoElementProps> = ({
       {children ? (
         <View style={[t.mT1, position]}>{children}</View>
       ) : (
-        <Text style={[t.fontSansBold, t.textSm, t.mT2, position]}>{info}</Text>
+        <Text
+          numberOfLines={1}
+          ellipsizeMode="tail"
+          style={[t.fontSansBold, t.textSm, t.mT2, position]}>
+          {info}
+        </Text>
       )}
     </View>
   );
@@ -58,7 +63,9 @@ export const MatchInfo: React.FC<MatchInfoProps> = ({
   return (
     <Animated.View entering={LightSpeedInLeft}>
       <View style={[t.flexRow, t.justifyBetween, t.mY2]}>
-        <InfoElement label="Club" info={club} />
+        <View style={[t.maxW16]}>
+          <InfoElement label="Club" info={club} />
+        </View>
         <VDivider />
         <InfoElement label="Fecha" info={capitalizeText(matchDay)} />
         <VDivider />

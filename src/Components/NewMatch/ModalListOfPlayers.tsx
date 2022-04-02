@@ -74,6 +74,7 @@ export const ModalListOfPlayers = ({
         }
       />
       <Input
+        withLabel={false}
         placeholder="Nombre del jugador"
         value={search}
         onChangeText={setSearch}
@@ -115,7 +116,7 @@ export const ModalListOfPlayers = ({
         active
         disabled={!player && playersSelected?.length === 0}
         title="Guardar"
-        style={[t.mT4]}
+        style={[t.mY3]}
         textStyle={[t.textLg]}
       />
     </FullModal>

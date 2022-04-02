@@ -14,6 +14,7 @@ interface Props extends TextInputProps {
   style?: ViewStyle[];
   inputStyle?: TextStyle[];
   empty?: boolean;
+  withLabel?: boolean;
   emptyValues?: React.ReactNode;
   error?: string;
 }
@@ -22,12 +23,18 @@ export const Input: React.FC<Props> = ({
   style,
   error,
   empty,
+  withLabel = true,
   emptyValues,
   inputStyle,
   ...props
 }) => {
   return (
     <View style={[style]}>
+      {withLabel && (
+        <Text style={[t.mB2, t.fontSansBold, t.textBase]}>
+          {props?.placeholder}
+        </Text>
+      )}
       <View
         style={[
           t.border,

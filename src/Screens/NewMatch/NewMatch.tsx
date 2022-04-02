@@ -44,10 +44,10 @@ export const NewMatchScreen = () => {
     defaultValues: initialValues,
   });
 
-  console.log(isValid);
-
   const [show, setShow] = useState(false);
   const {isCoach} = usePermissions();
+  const selectdPlayersValidationFail =
+    isCoach && Object.keys(selectedPlayers)?.length < 4;
 
   const showDatePicker = () => {
     setShow(true);
@@ -69,8 +69,9 @@ export const NewMatchScreen = () => {
         <>
           <View>
             <Text style={[t.textLg, t.fontSans, t.textGray600]}>
-              La creación de partidos te permetirá registrar todos los golpes de
-              tus jugadores para poder analizarlos a posteriori.
+              {isCoach
+                ? 'La creación de partidos te permetirá registrar todos los golpes de tus jugadores para poder analizarlos a posteriori.'
+                : 'Crear una partida y registra todos tus golpes para despúes poder analizarlos'}
             </Text>
           </View>
           <DateTimePickerModal
@@ -156,7 +157,7 @@ export const NewMatchScreen = () => {
                 render={({field: {onBlur, value}, fieldState: {error}}) => (
                   <Select
                     list={sex}
-                    placeholder="Masculino / Femenino / Mixtos"
+                    placeholder="Sexo"
                     value={sex?.find(s => s.value === value)}
                     name="sex"
                     error={error?.message}
@@ -232,10 +233,10 @@ export const NewMatchScreen = () => {
       <Button
         active
         size="lg"
-        disabled={!isValid || Object.keys(selectedPlayers)?.length < 4}
+        disabled={!isValid || selectdPlayersValidationFail}
         loading={loading}
         title="Crear"
-        style={[t.mT3]}
+        style={[t.mY3]}
         onPress={handleSubmit(handleSubmitForm)}
       />
     </ScreenLayout>

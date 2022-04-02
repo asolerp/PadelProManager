@@ -5,6 +5,11 @@ import t from '../../Theme/theme';
 
 import {Chip} from '../UI/Chip';
 
+const pareseColorByLevel = {
+  ['Básico']: 'success',
+  ['Intermedio']: 'warning',
+};
+
 export const Exercice = ({level, objective, description, duration, image}) => {
   return (
     <View>
@@ -12,7 +17,7 @@ export const Exercice = ({level, objective, description, duration, image}) => {
         <View style={[t.flex2, t.pR2]}>
           <View style={[t.flexRow, t.itemsCenter, t.mB2]}>
             <Text style={[t.fontSansBold, t.mR2]}>Nivel:</Text>
-            <Chip text={level} mainColor="warning" />
+            <Chip text={level} mainColor={pareseColorByLevel[level]} />
           </View>
           <Text style={[t.fontSans, t.mB2]}>
             <Text style={[t.fontSansBold]}>Objetivo:</Text> {objective}

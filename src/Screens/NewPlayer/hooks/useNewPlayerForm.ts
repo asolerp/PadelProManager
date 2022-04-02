@@ -13,7 +13,7 @@ import {AuthContext} from '../../../Context/AuthContex';
 import {timeout} from '../../../Utils/timeout';
 import {useCameraOrLibrary} from '../../../Hooks/useCamerOrLibrary';
 
-export const useNewPlayerForm = playerId => {
+export const useNewPlayerForm = (playerId, edit) => {
   const {user} = useContext(AuthContext);
   const init = {
     firstName: '',
@@ -106,8 +106,8 @@ export const useNewPlayerForm = playerId => {
     }
   };
 
-  const handleSubmitForm = () => {
-    newPlayerFormRef?.current.handleSubmit();
+  const handleSubmitForm = values => {
+    edit ? handleUpdatePlayer(values) : handleCreateNewPlayer(values);
   };
 
   useEffect(() => {

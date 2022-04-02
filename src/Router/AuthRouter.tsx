@@ -10,10 +10,12 @@ import {SignOutRouter} from './SignOutRouter';
 import {PremiumModal} from '../Components/Common/PremiumModal';
 import {PremiumModalContext} from '../Context/PremiumModalContext';
 import {useIAPayments} from '../Lib/Payments/hooks/useIAPayments';
+import {useNotification} from '../Hooks/useNotifications';
 
 const AuthRouter = () => {
   useAuth();
   useIAPayments();
+  useNotification();
 
   const {isVisible, text} = useContext(LoadingModalContext);
   const {isVisible: visiblePremiumModal} = useContext(PremiumModalContext);

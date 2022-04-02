@@ -10,7 +10,7 @@ export const useGetExercices = ({group}) => {
   } = useFetchContentFul({query: query(group)});
 
   return {
-    exercices: items,
+    exercices: items?.sort((a, b) => a.id - b.id),
     refreshing,
     onRefresh,
     loading,

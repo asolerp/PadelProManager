@@ -29,7 +29,7 @@ export const Exercices = ({route}) => {
   };
 
   return (
-    <ScreenLayout>
+    <ScreenLayout edges={['top', 'bottom']} style={[t.pB10]}>
       <Header withBack title={title} />
       <FlatList
         data={exercices}
@@ -38,7 +38,7 @@ export const Exercices = ({route}) => {
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id}
         renderItem={renderItem}
-        style={[t.mT10]}
+        style={[t.mT5, t.flex]}
       />
     </ScreenLayout>
   );

@@ -22,10 +22,12 @@ import {sortByDate} from '../../Utils/sorts';
 import {HomeHeader} from '../../Components/Home/HomeHeader';
 
 import {MyTodaySessions} from '../../Components/Home/MyTodaySessions';
+import {useHideBootSplash} from '../../Hooks/useHideBootSplash';
 
 export const HOME_SCREEN_KEY = 'homeScreen';
 
 export const HomeScreen: FunctionComponent = () => {
+  useHideBootSplash();
   const {finishedMatches, loadingFinishedMatches} = useGetFinishedMatches();
 
   const {liveMatches} = useGetLiveMatches();

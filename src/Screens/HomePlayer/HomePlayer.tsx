@@ -6,7 +6,6 @@ import {ScreenLayout} from '../../Components/Layout/ScreenLayout';
 import {Stat} from '../../Components/Player/Stat';
 
 import t from '../../Theme/theme';
-import {MatchResume} from '../../Components/Home/MatchResume';
 
 import {useGetPlayer} from './hooks/useGetPlayer';
 
@@ -20,24 +19,33 @@ import {PlayerLiveMatches} from '../../Components/Player/PlayerLiveMatches';
 
 import {Banner} from '../../Components/UI/Banner';
 import {AuthContext} from '../../Context/AuthContex';
+import {PendingRelationModal} from '../../Components/HomePlayer/PendingRelationModal';
+import {useCheckPendingRelation} from './hooks/useCheckPendingRelation';
+import {useShareApp} from './hooks/useShareApp';
+import {useHideBootSplash} from '../../Hooks/useHideBootSplash';
 
 export const HOME_PLAYER_SCREEN_KEY = 'playerScreen';
 
 export const HomePlayerScreen = () => {
   const {user} = useContext(AuthContext);
   const {tw, tl, tm, graphData, loading} = useGetPlayer();
+  const {pendingRelation} = useCheckPendingRelation();
+  const {handleShare} = useShareApp();
+
+  useHideBootSplash();
 
   return (
     <ScreenLayout>
+      <PendingRelationModal relations={pendingRelation} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <PlayerHeader />
         <View style={[t.mB5]}>
           <MyTodaySessions />
         </View>
-        {!user?.coach && (
+        {!user?.coachId && (
           <Banner
             mainColor="warning"
-            onPress={() => {}}
+            onPress={() => handleShare()}
             ctaText="INFORMAR ENTRENADOR"
             title="Avisa a tu entrenador"
             subtitle="Hazle saber a tu entrenador de PadelPro para que pueda llevar un seguimiento de tus logros y tu evolución."

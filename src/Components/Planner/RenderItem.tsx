@@ -32,10 +32,11 @@ export const RenderItem = ({item, onPress, style}) => {
         <View style={[t.flexRow, t.itemsCenter, t.justifyBetween]}>
           <Text style={[t.fontSansBold, t.textBase, t.mB1]}>{item?.title}</Text>
         </View>
-        <Text style={[t.fontSansMedium, t.textXs, t.textGray800, t.mB4]}>
-          {item?.description}
-        </Text>
-
+        {item?.notes && (
+          <Text style={[t.fontSansMedium, t.textXs, t.textGray800, t.mB4]}>
+            {item?.notes}
+          </Text>
+        )}
         {!!item?.startTime && !!item?.endTime && (
           <View style={[t.flexRow, t.itemsCenter, t.justifyBetween]}>
             <Chip

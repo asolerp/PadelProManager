@@ -37,9 +37,7 @@ export const WeekRep = ({onPressDay, activeDays}) => {
         t.itemsCenter,
         t.justifyBetween,
       ]}>
-      <Text style={[t.fontSans, t.textBase, t.textGray600]}>
-        Días de la semana
-      </Text>
+      <Text style={[t.fontSans, t.textBase, t.textGray600]}>Periocidad</Text>
       <View style={[t.flexRow]}>
         <Day
           day="L"

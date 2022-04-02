@@ -100,6 +100,8 @@ export const useLogin = () => {
       nonce,
     );
 
+    console.log('APPLE', appleCredential);
+
     // Sign the user in with the credential
     return auth().signInWithCredential(appleCredential);
   }

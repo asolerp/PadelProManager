@@ -27,6 +27,8 @@ export const useNewSessionForm = ({startDate, session}) => {
     date: startDate || format(new Date(), DATE_FORM),
     startTime: '',
     endTime: '',
+    notes: '',
+    club: '',
   });
 
   const newSessionFormRef = useRef();
