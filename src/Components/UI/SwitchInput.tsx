@@ -5,17 +5,7 @@ import t from '../../Theme/theme';
 export const SwitchInput = ({label, ...props}) => {
   return (
     <View
-      style={[
-        t.mB4,
-        t.pX3,
-        t.flexRow,
-        t.justifyBetween,
-        t.itemsCenter,
-        t.border,
-        t.borderGray400,
-        t.roundedSm,
-        t.h14,
-      ]}>
+      style={[t.mB4, t.flexRow, t.justifyBetween, t.itemsCenter, t.roundedSm]}>
       <Text style={[t.fontSans, t.textBase, {color: '#718096'}]}>{label}</Text>
       <Switch
         trackColor={{false: '#767577', true: '#2196f3'}}

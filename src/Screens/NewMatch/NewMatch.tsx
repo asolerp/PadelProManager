@@ -87,7 +87,7 @@ export const NewMatchScreen = () => {
             }}
             onCancel={hideDatePicker}
           />
-          <View style={[t.flexGrow, t.mT5]}>
+          <View style={[t.flexGrow, t.mT7]}>
             <Controller
               control={control}
               rules={{
@@ -229,15 +229,17 @@ export const NewMatchScreen = () => {
         </>
       </KeyboardAwareScrollView>
       <HDivider />
-      <Button
-        active
-        size="lg"
-        disabled={!isValid || selectdPlayersValidationFail}
-        loading={loading}
-        title="Crear"
-        style={[t.mY3]}
-        onPress={handleSubmit(handleSubmitForm)}
-      />
+      <View style={[t.pX4]}>
+        <Button
+          active
+          size="lg"
+          disabled={!isValid || selectdPlayersValidationFail}
+          loading={loading}
+          title="Crear"
+          style={[t.mY3]}
+          onPress={handleSubmit(handleSubmitForm)}
+        />
+      </View>
     </ScreenLayout>
   );
 };

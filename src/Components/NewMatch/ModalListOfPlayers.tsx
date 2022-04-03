@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList} from 'react-native';
+import {FlatList, View} from 'react-native';
 import {useGetPlayers} from '../../Hooks/useGetPlayers';
 import t from '../../Theme/theme';
 import {FullModal} from '../Modal/FullModal';
@@ -14,6 +14,7 @@ import {PlayerItem} from '../Players/PlayerItem';
 import PressableOpacity from '../UI/PressableOpacity';
 
 import {DEFAULT_PROFILE_IMAGE} from '../../Utils/constants';
+import {SearchInput} from '../UI/SearchInput';
 
 const emptyPlayer = {
   id: -1,
@@ -73,52 +74,56 @@ export const ModalListOfPlayers = ({
           </PressableOpacity>
         }
       />
-      <Input
-        withLabel={false}
-        placeholder="Nombre del jugador"
-        value={search}
-        onChangeText={setSearch}
-        style={[t.mT5]}
-      />
-      {filteredList && (
-        <FlatList
-          ListHeaderComponent={
-            <>
-              {withEmpyPlayer && (
-                <PlayerItem
-                  onPress={() => handlePressPlayer(emptyPlayer)}
-                  item={emptyPlayer}
-                  rightSide={
-                    <RadioButton
-                      onPress={() => handlePressPlayer(emptyPlayer)}
-                      active={emptyPlayer?.id === player?.id}
-                    />
-                  }
-                />
-              )}
-            </>
-          }
-          showsVerticalScrollIndicator={false}
-          data={filteredList}
-          renderItem={renderItem}
-          keyExtractor={item => item?.id}
-          contentContainerStyle={[t.flex1, t.mT8]}
+      <HDivider />
+      <View style={[t.flex1, t.pX4]}>
+        <SearchInput
+          value={search}
+          onChangeText={setSearch}
+          style={[t.mT5]}
+          placeholder="Nombre del jugador"
         />
-      )}
+        {filteredList && (
+          <FlatList
+            ListHeaderComponent={
+              <>
+                {withEmpyPlayer && (
+                  <PlayerItem
+                    onPress={() => handlePressPlayer(emptyPlayer)}
+                    item={emptyPlayer}
+                    rightSide={
+                      <RadioButton
+                        onPress={() => handlePressPlayer(emptyPlayer)}
+                        active={emptyPlayer?.id === player?.id}
+                      />
+                    }
+                  />
+                )}
+              </>
+            }
+            showsVerticalScrollIndicator={false}
+            data={filteredList}
+            renderItem={renderItem}
+            keyExtractor={item => item?.id}
+            contentContainerStyle={[t.flex1, t.mT3]}
+          />
+        )}
+      </View>
 
       <HDivider />
-      <Button
-        onPress={() => {
-          onSave(player || playersSelected);
-          setPlayer(null);
-          onClose();
-        }}
-        active
-        disabled={!player && playersSelected?.length === 0}
-        title="Guardar"
-        style={[t.mY3]}
-        textStyle={[t.textLg]}
-      />
+      <View style={[t.pX4]}>
+        <Button
+          onPress={() => {
+            onSave(player || playersSelected);
+            setPlayer(null);
+            onClose();
+          }}
+          active
+          disabled={!player && playersSelected?.length === 0}
+          title="Guardar"
+          style={[t.mY3]}
+          textStyle={[t.textLg]}
+        />
+      </View>
     </FullModal>
   );
 };

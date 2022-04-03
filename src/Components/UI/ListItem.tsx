@@ -9,8 +9,9 @@ interface Props {
   title: string;
   textStyle?: TextStyle[];
   onPress?: () => void;
-  iconName: string;
+  iconName?: string;
   iconColor?: string;
+  withIcon?: boolean;
 }
 
 export const ListItem: React.FC<Props> = ({
@@ -18,6 +19,7 @@ export const ListItem: React.FC<Props> = ({
   textStyle,
   onPress,
   iconName,
+  withIcon = true,
   iconColor = 'black',
 }) => {
   return (
@@ -26,10 +28,14 @@ export const ListItem: React.FC<Props> = ({
         onPress={onPress}
         style={[t.flexRow, t.justifyBetween, t.itemsCenter, t.p3]}>
         <View style={[t.flexRow, t.itemsCenter]}>
-          <Icon name={iconName} size={25} color={iconColor} />
-          <Text style={[t.fontSans, t.textLg, t.mL3, textStyle]}>{title}</Text>
+          {iconName && <Icon name={iconName} size={25} color={iconColor} />}
+          <Text style={[t.fontSans, t.textLg, iconName && t.mL3, textStyle]}>
+            {title}
+          </Text>
         </View>
-        <Icon name="ios-chevron-forward" size={25} color="black" />
+        {withIcon && (
+          <Icon name="ios-chevron-forward" size={25} color="black" />
+        )}
       </PressableOpacity>
       <HDivider />
     </>

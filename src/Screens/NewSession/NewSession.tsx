@@ -100,7 +100,7 @@ export const NewSessionScreen = ({route}) => {
         style={[t.flex1, t.pX4]}
         showsVerticalScrollIndicator={false}>
         {!session && (
-          <View style={[t.mT3]}>
+          <View style={[t.mT5]}>
             <Text style={[t.textLg, t.fontSans, t.textGray600]}>
               Crear una sesión y compártela con tus jugadores. Te ayudamos a que
               te organices para que te puedas dedicar a lo que más importa, tus

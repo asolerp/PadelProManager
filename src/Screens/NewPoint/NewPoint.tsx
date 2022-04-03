@@ -88,7 +88,8 @@ export const NewPoint = ({route}) => {
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
         style={[t.flex1, t.flexGrow]}>
-        <View style={[t.flexRow, t.justifyBetween, t.itemsCenter, t.mY5]}>
+        <View
+          style={[t.flexRow, t.justifyBetween, t.itemsCenter, t.mY5, t.pX4]}>
           <LiveResult game={match?.game} />
           {match?.game?.finished ? (
             <Chip text="Finalizado" mainColor="error" />
@@ -97,7 +98,7 @@ export const NewPoint = ({route}) => {
           )}
         </View>
         <HDivider />
-        <View style={[t.mB5, t.mT5]}>
+        <View style={[t.mB5, t.mT5, t.pX4]}>
           <Text style={[t.fontSansBold, t.mB5, t.text2xl]}>Resumen punto</Text>
           {pointStats?.length === 0 && !winPointTeam && (
             <Text style={[t.fontSansMedium, t.textBase]}>
@@ -127,7 +128,7 @@ export const NewPoint = ({route}) => {
               ))}
           </View>
         </View>
-        <View style={[t.mB5]}>
+        <View style={[t.mB5, t.pX4]}>
           <Text style={[t.fontSansBold, t.text2xl, t.mB5]}>
             Ganador del punto
           </Text>
@@ -147,7 +148,7 @@ export const NewPoint = ({route}) => {
             />
           </View>
         </View>
-        <View style={[t.mB5]}>
+        <View style={[t.mB5, t.pX4]}>
           <Text style={[t.fontSansBold, t.text2xl, t.mB5]}>
             Añadir estadística
           </Text>
@@ -186,7 +187,7 @@ export const NewPoint = ({route}) => {
             ))}
           </View>
         </View>
-        <View style={[t.mB5]}>
+        <View style={[t.mB5, t.pX4]}>
           <View style={[t.flexRow]}>
             <Button
               title="Winner"
@@ -210,7 +211,7 @@ export const NewPoint = ({route}) => {
             />
           </View>
         </View>
-        <View style={[t.flexRow, t.flexWrap, t.justifyBetween, t.mB5]}>
+        <View style={[t.flexRow, t.flexWrap, t.justifyBetween, t.mB5, t.pX4]}>
           <PointType
             mainColor="info"
             active={isTypePointActive(FONDO_DERECHA)}
@@ -268,16 +269,18 @@ export const NewPoint = ({route}) => {
         </View>
       </KeyboardAwareScrollView>
       <HDivider />
-      <Button
-        style={[t.mY3]}
-        active={!match?.game?.finished}
-        size="lg"
-        disabled={match?.game?.finished || loading}
-        title="Guardar punto"
-        loading={loading}
-        onPress={() => handleSavePoint(pointStats)}
-        textStyle={[t.fontSansBold]}
-      />
+      <View style={[t.pX4]}>
+        <Button
+          style={[t.mY3]}
+          active={!match?.game?.finished}
+          size="lg"
+          disabled={match?.game?.finished || loading}
+          title="Guardar punto"
+          loading={loading}
+          onPress={() => handleSavePoint(pointStats)}
+          textStyle={[t.fontSansBold]}
+        />
+      </View>
     </ScreenLayout>
   );
 };

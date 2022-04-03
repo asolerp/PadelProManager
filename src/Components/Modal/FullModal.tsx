@@ -13,9 +13,7 @@ export const FullModal = ({isVisible, children, onClose}) => {
       onSwipeComplete={onClose}
       swipeDirection={null}
       style={[t.m0]}>
-      <SafeAreaView style={[t.bgWhite, t.flex1, t.pX5]}>
-        {children}
-      </SafeAreaView>
+      <SafeAreaView style={[t.bgWhite, t.flex1]}>{children}</SafeAreaView>
     </Modal>
   );
 };

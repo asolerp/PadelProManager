@@ -3,7 +3,7 @@ import {Picker} from '@react-native-picker/picker';
 
 import {BottomModal} from '../Modal/BottomModal';
 import {Input} from './Input';
-import {Pressable, Keyboard} from 'react-native';
+import {Pressable, Keyboard, View} from 'react-native';
 import t from '../../Theme/theme';
 import {HDivider} from './HDivider';
 import {Button} from './Button';
@@ -46,16 +46,18 @@ export const Select = ({
             ))}
           </Picker>
           <HDivider />
-          <Button
-            active
-            title="Guardar"
-            style={[t.mT3, t.mB3]}
-            textStyle={[t.textLg]}
-            onPress={() => {
-              onChange(localValue);
-              setIsVisible(false);
-            }}
-          />
+          <View style={[t.pX4]}>
+            <Button
+              active
+              title="Guardar"
+              style={[t.mT3, t.mB3]}
+              textStyle={[t.textLg]}
+              onPress={() => {
+                onChange(localValue);
+                setIsVisible(false);
+              }}
+            />
+          </View>
         </>
       </BottomModal>
 

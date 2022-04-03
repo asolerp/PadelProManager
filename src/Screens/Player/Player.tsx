@@ -123,7 +123,7 @@ export const PlayerScreen = ({route}) => {
                 )}
               </View>
               <View style={[t.mT5]}>
-                <Text style={[t.text2xl, t.fontSansBold, t.mB5]}>
+                <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
                   Últimos partidos
                 </Text>
                 {matches?.length === 0 && (
@@ -140,6 +140,7 @@ export const PlayerScreen = ({route}) => {
         data={matches}
         renderItem={renderItem}
         keyExtractor={item => item.id}
+        style={[t.pX4]}
       />
     </ScreenLayout>
   );
