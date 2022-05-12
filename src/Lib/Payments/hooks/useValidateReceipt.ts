@@ -1,9 +1,10 @@
 import {useContext} from 'react';
 import {AuthContext} from '../../../Context/AuthContex';
-import functions from '@react-native-firebase/functions';
+
 import {LoadingModalContext} from '../../../Context/LoadingModalContext';
 import {useUpdateDocument} from '../../../Hooks/useUpdateDocument';
 import {userQuery} from '../../../Api/queries';
+import {defaultFunctions} from '../../API/firebaseApp';
 
 export const useValidateReceipt = () => {
   const {user} = useContext(AuthContext);
@@ -17,7 +18,7 @@ export const useValidateReceipt = () => {
   };
 
   const validateReceipt = async receipt => {
-    const validateFn = functions().httpsCallable('validateReceipt');
+    const validateFn = defaultFunctions.httpsCallable('validateReceipt');
     setText('Comprobando suscripción...');
     setIsVisible(true);
     try {

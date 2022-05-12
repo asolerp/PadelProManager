@@ -22,7 +22,6 @@ export const LaunchScreen = () => {
     if (!isFeatureEnabled(REGISTRY.FEATURE_SUBSCRIPTIONS)) {
       return <CoachStack />;
     }
-    return <CoachStack />;
 
     if (isSubscribed) {
       return <CoachStack />;

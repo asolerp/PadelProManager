@@ -25,6 +25,7 @@ const findUserIdByEmail = async email => {
 };
 
 const savePlayersStats = functions
+  .region('europe-west2')
   .runWith({
     timeoutSeconds: 540,
     memory: '2GB',

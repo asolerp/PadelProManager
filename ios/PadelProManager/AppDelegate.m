@@ -1,3 +1,4 @@
+#import <Bugsnag/Bugsnag.h>
 #import "AppDelegate.h"
 
 #if RCT_DEV
@@ -33,6 +34,8 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [Bugsnag start];
+
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);
 #endif

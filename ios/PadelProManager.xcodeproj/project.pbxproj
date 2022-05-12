@@ -15,10 +15,9 @@
 		7DCC1CCE5EEE6BD04D308E75 /* libPods-PadelProManager-PadelProManagerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 538824F4A6AD91B2BA6190DD /* libPods-PadelProManager-PadelProManagerTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		D305AE0D278CE26D007BA8EC /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = D305AE0C278CE26D007BA8EC /* File.swift */; };
-		D3657F5F27F2EE8E001398FD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3657F5E27F2EE8E001398FD /* GoogleService-Info.plist */; };
+		D33E535E280711700050738D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D33E535D280711700050738D /* GoogleService-Info.plist */; };
 		D370C05327EA33D5005B3B00 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D370C05227EA33D5005B3B00 /* BootSplash.storyboard */; };
 		D38F80822787AAF7000C2ED3 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = D38F80812787AAF7000C2ED3 /* fonts */; };
-		D3C42B9927AC0B880051AE65 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3C42B9827AC0B880051AE65 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,11 +49,10 @@
 		9A3926496736135B28ABE6EF /* Pods-PadelProManager-PadelProManagerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PadelProManager-PadelProManagerTests.release.xcconfig"; path = "Target Support Files/Pods-PadelProManager-PadelProManagerTests/Pods-PadelProManager-PadelProManagerTests.release.xcconfig"; sourceTree = "<group>"; };
 		D305AE0B278CE26D007BA8EC /* PadelProManager-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PadelProManager-Bridging-Header.h"; sourceTree = "<group>"; };
 		D305AE0C278CE26D007BA8EC /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		D33E535D280711700050738D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D3657F5D27F21134001398FD /* PadelProManager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = PadelProManager.entitlements; path = PadelProManager/PadelProManager.entitlements; sourceTree = "<group>"; };
-		D3657F5E27F2EE8E001398FD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D370C05227EA33D5005B3B00 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = PadelProManager/BootSplash.storyboard; sourceTree = "<group>"; };
 		D38F80812787AAF7000C2ED3 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
-		D3C42B9827AC0B880051AE65 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -71,7 +69,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3C42B9927AC0B880051AE65 /* StoreKit.framework in Frameworks */,
 				58136353D9C362F13B74A945 /* libPods-PadelProManager.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -99,7 +96,7 @@
 		13B07FAE1A68108700A75B9A /* PadelProManager */ = {
 			isa = PBXGroup;
 			children = (
-				D3657F5E27F2EE8E001398FD /* GoogleService-Info.plist */,
+				D33E535D280711700050738D /* GoogleService-Info.plist */,
 				D3657F5D27F21134001398FD /* PadelProManager.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -115,7 +112,6 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D3C42B9827AC0B880051AE65 /* StoreKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				475909AEC98A4043C1C83E67 /* libPods-PadelProManager.a */,
 				538824F4A6AD91B2BA6190DD /* libPods-PadelProManager-PadelProManagerTests.a */,
@@ -205,6 +201,7 @@
 				14BE7A27988654481D46D0F0 /* [CP] Embed Pods Frameworks */,
 				EEF1D54B0FC30F5D01A4BA29 /* [CP] Copy Pods Resources */,
 				DEB4E95CD0DA6401345A69FD /* [CP-User] [RNFB] Core Configuration */,
+				9D0492B416C54CFB807A3CAE /* Upload source maps to Bugsnag */,
 			);
 			buildRules = (
 			);
@@ -265,7 +262,7 @@
 			files = (
 				D370C05327EA33D5005B3B00 /* BootSplash.storyboard in Resources */,
 				D38F80822787AAF7000C2ED3 /* fonts in Resources */,
-				D3657F5F27F2EE8E001398FD /* GoogleService-Info.plist in Resources */,
+				D33E535E280711700050738D /* GoogleService-Info.plist in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
@@ -286,7 +283,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+			shellScript = "export EXTRA_PACKAGER_ARGS=\"--sourcemap-output $TMPDIR/$(md5 -qs \"$CONFIGURATION_BUILD_DIR\")-main.jsbundle.map\"\nset -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		0F2143427205BB42DF747F04 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -365,6 +362,20 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		9D0492B416C54CFB807A3CAE /* Upload source maps to Bugsnag */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Upload source maps to Bugsnag";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "SOURCE_MAP=\"$TMPDIR/$(md5 -qs \"$CONFIGURATION_BUILD_DIR\")-main.jsbundle.map\" ../node_modules/@bugsnag/react-native/bugsnag-react-native-xcode.sh";
 		};
 		DD81682B6DFA83F266B07CD6 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -524,7 +535,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PadelProManager/PadelProManager.entitlements;
-				CURRENT_PROJECT_VERSION = 0304202201030;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1304202201530;
 				DEVELOPMENT_TEAM = Y86MT47MC7;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PadelProManager/Info.plist;
@@ -539,6 +552,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.padelpro;
 				PRODUCT_NAME = PadelProManager;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PadelProManager-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -553,7 +567,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PadelProManager/PadelProManager.entitlements;
-				CURRENT_PROJECT_VERSION = 0304202201030;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1304202201530;
 				DEVELOPMENT_TEAM = Y86MT47MC7;
 				INFOPLIST_FILE = PadelProManager/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -567,6 +583,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.padelpro;
 				PRODUCT_NAME = PadelProManager;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PadelProManager-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

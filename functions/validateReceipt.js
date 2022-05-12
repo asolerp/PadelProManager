@@ -4,6 +4,7 @@ const {validateAndStoreReceipt} = require('./utils/validateAndStoreReceipt');
 const {URL_IAP_PRODUCTION} = require('./utils/constants');
 
 const validateReceipt = functions
+  .region('europe-west2')
   .runWith({
     timeoutSeconds: 540,
     memory: '2GB',

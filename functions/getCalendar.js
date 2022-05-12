@@ -5,6 +5,7 @@ const {format} = require('date-fns');
 const DATE_FORMAT = 'yyyy-MM-dd';
 
 const getCalendar = functions
+  .region('europe-west2')
   .runWith({
     timeoutSeconds: 540,
     memory: '2GB',
@@ -16,6 +17,8 @@ const getCalendar = functions
         'The function must be called while authenticated.',
       );
     }
+
+    console.log('OBTENIENDO SESIONES');
 
     const calendarRef = await admin
       .firestore()
@@ -42,6 +45,8 @@ const getCalendar = functions
         [val]: {marked: true},
       };
     }, {});
+
+    console.log(groupedSessions);
 
     return {
       markers,

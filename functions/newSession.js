@@ -5,6 +5,7 @@ const {firebaseIDGenerator} = require('./utils/firebaseIDGenerator');
 const {getPhotoIfUserExists} = require('./utils/getPhotoIfUserExists');
 
 const newSession = functions
+  .region('europe-west2')
   .runWith({
     timeoutSeconds: 540,
     memory: '2GB',

@@ -3,14 +3,13 @@ import {Alert} from 'react-native';
 
 import {popScreen} from '../../../Router/utils/actions';
 
-import functions from '@react-native-firebase/functions';
-
 import {timeout} from '../../../Utils/timeout';
+import {defaultFunctions} from '../../../Lib/API/firebaseApp';
 
 export const useDeleteSession = (sessionId, internalId) => {
   const [loading, setLoading] = useState(false);
 
-  const deleteFn = functions().httpsCallable('deleteSession');
+  const deleteFn = defaultFunctions.httpsCallable('deleteSession');
 
   const deleteSession = async allEvents => {
     try {

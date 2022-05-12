@@ -1,6 +1,5 @@
 import {useUpdateDocument} from '../../../Hooks/useUpdateDocument';
 import {useState} from 'react';
-import functions from '@react-native-firebase/functions';
 
 import {ERROR_FORCED, NONFORCED, WINNER} from '../../../Utils/constants';
 import {Alert} from 'react-native';
@@ -9,6 +8,7 @@ import {useContext} from 'react';
 import {LoadingModalContext} from '../../../Context/LoadingModalContext';
 import {popScreen} from '../../../Router/utils/actions';
 import {matchQuery} from '../../../Api/queries';
+import {defaultFunctions} from '../../../Lib/API/firebaseApp';
 
 export const useLiveMatch = match => {
   const query = matchQuery;
@@ -22,7 +22,7 @@ export const useLiveMatch = match => {
     path: `matches/${match?.id}`,
   });
 
-  const newPointFn = functions().httpsCallable('newPoint');
+  const newPointFn = defaultFunctions.httpsCallable('newPoint');
 
   const handleWhoStarts = async (team, callback) => {
     try {

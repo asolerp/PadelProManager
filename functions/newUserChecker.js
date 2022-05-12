@@ -41,35 +41,38 @@ const emptyStats = {
   tw: 0,
 };
 
-const newUserChecker = functions.auth.user().onCreate(async user => {
-  const findPlayer = await admin
-    .firestore()
-    .collection('players')
-    .where('email', '==', user?.email)
-    .get();
+const newUserChecker = functions
+  .region('europe-west2')
+  .auth.user()
+  .onCreate(async user => {
+    const findPlayer = await admin
+      .firestore()
+      .collection('players')
+      .where('email', '==', user?.email)
+      .get();
 
-  if (findPlayer.docs.length > 0) {
-    const player = findPlayer.docs[0];
-    await admin
-      .firestore()
-      .collection('players')
-      .doc(player?.id)
-      .update({id: user?.uid});
-  } else {
-    const id = firebaseIDGenerator();
-    await admin.firestore().collection('players').doc(id).set({
-      id: user?.uid,
-      email: user?.email,
-    });
-    await admin
-      .firestore()
-      .collection('players')
-      .doc(id)
-      .collection('stats')
-      .doc('global')
-      .set(emptyStats);
-  }
-});
+    if (findPlayer.docs.length > 0) {
+      const player = findPlayer.docs[0];
+      await admin
+        .firestore()
+        .collection('players')
+        .doc(player?.id)
+        .update({id: user?.uid});
+    } else {
+      const id = firebaseIDGenerator();
+      await admin.firestore().collection('players').doc(id).set({
+        id: user?.uid,
+        email: user?.email,
+      });
+      await admin
+        .firestore()
+        .collection('players')
+        .doc(id)
+        .collection('stats')
+        .doc('global')
+        .set(emptyStats);
+    }
+  });
 
 module.exports = {
   newUserChecker,

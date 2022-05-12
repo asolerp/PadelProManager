@@ -1,5 +1,5 @@
 import {useContext, useState} from 'react';
-import functions from '@react-native-firebase/functions';
+
 import firebase from '@react-native-firebase/app';
 import firestore from '@react-native-firebase/firestore';
 
@@ -8,12 +8,13 @@ import {matchQuery} from '../../../Api/queries';
 import {timeout} from '../../../Utils/timeout';
 import {LoadingModalContext} from '../../../Context/LoadingModalContext';
 import {useAddDocument} from '../../../Hooks/useAddDocument';
+import {defaultFunctions} from '../../../Lib/API/firebaseApp';
 
 export const useSavePlayersStats = match => {
   const [error, setError] = useState();
   const {setIsVisible, setText} = useContext(LoadingModalContext);
 
-  const savePlayersStats = functions().httpsCallable('savePlayersStats');
+  const savePlayersStats = defaultFunctions.httpsCallable('savePlayersStats');
   const {updateDocument} = useUpdateDocument(matchQuery);
   const {addDocument} = useAddDocument(
     matchQuery.doc(match?.id).collection('history'),

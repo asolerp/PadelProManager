@@ -1,6 +1,6 @@
-import functions from '@react-native-firebase/functions';
 import {addDays, format} from 'date-fns';
 import {useState} from 'react';
+import {defaultFunctions} from '../Lib/API/firebaseApp';
 
 export const useGetSessions = () => {
   const [loading, setLoading] = useState(false);
@@ -8,7 +8,7 @@ export const useGetSessions = () => {
   const [markers, setMarkers] = useState();
 
   const getSessions = async (callback?: () => void) => {
-    const sessionsFn = functions().httpsCallable('getCalendar');
+    const sessionsFn = defaultFunctions.httpsCallable('getCalendar');
 
     setLoading(true);
     try {
@@ -49,7 +49,7 @@ export const useGetSessions = () => {
 
       generateAllDays();
     } catch (err) {
-      console.log(err);
+      console.log('ERROR', err);
     } finally {
       setLoading(false);
       callback && callback();

@@ -1,8 +1,9 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 
-const newPlayer = functions.firestore
-  .document('users/{userId}/players/{playerId}')
+const newPlayer = functions
+  .region('europe-west2')
+  .firestore.document('users/{userId}/players/{playerId}')
   .onCreate(async (snap, context) => {
     const data = snap.data();
     const playerEmail = data?.email;
@@ -15,8 +16,6 @@ const newPlayer = functions.firestore
         .get();
 
       const coach = {...coachRes.data(), id: coachRes.id};
-
-      console.log('COACH', coach);
 
       await admin.firestore().collection('relations').add({
         coach,

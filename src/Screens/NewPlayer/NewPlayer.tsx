@@ -8,7 +8,7 @@ import t from '../../Theme/theme';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {format} from 'date-fns';
 import {useNewPlayerForm} from './hooks/useNewPlayerForm';
-import {Formik} from 'formik';
+
 import {DATE_FORM} from '../../Utils/date-ext';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Button} from '../../Components/UI/Button';
@@ -26,22 +26,21 @@ import {Controller, useForm} from 'react-hook-form';
 export const NEW_PLAYER_SCREEN_KEY = 'newPlayerScreen';
 
 export const NewPlayerScreen = ({route}) => {
-  const {edit, playerId} = route?.params;
-  const {isCoach} = usePermissions();
-  const {logout} = useLogout();
-  const {handleSubmitForm, initialValues, onImagePress, response, loading} =
-    useNewPlayerForm(playerId, edit);
-
   const {
     control,
     setValue,
     handleSubmit,
     getValues,
-    formState: {errors, isValid},
+    reset,
+    formState: {isValid},
   } = useForm({
     mode: 'onChange',
-    defaultValues: initialValues,
   });
+  const {edit, playerId} = route?.params;
+  const {isCoach} = usePermissions();
+  const {logout} = useLogout();
+  const {handleSubmitForm, onImagePress, response, loading, initPlayerImg} =
+    useNewPlayerForm(playerId, edit, reset);
 
   const [show, setShow] = useState(false);
 
@@ -97,7 +96,7 @@ export const NewPlayerScreen = ({route}) => {
           />
           <View style={[t.flexGrow, t.mT10]}>
             <ImageSelector
-              imageSource={initialValues?.profileImg}
+              imageSource={initPlayerImg}
               onImagePress={onImagePress}
               imageSelected={response}
               name={`${getValues()?.firstName?.[0]?.toUpperCase() || ''}${

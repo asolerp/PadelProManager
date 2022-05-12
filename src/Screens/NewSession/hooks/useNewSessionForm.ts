@@ -8,8 +8,9 @@ import {popScreen} from '../../../Router/utils/actions';
 import {DATE_FORM, HOUR_FORMAT} from '../../../Utils/date-ext';
 import {ddmmyyyyToDate} from '../../../Utils/parsers';
 import {timeout} from '../../../Utils/timeout';
-import functions from '@react-native-firebase/functions';
+
 import {firebaseIDGenerator} from '../../../Utils/firebaseIDGenerator';
+import {defaultFunctions} from '../../../Lib/API/firebaseApp';
 
 export const useNewSessionForm = ({startDate, session}) => {
   const {user} = useContext(AuthContext);
@@ -34,7 +35,7 @@ export const useNewSessionForm = ({startDate, session}) => {
   const newSessionFormRef = useRef();
   const {updateDocument} = useUpdateDocument(sessionQuery);
 
-  const newSessionsFn = functions().httpsCallable('newSession');
+  const newSessionsFn = defaultFunctions.httpsCallable('newSession');
 
   const handleSetRepDays = day => {
     if (repDays.some(d => d === day)) {

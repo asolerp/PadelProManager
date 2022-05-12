@@ -16,7 +16,6 @@ export const TabStack = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarShowLabel: false,
-
         headerShown: false,
       }}>
       <Tab.Screen
@@ -26,7 +25,7 @@ export const TabStack = () => {
           tabBarIcon: ({focused}) => (
             <>
               <Icon
-                name={focused ? 'ios-home' : 'ios-home-outline'}
+                name={focused ? 'ios-speedometer' : 'ios-speedometer-outline'}
                 size={20}
                 focused={focused}
               />

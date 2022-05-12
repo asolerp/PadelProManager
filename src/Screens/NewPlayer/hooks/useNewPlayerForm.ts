@@ -12,23 +12,14 @@ import {LoadingModalContext} from '../../../Context/LoadingModalContext';
 import {AuthContext} from '../../../Context/AuthContex';
 import {timeout} from '../../../Utils/timeout';
 import {useCameraOrLibrary} from '../../../Hooks/useCamerOrLibrary';
+import {error, info} from '../../../Lib/Logging';
 
-export const useNewPlayerForm = (playerId, edit) => {
+export const useNewPlayerForm = (playerId, edit, reset) => {
   const {user} = useContext(AuthContext);
-  const init = {
-    firstName: '',
-    secondName: '',
-    gender: '',
-    birthDate: '',
-    hand: '',
-    category: '',
-    email: '',
-    phone: '',
-  };
 
   const newPlayerFormRef = useRef();
   const [playerPosition, setPlayerPosition] = useState();
-  const [initialValues, setInitialValues] = useState(init);
+  const [initPlayerImg, setInitPlayerImg] = useState();
 
   const {uploadCloudinary} = useUploadCloudinaryImage();
   const {response, onImagePress} = useCameraOrLibrary();
@@ -57,11 +48,20 @@ export const useNewPlayerForm = (playerId, edit) => {
       } else {
         await updateDocument(playerId, {...values});
       }
-    } catch (err) {
-      console.log(err);
-    } finally {
       setIsVisible(false);
       popScreen();
+      info({
+        title: 'Actualización',
+        subtitle: 'Se ha actualizado correctamente al jugador.',
+      });
+    } catch (err) {
+      error({
+        title: 'Ha ocurrido un error',
+        subtitle: 'No se ha podido actualizar el jugador',
+        data: {
+          error: err,
+        },
+      });
     }
   };
 
@@ -112,9 +112,11 @@ export const useNewPlayerForm = (playerId, edit) => {
 
   useEffect(() => {
     const getPlayerInfo = async () => {
+      console.log(playerId);
       const playerRef = await playerQuery(user?.id).doc(playerId).get();
       const player = playerRef.data();
-      setInitialValues(player);
+      reset(player);
+      setInitPlayerImg(player?.profileImg);
     };
     if (playerId) {
       getPlayerInfo();
@@ -128,7 +130,7 @@ export const useNewPlayerForm = (playerId, edit) => {
     handleSubmitForm,
     newPlayerFormRef,
     playerPosition,
-    initialValues,
+    initPlayerImg,
     onImagePress,
     response,
     loading: loadingAddDocument,

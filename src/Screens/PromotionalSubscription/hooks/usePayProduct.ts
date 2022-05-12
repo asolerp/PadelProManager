@@ -1,19 +1,21 @@
 import Purchase from 'react-native-purchases';
-import {openStack} from '../../../Router/utils/actions';
-import {TAB_STACK_KEY} from '../../../Router/utils/routerKeys';
-import {ENTITLEMENT_ID} from '../../../Utils/constants';
+import {error} from '../../../Lib/Logging';
 
 export const usePayProduct = () => {
   const makePayment = async purchasePackage => {
     try {
-      const {purchaserInfo} = await Purchase.purchasePackage(purchasePackage);
-      if (
-        typeof purchaserInfo.entitlements.active[ENTITLEMENT_ID] !== 'undefined'
-      ) {
-        openStack(TAB_STACK_KEY);
-      }
+      await Purchase.purchasePackage(purchasePackage);
     } catch (err) {
-      console.log(err);
+      console.log(err.userInfo.readableErrorCode);
+      if (err.userInfo.readableErrorCode !== 'PURCHASE_CANCELLED') {
+        error({
+          title: 'Subscripción',
+          subtitle: 'No se ha podido realizar el pago',
+          data: {
+            error: err.userInfo.readableErrorCode,
+          },
+        });
+      }
     }
   };
 
@@ -21,7 +23,13 @@ export const usePayProduct = () => {
     try {
       await makePayment(purchasePackage);
     } catch (err) {
-      console.log(err);
+      error({
+        title: 'Subscripción',
+        subtitle: 'Algo ha ocurrido al realizar el pago',
+        data: {
+          error: err.userInfo.readableErrorCode,
+        },
+      });
     }
   };
 

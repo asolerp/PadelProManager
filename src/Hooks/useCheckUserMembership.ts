@@ -1,16 +1,15 @@
-import {useContext, useEffect} from 'react';
+import {useCallback, useContext, useEffect} from 'react';
 import Purchases from 'react-native-purchases';
 import {ENTITLEMENT_ID} from '../Utils/constants';
 import {SubscriptionContext} from '../Context/SubscriptionContext';
 import {timeout} from '../Utils/timeout';
 export const useCheckUserMembership = () => {
   const {setIsSubscribed, setIsChecking} = useContext(SubscriptionContext);
-  const checkUserMembership = async () => {
+  const checkUserMembership = useCallback(async () => {
     console.log('CHECKING MEMBERSHIP');
     setIsChecking(true);
     try {
       const purchaserInfo = await Purchases.getPurchaserInfo();
-      console.log(purchaserInfo);
       if (
         typeof purchaserInfo.entitlements.active[ENTITLEMENT_ID] !== 'undefined'
       ) {
@@ -26,12 +25,12 @@ export const useCheckUserMembership = () => {
       await timeout(2000);
       setIsChecking(false);
     }
-  };
+  }, [setIsChecking, setIsSubscribed]);
 
   useEffect(() => {
-    checkUserMembership();
-    Purchases.addPurchaserInfoUpdateListener(() => {
+    const paymentsSubscriber = Purchases.addPurchaserInfoUpdateListener(() => {
       checkUserMembership();
     });
+    return paymentsSubscriber;
   }, []);
 };

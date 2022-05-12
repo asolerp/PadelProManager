@@ -1,8 +1,8 @@
-import functions from '@react-native-firebase/functions';
+import {defaultFunctions} from '../Lib/API/firebaseApp';
 
 export const useRecursiveDelete = ({path}) => {
   const recursiveDelete = async (callback?: () => void) => {
-    const deleteFn = functions().httpsCallable('recursiveDelete');
+    const deleteFn = defaultFunctions.httpsCallable('recursiveDelete');
     try {
       await deleteFn({
         path: path,

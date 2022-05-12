@@ -4,6 +4,7 @@ const {firestore} = require('firebase-admin');
 const {tennisGameLogic} = require('./utils/gameLogic');
 
 const newPoint = functions
+  .region('europe-west2')
   .runWith({
     timeoutSeconds: 540,
     memory: '2GB',

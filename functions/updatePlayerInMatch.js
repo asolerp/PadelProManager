@@ -1,8 +1,9 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 
-const updatePlayerInMatch = functions.firestore
-  .document('players/{playerId}')
+const updatePlayerInMatch = functions
+  .region('europe-west2')
+  .firestore.document('players/{playerId}')
   .onUpdate(async (change, context) => {
     const playerAfter = change.after.data();
     // Create a new batch instance

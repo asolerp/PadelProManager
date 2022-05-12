@@ -1,7 +1,13 @@
 import React from 'react';
 
 import Icon from 'react-native-vector-icons/Ionicons';
-import {View, Text, StatusBar, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  StatusBar,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
 
 import {ContainerWithBg} from '../../Components/UI/ContainerWithBg';
 import t from '../../Theme/theme';
@@ -32,7 +38,7 @@ const Service = ({iconName, title}) => {
 };
 
 export const PromotionalSubscription = () => {
-  const {packages} = useGetProducts();
+  const {packages, loading} = useGetProducts();
   const {handleMakePayment} = usePayProduct();
 
   useHideBootSplash();
@@ -58,37 +64,41 @@ export const PromotionalSubscription = () => {
                 />
                 <Service iconName="ios-calendar" title="Gestión de agenda" />
               </View>
-              <View style={[t.mY5]}>
-                <Text
-                  style={[
-                    t.fontSansBold,
-                    t.textLg,
-                    t.textWhite,
-                    t.mB5,
-                    t.textCenter,
-                  ]}>
-                  ¡Primer mes gratis!
-                </Text>
-                <Text
-                  style={[
-                    t.fontSansBold,
-                    t.text2xl,
-                    t.textWhite,
-                    t.mB5,
-                    t.textCenter,
-                  ]}>
-                  Tan solo por {packages?.[0]?.product?.price_string} al mes
-                </Text>
+              {loading ? (
+                <ActivityIndicator />
+              ) : (
+                <View style={[t.mY5]}>
+                  <Text
+                    style={[
+                      t.fontSansBold,
+                      t.textLg,
+                      t.textWhite,
+                      t.mB5,
+                      t.textCenter,
+                    ]}>
+                    ¡Primer mes gratis!
+                  </Text>
+                  <Text
+                    style={[
+                      t.fontSansBold,
+                      t.text2xl,
+                      t.textWhite,
+                      t.mB5,
+                      t.textCenter,
+                    ]}>
+                    Tan solo por {packages?.[0]?.product?.price_string} al mes
+                  </Text>
 
-                <Button
-                  active
-                  title="Empezar prueba"
-                  type="white"
-                  textStyle={[t.textLg]}
-                  style={[t.pY4]}
-                  onPress={() => handleMakePayment(packages?.[0])}
-                />
-              </View>
+                  <Button
+                    active
+                    title="Empezar prueba"
+                    type="white"
+                    textStyle={[t.textLg]}
+                    style={[t.pY4]}
+                    onPress={() => handleMakePayment(packages?.[0])}
+                  />
+                </View>
+              )}
               <View>
                 <View style={[t.justifyCenter, t.itemsCenter, t.mT5]}>
                   <Text
