@@ -537,7 +537,7 @@
 				CODE_SIGN_ENTITLEMENTS = PadelProManager/PadelProManager.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1304202201530;
+				CURRENT_PROJECT_VERSION = 1505202202231;
 				DEVELOPMENT_TEAM = Y86MT47MC7;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PadelProManager/Info.plist;
@@ -545,6 +545,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -569,13 +570,14 @@
 				CODE_SIGN_ENTITLEMENTS = PadelProManager/PadelProManager.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1304202201530;
+				CURRENT_PROJECT_VERSION = 1505202202231;
 				DEVELOPMENT_TEAM = Y86MT47MC7;
 				INFOPLIST_FILE = PadelProManager/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

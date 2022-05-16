@@ -39,7 +39,7 @@ export const HomePlayerScreen = () => {
       <PendingRelationModal relations={pendingRelation} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <PlayerHeader />
-        <View style={[t.mB5]}>
+        <View style={[t.mB5, t.pX4]}>
           <MyTodaySessions />
         </View>
         {!user?.coachId && (
@@ -51,7 +51,7 @@ export const HomePlayerScreen = () => {
             subtitle="Hazle saber a tu entrenador de PadelPro para que pueda llevar un seguimiento de tus logros y tu evolución."
           />
         )}
-        <View style={[t.mT5]}>
+        <View style={[t.mT5, t.pX4]}>
           <Text style={[t.text2xl, t.fontSansBold, t.mB5]}>
             Mis estadísticas
           </Text>

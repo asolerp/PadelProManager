@@ -15,6 +15,7 @@ import {SearchInput} from '../../Components/UI/SearchInput';
 import {searchOptions} from '../../Utils/lists';
 import PressableOpacity from '../../Components/UI/PressableOpacity';
 import {useGetPlayerMatches} from '../../Hooks/useGetPlayerMatches';
+import {HDivider} from '../../Components/UI/HDivider';
 
 export const MATCHES_PLAYER_SCREE_KEY = 'matchesScreen';
 
@@ -35,28 +36,31 @@ export const MatchesPlayer = () => {
           </PressableOpacity>
         }
       />
+      <HDivider />
       <SearchInput
         value={search}
         defaultOption={searchOption}
         onChangeText={setSearch}
         onChange={setSearchOption}
         list={searchOptions}
-        style={[t.mT10, t.mB5]}
+        style={[t.mT5, t.mB5, t.pX4]}
       />
-      {matches?.length === 0 ? (
-        <View style={[t.flexGrow, t.justifyCenter, t.itemsCenter]}>
-          <Text style={[t.fontSans]}>No tienes ningúna partida</Text>
-        </View>
-      ) : (
-        <View style={[t.flexGrow]}>
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            data={matches?.sort(sortByDate)}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-          />
-        </View>
-      )}
+      <View style={[t.pX4]}>
+        {matches?.length === 0 ? (
+          <View style={[t.flexGrow, t.justifyCenter, t.itemsCenter]}>
+            <Text style={[t.fontSans]}>No tienes ningúna partida</Text>
+          </View>
+        ) : (
+          <View style={[t.flexGrow]}>
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              data={matches?.sort(sortByDate)}
+              renderItem={renderItem}
+              keyExtractor={item => item.id}
+            />
+          </View>
+        )}
+      </View>
     </ScreenLayout>
   );
 };

@@ -2,6 +2,7 @@ import React from 'react';
 
 import {View, ImageBackground, ViewStyle} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {boolean} from 'yup';
 import t from '../../Theme/theme';
 import {capitalize} from '../../Utils/parsers';
 
@@ -9,6 +10,7 @@ interface Props {
   children: React.ReactNode;
   backgroundColor?: string;
   imageSrc?: string;
+  isBox?: boolean;
   style?: ViewStyle[];
   opacity?: number;
 }
@@ -19,6 +21,7 @@ const DEFAULT_PROFILE_IMAGE =
 export const ContainerWithBg: React.FC<Props> = ({
   backgroundColor = 'info',
   children,
+  isBox = true,
   imageSrc = DEFAULT_PROFILE_IMAGE,
   opacity = 50,
   style,
@@ -30,9 +33,11 @@ export const ContainerWithBg: React.FC<Props> = ({
   return (
     <ImageBackground
       source={{uri: imageSrc}}
-      imageStyle={[t.roundedLg]}
+      imageStyle={[isBox && t.roundedLg]}
       style={[t.flexGrow, t.relative, style]}>
-      <View style={[t.wFull, t.hFull, t.roundedLg, bg, op, t.absolute]} />
+      <View
+        style={[t.wFull, t.hFull, isBox && t.roundedLg, bg, op, t.absolute]}
+      />
       <SafeAreaView style={[t.flexGrow, t.pX4]}>{children}</SafeAreaView>
     </ImageBackground>
   );

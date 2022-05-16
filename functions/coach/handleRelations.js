@@ -1,9 +1,8 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 
-const handleRelations = functions
-  .region('europe-west2')
-  .firestore.document('relations/{relationId}')
+const handleRelations = functions.firestore
+  .document('relations/{relationId}')
   .onUpdate(async (change, context) => {
     const relationAfter = change.after.data();
 

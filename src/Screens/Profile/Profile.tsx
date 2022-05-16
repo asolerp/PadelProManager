@@ -139,7 +139,7 @@ export const ProfileScreen = () => {
                   style={[t.flex1, t.mB4]}
                 />
                 <Input
-                  editable={false}
+                  editable={true}
                   value={values?.birthDate}
                   onPressIn={() => showDatePicker()}
                   placeholder="Fecha de nacimiento"
@@ -147,7 +147,6 @@ export const ProfileScreen = () => {
                   onBlur={handleBlur('birthDate')}
                   style={[t.flex1, t.mB4]}
                 />
-
                 <Select
                   list={gender}
                   placeholder="Género"
@@ -172,7 +171,6 @@ export const ProfileScreen = () => {
                     style={[t.flex1, t.mB4]}
                   />
                 )}
-
                 <Select
                   list={provincias.sort(sortByLabel)}
                   placeholder="Provincia"

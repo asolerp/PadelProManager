@@ -49,12 +49,10 @@ export const PointHistoryItem = ({match, pointHistory}) => {
   return (
     <>
       <BottomModal
+        title="Nuevo comentario"
         isVisible={visibleCommentModal}
         onClose={() => setVisibleCommentModal(false)}>
-        <View style={[t.wFull, t.mB3]}>
-          <Text style={[t.fontSansBold, t.text2xl, t.textLeft, t.mB5]}>
-            Nuevo comentario
-          </Text>
+        <View style={[t.wFull, t.mB3, t.pX4, t.pT4]}>
           <View style={[t.wFull]}>
             <Input
               label="Comentario"

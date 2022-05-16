@@ -6,7 +6,6 @@ import AuthRouter from './Router/AuthRouter';
 import {StatusBar} from 'react-native';
 import {LoadingModalProvider} from './Context/LoadingModalContext';
 import {AuthProvider} from './Context/AuthContex';
-import {withIAPContext} from 'react-native-iap';
 
 import {SubscriptionProvider} from './Context/SubscriptionContext';
 import {PremiumModalProvider} from './Context/PremiumModalContext';
@@ -38,4 +37,4 @@ const App: FunctionComponent = () => {
   );
 };
 
-export default withIAPContext(App);
+export default App;

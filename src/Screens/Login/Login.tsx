@@ -19,7 +19,7 @@ export const LoginScreen = () => {
   return (
     <>
       <StatusBar barStyle="light-content" />
-      <ContainerWithBg backgroundColor="Gray900" opacity={80}>
+      <ContainerWithBg isBox={false} backgroundColor="Gray900" opacity={80}>
         <View style={[t.flexGrow, t.flexCol, t.itemsCenter]}>
           <Text
             style={[
@@ -38,7 +38,7 @@ export const LoginScreen = () => {
               style={[t.h20, t.mT5]}
             />
           </View>
-          <View style={[t.wFull, t.justifyEnd]}>
+          <View style={[t.wFull, t.justifyEnd, t.mB4]}>
             <GoogleButton
               onPress={() =>
                 onGoogleButtonPress()

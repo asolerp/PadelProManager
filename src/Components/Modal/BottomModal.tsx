@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Dimensions,
   KeyboardAvoidingView,
+  Platform,
   Pressable,
   Text,
   View,
@@ -35,7 +36,8 @@ export const BottomModal: React.FC<BottomModalProps> = ({
       onSwipeComplete={onClose}
       swipeDirection={swipeDirection}
       style={[t.justifyEnd, {height: Dimensions.get('screen').height}, t.m0]}>
-      <KeyboardAvoidingView behavior="padding">
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'android' ? 'height' : 'padding'}>
         <View style={[t.bgWhite, t.pT3, t.roundedTlXl, t.roundedTrXl, t.pB8]}>
           <View style={[t.flexRow, t.itemsCenter, t.pX4]}>
             <View style={[t.flex1]} />

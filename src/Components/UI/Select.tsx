@@ -63,7 +63,7 @@ export const Select = ({
 
       <Input
         empty={empty}
-        editable={false}
+        editable={true}
         placeholder={placeholder}
         value={value?.label}
         name={name}

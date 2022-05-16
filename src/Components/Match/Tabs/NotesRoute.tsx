@@ -48,10 +48,10 @@ export const NotesRoute = ({notes, matchId}) => {
   return (
     <View style={[t.flexGrow, t.pX3, t.mT5]}>
       <BottomModal
+        title="Nueva nota"
         isVisible={newNoteModalOpen}
         onClose={() => setNewNoteModalOpen(false)}>
-        <View style={[t.wFull, t.mB3]}>
-          <Text style={[t.fontSansBold, t.textLg, t.mB5]}>Nueva nota</Text>
+        <View style={[t.wFull, t.mB3, t.pX4, t.pT4]}>
           <Input
             value={title}
             onChangeText={setTitle}

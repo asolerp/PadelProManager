@@ -6,6 +6,7 @@ import {
   TextInputProps,
   ViewStyle,
   TextStyle,
+  Platform,
 } from 'react-native';
 import t from '../../Theme/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -40,15 +41,11 @@ export const SearchInput: React.FC<Props> = ({
   return (
     <>
       <BottomModal
+        title={list && 'Buscar por...'}
         swipeDirection={null}
         isVisible={isVisible}
         onClose={() => setIsVisible(false)}>
         <>
-          {list && (
-            <Text style={[t.fontSansBold, t.text2xl, t.textCenter]}>
-              Buscar por...
-            </Text>
-          )}
           <Picker
             selectedValue={localValue}
             onValueChange={itemValue => setLocalValue(itemValue)}>
@@ -64,7 +61,7 @@ export const SearchInput: React.FC<Props> = ({
           <Button
             active
             title="Guardar"
-            style={[t.mT3, t.mB3]}
+            style={[t.mT3, t.mB3, t.mX4]}
             textStyle={[t.textLg]}
             onPress={() => {
               onChange(localValue);
@@ -81,7 +78,7 @@ export const SearchInput: React.FC<Props> = ({
             t.justifyStart,
             t.itemsCenter,
             t.pX4,
-            t.pY4,
+            Platform.OS === 'ios' && t.pY4,
             t.roundedSm,
             error ? t.borderErrorDark : t.borderGray400,
           ]}>
