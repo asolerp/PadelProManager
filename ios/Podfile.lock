@@ -894,8 +894,6 @@ PODS:
   - RNGoogleSignin (7.0.4):
     - GoogleSignIn (~> 6.0.0)
     - React-Core
-  - RNIap (7.5.6):
-    - React-Core
   - RNPurchases (4.5.1):
     - PurchasesHybridCommon (= 1.11.1)
     - React-Core
@@ -1016,7 +1014,6 @@ DEPENDENCIES:
   - "RNFBRemoteConfig (from `../node_modules/@react-native-firebase/remote-config`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
-  - RNIap (from `../node_modules/react-native-iap`)
   - RNPurchases (from `../node_modules/react-native-purchases`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -1170,8 +1167,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNGoogleSignin:
     :path: "../node_modules/@react-native-google-signin/google-signin"
-  RNIap:
-    :path: "../node_modules/react-native-iap"
   RNPurchases:
     :path: "../node_modules/react-native-purchases"
   RNReanimated:
@@ -1278,7 +1273,6 @@ SPEC CHECKSUMS:
   RNFBRemoteConfig: 690431ccdbd7da77c58f661ea7b63e249d86f6f0
   RNGestureHandler: bf572f552ea324acd5b5464b8d30755b2d8c1de6
   RNGoogleSignin: c4381751eefd73c552b923ba347a9bfc6f18771c
-  RNIap: d248609d1b8937e63bd904e865c318e9b1457eff
   RNPurchases: 6eed91e035e9d0883b2fcb894cdff4a739ed7b08
   RNReanimated: ee33ab40fa252332a36aeed9d936801ed9700b24
   RNScreens: d6da2b9e29cf523832c2542f47bf1287318b1868
@@ -1291,4 +1285,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 849bf1cb827e95fc942f40d32f107770696e14f0
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

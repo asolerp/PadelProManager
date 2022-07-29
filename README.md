@@ -1,7 +1,7 @@
 <p align="center">
    <img width='120' alt='PadelProManager logo' src='https://res.cloudinary.com/enalbis/image/upload/v1659089151/PadelPro/varios/z2rdilusv7x45rlnhbuj.png'>
 </p>
-<h1 align="center">PadelProManager App for coaches and players</h1>
+<h1 align="center">PadelProManager MVP App for coaches and players</h1>
 <p align="center">A mobile application to allow padel coaches and players to organize their classes and keep a track of their improvements.</p>
 <p align="center">
   <a href='https://apps.apple.com/us/app/padelpromanager/id1608207639'>

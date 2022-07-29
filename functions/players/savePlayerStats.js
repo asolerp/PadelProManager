@@ -1,13 +1,14 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-const {getStatsUpdateObject} = require('./utils/getStatsUpdateObject');
+const {getStatsUpdateObject} = require('../utils/getStatsUpdateObject');
+const { USERS, PLAYERS, FB_REGION, MATCHES, STATS } = require('../utils/constants');
 
 const findPlayerEmailById = async (userId, playerId) => {
   const player = await admin
     .firestore()
-    .collection('users')
+    .collection(USERS)
     .doc(userId)
-    .collection('players')
+    .collection(PLAYERS)
     .doc(playerId)
     .get();
 
@@ -17,7 +18,7 @@ const findPlayerEmailById = async (userId, playerId) => {
 const findUserIdByEmail = async email => {
   const user = await admin
     .firestore()
-    .collection('users')
+    .collection(USERS)
     .where('email', '==', email)
     .get();
 
@@ -25,7 +26,7 @@ const findUserIdByEmail = async email => {
 };
 
 const savePlayersStats = functions
-  .region('europe-west2')
+  .region(FB_REGION)
   .runWith({
     timeoutSeconds: 540,
     memory: '2GB',
@@ -46,23 +47,23 @@ const savePlayersStats = functions
     const team1Stats = playersStats?.team1;
     const team2Stats = playersStats?.team2;
 
-    const matchRef = admin.firestore().collection('matches').doc(matchId);
+    const matchRef = admin.firestore().collection(MATCHES).doc(matchId);
     const coachPlayerRef = playerId =>
       admin
         .firestore()
-        .collection('users')
+        .collection(USERS)
         .doc(userId)
-        .collection('players')
+        .collection(PLAYERS)
         .doc(playerId)
-        .collection('stats')
+        .collection(STATS)
         .doc('global');
 
     const userRef = id =>
       admin
         .firestore()
-        .collection('users')
+        .collection(USERS)
         .doc(id)
-        .collection('stats')
+        .collection(STATS)
         .doc('global');
 
     batch.update(matchRef, {state: 'finished'});

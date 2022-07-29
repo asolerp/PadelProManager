@@ -1,8 +1,9 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const { FB_REGION, SESSIONS } = require('../utils/constants');
 
 const deleteSession = functions
-  .region('europe-west2')
+  .region(FB_REGION)
   .runWith({
     timeoutSeconds: 540,
     memory: '2GB',
@@ -21,7 +22,7 @@ const deleteSession = functions
     if (allEvents) {
       await admin
         .firestore()
-        .collection('sessions')
+        .collection(SESSIONS)
         .where('internalId', '==', internalId)
         .get()
         .then(querySnapshot => {
@@ -32,7 +33,7 @@ const deleteSession = functions
           return batch.commit();
         });
     } else {
-      await admin.firestore().collection('sessions').doc(sessionId).delete();
+      await admin.firestore().collection(SESSIONS).doc(sessionId).delete();
     }
   });
 

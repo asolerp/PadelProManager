@@ -1,12 +1,12 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-const {validateAndStoreReceipt} = require('./utils/validateAndStoreReceipt');
-const {URL_IAP_PRODUCTION} = require('./utils/constants');
+const {validateAndStoreReceipt} = require('../utils/validateAndStoreReceipt');
+const {URL_IAP_PRODUCTION, USERS} = require('../utils/constants');
 
 const checkUsersSubscriptions = functions.pubsub
   .schedule('every 1 minutes')
   .onRun(async context => {
-    const usersRef = await admin.firestore().collection('users').get();
+    const usersRef = await admin.firestore().collection(USERS).get();
     usersRef.forEach(doc => {
       const user = doc.data();
 

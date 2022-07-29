@@ -1,10 +1,11 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const {firestore} = require('firebase-admin');
-const {tennisGameLogic} = require('./utils/gameLogic');
+const {tennisGameLogic} = require('../utils/gameLogic');
+const { FB_REGION, MATCHES, HISTORY } = require('../utils/constants');
 
 const newPoint = functions
-  .region('europe-west2')
+  .region(FB_REGION)
   .runWith({
     timeoutSeconds: 540,
     memory: '2GB',
@@ -20,12 +21,12 @@ const newPoint = functions
     const {match, stats} = data;
 
     const newStateGame = tennisGameLogic(match?.game, stats?.winPointTeam);
-    const matchQuery = admin.firestore().collection('matches').doc(match?.id);
+    const matchQuery = admin.firestore().collection(MATCHES).doc(match?.id);
     const historyQuery = admin
       .firestore()
-      .collection('matches')
+      .collection(MATCHES)
       .doc(match?.id)
-      .collection('history');
+      .collection(HISTORY);
 
     try {
       await historyQuery.add({

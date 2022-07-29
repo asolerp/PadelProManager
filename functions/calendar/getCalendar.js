@@ -1,11 +1,12 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const {format} = require('date-fns');
+const { FB_REGION, SESSIONS } = require('../utils/constants');
 
 const DATE_FORMAT = 'yyyy-MM-dd';
 
 const getCalendar = functions
-  .region('europe-west2')
+  .region(FB_REGION)
   .runWith({
     timeoutSeconds: 540,
     memory: '2GB',
@@ -22,7 +23,7 @@ const getCalendar = functions
 
     const calendarRef = await admin
       .firestore()
-      .collection('sessions')
+      .collection(SESSIONS)
       .where('coachId', '==', context?.auth?.uid)
       .get();
 
@@ -45,8 +46,6 @@ const getCalendar = functions
         [val]: {marked: true},
       };
     }, {});
-
-    console.log(groupedSessions);
 
     return {
       markers,

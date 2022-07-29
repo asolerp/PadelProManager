@@ -1,5 +1,6 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const { USERS, RELATIONS } = require('../utils/constants');
 
 const newPlayer = functions.firestore
   .document('users/{userId}/players/{playerId}')
@@ -10,13 +11,13 @@ const newPlayer = functions.firestore
     try {
       const coachRes = await admin
         .firestore()
-        .collection('users')
+        .collection(USERS)
         .doc(context?.params?.userId)
         .get();
 
       const coach = {...coachRes.data(), id: coachRes.id};
 
-      await admin.firestore().collection('relations').add({
+      await admin.firestore().collection(RELATIONS).add({
         coach,
         playerEmail,
         status: 'pending',

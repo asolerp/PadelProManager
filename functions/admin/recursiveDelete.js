@@ -1,8 +1,9 @@
 const functions = require('firebase-functions');
 const firebase_tools = require('firebase-tools');
+const { FB_REGION } = require('../utils/constants');
 
 const recursiveDelete = functions
-  .region('europe-west2')
+  .region(FB_REGION)
   .runWith({
     timeoutSeconds: 540,
     memory: '2GB',

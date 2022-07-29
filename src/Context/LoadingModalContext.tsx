@@ -1,6 +1,6 @@
 import React, {createContext, useState} from 'react';
 
-interface LoadingModalContextInterface {
+export interface LoadingModalContextInterface {
   isVisible: boolean;
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
   text: string;

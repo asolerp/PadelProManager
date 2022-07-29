@@ -27,8 +27,6 @@ const validateAndStoreReceipt = async (url, body, userSnapshot) => {
         expireDate: expireDate,
       };
 
-      console.log('[[STATUS]]', status);
-
       const appleSubscription = {
         receipt: data.latest_receipt,
         productId: latestReceiptInfo.product_id,

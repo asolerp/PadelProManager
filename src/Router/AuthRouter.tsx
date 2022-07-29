@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {LoadingModal} from '../Components/Common/LoadingModal';
 import {AuthContext} from '../Context/AuthContex';
-import {LoadingModalContext} from '../Context/LoadingModalContext';
+import {LoadingModalContext, LoadingModalContextInterface} from '../Context/LoadingModalContext';
 import {useAuth} from './hooks/useAuth';
 
 import {SignInRouter} from './SignInRouter';
@@ -17,9 +17,9 @@ const AuthRouter = () => {
   useIAPayments();
   useNotification();
 
-  const {isVisible, text} = useContext(LoadingModalContext);
-  const {isVisible: visiblePremiumModal} = useContext(PremiumModalContext);
-  const {user} = useContext(AuthContext);
+  const {isVisible, text} = useContext<any>(LoadingModalContext);
+  const {isVisible: visiblePremiumModal} = useContext<any>(PremiumModalContext);
+  const {user} = useContext<any>(AuthContext);
 
   if (!user) {
     return null;

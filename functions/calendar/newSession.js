@@ -1,11 +1,12 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const moment = require('moment');
-const {firebaseIDGenerator} = require('./utils/firebaseIDGenerator');
-const {getPhotoIfUserExists} = require('./utils/getPhotoIfUserExists');
+const {firebaseIDGenerator} = require('../utils/firebaseIDGenerator');
+const {getPhotoIfUserExists} = require('../utils/getPhotoIfUserExists');
+const { FB_REGION, SESSIONS } = require('../utils/constants');
 
 const newSession = functions
-  .region('europe-west2')
+  .region(FB_REGION)
   .runWith({
     timeoutSeconds: 540,
     memory: '2GB',
@@ -53,7 +54,7 @@ const newSession = functions
       });
 
       result.forEach(async date => {
-        const docRef = admin.firestore().collection('sessions').doc();
+        const docRef = admin.firestore().collection(SESSIONS).doc();
 
         batch.set(docRef, {
           ...payload,
@@ -67,7 +68,7 @@ const newSession = functions
     } else {
       await admin
         .firestore()
-        .collection('sessions')
+        .collection(SESSIONS)
         .add({
           ...payload,
           players: playersWithUserImage,

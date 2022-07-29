@@ -1,10 +1,10 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-const {validateAndStoreReceipt} = require('./utils/validateAndStoreReceipt');
-const {URL_IAP_PRODUCTION} = require('./utils/constants');
+const {validateAndStoreReceipt} = require('../utils/validateAndStoreReceipt');
+const {URL_IAP_PRODUCTION, FB_REGION, USERS} = require('../utils/constants');
 
 const validateReceipt = functions
-  .region('europe-west2')
+  .region(FB_REGION)
   .runWith({
     timeoutSeconds: 540,
     memory: '2GB',
@@ -27,7 +27,7 @@ const validateReceipt = functions
     // First we fetch the user
     const userSnapshot = await admin
       .firestore()
-      .collection('users')
+      .collection(USERS)
       .doc(context.auth.uid)
       .get();
     if (!userSnapshot.exists) {

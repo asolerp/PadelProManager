@@ -4,16 +4,16 @@ const admin = require('firebase-admin');
 const {updatePlayerInMatch} = require('./updatePlayerInMatch');
 
 const {handleRelations} = require('./coach/handleRelations');
-const {savePlayersStats} = require('./savePlayerStats');
-const {recursiveDelete} = require('./recursiveDelete');
-const {validateReceipt} = require('./validateReceipt');
-const {newUserChecker} = require('./newUserChecker');
-const {deleteSession} = require('./deleteSession');
+const {savePlayersStats} = require('./player/savePlayerStats');
+const {recursiveDelete} = require('./admin/recursiveDelete');
+const {validateReceipt} = require('./admin/validateReceipt');
+const {newUserChecker} = require('./admin/newUserChecker');
+const {deleteSession} = require('./calendar/deleteSession');
 const {newPlayer} = require('./players/newPlayer');
 
-const {getCalendar} = require('./getCalendar');
-const {newSession} = require('./newSession');
-const {newPoint} = require('./newPoint');
+const {getCalendar} = require('./calendar/getCalendar');
+const {newSession} = require('./calendar/newSession');
+const {newPoint} = require('./match/newPoint');
 
 admin.initializeApp(functions.config().firebase);
 

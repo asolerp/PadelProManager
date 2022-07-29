@@ -1,9 +1,10 @@
 const admin = require('firebase-admin');
+const { USERS } = require('./constants');
 
 const getPhotoIfUserExists = async email => {
   const user = await admin
     .firestore()
-    .collection('users')
+    .collection(USERS)
     .where('email', '==', email)
     .get();
 
