@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import type {FunctionComponent} from 'react';
+
 import Toast from 'react-native-toast-message';
 
 import AuthRouter from './Router/AuthRouter';
@@ -13,7 +13,7 @@ import {initRemoteConfig} from './Lib/FeatureToggle';
 
 import {toastConfig} from './Lib/Logging/utils/toastConfig';
 
-const App: FunctionComponent = () => {
+const App: React.FC = () => {
   useEffect(() => {
     (async () => {
       await initRemoteConfig();
@@ -21,7 +21,7 @@ const App: FunctionComponent = () => {
   });
 
   return (
-    <>
+    <React.Fragment>
       <StatusBar animated={true} barStyle="dark-content" />
       <AuthProvider>
         <SubscriptionProvider>
@@ -33,7 +33,7 @@ const App: FunctionComponent = () => {
         </SubscriptionProvider>
       </AuthProvider>
       <Toast config={toastConfig} />
-    </>
+    </React.Fragment>
   );
 };
 

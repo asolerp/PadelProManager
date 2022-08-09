@@ -1,6 +1,7 @@
 import {useCallback, useEffect, useState} from 'react';
 
 import {PlayerType} from '../../../Global/types';
+import {NONFORCED, TEAM1, TEAM2} from '../../../Utils/constants';
 import {showError} from '../utils/alertErrorMessages';
 
 interface PointStatsType {
@@ -15,6 +16,7 @@ export const useNewPoint = () => {
   const [playerStat, setPlayerStat] = useState<PlayerType>();
   const [resultPoint, setResultPoint] = useState();
   const [typePoint, setTypePoint] = useState();
+  const [modalOpen, setModalOpen] = useState(false);
 
   const isPointWithoutStatistic = winPointTeam && pointStats?.length === 0;
   const isWinPointTeamActive = team => team === winPointTeam;
@@ -30,28 +32,19 @@ export const useNewPoint = () => {
       setTypePoint(null);
   };
 
-  const hasPointStatErrors = useCallback(
-    newPoint => {
-      if (!playerStat) {
-        return 'no_player';
-      }
-      if (!resultPoint) {
-        return 'no_result';
-      }
-      if (!typePoint) {
-        return 'no_point';
-      }
-      if (pointStats.some(stat => stat?.result === newPoint?.result)) {
-        return 'duplicated_result';
-      }
-      if (pointStats.some(stat => stat?.player?.id === newPoint?.player?.id)) {
-        return 'duplicated_player';
-      } else {
-        return false;
-      }
-    },
-    [playerStat, resultPoint, typePoint, pointStats],
-  );
+  const hasPointStatErrors = useCallback(() => {
+    if (!playerStat) {
+      return 'no_player';
+    }
+    if (!resultPoint) {
+      return 'no_result';
+    }
+    if (!typePoint) {
+      return 'no_point';
+    }
+
+    return false;
+  }, [playerStat, resultPoint, typePoint]);
 
   const handlePressAddPointStat = useCallback(() => {
     const newStat = {
@@ -60,14 +53,13 @@ export const useNewPoint = () => {
       point: typePoint,
       team: playerStat?.team,
     };
-    const error = hasPointStatErrors(newStat);
+    const error = hasPointStatErrors();
     if (error) {
       showError[error]();
     } else {
+      console.log('NEW', newStat);
       setPointStats(oldArray => [...oldArray, newStat]);
-      setPlayerStat(null);
-      setResultPoint(null);
-      setTypePoint(null);
+      // setTypePoint(null);
     }
   }, [playerStat, resultPoint, typePoint, hasPointStatErrors]);
 
@@ -78,6 +70,26 @@ export const useNewPoint = () => {
   }, [playerStat, resultPoint, typePoint, handlePressAddPointStat]);
 
   const hasSavePointError = !winPointTeam;
+
+  const getTotalPlayerStatistics = (statistics, team, playerId) => {
+    const playerStats = statistics?.total?.[team]?.players?.[playerId];
+    const total =
+      playerStats?.w?.count + playerStats?.ef?.count + playerStats?.nf?.count;
+    return [
+      {
+        color: '#4caf50',
+        percentage: (playerStats?.w?.count / total) * 100 || 0,
+      },
+      {
+        color: '#2196f3',
+        percentage: (playerStats?.ef?.count / total) * 100 || 0,
+      },
+      {
+        color: '#f44336',
+        percentage: (playerStats?.nf?.count / total) * 100 || 0,
+      },
+    ];
+  };
 
   const handlePressWinPointTeam = team => {
     if (winPointTeam === team) {
@@ -98,8 +110,18 @@ export const useNewPoint = () => {
   const handlePressResult = result => {
     if (resultPoint === result) {
       setResultPoint(null);
+      if (winPointTeam === TEAM1) {
+        return setWinPointTeam(TEAM2);
+      }
+      return setWinPointTeam(TEAM1);
     } else {
       setResultPoint(result);
+      if (result === NONFORCED) {
+        if (winPointTeam === TEAM1) {
+          return setWinPointTeam(TEAM2);
+        }
+        return setWinPointTeam(TEAM1);
+      }
     }
   };
 
@@ -116,8 +138,10 @@ export const useNewPoint = () => {
   };
 
   return {
+    modalOpen,
     pointStats,
     winPointTeam,
+    setModalOpen,
     isPlayerActive,
     isResultActive,
     cleanNewPointForm,
@@ -131,5 +155,6 @@ export const useNewPoint = () => {
     isPointWithoutStatistic,
     handlePressWinPointTeam,
     handlePressAddPointStat,
+    getTotalPlayerStatistics,
   };
 };

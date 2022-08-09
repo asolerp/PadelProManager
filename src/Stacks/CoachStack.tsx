@@ -78,7 +78,7 @@ export const CoachStack = () => {
           component={Exercices}
         />
       </Stack.Group>
-      <Stack.Group screenOptions={{presentation: 'modal'}}>
+      <Stack.Group>
         <Stack.Screen
           options={{headerShown: false}}
           name={NEW_POINT_SCREEN_KEY}

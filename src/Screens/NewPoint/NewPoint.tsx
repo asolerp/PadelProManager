@@ -1,5 +1,8 @@
-import React from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import React, {useState} from 'react';
+import FastImage from 'react-native-fast-image';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+import {View, StyleSheet, Pressable, Text, Dimensions} from 'react-native';
 import {PlayerType} from '../../Global/types';
 import t from '../../Theme/theme';
 import {firstSurname, shortName} from '../../Utils/parsers';
@@ -31,19 +34,27 @@ import {LiveResult} from '../../Components/Match/LiveResult';
 import {HDivider} from '../../Components/UI/HDivider';
 import {useLiveMatch} from '../../Components/Match/hooks/useLiveMatch';
 import {useGetMatch} from '../Match/hooks/useGetMatch';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+
+import {CircleChart} from '../../Components/Match/CircleChart';
+import Animated, {SlideInDown, SlideOutDown} from 'react-native-reanimated';
+import {Header} from '../../Components/Layout';
+import {useAnimationGesturePoint} from './hooks/useAnimationGesturePoint';
 
 export const NEW_POINT_SCREEN_KEY = 'newPoint';
+const MODAL_WIDTH = 340;
+const MODAL_HEIGHT = 500;
 
 export const NewPoint = ({route}) => {
   const {matchId} = route?.params;
-
+  const [areas, setAreas] = useState({});
   const {match} = useGetMatch(matchId);
   const {handleSavePoint: onSavePoint, loading} = useLiveMatch(match);
 
   const {
+    modalOpen,
     pointStats,
     winPointTeam,
+    setModalOpen,
     isResultActive,
     isPlayerActive,
     hasSavePointError,
@@ -56,16 +67,11 @@ export const NewPoint = ({route}) => {
     handlePressRemoveStat,
     isPointWithoutStatistic,
     handlePressWinPointTeam,
+    getTotalPlayerStatistics,
   } = useNewPoint();
 
-  const resultColor = {
-    w: 'success',
-    ef: 'info',
-    nf: 'error',
-  };
-
   const handlerSavePoint = point => {
-    onSavePoint(point);
+    onSavePoint(point, () => setModalOpen(false));
     cleanNewPointForm();
   };
 
@@ -84,8 +90,392 @@ export const NewPoint = ({route}) => {
   };
 
   return (
-    <ScreenLayout edges={['left', 'right', 'bottom']}>
-      <KeyboardAwareScrollView
+    <ScreenLayout>
+      <Header
+        withBack
+        title={<LiveResult game={match?.game} />}
+        rightSide={
+          <View
+            style={[t.flexRow, t.justifyBetween, t.itemsCenter, t.mY5, t.pX4]}>
+            {match?.game?.finished ? (
+              <Chip text="Finalizado" mainColor="error" />
+            ) : (
+              <Chip text="Activo" />
+            )}
+          </View>
+        }
+      />
+      {modalOpen && (
+        <Animated.View
+          entering={SlideInDown}
+          exiting={SlideOutDown}
+          style={[
+            styles.modalPoints,
+            t.shadow2xl,
+            t.justifyCenter,
+            t.itemsCenter,
+            t.flexCol,
+            t.pY2,
+            t.pX4,
+            t.borderGray200,
+            t.bgWhite,
+            t.rounded,
+            t.absolute,
+            t.z10,
+          ]}>
+          <View>
+            <View style={[t.flexRow, t.flex, t.justifyEnd, t.mT10]}>
+              <Pressable
+                onPress={() => {
+                  cleanNewPointForm();
+                  setModalOpen(false);
+                }}>
+                <Icon name="close" size={25} style={[t.textBlack]} />
+              </Pressable>
+            </View>
+            <View style={[t.mT5, t.itemsCenter]}>
+              <View style={[t.flexRow]}>
+                <Button
+                  title="Winner"
+                  type="success"
+                  style={[t.mR2]}
+                  active={isResultActive(WINNER)}
+                  onPress={() => handlePressResult(WINNER)}
+                />
+                <Button
+                  title="Fuerza error"
+                  type="inform"
+                  style={[t.mR2]}
+                  active={isResultActive(ERROR_FORCED)}
+                  onPress={() => handlePressResult(ERROR_FORCED)}
+                />
+                <Button
+                  title="No forzado"
+                  type="error"
+                  active={isResultActive(NONFORCED)}
+                  onPress={() => {
+                    handlePressResult(NONFORCED);
+                  }}
+                />
+              </View>
+            </View>
+            <View style={[t.flexGrow, t.itemsCenter, t.justifyCenter]}>
+              <View
+                style={[
+                  t.flexRow,
+                  t.flexWrap,
+                  t.justifyBetween,
+                  t.itemsCenter,
+                ]}>
+                <PointType
+                  mainColor="info"
+                  active={isTypePointActive(FONDO_DERECHA)}
+                  onPress={() => handlePressTypePoint(FONDO_DERECHA)}>
+                  Fondo Derecha
+                </PointType>
+                <PointType
+                  mainColor="info"
+                  active={isTypePointActive(FONDO_REVES)}
+                  onPress={() => handlePressTypePoint(FONDO_REVES)}>
+                  Fondo Revés
+                </PointType>
+                <PointType
+                  mainColor="warning"
+                  active={isTypePointActive(VOLEA_DERECHA)}
+                  onPress={() => handlePressTypePoint(VOLEA_DERECHA)}>
+                  Volea Derecha
+                </PointType>
+                <PointType
+                  mainColor="warning"
+                  active={isTypePointActive(VOLEA_REVES)}
+                  onPress={() => handlePressTypePoint(VOLEA_REVES)}>
+                  Volea Revés
+                </PointType>
+                <PointType
+                  mainColor="error"
+                  active={isTypePointActive(BAJADA_DERECHA)}
+                  onPress={() => handlePressTypePoint(BAJADA_DERECHA)}>
+                  Bajada Derecha
+                </PointType>
+                <PointType
+                  mainColor="error"
+                  active={isTypePointActive(BAJADA_REVES)}
+                  onPress={() => handlePressTypePoint(BAJADA_REVES)}>
+                  Bajada Revés
+                </PointType>
+                <PointType
+                  mainColor="primary"
+                  active={isTypePointActive(BANDEJA)}
+                  onPress={() => handlePressTypePoint(BANDEJA)}>
+                  Bandeja
+                </PointType>
+                <PointType
+                  mainColor="secondary"
+                  active={isTypePointActive(SMASH)}
+                  onPress={() => handlePressTypePoint(SMASH)}>
+                  Smash
+                </PointType>
+                <PointType
+                  mainColor="success"
+                  active={isTypePointActive(GLOBO)}
+                  onPress={() => handlePressTypePoint(GLOBO)}>
+                  Globo
+                </PointType>
+              </View>
+            </View>
+          </View>
+          <View style={[t.wFull, t.mB10]}>
+            <Button
+              active
+              loading={loading}
+              type="success"
+              title="Enviar"
+              onPress={() => {
+                handleSavePoint(pointStats);
+              }}
+            />
+          </View>
+        </Animated.View>
+      )}
+
+      <HDivider style={[t.mB2]} />
+      <View
+        style={[
+          t.flexGrow,
+          t.flexRow,
+          t.flexWrap,
+          t.justifyBetween,
+          t.z50,
+          t.pX2,
+        ]}>
+        <PointType
+          areas={areas}
+          mainColor="info"
+          active={isTypePointActive(FONDO_DERECHA)}
+          onPress={() => handlePressTypePoint(FONDO_DERECHA)}>
+          Fondo Derecha
+        </PointType>
+        <PointType
+          areas={areas}
+          mainColor="info"
+          active={isTypePointActive(FONDO_REVES)}
+          onPress={() => handlePressTypePoint(FONDO_REVES)}>
+          Fondo Revés
+        </PointType>
+        <PointType
+          areas={areas}
+          mainColor="warning"
+          active={isTypePointActive(VOLEA_DERECHA)}
+          onPress={() => handlePressTypePoint(VOLEA_DERECHA)}>
+          Volea Derecha
+        </PointType>
+        <PointType
+          areas={areas}
+          mainColor="warning"
+          active={isTypePointActive(VOLEA_REVES)}
+          onPress={() => handlePressTypePoint(VOLEA_REVES)}>
+          Volea Revés
+        </PointType>
+        <PointType
+          areas={areas}
+          mainColor="error"
+          active={isTypePointActive(BAJADA_DERECHA)}
+          onPress={() => handlePressTypePoint(BAJADA_DERECHA)}>
+          Bajada Derecha
+        </PointType>
+        <PointType
+          areas={areas}
+          mainColor="error"
+          active={isTypePointActive(BAJADA_REVES)}
+          onPress={() => handlePressTypePoint(BAJADA_REVES)}>
+          Bajada Revés
+        </PointType>
+        <PointType
+          areas={areas}
+          mainColor="primary"
+          active={isTypePointActive(BANDEJA)}
+          onPress={() => handlePressTypePoint(BANDEJA)}>
+          Bandeja
+        </PointType>
+        <PointType
+          areas={areas}
+          mainColor="secondary"
+          active={isTypePointActive(SMASH)}
+          onPress={() => handlePressTypePoint(SMASH)}>
+          Smash
+        </PointType>
+        <PointType
+          areas={areas}
+          mainColor="success"
+          active={isTypePointActive(GLOBO)}
+          onPress={() => handlePressTypePoint(GLOBO)}>
+          Globo
+        </PointType>
+        <View
+          onLayout={({nativeEvent}) =>
+            setAreas({...areas, area1: {...nativeEvent.layout, name: 'area1'}})
+          }
+          style={[
+            t.flex,
+            t.justifyCenter,
+            t.itemsCenter,
+            t.absolute,
+            t.w28,
+            t.h40,
+
+            {borderWidth: 2},
+            {top: Dimensions.get('window').height / 4.1},
+            {left: Dimensions.get('window').width / 4.6},
+          ]}>
+          <View>
+            <CircleChart
+              data={getTotalPlayerStatistics(
+                match?.statistics,
+                TEAM1,
+                match?.t1?.[0].id,
+              )}>
+              <Avatar
+                onPress={() => {
+                  handlePressWinPointTeam(TEAM1);
+                  handlePressPlayer(match?.t1?.[0], TEAM1);
+                  setModalOpen(true);
+                }}
+                active={isPlayerActive(match?.t1?.[0])}
+                img={match?.t1?.[0].profileImg}
+                imageStyle={[
+                  t.border1,
+                  t.borderWhite,
+                  t.roundedFull,
+                  t.shadow,
+                  styles.avatarSizes,
+                ]}
+              />
+            </CircleChart>
+          </View>
+        </View>
+        <View
+          onLayout={({nativeEvent}) =>
+            setAreas({...areas, area2: {...nativeEvent.layout, name: 'area2'}})
+          }
+          style={[
+            t.absolute,
+            t.w28,
+            t.h40,
+            t.bgInfo,
+            t.border1,
+            {top: Dimensions.get('window').height / 4.1},
+            {left: Dimensions.get('window').width / 1.95},
+          ]}
+        />
+        <View
+          onLayout={({nativeEvent}) =>
+            setAreas({...areas, area3: {...nativeEvent.layout, name: 'area3'}})
+          }
+          style={[
+            t.absolute,
+            t.w28,
+            t.h40,
+            t.bgError,
+            t.border1,
+            {top: Dimensions.get('window').height / 2.3},
+            {left: Dimensions.get('window').width / 4.6},
+          ]}
+        />
+        <View
+          onLayout={({nativeEvent}) =>
+            setAreas({...areas, area4: {...nativeEvent.layout, name: 'area4'}})
+          }
+          style={[
+            t.absolute,
+            t.w28,
+            t.h40,
+            t.bgSuccess,
+            t.border1,
+            {top: Dimensions.get('window').height / 2.3},
+            {left: Dimensions.get('window').width / 1.95},
+          ]}
+        />
+        {/* {match?.t1?.map((player: PlayerType, i: number) => (
+          <Avatar
+            onPress={() => {
+              handlePressWinPointTeam(TEAM1);
+              handlePressPlayer(player, TEAM1);
+              setModalOpen(true);
+            }}
+            active={isPlayerActive(player)}
+            img={player?.profileImg}
+            imageStyle={[
+              t.border1,
+              t.borderWhite,
+              t.roundedFull,
+              t.shadow,
+              styles.avatarSizes,
+            ]}
+          />
+        ))} */}
+      </View>
+      <View
+        style={[
+          t.justifyCenter,
+          t.flexGrow,
+          t.z10,
+          t.absolute,
+          t.wFull,
+          t.hFull,
+          t.pT40,
+          t.pB10,
+        ]}>
+        <FastImage
+          style={[t.flex1]}
+          source={{
+            uri: 'https://res.cloudinary.com/enalbis/image/upload/v1659947162/PadelPro/varios/nz8dcrhjrtry8kizlu4h.jpg',
+            priority: FastImage.priority.normal,
+          }}
+          resizeMode={FastImage.resizeMode.contain}
+        />
+      </View>
+
+      {/* <View
+        style={[
+          t.absolute,
+          t.flexRow,
+          t.top28,
+          t.itemsCenter,
+          t.justifyAround,
+          t.wFull,
+          t.pX20,
+          t.z20,
+        ]}>
+        {match?.t2?.map((player: PlayerType, i: number) => (
+          <View key={`${player?.id}-${i}`}>
+            <CircleChart
+              data={getTotalPlayerStatistics(
+                match?.statistics,
+                TEAM2,
+                player?.id,
+              )}
+            />
+            <Avatar
+              onPress={() => {
+                handlePressWinPointTeam(TEAM2);
+                handlePressPlayer(player, TEAM2);
+                setModalOpen(true);
+              }}
+              active={isPlayerActive(player)}
+              img={player?.profileImg}
+              imageStyle={[
+                t.border1,
+                t.borderWhite,
+                t.roundedFull,
+                t.shadow,
+                t.absolute,
+                styles.avatarSizes,
+              ]}
+            />
+          </View>
+        ))}
+      </View> */}
+      {/* <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
         style={[t.flex1, t.flexGrow]}>
         <View
@@ -211,62 +601,7 @@ export const NewPoint = ({route}) => {
             />
           </View>
         </View>
-        <View style={[t.flexRow, t.flexWrap, t.justifyBetween, t.mB5, t.pX4]}>
-          <PointType
-            mainColor="info"
-            active={isTypePointActive(FONDO_DERECHA)}
-            onPress={() => handlePressTypePoint(FONDO_DERECHA)}>
-            Fondo Derecha
-          </PointType>
-          <PointType
-            mainColor="info"
-            active={isTypePointActive(FONDO_REVES)}
-            onPress={() => handlePressTypePoint(FONDO_REVES)}>
-            Fondo Revés
-          </PointType>
-          <PointType
-            mainColor="warning"
-            active={isTypePointActive(VOLEA_DERECHA)}
-            onPress={() => handlePressTypePoint(VOLEA_DERECHA)}>
-            Volea Derecha
-          </PointType>
-          <PointType
-            mainColor="warning"
-            active={isTypePointActive(VOLEA_REVES)}
-            onPress={() => handlePressTypePoint(VOLEA_REVES)}>
-            Volea Revés
-          </PointType>
-          <PointType
-            mainColor="error"
-            active={isTypePointActive(BAJADA_DERECHA)}
-            onPress={() => handlePressTypePoint(BAJADA_DERECHA)}>
-            Bajada Derecha
-          </PointType>
-          <PointType
-            mainColor="error"
-            active={isTypePointActive(BAJADA_REVES)}
-            onPress={() => handlePressTypePoint(BAJADA_REVES)}>
-            Bajada Revés
-          </PointType>
-          <PointType
-            mainColor="primary"
-            active={isTypePointActive(BANDEJA)}
-            onPress={() => handlePressTypePoint(BANDEJA)}>
-            Bandeja
-          </PointType>
-          <PointType
-            mainColor="secondary"
-            active={isTypePointActive(SMASH)}
-            onPress={() => handlePressTypePoint(SMASH)}>
-            Smash
-          </PointType>
-          <PointType
-            mainColor="success"
-            active={isTypePointActive(GLOBO)}
-            onPress={() => handlePressTypePoint(GLOBO)}>
-            Globo
-          </PointType>
-        </View>
+
       </KeyboardAwareScrollView>
       <HDivider />
       <View style={[t.pX4]}>
@@ -280,7 +615,20 @@ export const NewPoint = ({route}) => {
           onPress={() => handleSavePoint(pointStats)}
           textStyle={[t.fontSansBold]}
         />
-      </View>
+      </View> */}
     </ScreenLayout>
   );
 };
+
+const styles = StyleSheet.create({
+  modalPoints: {
+    borderWidth: 2,
+    width: MODAL_WIDTH,
+    height: MODAL_HEIGHT,
+    top: '50%',
+    left: '50%',
+    marginTop: -MODAL_HEIGHT / 2,
+    marginLeft: -MODAL_WIDTH / 2,
+  },
+  avatarSizes: {width: 68, height: 68},
+});

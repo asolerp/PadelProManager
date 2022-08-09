@@ -6,10 +6,9 @@ import t from '../../Theme/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {popScreen} from '../../Router/utils/actions';
 import PressableOpacity from '../UI/PressableOpacity';
-import {boolean} from 'yup';
 
 interface Props {
-  title?: string;
+  title?: string | React.ReactNode;
   withBack?: boolean;
   position?: 'relative' | 'absolute';
   leftSide?: React.ReactNode;
@@ -20,7 +19,7 @@ interface Props {
 
 export const Header: React.FC<Props> = ({
   mode = 'default',
-  title,
+  title = '',
   position = 'relative',
   withBack,
   withPadding = true,
@@ -53,14 +52,18 @@ export const Header: React.FC<Props> = ({
           )}
         </View>
         <View style={[t.flexGrow, t.itemsCenter]}>
-          <Text
-            style={[
-              t.fontSansMedium,
-              t.textXl,
-              mode === 'default' ? t.textBlack : t.textWhite,
-            ]}>
-            {title}
-          </Text>
+          {typeof title === 'string' ? (
+            <Text
+              style={[
+                t.fontSansMedium,
+                t.textXl,
+                mode === 'default' ? t.textBlack : t.textWhite,
+              ]}>
+              {title}
+            </Text>
+          ) : (
+            title
+          )}
         </View>
         <View style={[t.minW10, t.itemsEnd]}>{!!rightSide && rightSide}</View>
       </View>

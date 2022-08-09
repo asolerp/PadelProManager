@@ -4,6 +4,7 @@ import {REGISTRY} from './registry';
 import {compareToggleValues, getDefaultValues} from './utils';
 export {REGISTRY};
 import {isDevelopment} from '../../Utils/isDevelopment';
+import {error} from '../Logging';
 
 export const initRemoteConfig = async () => {
   try {
@@ -17,7 +18,13 @@ export const initRemoteConfig = async () => {
 
     return await remoteConfig().fetchAndActivate();
   } catch (e) {
-    console.log(e);
+    error({
+      title: 'Error',
+      subtitle: 'Ha ocurrido un error',
+      data: {
+        error: e,
+      },
+    });
   }
 };
 
@@ -32,7 +39,13 @@ export const isFeatureEnabled = registry => {
 
     return compareToggleValues(configValue.asString(), '1');
   } catch (e) {
-    console.log(e);
+    error({
+      title: 'Error',
+      subtitle: 'Ha ocurrido un error',
+      data: {
+        error: e,
+      },
+    });
   }
 
   return false;
@@ -45,7 +58,13 @@ export const isFeatureAppUpdateRequired = registry => {
 
     return compareToggleValues(configValue.asString(), 'update');
   } catch (e) {
-    console.log(e);
+    error({
+      title: 'Error',
+      subtitle: 'Ha ocurrido un error',
+      data: {
+        error: e,
+      },
+    });
   }
 };
 
@@ -60,7 +79,13 @@ export const getFeatureConfig = registry => {
 
     return JSON.parse(configValue);
   } catch (e) {
-    console.log(e);
+    error({
+      title: 'Error',
+      subtitle: 'Ha ocurrido un error',
+      data: {
+        error: e,
+      },
+    });
   }
 
   return {};
