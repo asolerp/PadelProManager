@@ -1,103 +1,73 @@
 import React from 'react';
-import {Alert, Text, View} from 'react-native';
+import {Text} from 'react-native';
 import {PanGestureHandler} from 'react-native-gesture-handler';
-import Animated, {
-  runOnJS,
-  useAnimatedGestureHandler,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {findInWhatArea, isInArea} from '../../Screens/NewPoint/utils/isInArea';
+import Animated from 'react-native-reanimated';
+
 import t from '../../Theme/theme';
-import {capitalize} from '../../Utils/parsers';
-import PressableOpacity from '../UI/PressableOpacity';
+
+import {useAnimatedPointType} from './hooks/useAnimatedPointType';
 
 interface Props {
   children: string;
   mainColor: string;
   onPress?: () => void;
+  onDrop?: () => void;
+  match?: any;
+  result?: string;
+  type: 'fd' | 'fr' | 'vd' | 'vr' | 'bd' | 'br' | 'sm' | 'gl' | 'bj';
   active?: boolean;
   onLayout?: any;
   areas?: any;
+  usedPoints?: any;
 }
 
 export const PointType: React.FC<Props> = ({
   children,
   mainColor,
+  result,
+  type,
   active = false,
+  usedPoints = {},
   areas = {},
+  onDrop = () => {},
 }) => {
-  const capitalizedColor = capitalize(mainColor);
+  const textColor = t.textWhite;
 
-  const border = t?.[`border${capitalizedColor}Dark`];
-  const bg = t?.[active ? `bg${capitalizedColor}` : 'bgWhite'];
-  const textColor = active ? t.textWhite : t?.[`text${capitalizedColor}Dark`];
+  const handleOnDrop = area => {
+    onDrop(area);
+  };
 
-  const translateX = useSharedValue(0);
-  const translateY = useSharedValue(0);
-  const positionBoxX = useSharedValue(0);
-  const zIndex = useSharedValue(1);
-
-  const gestureHandler = useAnimatedGestureHandler({
-    onActive: (event, ctx) => {
-      zIndex.value = 1000;
-      translateX.value = event.translationX;
-      translateY.value = event.translationY;
-    },
-    onEnd: (event, ctx) => {
-      const fPositionX =
-        translateX.value <= 0
-          ? positionBoxX.value + translateX.value
-          : translateX.value + positionBoxX.value;
-      const fPositionY = translateY.value;
-
-      const {x, y, height, width} = areas?.area1;
-
-      const wichArea = findInWhatArea(areas, fPositionX, fPositionY);
-
-      // console.log(wichArea);
-
-      if (wichArea) {
-        runOnJS(Alert.alert)('Elemento dentro de area!', wichArea.name);
-      }
-
-      translateX.value = withTiming(0);
-      translateY.value = withTiming(0);
-    },
-  });
-
-  const containerStyles = useAnimatedStyle(() => {
-    return {
-      zIndex: zIndex.value,
-      transform: [
-        {translateY: translateY.value},
-        {translateX: translateX.value},
-      ],
-    };
-  });
+  const {containerStyles, gestureHandler, positionBoxX, positionBoxY, pStyle} =
+    useAnimatedPointType({
+      mainColor,
+      usedPoints,
+      onDrop: handleOnDrop,
+      areas,
+      result,
+      type,
+    });
 
   return (
     <PanGestureHandler onGestureEvent={gestureHandler}>
       <Animated.View
-        onLayout={({nativeEvent}) =>
-          (positionBoxX.value = nativeEvent.layout.x)
-        }
+        onLayout={({nativeEvent}) => {
+          positionBoxX.value = nativeEvent.layout.x;
+          positionBoxY.value = nativeEvent.layout.y;
+        }}
         style={[
-          t.w10,
-          t.h10,
+          t.w8,
+          t.h8,
           t.mB2,
+          t.mX1,
           t.justifyCenter,
           t.itemsCenter,
-          t.roundedSm,
+          t.roundedFull,
           t.shadow,
           active ? t.border0 : t.border,
-          border,
-          bg,
+          pStyle,
           containerStyles,
         ]}>
-        <Text style={[t.fontSansBold, t.textBase, textColor, t.textCenter]}>
+        <Text style={[t.fontSansBold, t.textSm, textColor, t.textCenter]}>
           {children}
         </Text>
       </Animated.View>

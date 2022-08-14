@@ -63,12 +63,12 @@ export const Select = ({
 
       <Input
         empty={empty}
-        editable={true}
+        editable={false}
         placeholder={placeholder}
         value={value?.label}
         name={name}
         error={error}
-        onPressIn={() => {
+        onPressOut={() => {
           Keyboard.dismiss();
           !disabled && setIsVisible(true);
         }}

@@ -113,7 +113,7 @@ export const MatchScreen: React.FC = ({route}) => {
                 <HDivider />
               </>
             )}
-            <View style={[t.flexGrow, t.mT5]}>
+            <View style={[t.flexGrow]}>
               {match && (
                 <MatchTabs
                   match={match}

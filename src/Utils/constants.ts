@@ -28,6 +28,8 @@ export const BAJADA_REVES = 'br';
 export const BANDEJA = 'bj';
 export const SMASH = 'sm';
 export const GLOBO = 'gl';
+export const X3 = 'x3';
+export const X4 = 'x4';
 
 export const MAP_POINTS = {
   0: '0',

@@ -14,7 +14,7 @@ export const useUploadCloudinaryImage = () => {
 
     const data = new FormData();
     data.append('file', source);
-    data.append('upload_preset', 'eco_image');
+    data.append('upload_preset', 'padel_pro');
     data.append('cloud_name', 'enalbis');
     data.append('folder', folder);
 

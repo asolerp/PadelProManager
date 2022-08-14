@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {View, Text} from 'react-native';
+import {View, Text, StyleProp} from 'react-native';
 import t from '../../Theme/theme';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -15,6 +15,7 @@ interface Props {
   rightSide?: React.ReactNode;
   mode?: 'dark' | 'default';
   withPadding?: boolean;
+  leftStyles?: ViewStyle[];
 }
 
 export const Header: React.FC<Props> = ({
@@ -25,6 +26,7 @@ export const Header: React.FC<Props> = ({
   withPadding = true,
   leftSide,
   rightSide,
+  leftStyles,
 }) => {
   return (
     <>
@@ -37,7 +39,7 @@ export const Header: React.FC<Props> = ({
           t.z20,
           t?.[position],
         ]}>
-        <View style={[t.minW10, t.itemsStart]}>
+        <View style={[t.w20, t.itemsStart, leftStyles]}>
           {withBack && !leftSide ? (
             <PressableOpacity onPress={popScreen}>
               <Icon
@@ -65,7 +67,7 @@ export const Header: React.FC<Props> = ({
             title
           )}
         </View>
-        <View style={[t.minW10, t.itemsEnd]}>{!!rightSide && rightSide}</View>
+        <View style={[t.w20, t.itemsEnd]}>{!!rightSide && rightSide}</View>
       </View>
     </>
   );

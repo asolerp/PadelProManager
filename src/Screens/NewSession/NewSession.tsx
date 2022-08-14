@@ -77,7 +77,7 @@ export const NewSessionScreen = ({route}) => {
   };
 
   return (
-    <ScreenLayout edges={['right', 'left', 'bottom']}>
+    <ScreenLayout>
       <ModalListOfPlayers
         multiple
         selectedPlayers={selectedPlayers}
@@ -178,7 +178,7 @@ export const NewSessionScreen = ({route}) => {
                   <Input
                     editable={false}
                     value={values?.date}
-                    onPressIn={() => showDatePicker('date', 'date')}
+                    onPressOut={() => showDatePicker('date', 'date')}
                     placeholder="Fecha"
                     error={errors.date}
                     onBlur={handleBlur('date')}
@@ -189,7 +189,7 @@ export const NewSessionScreen = ({route}) => {
                   <Input
                     editable={false}
                     value={values?.startTime}
-                    onPressIn={() => showDatePicker('time', 'startTime')}
+                    onPressOut={() => showDatePicker('time', 'startTime')}
                     placeholder="Hora inicio"
                     error={errors.startTime}
                     onBlur={handleBlur('startTime')}
@@ -198,7 +198,7 @@ export const NewSessionScreen = ({route}) => {
                   <Input
                     editable={false}
                     value={values?.endTime}
-                    onPressIn={() => showDatePicker('time', 'endTime')}
+                    onPressOut={() => showDatePicker('time', 'endTime')}
                     placeholder="Hora fin"
                     error={errors.endTime}
                     onBlur={handleBlur('birtendTimehDate')}
@@ -264,7 +264,7 @@ export const NewSessionScreen = ({route}) => {
         </Formik>
       </KeyboardAwareScrollView>
       <HDivider />
-      <View style={[t.pX4]}>
+      <View style={[t.pX4, t.pB4]}>
         {session && (
           <Button
             disabled={loading || loadingCreateUpdate}

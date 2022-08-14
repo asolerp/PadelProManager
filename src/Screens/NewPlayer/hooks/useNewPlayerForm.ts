@@ -31,6 +31,7 @@ export const useNewPlayerForm = (playerId, edit, reset) => {
   const {setIsVisible, setText} = useContext(LoadingModalContext);
 
   const handleUpdatePlayer = async values => {
+    console.log(values);
     setText('Editando jugador...');
     setIsVisible(true);
     await timeout(1500);
@@ -77,7 +78,13 @@ export const useNewPlayerForm = (playerId, edit, reset) => {
           async url =>
             await addDocument({
               docId: id,
-              data: {...values, coach: [user?.id], profileImg: url},
+              data: {
+                ...Object.fromEntries(
+                  Object.entries(values).filter(([key, value]) => !!value),
+                ),
+                coach: [user?.id],
+                profileImg: url,
+              },
               callback: async () =>
                 await playerQuery(user?.id)
                   .doc(id)
@@ -112,7 +119,6 @@ export const useNewPlayerForm = (playerId, edit, reset) => {
 
   useEffect(() => {
     const getPlayerInfo = async () => {
-      console.log(playerId);
       const playerRef = await playerQuery(user?.id).doc(playerId).get();
       const player = playerRef.data();
       reset(player);

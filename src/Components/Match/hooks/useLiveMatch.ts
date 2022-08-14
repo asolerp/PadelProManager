@@ -50,15 +50,17 @@ export const useLiveMatch = match => {
   };
 
   const handleSavePoint = async (stats, callback) => {
+    console.log('STATS', stats);
     let error = false;
     stats?.points?.forEach(st => {
+      console.log(st.player);
       if (st?.result === NONFORCED) {
-        if (st?.player?.team === stats?.winPointTeam) {
+        if (st?.team === stats?.winPointTeam) {
           error = true;
         }
       }
       if (st?.result === WINNER || st?.result === ERROR_FORCED) {
-        if (st?.player?.team !== stats?.winPointTeam) {
+        if (st?.team !== stats?.winPointTeam) {
           error = true;
         }
       }

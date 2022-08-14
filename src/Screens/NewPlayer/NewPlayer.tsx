@@ -228,7 +228,7 @@ export const NewPlayerScreen = ({route}) => {
                 <Select
                   list={gender}
                   placeholder="Género"
-                  value={lateralidad?.find(s => s.value === value)}
+                  value={gender?.find(s => s.value === value)}
                   name="gender"
                   error={error?.message}
                   onBlur={onBlur}

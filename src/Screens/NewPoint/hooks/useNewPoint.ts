@@ -8,6 +8,7 @@ interface PointStatsType {
   player: PlayerType;
   result: string;
   point: string;
+  team: string;
 }
 
 export const useNewPoint = () => {
@@ -16,7 +17,10 @@ export const useNewPoint = () => {
   const [playerStat, setPlayerStat] = useState<PlayerType>();
   const [resultPoint, setResultPoint] = useState();
   const [typePoint, setTypePoint] = useState();
-  const [modalOpen, setModalOpen] = useState(false);
+  const [usedPoints, setUsedPoints] = useState({});
+
+  const checkIfIsInPointStats = id =>
+    pointStats.some(ps => ps.player.id === id);
 
   const isPointWithoutStatistic = winPointTeam && pointStats?.length === 0;
   const isWinPointTeamActive = team => team === winPointTeam;
@@ -25,11 +29,12 @@ export const useNewPoint = () => {
   const isTypePointActive = type => typePoint === type;
 
   const cleanNewPointForm = () => {
-    setWinPointTeam(null),
-      setPointStats([]),
-      setPlayerStat(null),
-      setResultPoint(null),
-      setTypePoint(null);
+    setWinPointTeam(null);
+    setPointStats([]);
+    setPlayerStat(null);
+    setResultPoint(null);
+    setTypePoint(null);
+    setUsedPoints({});
   };
 
   const hasPointStatErrors = useCallback(() => {
@@ -46,35 +51,30 @@ export const useNewPoint = () => {
     return false;
   }, [playerStat, resultPoint, typePoint]);
 
-  const handlePressAddPointStat = useCallback(() => {
+  const handlePressAddPointStat = ({player, result, point, team}) => {
     const newStat = {
-      player: playerStat,
-      result: resultPoint,
-      point: typePoint,
-      team: playerStat?.team,
+      player,
+      result,
+      point,
+      team,
     };
-    const error = hasPointStatErrors();
-    if (error) {
-      showError[error]();
-    } else {
-      console.log('NEW', newStat);
-      setPointStats(oldArray => [...oldArray, newStat]);
-      // setTypePoint(null);
-    }
-  }, [playerStat, resultPoint, typePoint, hasPointStatErrors]);
 
-  useEffect(() => {
-    if (playerStat && resultPoint && typePoint) {
-      handlePressAddPointStat();
-    }
-  }, [playerStat, resultPoint, typePoint, handlePressAddPointStat]);
+    const filteredPointStats = pointStats
+      .filter(ps => ps.team !== newStat.team)
+      .filter(ps => ps.player.id !== newStat.player.id);
+    setPointStats([...filteredPointStats, newStat]);
+    // setTypePoint(null);
+  };
 
   const hasSavePointError = !winPointTeam;
 
   const getTotalPlayerStatistics = (statistics, team, playerId) => {
     const playerStats = statistics?.total?.[team]?.players?.[playerId];
     const total =
-      playerStats?.w?.count + playerStats?.ef?.count + playerStats?.nf?.count;
+      (playerStats?.w?.count || 0) +
+      (playerStats?.ef?.count || 0) +
+      (playerStats?.nf?.count || 0);
+
     return [
       {
         color: '#4caf50',
@@ -110,18 +110,8 @@ export const useNewPoint = () => {
   const handlePressResult = result => {
     if (resultPoint === result) {
       setResultPoint(null);
-      if (winPointTeam === TEAM1) {
-        return setWinPointTeam(TEAM2);
-      }
-      return setWinPointTeam(TEAM1);
     } else {
       setResultPoint(result);
-      if (result === NONFORCED) {
-        if (winPointTeam === TEAM1) {
-          return setWinPointTeam(TEAM2);
-        }
-        return setWinPointTeam(TEAM1);
-      }
     }
   };
 
@@ -137,11 +127,123 @@ export const useNewPoint = () => {
     setPointStats(pointStats.filter(stat => stat?.player?.id !== playerId));
   };
 
+  const handleOnDrop = ({area, match, point}) => {
+    if (!area) {
+      return;
+    }
+    handlePressTypePoint(point.type);
+    if (area === 1 || area === 2) {
+      if (resultPoint === NONFORCED) {
+        handlePressWinPointTeam(TEAM2);
+      } else {
+        handlePressWinPointTeam(TEAM1);
+      }
+      if (area === 1) {
+        handlePressAddPointStat({
+          player: match?.t1?.[0],
+          result: resultPoint,
+          point: point.type,
+          team: TEAM1,
+        });
+        setUsedPoints({
+          ...Object.fromEntries(
+            Object.entries(usedPoints)
+              .filter(([key, value]) => value.team !== TEAM1)
+              .filter(([key, value]) => value.id !== match?.t1?.[0].id),
+          ),
+          [resultPoint]: {
+            id: match?.t1?.[0].id,
+            result: resultPoint,
+            type: point.type,
+            team: TEAM1,
+          },
+        });
+        return handlePressPlayer(match?.t1?.[0], TEAM1);
+      }
+      if (area === 2) {
+        handlePressAddPointStat({
+          player: match?.t1?.[1],
+          result: resultPoint,
+          point: point.type,
+          team: TEAM1,
+        });
+        setUsedPoints({
+          ...Object.fromEntries(
+            Object.entries(usedPoints).filter(
+              ([key, value]) => value.id !== match?.t1?.[1].id,
+            ),
+          ),
+          [resultPoint]: {
+            id: match?.t1?.[1].id,
+            result: resultPoint,
+            type: point.type,
+            team: TEAM1,
+          },
+        });
+        return handlePressPlayer(match?.t1?.[1], TEAM1);
+      }
+    }
+    if (area === 3 || area === 4) {
+      if (resultPoint === NONFORCED) {
+        handlePressWinPointTeam(TEAM1);
+      } else {
+        handlePressWinPointTeam(TEAM2);
+      }
+      if (area === 3) {
+        handlePressAddPointStat({
+          player: match?.t2?.[0],
+          result: resultPoint,
+          point: point.type,
+          team: TEAM2,
+        });
+        setUsedPoints({
+          ...Object.fromEntries(
+            Object.entries(usedPoints).filter(
+              ([key, value]) => value.id !== match?.t2?.[0].id,
+            ),
+          ),
+          [resultPoint]: {
+            id: match?.t2?.[0].id,
+            result: resultPoint,
+            type: point.type,
+            team: TEAM2,
+          },
+        });
+        return handlePressPlayer(match?.t2?.[0], TEAM2);
+      }
+      if (area === 4) {
+        handlePressAddPointStat({
+          player: match?.t2?.[1],
+          result: resultPoint,
+          point: point.type,
+          team: TEAM2,
+        });
+        setUsedPoints({
+          ...Object.fromEntries(
+            Object.entries(usedPoints).filter(
+              ([key, value]) => value.id !== match?.t2?.[1].id,
+            ),
+          ),
+          [resultPoint]: {
+            id: match?.t2?.[1].id,
+            result: resultPoint,
+            type: point.type,
+            team: TEAM2,
+          },
+        });
+        return handlePressPlayer(match?.t2?.[1], TEAM2);
+      }
+    }
+  };
+
   return {
-    modalOpen,
+    typePoint,
+    usedPoints,
     pointStats,
+    resultPoint,
     winPointTeam,
-    setModalOpen,
+    handleOnDrop,
+    setUsedPoints,
     isPlayerActive,
     isResultActive,
     cleanNewPointForm,
@@ -152,6 +254,7 @@ export const useNewPoint = () => {
     handlePressTypePoint,
     isWinPointTeamActive,
     handlePressRemoveStat,
+    checkIfIsInPointStats,
     isPointWithoutStatistic,
     handlePressWinPointTeam,
     handlePressAddPointStat,

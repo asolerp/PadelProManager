@@ -28,8 +28,8 @@ export const HOME_SCREEN_KEY = 'homeScreen';
 
 export const HomeScreen: FunctionComponent = () => {
   useHideBootSplash();
-  const {finishedMatches, loadingFinishedMatches} = useGetFinishedMatches();
 
+  const {finishedMatches, loadingFinishedMatches} = useGetFinishedMatches();
   const {liveMatches} = useGetLiveMatches();
 
   const renderItem = ({item}) => <LiveMatchResume match={item} />;
