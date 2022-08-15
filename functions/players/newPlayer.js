@@ -1,6 +1,6 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-const { USERS, RELATIONS } = require('../utils/constants');
+const {USERS, RELATIONS} = require('../utils/constants');
 
 const newPlayer = functions.firestore
   .document('users/{userId}/players/{playerId}')

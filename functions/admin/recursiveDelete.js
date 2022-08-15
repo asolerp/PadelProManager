@@ -1,6 +1,6 @@
 const functions = require('firebase-functions');
 const firebase_tools = require('firebase-tools');
-const { FB_REGION } = require('../utils/constants');
+const {FB_REGION} = require('../utils/constants');
 
 const recursiveDelete = functions
   .region(FB_REGION)

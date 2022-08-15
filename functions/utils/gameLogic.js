@@ -96,14 +96,32 @@ const checkWhoServesTB = (service, points) => {
 };
 
 const checkResult = game => {
-  if (game?.team1 > 3 || game?.team2 > 3) {
-    if (game?.team1 > game?.team2) {
-      return checkSetState(game, 't1', 't2');
+  if (game?.goldPoint) {
+    if (game?.team1 > 3 || game?.team2 > 3) {
+      if (game?.team1 > game?.team2) {
+        return checkSetState(game, 't1', 't2');
+      } else {
+        return checkSetState(game, 't2', 't1');
+      }
     } else {
-      return checkSetState(game, 't2', 't1');
+      return game;
     }
   } else {
-    return game;
+    if (game?.team1 > 3 || game?.team2 > 3) {
+      if (game?.team1 > game?.team2) {
+        if (game?.team1 - game?.team2 > 1) {
+          return checkSetState(game, 't1', 't2');
+        }
+        return game;
+      } else {
+        if (game?.team2 - game?.team1 > 1) {
+          return checkSetState(game, 't2', 't1');
+        }
+        return game;
+      }
+    } else {
+      return game;
+    }
   }
 };
 

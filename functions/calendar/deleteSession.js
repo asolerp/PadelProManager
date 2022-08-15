@@ -1,6 +1,6 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-const { FB_REGION, SESSIONS } = require('../utils/constants');
+const {FB_REGION, SESSIONS} = require('../utils/constants');
 
 const deleteSession = functions
   .region(FB_REGION)

@@ -2,7 +2,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const {firestore} = require('firebase-admin');
 const {tennisGameLogic} = require('../utils/gameLogic');
-const { FB_REGION, MATCHES, HISTORY } = require('../utils/constants');
+const {FB_REGION, MATCHES, HISTORY} = require('../utils/constants');
 
 const newPoint = functions
   .region(FB_REGION)
@@ -36,7 +36,11 @@ const newPoint = functions
         gameState: newStateGame,
       });
 
-      if (newStateGame?.team1 === 3 && newStateGame?.team2 === 3) {
+      if (
+        newStateGame?.team1 === 3 &&
+        newStateGame?.team2 === 3 &&
+        newStateGame?.goldPoint
+      ) {
         await historyQuery.add({
           date: new Date(),
           alert: '¡Punto de oro!',

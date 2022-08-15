@@ -168,7 +168,20 @@ export const NewMatchScreen = () => {
               )}
               name="sex"
             />
-
+            <Controller
+              control={control}
+              render={({field: {onBlur, value}}) => (
+                <SwitchInput
+                  label="Punto de oro"
+                  onBlur={onBlur}
+                  onValueChange={v => setValue('goldPoint', v)}
+                  value={value}
+                />
+              )}
+              name="goldPoint"
+            />
+            <HDivider />
+            <View style={[t.mB4]} />
             <Controller
               control={control}
               render={({field: {onBlur, value}}) => (

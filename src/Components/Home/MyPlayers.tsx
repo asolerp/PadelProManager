@@ -7,15 +7,14 @@ import {openScreenWithPush} from '../../Router/utils/actions';
 import {PLAYER_SCREEN_KEY} from '../../Screens/Player/Player';
 import t from '../../Theme/theme';
 import {shortName} from '../../Utils/parsers';
-import {useGetPlayers} from '../../Hooks/useGetPlayers';
+
 import {Banner} from '../UI/Banner';
 import {NEW_PLAYER_SCREEN_KEY} from '../../Screens/NewPlayer/NewPlayer';
 import {useCheckPermissions} from '../../Hooks/useCheckPermissions';
 
 import {sortByName} from '../../Utils/sorts';
 
-export const MyPlayers = () => {
-  const {players} = useGetPlayers();
+export const MyPlayers = ({players}) => {
   const {handleCheckCreateNewPlayer} = useCheckPermissions();
 
   const PlayerItem = ({item}: {item: PlayerType}) => {
@@ -36,9 +35,6 @@ export const MyPlayers = () => {
 
   return (
     <View>
-      <View>
-        <Text style={[t.textXl, t.fontSansBold, t.mB5]}>Mis jugadores</Text>
-      </View>
       {players?.length === 0 ? (
         <Banner
           imageSrc="https://res.cloudinary.com/enalbis/image/upload/v1648630621/PadelPro/varios/juan-lebron-finales-kUmG--620x349_abc_lmxjgh.jpg"

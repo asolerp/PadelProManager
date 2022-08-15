@@ -5,13 +5,14 @@ import {UserType} from '../Global/types';
 
 interface SubscriptionContextInterface {
   isCoach: boolean;
-  user: UserType;
+  user?: UserType;
   setUser: React.Dispatch<UserType>;
 }
 
-export const AuthContext = createContext<SubscriptionContextInterface | null>(
-  null,
-);
+export const AuthContext = createContext<SubscriptionContextInterface>({
+  isCoach: false,
+  setUser: () => {},
+});
 
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState<UserType>();
@@ -27,7 +28,7 @@ export const AuthProvider = ({children}) => {
 
   useEffect(() => {
     if (userData) {
-      setUser({...user, ...userData});
+      setUser(oldSate => ({...oldSate, ...userData}));
     }
   }, [userData]);
 

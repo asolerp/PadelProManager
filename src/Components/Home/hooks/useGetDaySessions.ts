@@ -1,6 +1,6 @@
 import {format} from 'date-fns';
 import {useContext} from 'react';
-import {useCollectionData} from 'react-firebase-hooks/firestore';
+import {useCollectionDataOnce} from 'react-firebase-hooks/firestore';
 import {sessionQuery} from '../../../Api/queries';
 import {AuthContext} from '../../../Context/AuthContex';
 
@@ -25,7 +25,7 @@ export const useGetDaySessions = () => {
         .where('date', '>=', parsedStart)
         .where('date', '<=', parsedEnd);
 
-  const [sessions, loading] = useCollectionData(query, {
+  const [sessions, loading] = useCollectionDataOnce(query, {
     idField: 'id',
   });
 

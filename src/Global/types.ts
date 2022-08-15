@@ -1,6 +1,10 @@
 export interface PlayerType {
   id?: string;
   firstName: string;
+  birthDate?: string;
+  coach?: string[];
+  category: number;
+  phone: string;
   secondName?: string;
   profileImg?: string;
   team?: string;
@@ -22,8 +26,44 @@ export interface UserType {
   loggedIn: boolean;
 }
 
+export interface SessionType {
+  id: string;
+  club: string;
+  coachId: string;
+  color: 'red' | 'blue' | 'yellow';
+  date: number;
+  description: string;
+  endTime: number;
+  playersEmail: string[];
+  players: PlayerType[];
+  internalId: string;
+  notes: string;
+  startTime: number;
+  title: string;
+  weeK: number[];
+}
+
+export interface MatchType {
+  id: string;
+  category: number;
+  club: number;
+  coachId: string;
+  date: string;
+  owner: string;
+  game: GameType;
+  round: number;
+  statistics: any;
+  playersEmail: string[];
+  playersId: string[];
+  sex: 'male' | 'female';
+  state: 'finished' | 'live';
+  tournamentName: string;
+}
+
 export interface GameType {
+  breakpoint: string;
   service: string;
+  set: number;
   team1: number;
   team2: number;
   s1t1: number;
@@ -32,4 +72,6 @@ export interface GameType {
   s2t2: number;
   s3t1: number;
   s3t2: number;
+  winSetTeam1: number;
+  winSetTeam2: number;
 }

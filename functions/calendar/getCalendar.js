@@ -1,7 +1,7 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const {format} = require('date-fns');
-const { FB_REGION, SESSIONS } = require('../utils/constants');
+const {FB_REGION, SESSIONS} = require('../utils/constants');
 
 const DATE_FORMAT = 'yyyy-MM-dd';
 

@@ -1,10 +1,10 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 
-const {updatePlayerInMatch} = require('./updatePlayerInMatch');
+const {updatePlayerInMatch} = require('./players/updatePlayerInMatch');
 
 const {handleRelations} = require('./coach/handleRelations');
-const {savePlayersStats} = require('./player/savePlayerStats');
+const {savePlayersStats} = require('./players/savePlayerStats');
 const {recursiveDelete} = require('./admin/recursiveDelete');
 const {validateReceipt} = require('./admin/validateReceipt');
 const {newUserChecker} = require('./admin/newUserChecker');

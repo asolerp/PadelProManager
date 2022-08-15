@@ -1,7 +1,13 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const {getStatsUpdateObject} = require('../utils/getStatsUpdateObject');
-const { USERS, PLAYERS, FB_REGION, MATCHES, STATS } = require('../utils/constants');
+const {
+  USERS,
+  PLAYERS,
+  FB_REGION,
+  MATCHES,
+  STATS,
+} = require('../utils/constants');
 
 const findPlayerEmailById = async (userId, playerId) => {
   const player = await admin

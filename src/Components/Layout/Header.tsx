@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {View, Text, StyleProp} from 'react-native';
+import {View, Text, ViewStyle} from 'react-native';
 import t from '../../Theme/theme';
 
 import Icon from 'react-native-vector-icons/Ionicons';

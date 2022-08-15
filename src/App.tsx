@@ -12,6 +12,7 @@ import {PremiumModalProvider} from './Context/PremiumModalContext';
 import {initRemoteConfig} from './Lib/FeatureToggle';
 
 import {toastConfig} from './Lib/Logging/utils/toastConfig';
+import '../i18n.config';
 
 const App: React.FC = () => {
   useEffect(() => {

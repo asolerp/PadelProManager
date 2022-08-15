@@ -48,14 +48,20 @@ export const LiveMatchResume: React.FC<Props> = ({match}) => {
       <View style={[t.wFull, t.borderB, t.borderWhite]} />
       <View style={[t.flexGrow, t.flexRow, t.mR4]}>
         <View style={[t.flex2, t.justifyCenter]}>
-          <Text ellipsizeMode="tail" style={[t.flex1, cardInfo]}>
+          <Text
+            ellipsizeMode="tail"
+            numberOfLines={1}
+            style={[t.flex1, cardInfo]}>
             {shortName(
               1,
               match?.t1?.[0]?.firstName,
               match?.t1?.[0]?.secondName,
             )}
           </Text>
-          <Text ellipsizeMode="tail" style={[t.flex1, cardInfo]}>
+          <Text
+            ellipsizeMode="tail"
+            numberOfLines={1}
+            style={[t.flex1, cardInfo]}>
             {shortName(
               2,
               match?.t1?.[1]?.firstName,
@@ -70,7 +76,8 @@ export const LiveMatchResume: React.FC<Props> = ({match}) => {
         </View>
         <View style={[t.flex3, t.flexRow, t.itemsCenter, t.justifyBetween]}>
           <Text style={[t.textBase, t.fontSansBold, t.textWhite, t.w10]}>
-            {match?.game && resultGame(match?.game).split('-')[0]}
+            {match?.game &&
+              resultGame(match?.game, match?.goldPoint)?.split('-')[0]}
           </Text>
           <Text style={[setNumber]}>{match?.game.s1t1}</Text>
           <Text style={[setNumber]}>{match?.game.s2t1}</Text>
@@ -80,14 +87,20 @@ export const LiveMatchResume: React.FC<Props> = ({match}) => {
       <View style={[t.wFull, t.borderB, t.borderWhite]} />
       <View style={[t.flexGrow, t.flexRow, t.mR4]}>
         <View style={[t.flex2, t.justifyCenter]}>
-          <Text ellipsizeMode="tail" style={[t.flex1, cardInfo]}>
+          <Text
+            ellipsizeMode="tail"
+            numberOfLines={1}
+            style={[t.flex1, cardInfo]}>
             {shortName(
               3,
               match?.t2?.[0]?.firstName,
               match?.t2?.[0]?.secondName,
             )}
           </Text>
-          <Text ellipsizeMode="tail" style={[t.flex1, cardInfo]}>
+          <Text
+            ellipsizeMode="tail"
+            numberOfLines={1}
+            style={[t.flex1, cardInfo]}>
             {shortName(
               4,
               match?.t2?.[1]?.firstName,
@@ -102,7 +115,7 @@ export const LiveMatchResume: React.FC<Props> = ({match}) => {
         </View>
         <View style={[t.flex3, t.flexRow, t.itemsCenter, t.justifyBetween]}>
           <Text style={[t.textBase, t.fontSansBold, t.textWhite, t.w10]}>
-            {resultGame(match?.game).split('-')[1]}
+            {resultGame(match?.game, match?.goldPoint)?.split('-')[1]}
           </Text>
           <Text style={[setNumber]}>{match?.game.s1t2}</Text>
           <Text style={[setNumber]}>{match?.game.s2t2}</Text>

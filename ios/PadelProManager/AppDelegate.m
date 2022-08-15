@@ -40,13 +40,13 @@ static void InitializeFlipper(UIApplication *application) {
   InitializeFlipper(application);
 #endif
 
-  RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
+  RCTBridge *bridge = [self.reactDelegate createBridgeWithDelegate:self launchOptions:launchOptions];
   
 #if RCT_DEV
   [bridge moduleForClass:[RCTDevLoadingView class]];
 #endif
   
-  RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
+  RCTRootView *rootView = [self.reactDelegate createRootViewWithBridge:bridge
                                                    moduleName:@"PadelProManager"
                                             initialProperties:nil];
 
@@ -57,12 +57,13 @@ static void InitializeFlipper(UIApplication *application) {
   }
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  UIViewController *rootViewController = [UIViewController new];
+  UIViewController *rootViewController = [self.reactDelegate createRootViewController];
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [FIRApp configure];
   [self.window makeKeyAndVisible];
   [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView];
+  [super application:application didFinishLaunchingWithOptions:launchOptions];
   return YES;
 }
 

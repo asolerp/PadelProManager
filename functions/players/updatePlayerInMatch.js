@@ -1,6 +1,6 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-const { MATCHES } = require('../utils/constants');
+const {MATCHES} = require('../utils/constants');
 
 const updatePlayerInMatch = functions.firestore
   .document('players/{playerId}')

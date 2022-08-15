@@ -1,18 +1,25 @@
 import React from 'react';
 import {View, Text} from 'react-native';
+import {SessionType} from '../../Global/types';
+import {useTranslationWrapper} from '../../Hooks/useTranslationsWrapper';
 
 import t from '../../Theme/theme';
 
-import {useGetDaySessions} from './hooks/useGetDaySessions';
 import {SessionItem} from './SessionItem';
 
-export const MyTodaySessions = () => {
-  const {sessions, loading} = useGetDaySessions();
+interface MyTodaySessionsProps {
+  sessions: SessionType[];
+}
+
+export const MyTodaySessions: React.FC<MyTodaySessionsProps> = ({sessions}) => {
+  const {loc} = useTranslationWrapper();
 
   return (
     <View>
-      <Text style={[t.textXl, t.fontSansBold, t.mB2]}>Mis sesiones de hoy</Text>
-      {sessions?.length > 0 && !loading ? (
+      <Text style={[t.textXl, t.fontSansBold, t.mB2]}>
+        {loc('SESSIONS_TITLE')}
+      </Text>
+      {sessions?.length > 0 ? (
         sessions?.map(session => (
           <View key={session?.id} style={[{marginHorizontal: 2}]}>
             <SessionItem item={session} style={[t.mY2]} />
@@ -20,7 +27,7 @@ export const MyTodaySessions = () => {
         ))
       ) : (
         <Text style={[t.fontSansMedium, t.textBase]}>
-          No tienes ningúna sesión para el día de hoy
+          {loc('SESSION_NOT_TODAY')}
         </Text>
       )}
     </View>

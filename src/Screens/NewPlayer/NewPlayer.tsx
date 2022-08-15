@@ -192,7 +192,7 @@ export const NewPlayerScreen = ({route}) => {
                 <Input
                   editable={false}
                   placeholder="Cumpleaños"
-                  onPressIn={() => showDatePicker()}
+                  onPressOut={() => showDatePicker()}
                   value={value}
                   error={error?.message}
                   onBlur={onBlur}

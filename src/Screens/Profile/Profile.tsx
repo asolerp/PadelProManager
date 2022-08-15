@@ -172,6 +172,7 @@ export const ProfileScreen = () => {
                   />
                 )}
                 <Select
+                  withScroll
                   list={provincias.sort(sortByLabel)}
                   placeholder="Provincia"
                   value={provincias?.find(s => s.value === values.provincia)}
@@ -183,6 +184,7 @@ export const ProfileScreen = () => {
                   style={[t.flex1, t.mB4]}
                 />
                 <Select
+                  withScroll
                   disabled={!values.provincia}
                   list={municipios
                     .filter(

@@ -3,7 +3,7 @@ const admin = require('firebase-admin');
 const moment = require('moment');
 const {firebaseIDGenerator} = require('../utils/firebaseIDGenerator');
 const {getPhotoIfUserExists} = require('../utils/getPhotoIfUserExists');
-const { FB_REGION, SESSIONS } = require('../utils/constants');
+const {FB_REGION, SESSIONS} = require('../utils/constants');
 
 const newSession = functions
   .region(FB_REGION)

@@ -1,6 +1,6 @@
 const admin = require('firebase-admin');
 const functions = require('firebase-functions');
-const { PLAYERS } = require('../utils/constants');
+const {PLAYERS} = require('../utils/constants');
 const {firebaseIDGenerator} = require('../utils/firebaseIDGenerator');
 
 const emptyStats = {

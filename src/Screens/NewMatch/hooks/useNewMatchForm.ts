@@ -34,7 +34,15 @@ export const useNewMatchForm = () => {
   const [errorPlayers, setErrorPlayers] = useState(false);
 
   const handleCreateNewMatch = async values => {
-    const {club, category, date, sex, round = '', tournamentName = ''} = values;
+    const {
+      club,
+      category,
+      date,
+      sex,
+      round = '',
+      tournamentName = '',
+      goldPoint,
+    } = values;
 
     const dateParts = date.split('/');
     const dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
@@ -48,6 +56,7 @@ export const useNewMatchForm = () => {
       owner: user?.id,
       tournamentName,
       state: 'live',
+      goldPoint,
       category: category,
       game: {
         set: 1,
@@ -114,6 +123,7 @@ export const useNewMatchForm = () => {
     date: '',
     category: '',
     round: '',
+    goldPoint: false,
     tournament: false,
   };
 
