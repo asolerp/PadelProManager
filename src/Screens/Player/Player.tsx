@@ -116,7 +116,7 @@ export const PlayerScreen = ({route}) => {
                       skipWebLineCount={1}
                       touchEnabled={false}
                     />
-                    <View>
+                    <View style={[t.wFull]}>
                       <ResumenStatistic statistics={graphData?.dataSets} />
                     </View>
                   </>

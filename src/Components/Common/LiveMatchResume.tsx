@@ -76,8 +76,7 @@ export const LiveMatchResume: React.FC<Props> = ({match}) => {
         </View>
         <View style={[t.flex3, t.flexRow, t.itemsCenter, t.justifyBetween]}>
           <Text style={[t.textBase, t.fontSansBold, t.textWhite, t.w10]}>
-            {match?.game &&
-              resultGame(match?.game, match?.goldPoint)?.split('-')[0]}
+            {match?.game && resultGame(match?.game)?.split('-')[0]}
           </Text>
           <Text style={[setNumber]}>{match?.game.s1t1}</Text>
           <Text style={[setNumber]}>{match?.game.s2t1}</Text>
@@ -115,7 +114,7 @@ export const LiveMatchResume: React.FC<Props> = ({match}) => {
         </View>
         <View style={[t.flex3, t.flexRow, t.itemsCenter, t.justifyBetween]}>
           <Text style={[t.textBase, t.fontSansBold, t.textWhite, t.w10]}>
-            {resultGame(match?.game, match?.goldPoint)?.split('-')[1]}
+            {resultGame(match?.game)?.split('-')[1]}
           </Text>
           <Text style={[setNumber]}>{match?.game.s1t2}</Text>
           <Text style={[setNumber]}>{match?.game.s2t2}</Text>

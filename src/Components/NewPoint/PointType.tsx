@@ -57,7 +57,7 @@ export const PointType: React.FC<Props> = ({
         style={[
           t.w8,
           t.h8,
-          t.mB2,
+          t.mY1,
           t.mX1,
           t.justifyCenter,
           t.itemsCenter,

@@ -233,24 +233,37 @@ export const NewPoint = ({route}) => {
           t.flexRow,
           t.flexWrap,
           t.justifyCenter,
-          t.z50,
+          t.z40,
           t.pX2,
-          {elevation: 10},
+          {elevation: 9},
         ]}>
-        {points?.map(p => (
-          <PointType
-            result={resultPoint}
-            usedPoints={usedPoints}
-            onDrop={area => {
-              handleOnDrop({area, match, point: p});
-            }}
-            areas={areas}
-            mainColor={p.mainColor}
-            type={p.type}
-            match={match}>
-            {p.label}
-          </PointType>
-        ))}
+        <View
+          style={[
+            t.flexGrow,
+            t.flexRow,
+            t.flexWrap,
+            t.justifyCenter,
+
+            t.p2,
+            t.roundedSm,
+            t.z50,
+            {elevation: 10},
+          ]}>
+          {points?.map(p => (
+            <PointType
+              result={resultPoint}
+              usedPoints={usedPoints}
+              onDrop={area => {
+                handleOnDrop({area, match, point: p});
+              }}
+              areas={areas}
+              mainColor={p.mainColor}
+              type={p.type}
+              match={match}>
+              {p.label}
+            </PointType>
+          ))}
+        </View>
         <View
           onLayout={({nativeEvent}) =>
             setAreas({

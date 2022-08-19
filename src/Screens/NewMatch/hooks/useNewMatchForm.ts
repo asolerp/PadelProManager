@@ -56,7 +56,6 @@ export const useNewMatchForm = () => {
       owner: user?.id,
       tournamentName,
       state: 'live',
-      goldPoint,
       category: category,
       game: {
         set: 1,
@@ -70,6 +69,7 @@ export const useNewMatchForm = () => {
         s3t2: 0,
         winsSetTeam1: 0,
         winsSetTeam2: 0,
+        goldPoint,
       },
       statistics: {
         s1: {
