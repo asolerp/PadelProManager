@@ -24,7 +24,7 @@ export const HomeHeader: React.FC<Props> = ({position}) => {
         withPadding={false}
         position={position}
         leftSide={<WelcomeMessage />}
-        leftStyles={[t.w40]}
+        leftStyles={[t.w48]}
         rightSide={
           <Avatar
             imageStyle={[t.w12, t.h12]}

@@ -20,9 +20,9 @@ export const MatchTabs = ({match, notes, pointsHistory}) => {
     const isOnwer = getIsOwner(match?.owner);
     if (isOnwer) {
       setRoutes([
-        {key: 'notes', title: 'Notas'},
         {key: 'statistics', title: 'Estadísticas'},
         {key: 'historic', title: 'Histórioco'},
+        {key: 'notes', title: 'Notas'},
       ]);
     } else {
       setRoutes([

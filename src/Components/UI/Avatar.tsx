@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageBackground, Text, View, ViewStyle} from 'react-native';
+import {ImageBackground, Text, TextStyle, View, ViewStyle} from 'react-native';
 import t from '../../Theme/theme';
 import PressableOpacity from './PressableOpacity';
 
@@ -11,6 +11,7 @@ interface Props {
   style?: ViewStyle[];
   onPress?: () => void;
   imageStyle?: ViewStyle[];
+  textStyle?: TextStyle[];
 }
 
 const DEFAULT_PROFILE_IMAGE =
@@ -22,6 +23,7 @@ export const Avatar: React.FC<Props> = ({
   style,
   onPress,
   disabled,
+  textStyle,
   imageStyle,
   active = false,
 }) => {
@@ -53,7 +55,9 @@ export const Avatar: React.FC<Props> = ({
               </Text>
             </View>
           ) : (
-            <Text style={[t.fontSansMedium, t.textSm]}>{name}</Text>
+            <Text style={[t.fontSansBold, t.textSm, t.pT2, textStyle]}>
+              {name.toUpperCase()}
+            </Text>
           )}
         </>
       )}

@@ -1,0 +1,12 @@
+{
+  "resourceName": "s3padelpromanagerstorage0827d0dd",
+  "bucketName": "padelpromanager-storage-0827d0dd",
+  "policyUUID": "d56d82d3",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ]
+}

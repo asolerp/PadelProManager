@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "ios": "react-native run-ios --port 9988 --simulator='Enalbis' && npx react-native start --port 9988",
     "start": "react-native start",
     "install-with-pods": "yarn install && cd ios && pod install",
     "test": "jest",
@@ -36,6 +36,7 @@
     "i18next": "^21.9.0",
     "lodash.debounce": "^4.0.8",
     "lodash.isequal": "^4.5.0",
+    "lodash.times": "^4.3.2",
     "react": "17.0.2",
     "react-content-loader": "^6.1.0",
     "react-firebase-hooks": "^3.0.4",

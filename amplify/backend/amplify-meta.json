@@ -1,0 +1,159 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-padelpromanager-dev-202100-authRole",
+      "UnauthRoleArn": "arn:aws:iam::840623797050:role/amplify-padelpromanager-dev-202100-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::840623797050:role/amplify-padelpromanager-dev-202100-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-padelpromanager-dev-202100-deployment",
+      "UnauthRoleName": "amplify-padelpromanager-dev-202100-unauthRole",
+      "StackName": "amplify-padelpromanager-dev-202100",
+      "StackId": "arn:aws:cloudformation:eu-west-1:840623797050:stack/amplify-padelpromanager-dev-202100/ae8c4f80-1feb-11ed-9161-02113356d6f7",
+      "AmplifyAppId": "d2v02ob0jvf33u"
+    }
+  },
+  "api": {
+    "padelpromanager": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "padelpromanager76649c45",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ],
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 30,
+              "description": "api key description"
+            }
+          },
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            },
+            {
+              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+              "userPoolConfig": {
+                "userPoolId": "authpadelpromanager76649c45"
+              }
+            }
+          ]
+        },
+        "GraphQLAPIIdOutput": "6tct2r2ajvdj7mgymf6xgyqlva",
+        "GraphQLAPIEndpointOutput": "https://ihtykzg27naxnl4fztuuhjb56e.appsync-api.eu-west-1.amazonaws.com/graphql",
+        "GraphQLAPIKeyOutput": "da2-3s3h77mygzaqfbhbmo2zbrvkp4"
+      },
+      "lastPushTimeStamp": "2022-08-27T19:59:33.433Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-padelpromanager-dev-202100-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apipadelpromanager"
+      },
+      "lastPushDirHash": "YJKdWqb6Fr0dOkLeEWldU9ue9Gc="
+    }
+  },
+  "auth": {
+    "padelpromanager76649c45": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [
+          "GOOGLE"
+        ],
+        "usernameAttributes": [],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "output": {
+        "UserPoolId": "eu-west-1_q9FrZDKAE",
+        "AppClientIDWeb": "44tas5kfhonhn9h6h9p01inor0",
+        "AppClientID": "3sk4ssmrpph03bq10ckduouqqq",
+        "HostedUIDomain": "padelpromanager3ce631af-3ce631af-dev",
+        "IdentityPoolId": "eu-west-1:0a800689-4ed3-446a-8d21-cbf906ac6e15",
+        "UserPoolArn": "arn:aws:cognito-idp:eu-west-1:840623797050:userpool/eu-west-1_q9FrZDKAE",
+        "IdentityPoolName": "padelpromanager76649c45_identitypool_76649c45__dev",
+        "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"PadelProManager://\"],\"LogoutURLs\":[\"PadelProManager://\"]}",
+        "UserPoolName": "padelpromanager76649c45_userpool_76649c45"
+      },
+      "lastPushTimeStamp": "2022-08-27T19:59:33.436Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-padelpromanager-dev-202100-deployment/amplify-cfn-templates/auth/padelpromanager76649c45-cloudformation-template.json",
+        "logicalId": "authpadelpromanager76649c45"
+      },
+      "lastPushDirHash": "ZGxWCgLOGHCEVjG5V2izJRLcnZc="
+    }
+  },
+  "storage": {
+    "s3padelpromanagerstorage0827d0dd": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "output": {
+        "BucketName": "padelpromanager-storage-0827d0dd202100-dev",
+        "Region": "eu-west-1"
+      },
+      "lastPushTimeStamp": "2022-08-27T19:59:34.930Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-padelpromanager-dev-202100-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
+        "logicalId": "storages3padelpromanagerstorage0827d0dd"
+      },
+      "lastPushDirHash": "6jpklv1QQQJmPPXOFvG+PzatZ8w="
+    }
+  },
+  "function": {
+    "uniqueemailcheck": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "padelpromanager",
+          "attributes": [
+            "GraphQLAPIIdOutput"
+          ]
+        }
+      ],
+      "lastBuildTimeStamp": "2022-08-27T19:35:30.345Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2022-08-27T19:35:30.384Z",
+      "distZipFilename": "uniqueemailcheck-7955416f476879555537-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-padelpromanager-dev-202100-deployment",
+        "s3Key": "amplify-builds/uniqueemailcheck-7955416f476879555537-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-padelpromanager-dev-202100-deployment/amplify-cfn-templates/function/uniqueemailcheck-cloudformation-template.json",
+        "logicalId": "functionuniqueemailcheck"
+      },
+      "lastPushTimeStamp": "2022-08-27T19:59:33.439Z",
+      "output": {
+        "Region": "eu-west-1",
+        "Arn": "arn:aws:lambda:eu-west-1:840623797050:function:uniqueemailcheck-dev",
+        "Name": "uniqueemailcheck-dev",
+        "LambdaExecutionRole": "padelpromanagerLambdaRole4b476687-dev"
+      },
+      "lastPushDirHash": "0t6uLjH7noSAZ6X6Bbn611w1IuA="
+    }
+  }
+}

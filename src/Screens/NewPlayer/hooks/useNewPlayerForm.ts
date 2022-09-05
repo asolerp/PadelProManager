@@ -31,7 +31,6 @@ export const useNewPlayerForm = (playerId, edit, reset) => {
   const {setIsVisible, setText} = useContext(LoadingModalContext);
 
   const handleUpdatePlayer = async values => {
-    console.log(values);
     setText('Editando jugador...');
     setIsVisible(true);
     await timeout(1500);

@@ -1,0 +1,16 @@
+{
+  "stackTemplatePathOrUrl": "amplify-cfn-templates/function/temp/temp-uniqueemailcheck-cloudformation-template.json",
+  "parameters": {
+    "CloudWatchRule": "NONE",
+    "s3Key": "amplify-builds/uniqueemailcheck-7955416f476879555537-build.zip",
+    "apipadelpromanagerGraphQLAPIIdOutput": "6tct2r2ajvdj7mgymf6xgyqlva",
+    "deploymentBucketName": "amplify-padelpromanager-dev-202100-deployment",
+    "env": "dev"
+  },
+  "stackName": "arn:aws:cloudformation:eu-west-1:840623797050:stack/amplify-padelpromanager-dev-202100-functionuniqueemailcheck-11HFCGRYGJUFC/8624bde0-2511-11ed-955a-06df403d0467",
+  "capabilities": [
+    "CAPABILITY_NAMED_IAM",
+    "CAPABILITY_AUTO_EXPAND"
+  ],
+  "tableNames": []
+}

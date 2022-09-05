@@ -4,7 +4,6 @@ import t from '../../Theme/theme';
 import Pie from 'react-native-pie';
 
 export const CircleChart = ({data, children}) => {
-  console.log('DATA', data);
   const hasStatistics = data.some(s => s.percentage > 0);
 
   return (

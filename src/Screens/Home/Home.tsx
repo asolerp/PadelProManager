@@ -1,7 +1,15 @@
 import React, {FunctionComponent, useCallback} from 'react';
 
 import {ScreenLayout} from '../../Components/Layout';
-import {View, Text, ScrollView, FlatList, RefreshControl} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  FlatList,
+  RefreshControl,
+  ImageBackground,
+  Pressable,
+} from 'react-native';
 import t from '../../Theme/theme';
 import {LiveMatchResume} from '../../Components/Common/LiveMatchResume';
 import {MatchResume} from '../../Components/Home/MatchResume';
@@ -27,6 +35,10 @@ import {useTranslationWrapper} from '../../Hooks/useTranslationsWrapper';
 import {LiveMatchesSkeleton} from '../../Components/Home/skeleton/LiveMatchesSkeleton';
 import {DailyExerciseSkeleton} from '../../Components/Home/skeleton/DailyExerciseSkeleton';
 import {LastMatchesSkeleton} from '../../Components/Home/skeleton/LastMatchesSkeleton';
+import {Avatar} from '../../Components/UI/Avatar';
+import {shortName} from '../../Utils/parsers';
+import {ProMatch, PRO_MATCH_SCREEN_KEY} from '../ProMatch/ProMatch';
+import {ProMatchCard} from '../../Components/Home/ProMatch';
 
 export const HOME_SCREEN_KEY = 'homeScreen';
 
@@ -63,6 +75,12 @@ export const HomeScreen: FunctionComponent = () => {
         <HomeHeader />
         <View style={[t.mB7]}>
           <MyTodaySessions sessions={todaySessions} />
+        </View>
+        <View style={[t.mB7]}>
+          <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
+            Circuito profesional
+          </Text>
+          <ProMatchCard match={liveMatches} />
         </View>
         <View style={[t.mB7]}>
           <View>

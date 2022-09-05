@@ -1,7 +1,6 @@
 import {MAP_POINTS} from './constants';
 
 export const resultGame = game => {
-  console.log(game);
   if (game?.tiebreak) {
     return `${game?.team1Tiebreak}-${game?.team2Tiebreak}`;
   } else {

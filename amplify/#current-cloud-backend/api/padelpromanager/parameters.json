@@ -1,0 +1,12 @@
+{
+  "AppSyncApiName": "padelpromanager",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthModeLastUpdated": "2022-08-20T19:20:25.973Z",
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authpadelpromanager76649c45",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

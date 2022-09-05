@@ -1,0 +1,117 @@
+enum MatchStates {
+  LIVE
+  FINISHED
+}
+
+enum Team {
+  T1
+  T2
+}
+
+enum Roles {
+  COACH
+  PLAYER
+}
+
+enum Categories {
+  PRO
+  FIRST
+  SECOND
+  THIRD
+  FOURTH
+  FIFTH
+}
+
+enum Hands {
+  LEFT
+  RIGHT
+}
+
+enum Genders {
+  MALE
+  FEMALE
+  MIX
+}
+
+
+type Game {
+  gold_point: Boolean
+  breackpoint: Boolean
+  finished: Boolean
+  s1t1: Int
+  s1t2: Int
+  s2t1: Int
+  s2t2: Int
+  s3t1: Int
+  s3t2: Int
+  service: Team
+  team1: Int
+  team2: Int
+  win_match: Boolean
+  winsSetTeam1: Int
+  winsSetTeam2: Int
+}
+
+type Partner @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  left_player: Player @hasOne
+  right_player: Player @hasOne
+}
+
+
+type Match @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  category: Categories!
+  club: String!
+  coach: Coach @hasOne
+  date: AWSDate!
+  game: Game
+  owners: [ID!]!
+  sex: Genders
+  state: MatchStates
+  tournament_name: String
+  team_1: Partner @hasOne
+  team_2: Partner @hasOne 
+}
+
+type Player @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  coach_id: ID!
+  firstName: String
+  secondName: String
+  email: AWSEmail
+  phone: Int
+  birth: AWSDate
+  hand: Hands
+  gender: Genders
+  category: Categories
+}
+
+
+type Coach @model @auth(rules: [{allow: public}]) {
+  id: ID!
+
+  user_id: ID!
+  user: User @hasOne
+
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  role: Roles
+  email: AWSEmail! 
+  external_id: String
+  firstName: String
+  secondName: String
+  gender: Genders
+  hand: Hands
+  phone: AWSPhone
+  profileImg: String
+  city: String
+  province: String
+  token: String
+}
+
+
+
+ 

@@ -58,6 +58,8 @@ export interface MatchType {
   sex: 'male' | 'female';
   state: 'finished' | 'live';
   tournamentName: string;
+  t1: any;
+  t2: any;
 }
 
 export interface GameType {

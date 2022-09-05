@@ -133,24 +133,28 @@ export const useStatistics = ({team1, team2, statistics}) => {
         team1?.[0]?.id !== -1 &&
           radarGraphDataGenerator(
             statistics?.[activeSet]?.team1?.players?.[team1?.[0]?.id],
+            'dark',
           ),
       );
       setDataP2(
         team1?.[1]?.id !== -1 &&
           radarGraphDataGenerator(
             statistics?.[activeSet]?.team1?.players?.[team1?.[1]?.id],
+            'dark',
           ),
       );
       setDataP3(
         team2?.[0]?.id !== -1 &&
           radarGraphDataGenerator(
             statistics?.[activeSet]?.team2?.players?.[team2?.[0]?.id],
+            'dark',
           ),
       );
       setDataP4(
         team2?.[1]?.id !== -1 &&
           radarGraphDataGenerator(
             statistics?.[activeSet]?.team2?.players?.[team2?.[1]?.id],
+            'dark',
           ),
       );
 
