@@ -10,6 +10,17 @@ export const shortName = (
   return `Jug ${pos}`;
 };
 
+export const fullName = (
+  pos = 1,
+  firstName: string,
+  secondName: string,
+): string => {
+  if (firstName && secondName) {
+    return firstName.toUpperCase() + ' ' + secondName.toUpperCase();
+  }
+  return `JUG ${pos}`;
+};
+
 export const roundParser = {
   quarter: 'Cuartos de final',
 };
@@ -23,6 +34,8 @@ export const firstSurname = str => {
 };
 
 export const colorByCategory = {
+  wpt: 'infoDark',
+  premier: 'black',
   1: 'primary',
   2: 'secondary',
   3: 'info',
@@ -31,7 +44,8 @@ export const colorByCategory = {
 };
 
 export const categoryParse = {
-  PRO: 'PRO',
+  wpt: 'World Padel Tour',
+  premier: 'Premier',
   1: 'Primera',
   2: 'Segunda',
   3: 'Tercera',

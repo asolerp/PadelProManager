@@ -15,6 +15,7 @@ export const useAddDocument = query => {
     setLoading(true);
     try {
       setLoading(false);
+      console.log('DOCID', query, docId, data);
       const result = docId
         ? await query.doc(docId).set({...data})
         : await query.add({...data}).then(docRef => setDoRefId(docRef.id));

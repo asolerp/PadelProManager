@@ -30,7 +30,7 @@ export const useNewMatchForm = () => {
   const [loading, setLoading] = useState(false);
   const {selectedPlayers} = useContext(NewMatchContext);
   const {addNewMatch, loading: loadingAddMatch} = useAddNewMatch();
-  const {isCoach} = usePermissions();
+  const {isCoach, isAdmin} = usePermissions();
   const [errorPlayers, setErrorPlayers] = useState(false);
 
   const handleCreateNewMatch = async values => {
@@ -52,7 +52,7 @@ export const useNewMatchForm = () => {
       club,
       round,
       sex,
-      coachId: isCoach && user?.id,
+      coachId: (isCoach || isAdmin) && user?.id,
       owner: user?.id,
       tournamentName,
       state: 'live',
@@ -61,6 +61,8 @@ export const useNewMatchForm = () => {
         set: 1,
         team1: 0,
         team2: 0,
+        consecutiveWon: 0,
+        lastPointWon: '',
         s1t1: 0,
         s1t2: 0,
         s2t1: 0,
@@ -89,10 +91,15 @@ export const useNewMatchForm = () => {
           team2: {},
         },
       },
-      playersEmail: isCoach ? playersEmails(selectedPlayers) : [user?.email],
-      playersId: isCoach ? playersId(selectedPlayers) : [user?.id],
-      t1: isCoach ? matchTeam1(selectedPlayers) : [user, emptyPlayer],
-      t2: isCoach ? matchTeam2(selectedPlayers) : [emptyPlayer, emptyPlayer],
+      playersEmail:
+        isCoach || isAdmin ? playersEmails(selectedPlayers) : [user?.email],
+      playersId: isCoach || isAdmin ? playersId(selectedPlayers) : [user?.id],
+      t1:
+        isCoach || isAdmin ? matchTeam1(selectedPlayers) : [user, emptyPlayer],
+      t2:
+        isCoach || isAdmin
+          ? matchTeam2(selectedPlayers)
+          : [emptyPlayer, emptyPlayer],
     };
 
     setLoading(true);

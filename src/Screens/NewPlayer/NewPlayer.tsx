@@ -15,7 +15,7 @@ import {Button} from '../../Components/UI/Button';
 import {HDivider} from '../../Components/UI/HDivider';
 import {ImageSelector} from '../../Components/NewPlayer/ImageSelector';
 import {Select} from '../../Components/UI/Select';
-import {cateogries, gender, lateralidad} from '../../Utils/lists';
+import {playerCategories, gender, lateralidad} from '../../Utils/lists';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {usePermissions} from '../../Hooks/usePermissions';
@@ -34,10 +34,13 @@ export const NewPlayerScreen = ({route}) => {
     reset,
     formState: {isValid},
   } = useForm({
+    defaultValues: {
+      category: '',
+    },
     mode: 'onChange',
   });
   const {edit, playerId} = route?.params;
-  const {isCoach} = usePermissions();
+  const {isCoach, isAdmin} = usePermissions();
   const {logout} = useLogout();
   const {handleSubmitForm, onImagePress, response, loading, initPlayerImg} =
     useNewPlayerForm(playerId, edit, reset);
@@ -56,9 +59,14 @@ export const NewPlayerScreen = ({route}) => {
     <ScreenLayout edges={['top', 'right', 'left', 'bottom']}>
       <Header
         withBack
-        title={isCoach ? `${edit ? 'Editar' : 'Nuevo'} jugador` : 'Mi perfil'}
+        title={
+          isCoach || isAdmin
+            ? `${edit ? 'Editar' : 'Nuevo'} jugador`
+            : 'Mi perfil'
+        }
         rightSide={
-          !isCoach && (
+          !isCoach &&
+          !isAdmin && (
             <PressableOpacity onPress={() => logout()}>
               <Icon name="ios-exit-outline" size={30} />
             </PressableOpacity>
@@ -247,9 +255,9 @@ export const NewPlayerScreen = ({route}) => {
               }}
               render={({field: {onBlur, value}, fieldState: {error}}) => (
                 <Select
-                  list={cateogries}
+                  list={playerCategories}
                   placeholder="Categoría"
-                  value={cateogries?.find(s => s.value === value)}
+                  value={playerCategories?.find(s => s.value === value)}
                   name="category"
                   error={error?.message}
                   onBlur={onBlur}

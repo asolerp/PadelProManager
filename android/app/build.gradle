@@ -83,6 +83,11 @@ project.ext.react = [
     enableHermes: false,  // clean and rebuild if changing
 ]
 
+project.ext.envConfigFiles = [
+    Development: ".env.development",
+    Production: ".env.production"
+]
+
 apply from: "../../node_modules/react-native/react.gradle"
 apply plugin: "com.bugsnag.android.gradle"
 
@@ -143,6 +148,19 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        flavorDimensions "default"
+    }
+    productFlavors {
+        Development {
+             minSdkVersion rootProject.ext.minSdkVersion
+             applicationId "com.padelpromanager.development"
+             targetSdkVersion rootProject.ext.targetSdkVersion
+        }
+        Production {
+             minSdkVersion rootProject.ext.minSdkVersion
+             applicationId "com.padelpromanager"
+             targetSdkVersion rootProject.ext.targetSdkVersion
+        }
     }
     splits {
         abi {

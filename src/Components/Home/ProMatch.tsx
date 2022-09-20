@@ -1,17 +1,18 @@
 import React from 'react';
-import {ImageBackground, Pressable, Text, View} from 'react-native';
+import {Dimensions, ImageBackground, Pressable, Text, View} from 'react-native';
 import {openScreenWithPush} from '../../Router/utils/actions';
 import {PRO_MATCH_SCREEN_KEY} from '../../Screens/ProMatch/ProMatch';
 import t from '../../Theme/theme';
 
 import {ResultPro} from '../PadelPro/ResultPro';
 
+const CARD_WIDTH = Dimensions.get('window').width - 36;
+
 export const ProMatchCard = ({match}) => {
   return (
     <Pressable
-      onPress={() =>
-        openScreenWithPush(PRO_MATCH_SCREEN_KEY, {match: match[0]})
-      }>
+      style={[{width: CARD_WIDTH}]}
+      onPress={() => openScreenWithPush(PRO_MATCH_SCREEN_KEY, {match})}>
       <ImageBackground
         resizeMode="stretch"
         style={[t.wFull, t.p4, t.itemsCenter]}
@@ -40,7 +41,7 @@ export const ProMatchCard = ({match}) => {
             <Text style={[t.textWhite, t.fontSansMedium]}>Semifinal</Text>
           </View>
         </View>
-        <ResultPro />
+        <ResultPro mode="small" game={match.game} t1={match.t1} t2={match.t2} />
       </ImageBackground>
     </Pressable>
   );

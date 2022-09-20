@@ -1,13 +1,10 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Matches} from '../Screens/Matches/Matches';
-import t from '../Theme/theme';
-import {View} from 'react-native';
-
 import {HomePlayerScreen} from '../Screens/HomePlayer/HomePlayer';
-import {MatchesPlayer} from '../Screens/Matches/MatchesPlayer';
+import t from '../Theme/theme';
+import {Text} from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,7 +13,6 @@ export const TabPlayerStack = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarShowLabel: false,
-
         headerShown: false,
       }}>
       <Tab.Screen
@@ -24,32 +20,31 @@ export const TabPlayerStack = () => {
         component={HomePlayerScreen}
         options={() => ({
           tabBarIcon: ({focused}) => (
-            <View
-              style={[t.roundedFull, t.p2, focused ? t.bgBlack : t.bgWhite]}>
+            <>
               <Icon
-                name="home"
+                name={focused ? 'ios-speedometer' : 'ios-speedometer-outline'}
                 size={20}
-                color={focused ? 'white' : 'black'}
                 focused={focused}
               />
-            </View>
+              <Text style={[t.fontSans, t.textXs]}>Hoy</Text>
+            </>
           ),
         })}
       />
+
       <Tab.Screen
         name="Partidos"
-        component={MatchesPlayer}
+        component={Matches}
         options={() => ({
           tabBarIcon: ({focused}) => (
-            <View
-              style={[t.roundedFull, t.p2, focused ? t.bgBlack : t.bgWhite]}>
+            <>
               <Icon
-                name="tennisball"
+                name={focused ? 'ios-tennisball' : 'ios-tennisball-outline'}
                 size={20}
-                color={focused ? 'white' : 'black'}
                 focused={focused}
               />
-            </View>
+              <Text style={[t.fontSans, t.textXs]}>Partidos</Text>
+            </>
           ),
         })}
       />

@@ -10,10 +10,12 @@ import {useLogin} from './hooks/useLogin';
 import {GoogleButton} from '../../Components/Login/GoogleButton';
 import {AppleButton} from '../../Components/Login/AppleButton';
 import {Spacer} from '../../Components/UI/Spacer';
+import {useDeepLinks} from '../../Lib/DeepLinks/hooks/useDeepLinks';
 
 export const LOGIN_SCREEN_KEY = 'loginScreen';
 
 export const LoginScreen = () => {
+  useDeepLinks();
   const {onGoogleButtonPress, onAppleButtonPress} = useLogin();
 
   return (

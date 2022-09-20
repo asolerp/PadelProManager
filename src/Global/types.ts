@@ -5,7 +5,7 @@ export interface PlayerType {
   coach?: string[];
   category: number;
   phone: string;
-  secondName?: string;
+  secondName: string;
   profileImg?: string;
   team?: string;
 }
@@ -21,7 +21,7 @@ export interface UserType {
   photoURL?: string;
   profileImg?: string;
   provincia?: string;
-  role?: 'player' | 'coach';
+  role?: Roles;
   token?: string;
   loggedIn: boolean;
 }
@@ -62,6 +62,45 @@ export interface MatchType {
   t2: any;
 }
 
+interface PlayersStats {
+  p1: number;
+  p2: number;
+  p3: number;
+  p4: number;
+}
+
+export interface MatchStatistic {
+  t1Br: number;
+  t2Br: number;
+  t1GP: number;
+  t2GP: number;
+  t1Tw: number;
+  t2Tw: number;
+  t1Tnf: number;
+  t2Tnf: number;
+  t1Tef: number;
+  t2Tef: number;
+  t1Tv: number;
+  t2Tv: number;
+  t1Tf: number;
+  t2Tf: number;
+  t1TBp: number;
+  t2TBp: number;
+  t1TBj: number;
+  t2TBj: number;
+  t1Tsm: number;
+  t2Tsm: number;
+  t1Tgl: number;
+  t2Tgl: number;
+  totalPoints: number;
+  totalGoldPoints: number;
+  totalWPerPlayer: PlayersStats;
+  totalEFPerPlayer: PlayersStats;
+  totalNFPerPlayer: PlayersStats;
+  totalT1PointsWins: number;
+  totalT2PointsWins: number;
+}
+
 export interface GameType {
   breakpoint: string;
   service: string;
@@ -76,4 +115,10 @@ export interface GameType {
   s3t2: number;
   winSetTeam1: number;
   winSetTeam2: number;
+}
+
+export enum Roles {
+  COACH = 'coach',
+  PLAYER = 'player',
+  ADMIN = 'admin',
 }

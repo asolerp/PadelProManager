@@ -191,11 +191,11 @@ export const NewPoint = ({route}) => {
         />
       </View>
       <Header
+        containerStyle={[t.bgWhite]}
         withBack
         title={<LiveResult game={match?.game} />}
         rightSide={
-          <View
-            style={[t.flexRow, t.justifyBetween, t.itemsCenter, t.mY5, t.pX4]}>
+          <View style={[t.flexRow, t.justifyBetween, t.itemsCenter, t.mY5]}>
             {match?.game?.finished ? (
               <Chip text="Finalizado" mainColor="error" />
             ) : (
@@ -527,6 +527,7 @@ export const NewPoint = ({route}) => {
       </View>
       <View
         style={[
+          {backgroundColor: '#FF5B42'},
           t.justifyEnd,
           t.flexGrow,
           t.z10,
@@ -542,7 +543,7 @@ export const NewPoint = ({route}) => {
             {height: Dimensions.get('window').height / 1.55},
           ]}
           source={{
-            uri: 'https://res.cloudinary.com/enalbis/image/upload/v1659947162/PadelPro/varios/nz8dcrhjrtry8kizlu4h.jpg',
+            uri: 'https://res.cloudinary.com/enalbis/image/upload/v1662639963/PadelPro/varios/yqw1nnxl95jlvfzkb2fp.png',
             priority: FastImage.priority.normal,
           }}
           resizeMode={FastImage.resizeMode.contain}

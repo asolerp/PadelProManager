@@ -16,6 +16,7 @@ interface Props {
   mode?: 'dark' | 'default';
   withPadding?: boolean;
   leftStyles?: ViewStyle[];
+  containerStyle?: ViewStyle[];
 }
 
 export const Header: React.FC<Props> = ({
@@ -27,6 +28,7 @@ export const Header: React.FC<Props> = ({
   leftSide,
   rightSide,
   leftStyles,
+  containerStyle,
 }) => {
   return (
     <>
@@ -38,6 +40,7 @@ export const Header: React.FC<Props> = ({
           t.itemsCenter,
           t.z20,
           t?.[position],
+          containerStyle,
         ]}>
         <View style={[t.w20, t.itemsStart, leftStyles]}>
           {withBack && !leftSide ? (

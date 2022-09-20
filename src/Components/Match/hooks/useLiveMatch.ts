@@ -50,10 +50,8 @@ export const useLiveMatch = match => {
   };
 
   const handleSavePoint = async (stats, callback) => {
-    console.log('STATS', stats);
     let error = false;
     stats?.points?.forEach(st => {
-      console.log(st.player);
       if (st?.result === NONFORCED) {
         if (st?.team === stats?.winPointTeam) {
           error = true;
@@ -69,7 +67,9 @@ export const useLiveMatch = match => {
       try {
         setLoadingAdd(true);
         await newPointFn({
-          match,
+          match: {
+            ...match,
+          },
           stats,
         });
       } catch (err) {

@@ -1,13 +1,9 @@
 import React from 'react';
-import {processColor, View, Text} from 'react-native';
+import {View, Text} from 'react-native';
 import {RadarChart} from '../Common/RadarChart';
 import t from '../../Theme/theme';
-import {legend, xAxis} from '../../Utils/graphParams';
-import {ResumenStatistic} from '../Match/ResumenStatistic';
 
 export const PlayerRadarGraph = ({player, data, mode = 'dark'}) => {
-  console.log(player.firstName, data);
-
   return (
     <View style={[t.mB4, t.itemsCenter]}>
       <Text style={[t.fontSansBold, mode === 'white' && t.textWhite]}>

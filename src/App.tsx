@@ -13,6 +13,7 @@ import {initRemoteConfig} from './Lib/FeatureToggle';
 
 import {toastConfig} from './Lib/Logging/utils/toastConfig';
 import '../i18n.config';
+import {DynamicLinkProvider} from './Context/DynamicLinkContext';
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -25,13 +26,15 @@ const App: React.FC = () => {
     <React.Fragment>
       <StatusBar animated={true} barStyle="dark-content" />
       <AuthProvider>
-        <SubscriptionProvider>
-          <LoadingModalProvider>
-            <PremiumModalProvider>
-              <AuthRouter />
-            </PremiumModalProvider>
-          </LoadingModalProvider>
-        </SubscriptionProvider>
+        <DynamicLinkProvider>
+          <SubscriptionProvider>
+            <LoadingModalProvider>
+              <PremiumModalProvider>
+                <AuthRouter />
+              </PremiumModalProvider>
+            </LoadingModalProvider>
+          </SubscriptionProvider>
+        </DynamicLinkProvider>
       </AuthProvider>
       <Toast config={toastConfig} />
     </React.Fragment>

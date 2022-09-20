@@ -1,57 +1,31 @@
 import React from 'react';
-import {ImageBackground, View, Text, ScrollView} from 'react-native';
+import {
+  ImageBackground,
+  View,
+  Text,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
+import {PlayerRadarGraph} from '../../Components/Common/PlayerRadarGraph';
 
-import {RadarChart} from '../../Components/Common/RadarChart';
 import {Header, ScreenLayout} from '../../Components/Layout';
 import {useStatistics} from '../../Components/Match/hooks/useStatistics';
 import {ResultPro} from '../../Components/PadelPro/ResultPro';
 import {StatsPro} from '../../Components/PadelPro/StatsPro';
 import t from '../../Theme/theme';
 
-import data from './demoData';
-
 export const PRO_MATCH_SCREEN_KEY = 'proMatchScreen';
-
-const DARK_BLUE = '#21336B';
 
 export const ProMatch = ({route}) => {
   const {match} = route.params;
 
-  const {
-    dataP1,
-    dataP2,
-    dataP3,
-    dataP4,
-    t1Tbj,
-    t2Tbj,
-    t1Tsm,
-    t2Tsm,
-    t1Tbp,
-    t2Tbp,
-    t1GP,
-    t2GP,
-    t1Tf,
-    t2Tf,
-    t1Tw,
-    t2Tw,
-    t1Tnf,
-    t2Tnf,
-    t1Tef,
-    t2Tef,
-    t1Tv,
-    t2Tv,
-    activeSet,
-    totalPoints,
-    totalGoldPoints,
-    totalWPerPlayer,
-    totalEFPerPlayer,
-    totalNFPerPlayer,
-    handleSetActiveSet,
-  } = useStatistics({
-    team1: match?.t1,
-    team2: match?.t2,
-    statistics: match?.statistics,
-  });
+  const {dataP1, dataP2, dataP3, dataP4, matchStatistics, dataGenerated} =
+    useStatistics({
+      team1: match?.t1,
+      team2: match?.t2,
+      statistics: match?.statistics,
+      mode: 'white',
+    });
 
   return (
     <ImageBackground
@@ -66,28 +40,49 @@ export const ProMatch = ({route}) => {
           <ScrollView
             style={[t.pX4, t.mT4]}
             showsVerticalScrollIndicator={false}>
-            <ResultPro />
+            <ResultPro game={match?.game} t1={match?.t1} t2={match?.t2} />
             <View style={[t.mT7]} />
             <Text style={[t.fontSansBold, t.textWhite, t.textLg]}>
               RESUMEN DEL PARTIDO
             </Text>
             <View style={[t.mT2]} />
-            <StatsPro />
-            <View style={[t.mT7, t.justifyCenter, t.itemsCenter]}>
-              <RadarChart
-                captions={data?.captions}
-                data={data?.chart}
-                options={data?.options}
-                size={data?.size}
-              />
-              {/* {dataP1 && match?.t1?.[0] && (
-                <PlayerRadarGraph
-                  mode="white"
-                  player={match?.t1?.[0]}
-                  data={dataP1}
-                />
-              )} */}
-            </View>
+            {dataGenerated ? (
+              <>
+                <StatsPro matchStatistics={matchStatistics} />
+                <View style={[t.mT7, t.justifyCenter, t.itemsCenter]}>
+                  {dataP1 && match?.t1?.[0] && (
+                    <PlayerRadarGraph
+                      mode="white"
+                      player={match?.t1?.[0]}
+                      data={dataP1}
+                    />
+                  )}
+                  {dataP2 && match?.t1?.[1] && (
+                    <PlayerRadarGraph
+                      mode="white"
+                      player={match?.t1?.[1]}
+                      data={dataP2}
+                    />
+                  )}
+                  {dataP3 && match?.t2?.[0] && (
+                    <PlayerRadarGraph
+                      mode="white"
+                      player={match?.t2?.[0]}
+                      data={dataP3}
+                    />
+                  )}
+                  {dataP4 && match?.t2?.[1] && (
+                    <PlayerRadarGraph
+                      mode="white"
+                      player={match?.t2?.[1]}
+                      data={dataP4}
+                    />
+                  )}
+                </View>
+              </>
+            ) : (
+              <ActivityIndicator color="white" style={[t.mT3]} />
+            )}
           </ScrollView>
         </View>
       </ScreenLayout>

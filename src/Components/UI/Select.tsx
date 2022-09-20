@@ -114,21 +114,26 @@ export const Select = ({
           </View>
         </>
       </BottomModal>
-      <Input
-        empty={empty}
-        editable={false}
-        placeholder={placeholder}
-        value={value?.label}
-        name={name}
-        error={error}
-        onPressOut={() => {
+      <Pressable
+        onPress={() => {
+          console.log('HOLA');
           Keyboard.dismiss();
           !disabled && setIsVisible(true);
-        }}
-        onBlur={onBlur}
-        label={label}
-        style={[t.flex2]}
-      />
+        }}>
+        <View pointerEvents="none">
+          <Input
+            empty={empty}
+            editable={false}
+            placeholder={placeholder}
+            value={value?.label}
+            name={name}
+            error={error}
+            onBlur={onBlur}
+            label={label}
+            style={[t.flex2]}
+          />
+        </View>
+      </Pressable>
     </Pressable>
   );
 };

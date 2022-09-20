@@ -1,5 +1,5 @@
-import React, {useContext} from 'react';
-import {View, Text, FlatList} from 'react-native';
+import React from 'react';
+import {View, FlatList} from 'react-native';
 import {PlayerType} from '../../Global/types';
 import {Avatar as Player} from '../../Components/UI/Avatar';
 
@@ -15,8 +15,6 @@ import {useCheckPermissions} from '../../Hooks/useCheckPermissions';
 import {sortByName} from '../../Utils/sorts';
 
 export const MyPlayers = ({players}) => {
-  const {handleCheckCreateNewPlayer} = useCheckPermissions();
-
   const PlayerItem = ({item}: {item: PlayerType}) => {
     return (
       <Player
@@ -48,18 +46,6 @@ export const MyPlayers = ({players}) => {
         <View style={[t.flexRow, t.itemsCenter]}>
           <FlatList
             data={players?.sort(sortByName)}
-            ListHeaderComponent={
-              <Player
-                imageStyle={[t.w16, t.h16]}
-                style={[t.mX2]}
-                name="Crear jugador"
-                onPress={() =>
-                  handleCheckCreateNewPlayer(() =>
-                    openScreenWithPush(NEW_PLAYER_SCREEN_KEY),
-                  )
-                }
-              />
-            }
             showsHorizontalScrollIndicator={false}
             horizontal
             keyExtractor={item => item.id}

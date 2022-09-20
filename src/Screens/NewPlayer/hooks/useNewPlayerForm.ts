@@ -81,7 +81,6 @@ export const useNewPlayerForm = (playerId, edit, reset) => {
                 ...Object.fromEntries(
                   Object.entries(values).filter(([key, value]) => !!value),
                 ),
-                coach: [user?.id],
                 profileImg: url,
               },
               callback: async () =>
@@ -93,9 +92,14 @@ export const useNewPlayerForm = (playerId, edit, reset) => {
             }),
         );
       } else {
-        addDocument({
+        console.log('CREANDO JUEGO');
+        await addDocument({
           docId: id,
-          data: {...values, coach: [user?.id]},
+          data: {
+            ...Object.fromEntries(
+              Object.entries(values).filter(([key, value]) => !!value),
+            ),
+          },
           callback: async () =>
             await playerQuery(user?.id)
               .doc(id)

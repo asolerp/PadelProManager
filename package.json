@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "ios": "react-native run-ios --port 9988 --simulator='Enalbis' && npx react-native start --port 9988",
+    "ios-prod": "yarn react-native run-ios --scheme PadelProManager",
+    "ios-dev": "yarn react-native run-ios --scheme PadelProManager-Development",
     "start": "react-native start",
     "install-with-pods": "yarn install && cd ios && pod install",
     "test": "jest",
@@ -18,6 +19,7 @@
     "@react-native-community/datetimepicker": "^5.1.0",
     "@react-native-firebase/app": "^14.2.1",
     "@react-native-firebase/auth": "^14.3.0",
+    "@react-native-firebase/dynamic-links": "^15.4.0",
     "@react-native-firebase/firestore": "^14.2.3",
     "@react-native-firebase/functions": "^14.3.0",
     "@react-native-firebase/messaging": "^14.3.0",
@@ -48,6 +50,7 @@
     "react-native-chart-kit": "^6.12.0",
     "react-native-charts-wrapper": "^0.5.7",
     "react-native-circular-chart": "^1.0.8",
+    "react-native-config": "^1.4.6",
     "react-native-fast-image": "^8.5.11",
     "react-native-gesture-handler": "^2.2.0",
     "react-native-image-picker": "^4.7.1",
@@ -69,6 +72,7 @@
     "react-native-toast-message": "^2.1.5",
     "react-native-vector-icons": "^9.0.0",
     "react-native-whirlwind": "^0.2.0",
+    "search-params": "^4.0.1",
     "victory-native": "^36.2.0",
     "yup": "^0.32.11"
   },
@@ -86,8 +90,8 @@
     "typescript": "^4.5.4"
   },
   "resolutions": {
-    "@types/react": "17.0.43",
-    "@types/react-dom": "17.0.2"
+    "@types/react": "17.0.14",
+    "@types/react-dom": "17.0.14"
   },
   "jest": {
     "preset": "react-native"

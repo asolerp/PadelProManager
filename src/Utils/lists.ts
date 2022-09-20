@@ -1,4 +1,16 @@
-export const cateogries = [
+export const cateogries = isAdmin => {
+  return [
+    ...(isAdmin ? [{label: 'Pro', value: -1}] : []),
+    {label: '1ª', value: 1},
+    {label: '2ª', value: 2},
+    {label: '3ª', value: 3},
+    {label: '4ª', value: 4},
+    {label: '5ª', value: 5},
+  ];
+};
+
+export const playerCategories = [
+  {label: 'World Padel Tour', value: 'wpt'},
   {label: '1ª', value: 1},
   {label: '2ª', value: 2},
   {label: '3ª', value: 3},

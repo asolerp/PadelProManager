@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>285595276470-5u630m4hkf8dncshpg69cnlr81abgfgj.apps.googleusercontent.com</string>
+	<string>505646403706-ut2obnjhnuhs1tujk4rqmr8tjg3m2t79.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.285595276470-5u630m4hkf8dncshpg69cnlr81abgfgj</string>
+	<string>com.googleusercontent.apps.505646403706-ut2obnjhnuhs1tujk4rqmr8tjg3m2t79</string>
 	<key>API_KEY</key>
-	<string>AIzaSyB7cTlup2LWwXlYI_gHAMY4_54ieHoDUzM</string>
+	<string>AIzaSyA8Uw9NnBcM35ZvT2lRFQoludoy5BvkSn8</string>
 	<key>GCM_SENDER_ID</key>
-	<string>285595276470</string>
+	<string>505646403706</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.padelpro</string>
+	<string>com.padelpro.dev</string>
 	<key>PROJECT_ID</key>
-	<string>padel-manager-pro</string>
+	<string>padel-manager-pro---dev-95ef7</string>
 	<key>STORAGE_BUCKET</key>
-	<string>padel-manager-pro.appspot.com</string>
+	<string>padel-manager-pro---dev-95ef7.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:285595276470:ios:88383e719ddb38dbca4217</string>
+	<string>1:505646403706:ios:1daee8b08a21ba1095ebc3</string>
 </dict>
 </plist>

@@ -1,7 +1,10 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {LoadingModal} from '../Components/Common/LoadingModal';
 import {AuthContext} from '../Context/AuthContex';
-import {LoadingModalContext, LoadingModalContextInterface} from '../Context/LoadingModalContext';
+import {
+  LoadingModalContext,
+  LoadingModalContextInterface,
+} from '../Context/LoadingModalContext';
 import {useAuth} from './hooks/useAuth';
 
 import {SignInRouter} from './SignInRouter';

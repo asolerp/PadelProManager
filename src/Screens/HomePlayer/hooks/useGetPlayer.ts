@@ -7,6 +7,7 @@ import {AuthContext} from '../../../Context/AuthContex';
 
 export const useGetPlayer = () => {
   const {user} = useContext(AuthContext);
+  console.log('USER', user);
   const queryStats = useMemo(
     () => userQuery.doc(user?.id).collection('stats').doc('global'),
     [user?.id],
@@ -17,8 +18,9 @@ export const useGetPlayer = () => {
   const [graphData, setGraphData] = useState();
 
   useEffect(() => {
+    console.log('stats', stats);
     if (stats) {
-      setGraphData(radarGraphDataGenerator(stats));
+      setGraphData(radarGraphDataGenerator(stats, 'black'));
     }
   }, [stats]);
 
@@ -28,6 +30,8 @@ export const useGetPlayer = () => {
 
   const loading = loadingStats;
   const error = errorStats;
+
+  console.log('GRAPHDATA', graphData);
 
   return {user, error, loading, tw, tl, tm, graphData};
 };

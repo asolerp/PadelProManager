@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 
-import {View, Text, processColor, ScrollView} from 'react-native';
-import {RadarChart} from 'react-native-charts-wrapper';
+import {View, Text, ScrollView} from 'react-native';
+import {RadarChart} from '../../Components/Common/RadarChart';
 import {ScreenLayout} from '../../Components/Layout/ScreenLayout';
 import {Stat} from '../../Components/Player/Stat';
 
@@ -9,7 +9,6 @@ import t from '../../Theme/theme';
 
 import {useGetPlayer} from './hooks/useGetPlayer';
 
-import {legend, xAxis} from '../../Utils/graphParams';
 import {ResumenStatistic} from '../../Components/Match/ResumenStatistic';
 import {MyTodaySessions} from '../../Components/Home/MyTodaySessions';
 
@@ -28,7 +27,7 @@ export const HOME_PLAYER_SCREEN_KEY = 'playerScreen';
 
 export const HomePlayerScreen = () => {
   const {user} = useContext(AuthContext);
-  const {tw, tl, tm, graphData, loading} = useGetPlayer();
+  const {tw, tl, tm, graphData} = useGetPlayer();
   const {pendingRelation} = useCheckPendingRelation();
   const {handleShare} = useShareApp();
 
@@ -63,26 +62,13 @@ export const HomePlayerScreen = () => {
             </View>
           </View>
           <View style={[t.itemsCenter]}>
-            {!loading && (
+            {graphData && (
               <>
                 <RadarChart
-                  style={[
-                    t.itemsCenter,
-                    t.justifyCenter,
-                    {width: 300, height: 300},
-                  ]}
-                  data={graphData}
-                  xAxis={xAxis}
-                  yAxis={{drawLabels: false}}
-                  chartDescription={{text: ''}}
-                  legend={legend}
-                  drawWeb={true}
-                  webLineWidth={1}
-                  webLineWidthInner={1}
-                  webAlpha={255}
-                  webColorInner={processColor('#cbd5e0')}
-                  skipWebLineCount={1}
-                  touchEnabled={false}
+                  captions={graphData?.captions}
+                  data={graphData?.chart}
+                  options={graphData?.options}
+                  size={graphData?.size}
                 />
                 <View>
                   <ResumenStatistic statistics={graphData?.dataSets} />

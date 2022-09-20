@@ -65,6 +65,23 @@ const newPoint = functions
         ['statistics.total.count']: firestore.FieldValue.increment(1),
       });
 
+      if (match?.game?.lastPointWon === newStateGame?.lastPointWon) {
+        if (
+          newStateGame.consecutiveWon >
+          match?.statistics?.total?.[match?.game?.lastPointWon].global
+            .consecutiveWon
+        ) {
+          await matchQuery.update({
+            [`statistics.total.${newStateGame?.lastPointWon}.global.consecutiveWon`]:
+              newStateGame.consecutiveWon,
+          });
+        }
+      } else {
+        await matchQuery.update({
+          ['game.consecutiveWon']: 1,
+        });
+      }
+
       if (newStateGame?.team1 === 3 && newStateGame?.team2 === 3) {
         await matchQuery.update({
           [`statistics.s${newStateGame.set}.breakpoint`]:
@@ -73,7 +90,43 @@ const newPoint = functions
         });
       }
 
-      if (match?.game?.team1 === 3 && match?.game?.team2 === 3) {
+      if (
+        match?.game?.team1 === 3 &&
+        match?.game?.team2 === 3 &&
+        match?.game?.goldPoint
+      ) {
+        if (match?.game.service === 't1' && stats?.winPointTeam === 'team1') {
+          await matchQuery.update({
+            [`statistics.s${match?.game.set}.team1.global.serviceBreakpoint`]:
+              firestore.FieldValue.increment(1),
+            ['statistics.total.team1.global.serviceBreakpoint']:
+              firestore.FieldValue.increment(1),
+          });
+        }
+        if (match?.game.service === 't2' && stats?.winPointTeam === 'team1') {
+          await matchQuery.update({
+            [`statistics.s${match?.game.set}.team1.global.returningBreakpoint`]:
+              firestore.FieldValue.increment(1),
+            ['statistics.total.team1.global.returningBreakpoint']:
+              firestore.FieldValue.increment(1),
+          });
+        }
+        if (match?.game.service === 't1' && stats?.winPointTeam === 'team2') {
+          await matchQuery.update({
+            [`statistics.s${match?.game.set}.team2.global.returningBreakpoint`]:
+              firestore.FieldValue.increment(1),
+            ['statistics.total.team2.global.returningBreakpoint']:
+              firestore.FieldValue.increment(1),
+          });
+        }
+        if (match?.game.service === 't2' && stats?.winPointTeam === 'team2') {
+          await matchQuery.update({
+            [`statistics.s${match?.game.set}.team2.global.serviceBreakpoint`]:
+              firestore.FieldValue.increment(1),
+            ['statistics.total.team2.global.serviceBreakpoint']:
+              firestore.FieldValue.increment(1),
+          });
+        }
         await matchQuery.update({
           [`statistics.s${match?.game.set}.${stats?.winPointTeam}.global.breakpoint`]:
             firestore.FieldValue.increment(1),

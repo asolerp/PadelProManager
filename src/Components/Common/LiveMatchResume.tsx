@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Dimensions} from 'react-native';
 import t from '../../Theme/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {format} from 'date-fns';
@@ -17,6 +17,8 @@ const cardLabel = [t.textBase, t.fontSansBold, t.textWhite, t.opacity70];
 const cardInfo = [t.textBase, t.fontSansBold, t.textWhite];
 const setNumber = [t.textLg, t.fontSansBold, t.textWhite, t.opacity70];
 
+const CARD_WIDTH = Dimensions.get('window').width - 36;
+
 interface Props {
   match: any;
 }
@@ -28,7 +30,15 @@ export const LiveMatchResume: React.FC<Props> = ({match}) => {
 
   return (
     <PressableOpacity
-      style={[t.w80, t.h44, t.bgInfo, t.roundedLg, t.p3, t.shadow, t.mR3]}
+      style={[
+        {width: CARD_WIDTH},
+
+        t.h44,
+        t.bgInfo,
+        t.roundedLg,
+        t.p3,
+        t.shadow,
+      ]}
       onPress={() =>
         openScreenWithPush(MATCH_SCREEN_KEY, {
           matchId: match?.id,

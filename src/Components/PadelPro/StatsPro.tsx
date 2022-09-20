@@ -1,264 +1,71 @@
 import React from 'react';
-import {Text, View} from 'react-native';
-import t from '../../Theme/theme';
+import {View} from 'react-native';
+import {MatchStatistic} from '../../Global/types';
+import {useTranslationWrapper} from '../../Hooks/useTranslationsWrapper';
+
+import {StatItem} from './StatItem';
 
 const DARK_BLUE = '#21336B';
 const DARK_GOLD = '#CA9944';
 
-export const StatsPro = () => {
+interface Props {
+  matchStatistics: MatchStatistic;
+}
+
+export const StatsPro: React.FC<Props> = ({matchStatistics}) => {
+  const {loc} = useTranslationWrapper();
+
   return (
-    <View>
-      <View style={[t.flexRow]}>
-        <View
-          style={[
-            t.h10,
-            t.flex1,
-            t.bgWhite,
-            t.bgInfoLight,
-            t.itemsCenter,
-            t.justifyCenter,
-          ]}>
-          <Text style={[t.fontSansBold, {color: DARK_BLUE}]}>35</Text>
-        </View>
-        <View
-          style={[
-            t.flex4,
-            t.bgWhite,
-            t.h10,
-            t.itemsCenter,
-            t.justifyCenter,
-            {backgroundColor: DARK_BLUE},
-          ]}>
-          <Text style={[t.fontSansBold, t.textWhite]}>
-            TOTAL PUNTOS GANADOS
-          </Text>
-        </View>
-        <View
-          style={[
-            t.h10,
-            t.flex1,
-            t.bgWhite,
-            t.bgInfoLight,
-            t.itemsCenter,
-            t.justifyCenter,
-          ]}>
-          <Text style={[t.fontSansBold, {color: DARK_BLUE}]}>47</Text>
-        </View>
+    <>
+      <View>
+        <StatItem
+          t1Value={matchStatistics.totalT1PointsWins}
+          t2Value={matchStatistics.totalT2PointsWins}
+          title={loc('match_stats_total_points_won')}
+        />
+        <StatItem
+          t1Value={`${Math.round(
+            (matchStatistics.totalT1PointsWins /
+              (matchStatistics.totalT1PointsWins +
+                matchStatistics.totalT2PointsWins)) *
+              100,
+          )}%`}
+          t2Value={`${Math.round(
+            (matchStatistics.totalT2PointsWins /
+              (matchStatistics.totalT1PointsWins +
+                matchStatistics.totalT2PointsWins)) *
+              100,
+          )}%`}
+          title={loc('match_stats_%_points_won')}
+        />
+        <StatItem
+          t1Value={`${matchStatistics.t1Br}/${
+            matchStatistics.t1Br + matchStatistics.t2Br
+          }`}
+          t2Value={`${matchStatistics.t2Br}/${
+            matchStatistics.t1Br + matchStatistics.t2Br
+          }`}
+          title={loc('match_stats_break_points')}
+        />
+        <StatItem
+          t1Value={`${matchStatistics.t1Br}/${
+            matchStatistics.t1Br + matchStatistics.t2Br
+          }`}
+          t2Value={`${matchStatistics.t2Br}/${
+            matchStatistics.t1Br + matchStatistics.t2Br
+          }`}
+          title={loc('match_stats_gold_points_won')}
+        />
+        <StatItem
+          t1Value={`${matchStatistics.t1Br}/${
+            matchStatistics.t1Br + matchStatistics.t2Br
+          }`}
+          t2Value={`${matchStatistics.t2Br}/${
+            matchStatistics.t1Br + matchStatistics.t2Br
+          }`}
+          title={loc('match_stats_consecutive_points')}
+        />
       </View>
-      <View style={[t.flexRow]}>
-        <View
-          style={[
-            t.h10,
-            t.flex1,
-            t.bgWhite,
-            t.bgInfoLight,
-            t.itemsCenter,
-            t.justifyCenter,
-          ]}>
-          <Text style={[t.fontSansBold, {color: DARK_BLUE}]}>35</Text>
-        </View>
-        <View
-          style={[
-            t.flex4,
-            t.bgWhite,
-            t.h10,
-            t.itemsCenter,
-            t.justifyCenter,
-            {backgroundColor: DARK_BLUE},
-          ]}>
-          <Text style={[t.fontSansBold, t.textWhite]}>% PUNTOS GANADOS</Text>
-        </View>
-        <View
-          style={[
-            t.h10,
-            t.flex1,
-            t.bgWhite,
-            t.bgInfoLight,
-            t.itemsCenter,
-            t.justifyCenter,
-          ]}>
-          <Text style={[t.fontSansBold, {color: DARK_BLUE}]}>47</Text>
-        </View>
-      </View>
-      <View style={[t.flexRow]}>
-        <View
-          style={[
-            t.h10,
-            t.flex1,
-            t.bgWhite,
-            t.bgInfoLight,
-            t.itemsCenter,
-            t.justifyCenter,
-          ]}>
-          <Text style={[t.fontSansBold, {color: DARK_BLUE}]}>35</Text>
-        </View>
-        <View
-          style={[
-            t.flex4,
-            t.bgWhite,
-            t.h10,
-            t.itemsCenter,
-            t.justifyCenter,
-            {backgroundColor: DARK_BLUE},
-          ]}>
-          <Text style={[t.fontSansBold, t.textWhite]}>BREAK POINTS</Text>
-        </View>
-        <View
-          style={[
-            t.h10,
-            t.flex1,
-            t.bgWhite,
-            t.bgInfoLight,
-            t.itemsCenter,
-            t.justifyCenter,
-          ]}>
-          <Text style={[t.fontSansBold, {color: DARK_BLUE}]}>47</Text>
-        </View>
-      </View>
-      <View style={[t.flexRow]}>
-        <View
-          style={[
-            t.h10,
-            t.flex1,
-            t.bgWhite,
-            t.itemsCenter,
-            t.justifyCenter,
-            {backgroundColor: DARK_GOLD},
-          ]}>
-          <Text style={[t.fontSansBold, {color: DARK_BLUE}]}>35</Text>
-        </View>
-        <View
-          style={[
-            t.flex4,
-            t.bgWhite,
-            t.h10,
-            t.itemsCenter,
-            t.justifyCenter,
-            {backgroundColor: DARK_BLUE},
-          ]}>
-          <Text style={[t.fontSansBold, t.textWhite]}>
-            PUNTOS DE ORO GANADOS
-          </Text>
-        </View>
-        <View
-          style={[
-            t.h10,
-            t.flex1,
-            t.bgWhite,
-            t.itemsCenter,
-            t.justifyCenter,
-            {backgroundColor: DARK_GOLD},
-          ]}>
-          <Text style={[t.fontSansBold, {color: DARK_BLUE}]}>47</Text>
-        </View>
-      </View>
-      <View style={[t.flexRow]}>
-        <View
-          style={[
-            t.h10,
-            t.flex1,
-            t.bgWhite,
-            t.itemsCenter,
-            t.justifyCenter,
-            {backgroundColor: DARK_GOLD},
-          ]}>
-          <Text style={[t.fontSansBold, {color: DARK_BLUE}]}>35</Text>
-        </View>
-        <View
-          style={[
-            t.flex4,
-            t.bgWhite,
-            t.h10,
-            t.itemsCenter,
-            t.justifyCenter,
-            {backgroundColor: DARK_BLUE},
-          ]}>
-          <Text style={[t.fontSansBold, t.textWhite]}>GANADOS AL SERVICIO</Text>
-        </View>
-        <View
-          style={[
-            t.h10,
-            t.flex1,
-            t.bgWhite,
-            t.itemsCenter,
-            t.justifyCenter,
-            {backgroundColor: DARK_GOLD},
-          ]}>
-          <Text style={[t.fontSansBold, {color: DARK_BLUE}]}>47</Text>
-        </View>
-      </View>
-      <View style={[t.flexRow]}>
-        <View
-          style={[
-            t.h10,
-            t.flex1,
-            t.bgWhite,
-            t.itemsCenter,
-            t.justifyCenter,
-            {backgroundColor: DARK_GOLD},
-          ]}>
-          <Text style={[t.fontSansBold, {color: DARK_BLUE}]}>35</Text>
-        </View>
-        <View
-          style={[
-            t.flex4,
-            t.bgWhite,
-            t.h10,
-            t.itemsCenter,
-            t.justifyCenter,
-            {backgroundColor: DARK_BLUE},
-          ]}>
-          <Text style={[t.fontSansBold, t.textWhite]}>GANADOS AL RESTO</Text>
-        </View>
-        <View
-          style={[
-            t.h10,
-            t.flex1,
-            t.bgWhite,
-            t.itemsCenter,
-            t.justifyCenter,
-            {backgroundColor: DARK_GOLD},
-          ]}>
-          <Text style={[t.fontSansBold, {color: DARK_BLUE}]}>47</Text>
-        </View>
-      </View>
-      <View style={[t.flexRow]}>
-        <View
-          style={[
-            t.h10,
-            t.flex1,
-            t.bgWhite,
-            t.bgInfoLight,
-            t.itemsCenter,
-            t.justifyCenter,
-          ]}>
-          <Text style={[t.fontSansBold, {color: DARK_BLUE}]}>35</Text>
-        </View>
-        <View
-          style={[
-            t.flex4,
-            t.bgWhite,
-            t.h10,
-            t.itemsCenter,
-            t.justifyCenter,
-            {backgroundColor: DARK_BLUE},
-          ]}>
-          <Text style={[t.fontSansBold, t.textWhite]}>
-            GANADOS CONSECUTIDOS
-          </Text>
-        </View>
-        <View
-          style={[
-            t.h10,
-            t.flex1,
-            t.bgWhite,
-            t.bgInfoLight,
-            t.itemsCenter,
-            t.justifyCenter,
-          ]}>
-          <Text style={[t.fontSansBold, {color: DARK_BLUE}]}>47</Text>
-        </View>
-      </View>
-    </View>
+    </>
   );
 };

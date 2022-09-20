@@ -1,3 +1,9 @@
 {
-    "HELLO": "Hello"
+    "HELLO": "Hello",
+    "home_screen_wpt_match_title": "Professional matches",
+    "match_stats_total_points_won": "Total points won",
+    "match_stats_%_points_won": "% points won",
+    "match_stats_break_points": "Break points / won",
+    "match_stats_gold_points_won": "Gold points won",
+    "match_stats_consecutive_points": "Most consecutive points won"
 }

@@ -1,7 +1,7 @@
 import React, {createContext, useEffect, useMemo, useState} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import {useDocumentData} from 'react-firebase-hooks/firestore';
-import {UserType} from '../Global/types';
+import {Roles, UserType} from '../Global/types';
 
 interface SubscriptionContextInterface {
   isCoach: boolean;
@@ -33,7 +33,7 @@ export const AuthProvider = ({children}) => {
   }, [userData]);
 
   const value = {
-    isCoach: user?.role === 'coach',
+    isCoach: user?.role === Roles.COACH || user?.role === Roles.ADMIN,
     user,
     setUser,
   };

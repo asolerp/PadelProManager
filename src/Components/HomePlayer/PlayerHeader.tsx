@@ -18,6 +18,7 @@ export const PlayerHeader = ({position}) => {
     <View style={[t.mB10]}>
       <Header
         position={position}
+        leftStyles={[t.w48]}
         leftSide={<WelcomeMessage />}
         rightSide={
           <Avatar

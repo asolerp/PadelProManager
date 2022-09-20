@@ -3,5 +3,11 @@
  "SESSIONS_TITLE": "Mis sesiones de hoy",
  "SESSION_NOT_TODAY": "No tienes ninguna sesión para el día de hoy",
  "MY_PLAYERS_TITLE": "Mis jugadores",
- "DAILY_EXERCISE_TITLE": "Recomendación de ejercicio"
+ "DAILY_EXERCISE_TITLE": "Recomendación de ejercicio",
+ "home_screen_wpt_match_title": "Circuito profesional",
+ "match_stats_total_points_won": "Total puntos ganados",
+ "match_stats_%_points_won": "% puntos ganados",
+ "match_stats_break_points": "Break points / ganados",
+ "match_stats_gold_points_won": "Puntos de oro ganados",
+ "match_stats_consecutive_points": "Puntos consecutivos ganados"
 }

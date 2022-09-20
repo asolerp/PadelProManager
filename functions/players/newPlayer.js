@@ -1,30 +1,36 @@
 const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-const {USERS, RELATIONS} = require('../utils/constants');
+const fetch = require('node-fetch');
+
+const API_WEB_FIREBASE = 'AIzaSyC8aj5yS0qRdb75tQHs101a-mSn2xaUujI';
+const DYNAMIK_LINK = 'https://padelpromanager.page.link';
 
 const newPlayer = functions.firestore
   .document('users/{userId}/players/{playerId}')
   .onCreate(async (snap, context) => {
-    const data = snap.data();
-    const playerEmail = data?.email;
+    const coachId = context.params.userId;
 
-    try {
-      const coachRes = await admin
-        .firestore()
-        .collection(USERS)
-        .doc(context?.params?.userId)
-        .get();
+    const body = {
+      dynamicLinkInfo: {
+        domainUriPrefix: DYNAMIK_LINK,
+        link: `https://padelpromanager.com/player_invitation?action=new_player&coach_id=${coachId}`,
+        iosInfo: {
+          iosAppStoreId: '1608207639',
+          iosBundleId: 'com.padelpro',
+        },
+      },
+    };
 
-      const coach = {...coachRes.data(), id: coachRes.id};
+    const url = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=${API_WEB_FIREBASE}`;
 
-      await admin.firestore().collection(RELATIONS).add({
-        coach,
-        playerEmail,
-        status: 'pending',
-      });
-    } catch (err) {
-      console.log(err);
-    }
+    const response = await fetch(url, {
+      method: 'post',
+      body: JSON.stringify(body),
+      headers: {'Content-Type': 'application/json'},
+    });
+
+    const data = await response.json();
+
+    console.log(data);
   });
 
 module.exports = {

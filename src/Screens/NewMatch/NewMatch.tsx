@@ -45,7 +45,7 @@ export const NewMatchScreen = () => {
   });
 
   const [show, setShow] = useState(false);
-  const {isCoach} = usePermissions();
+  const {isCoach, isAdmin} = usePermissions();
   const selectdPlayersValidationFail =
     isCoach && Object.keys(selectedPlayers)?.length < 4;
 
@@ -134,9 +134,11 @@ export const NewMatchScreen = () => {
               }}
               render={({field: {onBlur, value}, fieldState: {error}}) => (
                 <Select
-                  list={cateogries}
+                  list={cateogries(isAdmin)}
                   placeholder="Categoría"
-                  value={cateogries?.find(c => c.value === Number(value))}
+                  value={cateogries(isAdmin)?.find(
+                    c => c.value === Number(value),
+                  )}
                   error={error?.message}
                   onBlur={onBlur}
                   onChange={v =>
@@ -232,7 +234,7 @@ export const NewMatchScreen = () => {
                 />
               </>
             )}
-            {isCoach && (
+            {(isCoach || isAdmin) && (
               <View style={[t.mY5]}>
                 <PlayersSelector />
                 {errorPlayers && <Text>Selecciona todos los jugadores</Text>}

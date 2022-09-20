@@ -9,6 +9,7 @@ import {query} from '../../../Lib/API/queries/dailyExercise';
 
 export const useGetHomeData = () => {
   const {user} = useContext(AuthContext);
+  const [proMatches, setProMatches] = useState<MatchType[]>([]);
   const [todaySessions, setTodaySessions] = useState<SessionType[]>([]);
   const [liveMatches, setLiveMatches] = useState<MatchType[]>([]);
   const [players, setPlayers] = useState<PlayerType[]>([]);
@@ -59,7 +60,6 @@ export const useGetHomeData = () => {
         .collection(USERS)
         .doc(user?.id)
         .collection(PLAYERS)
-        .where('coach', 'array-contains', user?.id)
         .get();
       setPlayers(
         playersQuery.docs.map(doc => ({
@@ -71,6 +71,23 @@ export const useGetHomeData = () => {
       console.log(err);
     }
   }, [user]);
+
+  const getProMatches = useCallback(async () => {
+    try {
+      const proMatchesQuery = await firestore()
+        .collection(MATCHES)
+        .where('category', '==', -1)
+        .where('state', '==', 'live')
+        .orderBy('date')
+        .get();
+      setProMatches(
+        proMatchesQuery.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as MatchType[],
+      );
+    } catch (err) {}
+  }, []);
 
   const getLiveMatches = useCallback(async () => {
     try {
@@ -118,6 +135,7 @@ export const useGetHomeData = () => {
         getTodaySessions(),
         getTotalPlayers(),
         getLiveMatches(),
+        getProMatches(),
       ]);
     } catch (err) {
       console.log(err);
@@ -134,6 +152,7 @@ export const useGetHomeData = () => {
     refetch,
     players,
     loading,
+    proMatches,
     liveMatches,
     dailyExercise,
     todaySessions,

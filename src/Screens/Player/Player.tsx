@@ -97,27 +97,8 @@ export const PlayerScreen = ({route}) => {
               <View style={[t.itemsCenter]}>
                 {!loading && (
                   <>
-                    <RadarChart
-                      style={[
-                        t.itemsCenter,
-                        t.justifyCenter,
-                        {width: 300, height: 300},
-                      ]}
-                      data={graphData}
-                      xAxis={xAxis}
-                      yAxis={{drawLabels: false}}
-                      chartDescription={{text: ''}}
-                      legend={legend}
-                      drawWeb={true}
-                      webLineWidth={1}
-                      webLineWidthInner={1}
-                      webAlpha={255}
-                      webColorInner={processColor('#cbd5e0')}
-                      skipWebLineCount={1}
-                      touchEnabled={false}
-                    />
                     <View style={[t.wFull]}>
-                      <ResumenStatistic statistics={graphData?.dataSets} />
+                      {/* <ResumenStatistic statistics={graphData?.dataSets} /> */}
                     </View>
                   </>
                 )}

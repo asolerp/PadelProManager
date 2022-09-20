@@ -4,9 +4,14 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '12.0'
 
-target 'PadelProManager' do
+abstract_target 'PadelProManagerCommonPods' do
   use_expo_modules!
   post_integrate do |installer|
+    begin
+      expo_patch_react_imports!(installer)
+    rescue => e
+      Pod::UI.warn e
+    end
     begin
       expo_patch_react_imports!(installer)
     rescue => e
@@ -15,15 +20,19 @@ target 'PadelProManager' do
   end
   config = use_native_modules!
 
+  # For extensions without React dependencies
+  pod 'react-native-config/Extension', :path => '../node_modules/react-native-config'
+
   use_react_native!(
     :path => config[:reactNativePath],
     # to enable hermes on iOS, change `false` to `true` and then install pods
     :hermes_enabled => true
   )
+  
+  target 'PadelProManager' do
+  end
 
-  target 'PadelProManagerTests' do
-    inherit! :complete
-    # Pods for testing
+  target 'PadelProManager-Development' do
   end
 
   # Enables Flipper.

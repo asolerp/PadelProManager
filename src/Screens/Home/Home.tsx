@@ -1,25 +1,12 @@
 import React, {FunctionComponent, useCallback} from 'react';
 
 import {ScreenLayout} from '../../Components/Layout';
-import {
-  View,
-  Text,
-  ScrollView,
-  FlatList,
-  RefreshControl,
-  ImageBackground,
-  Pressable,
-} from 'react-native';
+import {View, Text, ScrollView, RefreshControl} from 'react-native';
 import t from '../../Theme/theme';
 import {LiveMatchResume} from '../../Components/Common/LiveMatchResume';
 import {MatchResume} from '../../Components/Home/MatchResume';
 
-import {openScreenWithPush} from '../../Router/utils/actions';
-
 import {MyPlayers} from '../../Components/Home/MyPlayers';
-
-import {Banner} from '../../Components/UI/Banner';
-import {NEW_MATCH_SCREEN_KEY} from '../NewMatch/NewMatch';
 
 import {DailyExercise} from '../../Components/Home/DailyExercise';
 import {sortByDate} from '../../Utils/sorts';
@@ -35,10 +22,10 @@ import {useTranslationWrapper} from '../../Hooks/useTranslationsWrapper';
 import {LiveMatchesSkeleton} from '../../Components/Home/skeleton/LiveMatchesSkeleton';
 import {DailyExerciseSkeleton} from '../../Components/Home/skeleton/DailyExerciseSkeleton';
 import {LastMatchesSkeleton} from '../../Components/Home/skeleton/LastMatchesSkeleton';
-import {Avatar} from '../../Components/UI/Avatar';
-import {shortName} from '../../Utils/parsers';
-import {ProMatch, PRO_MATCH_SCREEN_KEY} from '../ProMatch/ProMatch';
-import {ProMatchCard} from '../../Components/Home/ProMatch';
+
+import {ProMatchesList} from '../../Components/Home/ProMatchesList';
+import {PaginatedList} from '../../Components/Common/PaginatedList';
+import {ProMatchSkeleton} from '../../Components/Home/skeleton/ProMatchSkeleton';
 
 export const HOME_SCREEN_KEY = 'homeScreen';
 
@@ -51,6 +38,7 @@ export const HomeScreen: FunctionComponent = () => {
     finishedMatches,
     dailyExercise,
     liveMatches,
+    proMatches,
     todaySessions,
     loading,
   } = useGetHomeData();
@@ -77,10 +65,16 @@ export const HomeScreen: FunctionComponent = () => {
           <MyTodaySessions sessions={todaySessions} />
         </View>
         <View style={[t.mB7]}>
-          <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
-            Circuito profesional
-          </Text>
-          <ProMatchCard match={liveMatches} />
+          {loading ? (
+            <ProMatchSkeleton />
+          ) : (
+            <>
+              <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
+                {loc('home_screen_wpt_match_title')}
+              </Text>
+              <ProMatchesList proMatches={proMatches} />
+            </>
+          )}
         </View>
         <View style={[t.mB7]}>
           <View>
@@ -98,22 +92,9 @@ export const HomeScreen: FunctionComponent = () => {
             {loading ? (
               <LiveMatchesSkeleton />
             ) : (
-              <FlatList
-                horizontal
-                ListEmptyComponent={
-                  !loading && (
-                    <Banner
-                      onPress={() => openScreenWithPush(NEW_MATCH_SCREEN_KEY)}
-                      ctaText="CREAR PARTIDA"
-                      title="Registra una partida"
-                      subtitle="Crea una partida con tus jugadores y registra todos sus golpes para después poder analizarlos."
-                    />
-                  )
-                }
-                showsHorizontalScrollIndicator={false}
+              <PaginatedList
                 data={liveMatches?.sort(sortByDate)}
                 renderItem={renderItem}
-                keyExtractor={item => item.id}
               />
             )}
           </View>

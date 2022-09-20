@@ -67,7 +67,7 @@ export const Input: React.FC<Props> = ({
           )}
         </View>
         {error && (
-          <Text style={[t.fontSansMedium, t.textError, t.mT1]}>{error}</Text>
+          <Text style={[t.fontSansMedium, t.textError, t.mB2]}>{error}</Text>
         )}
         <HDivider />
       </View>

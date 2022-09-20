@@ -24,7 +24,7 @@ const generateSet = (game, sets, team) => {
 
 const getIsMatchFinished = teamSet => teamSet === 2;
 
-const checkSetState = (game, firstTeamToCheck, seconTeamToCheck) => {
+const checkSetState = (game, firstTeamToCheck, secondTeamToCheck) => {
   const mainTeam = firstTeamToCheck[1];
   const sets = game[`s${game?.set}${firstTeamToCheck}`] + 1;
   if (sets >= 6) {
@@ -32,7 +32,7 @@ const checkSetState = (game, firstTeamToCheck, seconTeamToCheck) => {
       // firstTeamToCheck wins tiebreak
       return generateSet(game, game?.set, mainTeam);
     }
-    if (game[`s${game?.set}${seconTeamToCheck}`] === 6) {
+    if (game[`s${game?.set}${secondTeamToCheck}`] === 6) {
       // We are in tiebreak
       return {
         ...game,
@@ -44,17 +44,18 @@ const checkSetState = (game, firstTeamToCheck, seconTeamToCheck) => {
         tiebreak: true,
       };
     }
-    if (sets - game[`s${game?.set}${seconTeamToCheck}`] >= 2) {
+    if (sets - game[`s${game?.set}${secondTeamToCheck}`] >= 2) {
       // firstTeamToCheck wins set
       return generateSet(game, game?.set, mainTeam);
     }
   }
+
   return {
     ...game,
     team1: 0,
     team2: 0,
     service:
-      game?.service === firstTeamToCheck ? seconTeamToCheck : firstTeamToCheck,
+      game?.service === firstTeamToCheck ? secondTeamToCheck : firstTeamToCheck,
     [`s${game?.set}${firstTeamToCheck}`]:
       game[`s${game?.set}${firstTeamToCheck}`] + 1,
     breakpoint:
@@ -150,6 +151,11 @@ const tennisGameLogic = (game, winPointTeam) => {
   } else {
     const newGameState = {
       ...game,
+      consecutiveWon:
+        game?.lastPointWon === teamWinPoint
+          ? game?.consecutiveWon + 1
+          : game?.consecutiveWon,
+      lastPointWon: teamWinPoint,
       [`${teamWinPoint}`]: game?.[`${teamWinPoint}`] + 1,
     };
 
