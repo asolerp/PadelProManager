@@ -64,38 +64,58 @@ export const HomeScreen: FunctionComponent = () => {
         <View style={[t.mB7]}>
           <MyTodaySessions sessions={todaySessions} />
         </View>
-        <View style={[t.mB7]}>
+        <View>
           {loading ? (
-            <ProMatchSkeleton />
+            <View style={[t.mB7]}>
+              <ProMatchSkeleton />
+            </View>
           ) : (
             <>
-              <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
-                {loc('home_screen_wpt_match_title')}
-              </Text>
-              <ProMatchesList proMatches={proMatches} />
+              {proMatches?.length > 0 && (
+                <View style={[t.mB7]}>
+                  <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
+                    {loc('home_screen_wpt_match_title')}
+                  </Text>
+                  <ProMatchesList proMatches={proMatches} />
+                </View>
+              )}
             </>
           )}
         </View>
-        <View style={[t.mB7]}>
-          <View>
-            <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
-              {loc('MY_PLAYERS_TITLE')}
-            </Text>
-          </View>
-          {loading ? <PlayersSkeleton /> : <MyPlayers players={players} />}
+        <View>
+          {loading ? (
+            <View style={[t.mB7]}>
+              <PlayersSkeleton />
+            </View>
+          ) : (
+            <View style={[t.mB7]}>
+              <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
+                {loc('home_screen_my_players')}
+              </Text>
+              <MyPlayers players={players} />
+            </View>
+          )}
         </View>
         <View>
-          <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
-            Partidos activos
-          </Text>
-          <View style={[t.flexRow, t.justifyBetween, t.itemsCenter, t.mB7]}>
+          <View style={[t.flexRow, t.justifyBetween, t.itemsCenter]}>
             {loading ? (
-              <LiveMatchesSkeleton />
+              <View style={[t.mB7]}>
+                <LiveMatchesSkeleton />
+              </View>
             ) : (
-              <PaginatedList
-                data={liveMatches?.sort(sortByDate)}
-                renderItem={renderItem}
-              />
+              <>
+                {liveMatches?.length > 0 && (
+                  <View style={[t.mB7]}>
+                    <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
+                      {loc('home_screen_active_matches')}
+                    </Text>
+                    <PaginatedList
+                      data={liveMatches?.sort(sortByDate)}
+                      renderItem={renderItem}
+                    />
+                  </View>
+                )}
+              </>
             )}
           </View>
         </View>

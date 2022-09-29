@@ -44,7 +44,7 @@ export const colorByCategory = {
 };
 
 export const categoryParse = {
-  wpt: 'World Padel Tour',
+  wpt: 'WPT',
   premier: 'Premier',
   1: 'Primera',
   2: 'Segunda',

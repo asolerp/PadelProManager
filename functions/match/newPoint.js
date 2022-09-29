@@ -1,20 +1,20 @@
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-const {firestore} = require('firebase-admin');
-const {tennisGameLogic} = require('../utils/gameLogic');
-const {FB_REGION, MATCHES, HISTORY} = require('../utils/constants');
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
+const {firestore} = require("firebase-admin");
+const {tennisGameLogic} = require("../utils/gameLogic");
+const {FB_REGION, MATCHES, HISTORY} = require("../utils/constants");
 
 const newPoint = functions
   .region(FB_REGION)
   .runWith({
     timeoutSeconds: 540,
-    memory: '2GB',
+    memory: "2GB",
   })
   .https.onCall(async (data, context) => {
     if (!context.auth) {
       throw new functions.https.HttpsError(
-        'permission-denied',
-        'The function must be called while authenticated.',
+        "permission-denied",
+        "The function must be called while authenticated.",
       );
     }
 
@@ -43,8 +43,8 @@ const newPoint = functions
       ) {
         await historyQuery.add({
           date: new Date(),
-          alert: '¡Punto de oro!',
-          type: 'warning',
+          alert: "¡Punto de oro!",
+          type: "warning",
         });
       }
 
@@ -52,7 +52,7 @@ const newPoint = functions
         await historyQuery.add({
           date: new Date(),
           alert: `Partido finalizado, Gana el equipo ${newStateGame?.winMatch}`,
-          type: 'info',
+          type: "info",
         });
       }
 
@@ -62,7 +62,7 @@ const newPoint = functions
         game: newStateGame,
         [`statistics.s${newStateGame.set}.count`]:
           firestore.FieldValue.increment(1),
-        ['statistics.total.count']: firestore.FieldValue.increment(1),
+        ["statistics.total.count"]: firestore.FieldValue.increment(1),
       });
 
       if (match?.game?.lastPointWon === newStateGame?.lastPointWon) {
@@ -78,7 +78,7 @@ const newPoint = functions
         }
       } else {
         await matchQuery.update({
-          ['game.consecutiveWon']: 1,
+          ["game.consecutiveWon"]: 1,
         });
       }
 
@@ -86,7 +86,7 @@ const newPoint = functions
         await matchQuery.update({
           [`statistics.s${newStateGame.set}.breakpoint`]:
             firestore.FieldValue.increment(1),
-          ['statistics.total.breakpoint']: firestore.FieldValue.increment(1),
+          ["statistics.total.breakpoint"]: firestore.FieldValue.increment(1),
         });
       }
 
@@ -95,35 +95,35 @@ const newPoint = functions
         match?.game?.team2 === 3 &&
         match?.game?.goldPoint
       ) {
-        if (match?.game.service === 't1' && stats?.winPointTeam === 'team1') {
+        if (match?.game.service === "t1" && stats?.winPointTeam === "team1") {
           await matchQuery.update({
             [`statistics.s${match?.game.set}.team1.global.serviceBreakpoint`]:
               firestore.FieldValue.increment(1),
-            ['statistics.total.team1.global.serviceBreakpoint']:
+            ["statistics.total.team1.global.serviceBreakpoint"]:
               firestore.FieldValue.increment(1),
           });
         }
-        if (match?.game.service === 't2' && stats?.winPointTeam === 'team1') {
+        if (match?.game.service === "t2" && stats?.winPointTeam === "team1") {
           await matchQuery.update({
             [`statistics.s${match?.game.set}.team1.global.returningBreakpoint`]:
               firestore.FieldValue.increment(1),
-            ['statistics.total.team1.global.returningBreakpoint']:
+            ["statistics.total.team1.global.returningBreakpoint"]:
               firestore.FieldValue.increment(1),
           });
         }
-        if (match?.game.service === 't1' && stats?.winPointTeam === 'team2') {
+        if (match?.game.service === "t1" && stats?.winPointTeam === "team2") {
           await matchQuery.update({
             [`statistics.s${match?.game.set}.team2.global.returningBreakpoint`]:
               firestore.FieldValue.increment(1),
-            ['statistics.total.team2.global.returningBreakpoint']:
+            ["statistics.total.team2.global.returningBreakpoint"]:
               firestore.FieldValue.increment(1),
           });
         }
-        if (match?.game.service === 't2' && stats?.winPointTeam === 'team2') {
+        if (match?.game.service === "t2" && stats?.winPointTeam === "team2") {
           await matchQuery.update({
             [`statistics.s${match?.game.set}.team2.global.serviceBreakpoint`]:
               firestore.FieldValue.increment(1),
-            ['statistics.total.team2.global.serviceBreakpoint']:
+            ["statistics.total.team2.global.serviceBreakpoint"]:
               firestore.FieldValue.increment(1),
           });
         }
@@ -160,8 +160,8 @@ const newPoint = functions
       );
     } catch (err) {
       throw new functions.https.HttpsError(
-        'invalid-argument',
-        'Something were wrong.',
+        "invalid-argument",
+        "Something were wrong.",
       );
     }
   });

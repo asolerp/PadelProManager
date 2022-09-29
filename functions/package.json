@@ -23,6 +23,7 @@
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.19.1",
     "eslint": "^7.6.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-promise": "^6.0.0",

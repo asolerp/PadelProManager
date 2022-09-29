@@ -1,7 +1,7 @@
-const admin = require('firebase-admin');
-const functions = require('firebase-functions');
-const {PLAYERS} = require('../utils/constants');
-const {firebaseIDGenerator} = require('../utils/firebaseIDGenerator');
+const admin = require("firebase-admin");
+const functions = require("firebase-functions");
+const {PLAYERS} = require("../utils/constants");
+const {firebaseIDGenerator} = require("../utils/firebaseIDGenerator");
 
 const emptyStats = {
   ef: {
@@ -42,20 +42,20 @@ const emptyStats = {
   tw: 0,
 };
 
-const newUserChecker = functions.auth.user().onCreate(async user => {
+const newUserChecker = functions.auth.user().onCreate(async (user) => {
   const findPlayer = await admin
-    .firestore()
-    .collection(PLAYERS)
-    .where('email', '==', user?.email)
-    .get();
+      .firestore()
+      .collection(PLAYERS)
+      .where("email", "==", user?.email)
+      .get();
 
   if (findPlayer.docs.length > 0) {
     const player = findPlayer.docs[0];
     await admin
-      .firestore()
-      .collection(PLAYERS)
-      .doc(player?.id)
-      .update({id: user?.uid});
+        .firestore()
+        .collection(PLAYERS)
+        .doc(player?.id)
+        .update({id: user?.uid});
   } else {
     const id = firebaseIDGenerator();
     await admin.firestore().collection(PLAYERS).doc(id).set({
@@ -63,12 +63,12 @@ const newUserChecker = functions.auth.user().onCreate(async user => {
       email: user?.email,
     });
     await admin
-      .firestore()
-      .collection(PLAYERS)
-      .doc(id)
-      .collection('stats')
-      .doc('global')
-      .set(emptyStats);
+        .firestore()
+        .collection(PLAYERS)
+        .doc(id)
+        .collection("stats")
+        .doc("global")
+        .set(emptyStats);
   }
 });
 

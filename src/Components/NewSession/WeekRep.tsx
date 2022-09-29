@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text} from 'react-native';
+import {useTranslationWrapper} from '../../Hooks/useTranslationsWrapper';
 import t from '../../Theme/theme';
 import PressableOpacity from '../UI/PressableOpacity';
 
@@ -25,6 +26,8 @@ const Day = ({active, day, onPress}) => {
 };
 
 export const WeekRep = ({onPressDay, activeDays}) => {
+  const {loc} = useTranslationWrapper();
+
   return (
     <View
       style={[
@@ -37,7 +40,9 @@ export const WeekRep = ({onPressDay, activeDays}) => {
         t.itemsCenter,
         t.justifyBetween,
       ]}>
-      <Text style={[t.fontSans, t.textBase, t.textGray600]}>Periocidad</Text>
+      <Text style={[t.fontSans, t.textBase, t.textGray600]}>
+        {loc('new_session_form_periodicity')}
+      </Text>
       <View style={[t.flexRow]}>
         <Day
           day="L"

@@ -11,6 +11,7 @@ import {AuthContext} from '../../Context/AuthContex';
 import PressableOpacity from '../UI/PressableOpacity';
 import {openScreenWithPush} from '../../Router/utils/actions';
 import {NEW_SESSION_SCREEN_KEY} from '../../Screens/NewSession/NewSession';
+import {SESSION_SCREEN_KEY} from '../../Screens/Session/Session';
 
 export const SessionItem = ({item, style}) => {
   const {isCoach} = useContext(AuthContext);
@@ -21,7 +22,8 @@ export const SessionItem = ({item, style}) => {
     <>
       <PressableOpacity
         onPress={() =>
-          isCoach && openScreenWithPush(NEW_SESSION_SCREEN_KEY, {session: item})
+          isCoach &&
+          openScreenWithPush(SESSION_SCREEN_KEY, {sessionId: item.id})
         }
         style={[
           t.p3,

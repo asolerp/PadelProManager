@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "505646403706",
+    "project_id": "padel-manager-pro---dev-95ef7",
+    "storage_bucket": "padel-manager-pro---dev-95ef7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:505646403706:android:fa38577701b6059f95ebc3",
+        "android_client_info": {
+          "package_name": "com.padelpro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "505646403706-fej2kni70k12p2r13rdp22j9b7f64vog.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjXBuMZ0bBqeJTV5HwAV6MxbCK9z8G6Kg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "505646403706-fej2kni70k12p2r13rdp22j9b7f64vog.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "505646403706-ut2obnjhnuhs1tujk4rqmr8tjg3m2t79.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.padelpro.dev"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

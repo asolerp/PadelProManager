@@ -1,13 +1,13 @@
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-const {getStatsUpdateObject} = require('../utils/getStatsUpdateObject');
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
+const {getStatsUpdateObject} = require("../utils/getStatsUpdateObject");
 const {
   USERS,
   PLAYERS,
   FB_REGION,
   MATCHES,
   STATS,
-} = require('../utils/constants');
+} = require("../utils/constants");
 
 const findPlayerEmailById = async (userId, playerId) => {
   const player = await admin
@@ -25,7 +25,7 @@ const findUserIdByEmail = async email => {
   const user = await admin
     .firestore()
     .collection(USERS)
-    .where('email', '==', email)
+    .where("email", "==", email)
     .get();
 
   return user?.docs.length > 0 ? user.docs[0].id : null;
@@ -35,13 +35,13 @@ const savePlayersStats = functions
   .region(FB_REGION)
   .runWith({
     timeoutSeconds: 540,
-    memory: '2GB',
+    memory: "2GB",
   })
   .https.onCall(async (data, context) => {
     if (!context.auth) {
       throw new functions.https.HttpsError(
-        'permission-denied',
-        'The function must be called while authenticated.',
+        "permission-denied",
+        "The function must be called while authenticated.",
       );
     }
 
@@ -62,7 +62,7 @@ const savePlayersStats = functions
         .collection(PLAYERS)
         .doc(playerId)
         .collection(STATS)
-        .doc('global');
+        .doc("global");
 
     const userRef = id =>
       admin
@@ -70,9 +70,9 @@ const savePlayersStats = functions
         .collection(USERS)
         .doc(id)
         .collection(STATS)
-        .doc('global');
+        .doc("global");
 
-    batch.update(matchRef, {state: 'finished'});
+    batch.update(matchRef, {state: "finished"});
 
     try {
       team1Stats?.players &&

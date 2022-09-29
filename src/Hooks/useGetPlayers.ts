@@ -9,8 +9,7 @@ export const useGetPlayers = () => {
   const query = firestore()
     .collection('users')
     .doc(user?.id)
-    .collection('players')
-    .where('coach', 'array-contains', user?.id);
+    .collection('players');
   const [players, loading, error] = useCollectionData(query, {
     idField: 'id',
   });

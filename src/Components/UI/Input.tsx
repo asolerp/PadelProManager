@@ -14,17 +14,25 @@ import {HDivider} from './HDivider';
 interface Props extends TextInputProps {
   style?: ViewStyle[];
   inputStyle?: TextStyle[];
+  onInputPress?: () => void;
   empty?: boolean;
   withLabel?: boolean;
+  withDivider?: boolean;
+  subfix?: string;
   emptyValues?: React.ReactNode;
   error?: string;
+  labelText?: string;
 }
 
 export const Input: React.FC<Props> = ({
   style,
   error,
   empty,
+  subfix,
+  labelText,
+  onInputPress,
   withLabel = true,
+  withDivider = true,
   emptyValues,
   inputStyle,
   ...props
@@ -33,7 +41,9 @@ export const Input: React.FC<Props> = ({
     <>
       <View style={[style]}>
         {withLabel && (
-          <Text style={[t.fontSans, t.textSm]}>{props?.placeholder}</Text>
+          <Text style={[t.fontSans, t.textBase]}>
+            {labelText || props?.placeholder}
+          </Text>
         )}
         <View
           style={[
@@ -43,14 +53,14 @@ export const Input: React.FC<Props> = ({
             error ? t.borderErrorDark : t.borderGray400,
           ]}>
           {empty ? (
-            <Pressable onPress={props.onPressIn}>
+            <Pressable onPress={onInputPress}>
               {emptyValues ? (
                 emptyValues
               ) : (
                 <Text
                   style={[
                     t.fontSans,
-                    t.textBase,
+                    t.textSm,
                     inputStyle,
                     {color: '#718096'},
                   ]}>
@@ -59,17 +69,34 @@ export const Input: React.FC<Props> = ({
               )}
             </Pressable>
           ) : (
-            <TextInput
-              placeholderTextColor="#718096"
-              style={[t.fontSans, t.textBase, inputStyle]}
-              {...props}
-            />
+            <>
+              {onInputPress ? (
+                <Pressable onPress={onInputPress}>
+                  <View pointerEvents="none">
+                    <TextInput
+                      placeholderTextColor="#718096"
+                      style={[t.fontSans, t.textSm, inputStyle]}
+                      {...props}
+                    />
+                  </View>
+                </Pressable>
+              ) : (
+                <View style={[subfix && t.flexRow]}>
+                  <TextInput
+                    placeholderTextColor="#718096"
+                    style={[t.fontSans, t.textSm, inputStyle]}
+                    {...props}
+                  />
+                  {subfix && <Text style={[t.mL1]}>{subfix}</Text>}
+                </View>
+              )}
+            </>
           )}
         </View>
         {error && (
           <Text style={[t.fontSansMedium, t.textError, t.mB2]}>{error}</Text>
         )}
-        <HDivider />
+        {withDivider && <HDivider />}
       </View>
     </>
   );

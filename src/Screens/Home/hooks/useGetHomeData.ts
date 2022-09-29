@@ -77,7 +77,7 @@ export const useGetHomeData = () => {
       const proMatchesQuery = await firestore()
         .collection(MATCHES)
         .where('category', '==', -1)
-        .where('state', '==', 'live')
+        .where('state', '==', 'finished')
         .orderBy('date')
         .get();
       setProMatches(

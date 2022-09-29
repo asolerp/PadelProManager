@@ -1,8 +1,8 @@
-const axios = require('axios');
-const {URL_IAP_TEST} = require('./constants');
+const axios = require("axios");
+const {URL_IAP_TEST} = require("./constants");
 
 const validateAndStoreReceipt = async (url, body, userSnapshot) => {
-  console.log('[[VALIDATE AND STORE RECEIPT]]');
+  console.log("[[VALIDATE AND STORE RECEIPT]]");
   return await axios
     .post(url, body)
     .then(result => {

@@ -27,6 +27,7 @@ import {
   NEW_SESSION_SCREEN_KEY,
 } from '../Screens/NewSession/NewSession';
 import {ProMatch, PRO_MATCH_SCREEN_KEY} from '../Screens/ProMatch/ProMatch';
+import {Session, SESSION_SCREEN_KEY} from '../Screens/Session/Session';
 
 const Stack = createNativeStackNavigator();
 
@@ -82,6 +83,11 @@ export const CoachStack = () => {
           options={{headerShown: false}}
           name={EXERCICES_SCREEN_KEY}
           component={Exercices}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name={SESSION_SCREEN_KEY}
+          component={Session}
         />
       </Stack.Group>
       <Stack.Group>

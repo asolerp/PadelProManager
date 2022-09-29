@@ -84,25 +84,25 @@ const checkResultTiebreak = game => {
 };
 
 const checkWhoServesTB = (service, points) => {
-  if (service === 't1') {
+  if (service === "t1") {
     if (points % 2 !== 0) {
-      return 't2';
+      return "t2";
     }
-    return 't1';
+    return "t1";
   }
   if (points % 2 !== 0) {
-    return 't1';
+    return "t1";
   }
-  return 't2';
+  return "t2";
 };
 
 const checkResult = game => {
   if (game?.goldPoint) {
     if (game?.team1 > 3 || game?.team2 > 3) {
       if (game?.team1 > game?.team2) {
-        return checkSetState(game, 't1', 't2');
+        return checkSetState(game, "t1", "t2");
       } else {
-        return checkSetState(game, 't2', 't1');
+        return checkSetState(game, "t2", "t1");
       }
     } else {
       return game;
@@ -111,12 +111,12 @@ const checkResult = game => {
     if (game?.team1 > 3 || game?.team2 > 3) {
       if (game?.team1 > game?.team2) {
         if (game?.team1 - game?.team2 > 1) {
-          return checkSetState(game, 't1', 't2');
+          return checkSetState(game, "t1", "t2");
         }
         return game;
       } else {
         if (game?.team2 - game?.team1 > 1) {
-          return checkSetState(game, 't2', 't1');
+          return checkSetState(game, "t2", "t1");
         }
         return game;
       }
@@ -128,7 +128,7 @@ const checkResult = game => {
 
 const tennisGameLogic = (game, winPointTeam) => {
   const teamWinPoint = winPointTeam;
-  const teamLosePoint = winPointTeam === 'team1' ? 'team2' : 'team1';
+  const teamLosePoint = winPointTeam === "team1" ? "team2" : "team1";
 
   if (game?.tiebreak) {
     const newGameState = {

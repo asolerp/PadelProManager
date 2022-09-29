@@ -1,9 +1,9 @@
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-const {MATCHES} = require('../utils/constants');
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
+const {MATCHES} = require("../utils/constants");
 
 const updatePlayerInMatch = functions.firestore
-  .document('players/{playerId}')
+  .document("players/{playerId}")
   .onUpdate(async (change, context) => {
     const playerAfter = change.after.data();
     // Create a new batch instance
@@ -13,7 +13,7 @@ const updatePlayerInMatch = functions.firestore
       const querySnapshot = await admin
         .firestore()
         .collection(MATCHES)
-        .where('playersId', 'array-contains', context.params.playerId)
+        .where("playersId", "array-contains", context.params.playerId)
         .get();
       querySnapshot.forEach(doc => {
         const match = doc.data();

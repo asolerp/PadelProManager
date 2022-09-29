@@ -17,15 +17,15 @@ import {HDivider} from '../../Components/UI/HDivider';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {useNewSessionForm} from './hooks/useNewSessionForm';
-import PressableOpacity from '../../Components/UI/PressableOpacity';
-import {popScreen} from '../../Router/utils/actions';
+import * as Localization from 'expo-localization';
+
 import {ModalListOfPlayers} from '../../Components/NewMatch/ModalListOfPlayers';
 
-import Icon from 'react-native-vector-icons/Ionicons';
 import {PlayerChip} from '../../Components/NewSession/PlayerChip';
 import {useDeleteSession} from './hooks/useDeleteSession';
 import {CalendarType} from '../../Components/NewSession/CalendarType';
 import {WeekRep} from '../../Components/NewSession/WeekRep';
+import {useTranslationWrapper} from '../../Hooks/useTranslationsWrapper';
 
 export const NEW_SESSION_SCREEN_KEY = 'newSession';
 
@@ -52,6 +52,8 @@ export const NewSessionScreen = ({route}) => {
     session?.id,
     session?.internalId,
   );
+
+  const {loc} = useTranslationWrapper();
 
   const [show, setShow] = useState(false);
   const [mode, setMode] = useState('date');
@@ -88,12 +90,12 @@ export const NewSessionScreen = ({route}) => {
       />
 
       <Header
-        title={session ? 'Editar sesión' : 'Nueva sesión'}
-        rightSide={
-          <PressableOpacity onPress={() => popScreen()}>
-            <Icon name="ios-close" size={30} />
-          </PressableOpacity>
+        title={
+          session
+            ? loc('new_session_edit_title')
+            : loc('new_session_create_title')
         }
+        withBack
       />
       <HDivider />
       <KeyboardAwareScrollView
@@ -141,7 +143,7 @@ export const NewSessionScreen = ({route}) => {
               />
               <View style={[t.flexGrow, t.mT10]}>
                 <Input
-                  placeholder="Club"
+                  placeholder={loc('default_club')}
                   value={values?.club}
                   name="club"
                   error={errors.club}
@@ -151,7 +153,7 @@ export const NewSessionScreen = ({route}) => {
                   style={[t.flex1, t.mB3]}
                 />
                 <Input
-                  placeholder="Nombre de la sesión"
+                  placeholder={loc('new_session_form_session_name')}
                   value={values?.title}
                   name="title"
                   error={errors.title}
@@ -161,7 +163,7 @@ export const NewSessionScreen = ({route}) => {
                   style={[t.flex1, t.mB3]}
                 />
                 <Input
-                  placeholder="Notas para jugadores"
+                  placeholder={loc('new_session_form_players_notes')}
                   value={values?.notes}
                   name="notes"
                   error={errors.notes}
@@ -178,10 +180,21 @@ export const NewSessionScreen = ({route}) => {
                   <Input
                     editable={false}
                     value={values?.date}
-                    onPressOut={() => showDatePicker('date', 'date')}
-                    placeholder="Fecha"
+                    onInputPress={() => showDatePicker('date', 'date')}
+                    placeholder={loc('default_date')}
                     error={errors.date}
                     onBlur={handleBlur('date')}
+                    style={[t.flex1, t.mR3]}
+                  />
+                  <Input
+                    value={values?.price}
+                    subfix={String(Localization.currency)}
+                    onChangeText={handleChange('price')}
+                    keyboardType="decimal-pad"
+                    labelText={loc('new_session_form_price_session')}
+                    placeholder={loc('default_price')}
+                    error={errors.price}
+                    onBlur={handleBlur('price')}
                     style={[t.flex1]}
                   />
                 </View>
@@ -189,8 +202,8 @@ export const NewSessionScreen = ({route}) => {
                   <Input
                     editable={false}
                     value={values?.startTime}
-                    onPressOut={() => showDatePicker('time', 'startTime')}
-                    placeholder="Hora inicio"
+                    onInputPress={() => showDatePicker('time', 'startTime')}
+                    placeholder={loc('default_start_time')}
                     error={errors.startTime}
                     onBlur={handleBlur('startTime')}
                     style={[t.flex1, t.mR3]}
@@ -198,8 +211,8 @@ export const NewSessionScreen = ({route}) => {
                   <Input
                     editable={false}
                     value={values?.endTime}
-                    onPressOut={() => showDatePicker('time', 'endTime')}
-                    placeholder="Hora fin"
+                    onInputPress={() => showDatePicker('time', 'endTime')}
+                    placeholder={loc('default_end_time')}
                     error={errors.endTime}
                     onBlur={handleBlur('birtendTimehDate')}
                     style={[t.flex1]}
@@ -220,9 +233,9 @@ export const NewSessionScreen = ({route}) => {
                         </View>
                       )
                     }
-                    placeholder="Jugadores"
+                    placeholder={loc('default_players')}
                     style={[t.flex1]}
-                    onPressIn={() => setIsVisible(true)}
+                    onInputPress={() => setIsVisible(true)}
                   />
                 </View>
                 <View
@@ -237,7 +250,7 @@ export const NewSessionScreen = ({route}) => {
                     t.justifyBetween,
                   ]}>
                   <Text style={[t.fontSans, t.textBase, t.textGray600]}>
-                    Color calendario
+                    {loc('new_session_form_calendar_color')}
                   </Text>
                   <View style={[t.flexRow]}>
                     <CalendarType
@@ -280,7 +293,7 @@ export const NewSessionScreen = ({route}) => {
           disabled={loadingCreateUpdate}
           active
           size="lg"
-          title={session ? 'Editar' : 'Crear'}
+          title={session ? loc('default_edit') : loc('default_create')}
           style={[t.mY3]}
           onPress={handleSubmitForm}
         />

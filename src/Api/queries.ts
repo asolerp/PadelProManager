@@ -5,4 +5,5 @@ export const playerQuery = userId =>
   userQuery.doc(userId).collection('players');
 export const userQuery = firestore().collection('users');
 export const sessionQuery = firestore().collection('sessions');
+export const accountingQuery = firestore().collection('accounting');
 export const relationsQuery = firestore().collection('relations');
