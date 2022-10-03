@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:505646403706:android:fa38577701b6059f95ebc3",
+        "mobilesdk_app_id": "1:505646403706:android:c4783af81ed1fc7495ebc3",
         "android_client_info": {
-          "package_name": "com.padelpro"
+          "package_name": "com.padelpro.development"
         }
       },
       "oauth_client": [

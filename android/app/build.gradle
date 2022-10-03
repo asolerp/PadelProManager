@@ -143,7 +143,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.padelpromanager"
+        applicationId "com.padelpro"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -153,12 +153,12 @@ android {
     productFlavors {
         Development {
              minSdkVersion rootProject.ext.minSdkVersion
-             applicationId "com.padelpromanager.development"
+             applicationId "com.padelpro.development"
              targetSdkVersion rootProject.ext.targetSdkVersion
         }
         Production {
              minSdkVersion rootProject.ext.minSdkVersion
-             applicationId "com.padelpromanager"
+             applicationId "com.padelpro"
              targetSdkVersion rootProject.ext.targetSdkVersion
         }
     }
