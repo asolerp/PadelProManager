@@ -33,7 +33,10 @@ const Stack = createNativeStackNavigator();
 
 export const CoachStack = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        animation: 'slide_from_right',
+      }}>
       <Stack.Group>
         <Stack.Screen
           options={{headerShown: false}}
@@ -54,6 +57,11 @@ export const CoachStack = () => {
           options={{headerShown: false}}
           name={MATCH_SCREEN_KEY}
           component={MatchScreen}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name={NEW_POINT_SCREEN_KEY}
+          component={NewPoint}
         />
         <Stack.Screen
           options={{headerShown: false}}
@@ -89,13 +97,7 @@ export const CoachStack = () => {
           name={SESSION_SCREEN_KEY}
           component={Session}
         />
-      </Stack.Group>
-      <Stack.Group>
-        <Stack.Screen
-          options={{headerShown: false}}
-          name={NEW_POINT_SCREEN_KEY}
-          component={NewPoint}
-        />
+
         <Stack.Screen
           options={{headerShown: false}}
           name={NEW_SESSION_SCREEN_KEY}

@@ -1,4 +1,5 @@
-import {useEffect} from 'react';
+import {ar} from 'date-fns/locale';
+import {useEffect, useState} from 'react';
 
 import {
   interpolateColor,
@@ -24,8 +25,19 @@ export const useAnimatedPointType = ({
   const positionBoxX = useSharedValue(0);
   const positionBoxY = useSharedValue(0);
   const zIndex = useSharedValue(1);
+  const elevation = useSharedValue(1);
   const progress = useSharedValue(0);
   const color = useSharedValue('#D3D3D3');
+
+  const [areasArray, setAreasArray] = useState({});
+
+  useEffect(() => {
+    if (areas) {
+      setAreasArray(areas);
+    }
+  }, [areas]);
+
+  console.log('EFFECT AREAS', areasArray);
 
   useEffect(() => {
     if (usedPoints?.[result]?.type === type) {
@@ -89,6 +101,7 @@ export const useAnimatedPointType = ({
         return;
       }
       zIndex.value = 1000;
+      elevation.value = 5;
       translateX.value = event.translationX;
       translateY.value = event.translationY;
     },
@@ -102,7 +115,7 @@ export const useAnimatedPointType = ({
           ? positionBoxY.value + translateY.value
           : translateY.value + positionBoxY.value;
 
-      const wichArea = findInWhatArea(areas, fPositionX, fPositionY);
+      const wichArea = findInWhatArea(areasArray, fPositionX, fPositionY);
 
       if (wichArea) {
         if (wichArea.id === -1) {

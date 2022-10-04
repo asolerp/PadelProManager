@@ -2,7 +2,7 @@ import {format, setHours, setMinutes} from 'date-fns';
 import {useContext, useEffect, useRef, useState} from 'react';
 import {accountingQuery, sessionQuery} from '../../../Api/queries';
 import {AuthContext} from '../../../Context/AuthContex';
-import * as Localization from 'expo-localization';
+// import * as Localization from 'expo-localization';
 
 import {useUpdateDocument} from '../../../Hooks/useUpdateDocument';
 import {popScreen} from '../../../Router/utils/actions';
@@ -84,7 +84,7 @@ export const useNewSessionForm = ({startDate, session}) => {
       coachId: user?.id,
       date: Number(timestampDate),
       price,
-      currency: String(Localization.currency),
+      // currency: String(Localization.currency),
       startTime: Number(format(new Date(startTimeWithMinutes), 'T')),
       endTime: Number(format(new Date(endTimeWithMinutes), 'T')),
       color: sessionColor,

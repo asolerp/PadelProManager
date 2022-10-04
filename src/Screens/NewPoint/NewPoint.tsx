@@ -45,24 +45,17 @@ export const NewPoint = ({route}) => {
   const {handleSavePoint: onSavePoint, loading} = useLiveMatch(match);
 
   const {
-    typePoint,
     usedPoints,
     pointStats,
     resultPoint,
     winPointTeam,
     handleOnDrop,
-    setUsedPoints,
     isResultActive,
     isPlayerActive,
     hasSavePointError,
     handlePressResult,
-    isTypePointActive,
-    handlePressPlayer,
     cleanNewPointForm,
-    isWinPointTeamActive,
-    handlePressTypePoint,
     checkIfIsInPointStats,
-    handlePressRemoveStat,
     isPointWithoutStatistic,
     handlePressWinPointTeam,
     getTotalPlayerStatistics,
@@ -91,13 +84,30 @@ export const NewPoint = ({route}) => {
     setPoints(getPoints(resultPoint));
   }, [resultPoint]);
 
+  console.log('AREAS', areas);
+
   return (
     <ScreenLayout>
+      <Header
+        containerStyle={[t.bgWhite]}
+        withBack
+        title={<LiveResult game={match?.game} />}
+        rightSide={
+          <View style={[t.flexRow, t.justifyBetween, t.itemsCenter, t.mY5]}>
+            {match?.game?.finished ? (
+              <Chip text="Finalizado" mainColor="error" />
+            ) : (
+              <Chip text="Activo" />
+            )}
+          </View>
+        }
+      />
       <View
         style={[
           t.h10,
           t.w10,
-          {zIndex: 1000, top: Dimensions.get('window').height / 2.4},
+          t.z50,
+          {top: Dimensions.get('window').height / 2.4},
           t.absolute,
           t.left3,
           t.bottom0,
@@ -122,7 +132,8 @@ export const NewPoint = ({route}) => {
         style={[
           t.h10,
           t.w10,
-          {zIndex: 1000, bottom: Dimensions.get('window').height / 3.5},
+          t.z50,
+          {bottom: Dimensions.get('window').height / 3.5},
           t.absolute,
           t.left3,
           t.justifyCenter,
@@ -146,7 +157,7 @@ export const NewPoint = ({route}) => {
         style={[
           t.w10,
           t.h10,
-          {zIndex: 1000},
+          t.z50,
           t.absolute,
           t.right3,
           {top: Dimensions.get('window').height / 1.9},
@@ -170,10 +181,10 @@ export const NewPoint = ({route}) => {
       </View>
       <View
         style={[
-          {zIndex: 1000},
           t.absolute,
           t.left0,
           t.right0,
+          t.z50,
           t.bottom20,
           t.justifyCenter,
           t.itemsCenter,
@@ -190,22 +201,8 @@ export const NewPoint = ({route}) => {
           }}
         />
       </View>
-      <Header
-        containerStyle={[t.bgWhite]}
-        withBack
-        title={<LiveResult game={match?.game} />}
-        rightSide={
-          <View style={[t.flexRow, t.justifyBetween, t.itemsCenter, t.mY5]}>
-            {match?.game?.finished ? (
-              <Chip text="Finalizado" mainColor="error" />
-            ) : (
-              <Chip text="Activo" />
-            )}
-          </View>
-        }
-      />
       <HDivider style={[t.mB2]} />
-      <View style={[t.flexRow, t.mY4, t.justifyCenter, t.z40]}>
+      <View style={[t.flexRow, t.mY4, t.justifyCenter, t.z50]}>
         <Button
           title="Winner"
           type="success"
@@ -235,7 +232,7 @@ export const NewPoint = ({route}) => {
           t.justifyCenter,
           t.z40,
           t.pX2,
-          {elevation: 9},
+          t.shadowNone,
         ]}>
         <View
           style={[
@@ -243,14 +240,14 @@ export const NewPoint = ({route}) => {
             t.flexRow,
             t.flexWrap,
             t.justifyCenter,
-
             t.p2,
-            t.roundedSm,
             t.z50,
-            {elevation: 10},
+            t.roundedSm,
+            t.shadowNone,
           ]}>
           {points?.map(p => (
             <PointType
+              key={`${p.type}-${p.label}`}
               result={resultPoint}
               usedPoints={usedPoints}
               onDrop={area => {
@@ -265,12 +262,16 @@ export const NewPoint = ({route}) => {
           ))}
         </View>
         <View
-          onLayout={({nativeEvent}) =>
-            setAreas({
-              ...areas,
-              area1: {...nativeEvent.layout, name: 1, id: match?.t1?.[0].id},
-            })
-          }
+          onLayout={({nativeEvent}) => {
+            setAreas(old => ({
+              ...old,
+              area1: {
+                ...nativeEvent.layout,
+                name: 1,
+                id: match?.t1?.[0].id,
+              },
+            }));
+          }}
           style={[
             t.flex,
             t.justifyCenter,
@@ -530,8 +531,6 @@ export const NewPoint = ({route}) => {
           {backgroundColor: '#FF5B42'},
           t.justifyEnd,
           t.flexGrow,
-          t.z10,
-          {elevation: 1},
           t.absolute,
           t.wFull,
           t.hFull,

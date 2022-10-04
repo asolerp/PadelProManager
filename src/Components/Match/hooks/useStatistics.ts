@@ -157,8 +157,6 @@ export const useStatistics = ({team1, team2, statistics, mode = 'dark'}) => {
           getStatisticCount(statistics?.total?.team2?.global?.ef?.count),
       });
 
-      console.log('STATISTICS', statistics);
-
       setDataP1(
         team1?.[0]?.id !== -1 &&
           radarGraphDataGenerator(

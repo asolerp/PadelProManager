@@ -56,6 +56,7 @@ export const MatchScreen: React.FC = ({route}) => {
       {!loadingMatch && (
         <Header
           withBack
+          containerStyle={[t.bgWhite]}
           title={match?.tournamentName || 'Partida'}
           rightSide={isOnwer && <MatchSettings match={match} />}
         />

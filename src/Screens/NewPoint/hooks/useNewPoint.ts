@@ -37,20 +37,6 @@ export const useNewPoint = () => {
     setUsedPoints({});
   };
 
-  const hasPointStatErrors = useCallback(() => {
-    if (!playerStat) {
-      return 'no_player';
-    }
-    if (!resultPoint) {
-      return 'no_result';
-    }
-    if (!typePoint) {
-      return 'no_point';
-    }
-
-    return false;
-  }, [playerStat, resultPoint, typePoint]);
-
   const handlePressAddPointStat = ({player, result, point, team}) => {
     const newStat = {
       player,

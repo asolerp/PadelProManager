@@ -28,10 +28,12 @@ export const PointType: React.FC<Props> = ({
   type,
   active = false,
   usedPoints = {},
-  areas = {},
+  areas,
   onDrop = () => {},
 }) => {
   const textColor = t.textWhite;
+
+  console.log('POINT AREAS', areas);
 
   const handleOnDrop = area => {
     onDrop(area);

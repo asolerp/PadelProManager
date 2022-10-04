@@ -7,13 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		046671296EDA3F117331A7E0 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2315940DF048C31ECA8EFB1 /* ExpoModulesProvider.swift */; };
+		087ED3CBD945DEF254B5F950 /* libPods-PadelProManagerCommonPods-PadelProManager-Development.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 917C05AC0BFCCAB45A864062 /* libPods-PadelProManagerCommonPods-PadelProManager-Development.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		17ACEAF11A9658675B3AB847 /* libPods-PadelProManagerCommonPods-PadelProManager-Development.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 95F797F7AB7BEC5F35EDF174 /* libPods-PadelProManagerCommonPods-PadelProManager-Development.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		A955B3C4B48338C4F3213E7B /* libPods-PadelProManagerCommonPods-PadelProManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 26813CBBEBC3520E049C9651 /* libPods-PadelProManagerCommonPods-PadelProManager.a */; };
 		D305AE0D278CE26D007BA8EC /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = D305AE0C278CE26D007BA8EC /* File.swift */; };
 		D35BD6A828D1DC53009086CA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D35BD6A728D1DC52009086CA /* GoogleService-Info.plist */; };
 		D370C05327EA33D5005B3B00 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D370C05227EA33D5005B3B00 /* BootSplash.storyboard */; };
@@ -26,24 +24,23 @@
 		D3F0084828D2202D0028859E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		D3F0084928D2202D0028859E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		D3F0085428D223510028859E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D35BD6A528D1DC0E009086CA /* GoogleService-Info.plist */; };
-		E3A67F8D2A8832AC29EFBC54 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB6076F3CB7A57599D396C3 /* ExpoModulesProvider.swift */; };
+		E0BC0FFB71CAEB57802701DD /* libPods-PadelProManagerCommonPods-PadelProManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA65CC5452EC19003BEB0B6 /* libPods-PadelProManagerCommonPods-PadelProManager.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0A45E2F174C8B3EA40C010CB /* Pods-PadelProManagerCommonPods-PadelProManager-Development.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PadelProManagerCommonPods-PadelProManager-Development.debug.xcconfig"; path = "Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager-Development/Pods-PadelProManagerCommonPods-PadelProManager-Development.debug.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* PadelProManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PadelProManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = PadelProManager/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = PadelProManager/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = PadelProManager/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = PadelProManager/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = PadelProManager/main.m; sourceTree = "<group>"; };
-		148077035C3A4053B548A11C /* Pods-PadelProManagerCommonPods-PadelProManager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PadelProManagerCommonPods-PadelProManager.release.xcconfig"; path = "Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager/Pods-PadelProManagerCommonPods-PadelProManager.release.xcconfig"; sourceTree = "<group>"; };
-		26813CBBEBC3520E049C9651 /* libPods-PadelProManagerCommonPods-PadelProManager.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PadelProManagerCommonPods-PadelProManager.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6CB6076F3CB7A57599D396C3 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager-Development/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = PadelProManager/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		89AC7015FD4D8DE654AB5A24 /* Pods-PadelProManagerCommonPods-PadelProManager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PadelProManagerCommonPods-PadelProManager.debug.xcconfig"; path = "Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager/Pods-PadelProManagerCommonPods-PadelProManager.debug.xcconfig"; sourceTree = "<group>"; };
-		95F797F7AB7BEC5F35EDF174 /* libPods-PadelProManagerCommonPods-PadelProManager-Development.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PadelProManagerCommonPods-PadelProManager-Development.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B23787A3D6B0B0E9D31B91BB /* Pods-PadelProManagerCommonPods-PadelProManager-Development.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PadelProManagerCommonPods-PadelProManager-Development.release.xcconfig"; path = "Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager-Development/Pods-PadelProManagerCommonPods-PadelProManager-Development.release.xcconfig"; sourceTree = "<group>"; };
+		917C05AC0BFCCAB45A864062 /* libPods-PadelProManagerCommonPods-PadelProManager-Development.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PadelProManagerCommonPods-PadelProManager-Development.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BAA65CC5452EC19003BEB0B6 /* libPods-PadelProManagerCommonPods-PadelProManager.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PadelProManagerCommonPods-PadelProManager.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BACA7EF5F3A27B4DF0A755A0 /* Pods-PadelProManagerCommonPods-PadelProManager-Development.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PadelProManagerCommonPods-PadelProManager-Development.debug.xcconfig"; path = "Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager-Development/Pods-PadelProManagerCommonPods-PadelProManager-Development.debug.xcconfig"; sourceTree = "<group>"; };
+		BBC60430AB4FC2D871251894 /* Pods-PadelProManagerCommonPods-PadelProManager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PadelProManagerCommonPods-PadelProManager.release.xcconfig"; path = "Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager/Pods-PadelProManagerCommonPods-PadelProManager.release.xcconfig"; sourceTree = "<group>"; };
+		BE6833BC010256A9998F5FF6 /* Pods-PadelProManagerCommonPods-PadelProManager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PadelProManagerCommonPods-PadelProManager.debug.xcconfig"; path = "Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager/Pods-PadelProManagerCommonPods-PadelProManager.debug.xcconfig"; sourceTree = "<group>"; };
+		D054C643262D3283BCE15B95 /* Pods-PadelProManagerCommonPods-PadelProManager-Development.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PadelProManagerCommonPods-PadelProManager-Development.release.xcconfig"; path = "Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager-Development/Pods-PadelProManagerCommonPods-PadelProManager-Development.release.xcconfig"; sourceTree = "<group>"; };
 		D305AE0B278CE26D007BA8EC /* PadelProManager-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PadelProManager-Bridging-Header.h"; sourceTree = "<group>"; };
 		D305AE0C278CE26D007BA8EC /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		D35BD6A528D1DC0E009086CA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -53,7 +50,6 @@
 		D370C05227EA33D5005B3B00 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = PadelProManager/BootSplash.storyboard; sourceTree = "<group>"; };
 		D38F80812787AAF7000C2ED3 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		D3F0085228D2202E0028859E /* PadelProManager-Development.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PadelProManager-Development.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E2315940DF048C31ECA8EFB1 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -62,7 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A955B3C4B48338C4F3213E7B /* libPods-PadelProManagerCommonPods-PadelProManager.a in Frameworks */,
+				E0BC0FFB71CAEB57802701DD /* libPods-PadelProManagerCommonPods-PadelProManager.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,7 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				17ACEAF11A9658675B3AB847 /* libPods-PadelProManagerCommonPods-PadelProManager-Development.a in Frameworks */,
+				087ED3CBD945DEF254B5F950 /* libPods-PadelProManagerCommonPods-PadelProManager-Development.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,8 +76,6 @@
 		0860A704B9E85AEB6629FB7B /* ExpoModulesProviders */ = {
 			isa = PBXGroup;
 			children = (
-				E8EA2F4D696F70BA4EA0FDDB /* PadelProManager */,
-				14C20E0A31E0138A1ED2FB75 /* PadelProManager-Development */,
 			);
 			name = ExpoModulesProviders;
 			sourceTree = "<group>";
@@ -103,20 +97,12 @@
 			name = PadelProManager;
 			sourceTree = "<group>";
 		};
-		14C20E0A31E0138A1ED2FB75 /* PadelProManager-Development */ = {
-			isa = PBXGroup;
-			children = (
-				6CB6076F3CB7A57599D396C3 /* ExpoModulesProvider.swift */,
-			);
-			name = "PadelProManager-Development";
-			sourceTree = "<group>";
-		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				26813CBBEBC3520E049C9651 /* libPods-PadelProManagerCommonPods-PadelProManager.a */,
-				95F797F7AB7BEC5F35EDF174 /* libPods-PadelProManagerCommonPods-PadelProManager-Development.a */,
+				BAA65CC5452EC19003BEB0B6 /* libPods-PadelProManagerCommonPods-PadelProManager.a */,
+				917C05AC0BFCCAB45A864062 /* libPods-PadelProManagerCommonPods-PadelProManager-Development.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -158,10 +144,10 @@
 		8DA78E85FC30E64E2DBB38A4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				89AC7015FD4D8DE654AB5A24 /* Pods-PadelProManagerCommonPods-PadelProManager.debug.xcconfig */,
-				148077035C3A4053B548A11C /* Pods-PadelProManagerCommonPods-PadelProManager.release.xcconfig */,
-				0A45E2F174C8B3EA40C010CB /* Pods-PadelProManagerCommonPods-PadelProManager-Development.debug.xcconfig */,
-				B23787A3D6B0B0E9D31B91BB /* Pods-PadelProManagerCommonPods-PadelProManager-Development.release.xcconfig */,
+				BE6833BC010256A9998F5FF6 /* Pods-PadelProManagerCommonPods-PadelProManager.debug.xcconfig */,
+				BBC60430AB4FC2D871251894 /* Pods-PadelProManagerCommonPods-PadelProManager.release.xcconfig */,
+				BACA7EF5F3A27B4DF0A755A0 /* Pods-PadelProManagerCommonPods-PadelProManager-Development.debug.xcconfig */,
+				D054C643262D3283BCE15B95 /* Pods-PadelProManagerCommonPods-PadelProManager-Development.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -191,14 +177,6 @@
 			path = PRO;
 			sourceTree = "<group>";
 		};
-		E8EA2F4D696F70BA4EA0FDDB /* PadelProManager */ = {
-			isa = PBXGroup;
-			children = (
-				E2315940DF048C31ECA8EFB1 /* ExpoModulesProvider.swift */,
-			);
-			name = PadelProManager;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -206,15 +184,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "PadelProManager" */;
 			buildPhases = (
-				029D7557E9038DE46DE8E8B9 /* [CP] Check Pods Manifest.lock */,
+				2A15643FD86D835D012079AA /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				9D0492B416C54CFB807A3CAE /* Upload source maps to Bugsnag */,
-				E6129CCCAACE2073500944CF /* [CP] Embed Pods Frameworks */,
-				A0EBDC0D213D33D6D9A21DE5 /* [CP] Copy Pods Resources */,
+				B062D7B4B1BC24104E07F9F1 /* [CP] Embed Pods Frameworks */,
+				75DD6F5CC8530FFAB1508000 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -229,15 +207,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D3F0084F28D2202D0028859E /* Build configuration list for PBXNativeTarget "PadelProManager-Development" */;
 			buildPhases = (
-				A018E2DBA13778405FB568E5 /* [CP] Check Pods Manifest.lock */,
+				CD2F7BE9D307FE6BBB71967D /* [CP] Check Pods Manifest.lock */,
 				D3F0083C28D2202D0028859E /* Start Packager */,
 				D3F0083D28D2202D0028859E /* Sources */,
 				D3F0084228D2202D0028859E /* Frameworks */,
 				D3F0084428D2202D0028859E /* Resources */,
 				D3F0084A28D2202D0028859E /* Bundle React Native code and images */,
 				D3F0084B28D2202D0028859E /* Upload source maps to Bugsnag */,
-				8320BE1A560192D0AFC79531 /* [CP] Embed Pods Frameworks */,
-				22A1D0C22127E45025579AE6 /* [CP] Copy Pods Resources */,
+				0AB6612C51A458121CDD0F4E /* [CP] Embed Pods Frameworks */,
+				50E89094952D69D75D220B15 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -323,7 +301,24 @@
 			shellPath = /bin/sh;
 			shellScript = "export EXTRA_PACKAGER_ARGS=\"--sourcemap-output $TMPDIR/$(md5 -qs \"$CONFIGURATION_BUILD_DIR\")-main.jsbundle.map\"\nset -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		029D7557E9038DE46DE8E8B9 /* [CP] Check Pods Manifest.lock */ = {
+		0AB6612C51A458121CDD0F4E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager-Development/Pods-PadelProManagerCommonPods-PadelProManager-Development-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager-Development/Pods-PadelProManagerCommonPods-PadelProManager-Development-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager-Development/Pods-PadelProManagerCommonPods-PadelProManager-Development-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2A15643FD86D835D012079AA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -345,7 +340,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		22A1D0C22127E45025579AE6 /* [CP] Copy Pods Resources */ = {
+		50E89094952D69D75D220B15 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -362,21 +357,21 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager-Development/Pods-PadelProManagerCommonPods-PadelProManager-Development-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8320BE1A560192D0AFC79531 /* [CP] Embed Pods Frameworks */ = {
+		75DD6F5CC8530FFAB1508000 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager-Development/Pods-PadelProManagerCommonPods-PadelProManager-Development-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager/Pods-PadelProManagerCommonPods-PadelProManager-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager-Development/Pods-PadelProManagerCommonPods-PadelProManager-Development-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager/Pods-PadelProManagerCommonPods-PadelProManager-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager-Development/Pods-PadelProManagerCommonPods-PadelProManager-Development-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager/Pods-PadelProManagerCommonPods-PadelProManager-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9D0492B416C54CFB807A3CAE /* Upload source maps to Bugsnag */ = {
@@ -393,7 +388,24 @@
 			shellPath = /bin/sh;
 			shellScript = "SOURCE_MAP=\"$TMPDIR/$(md5 -qs \"$CONFIGURATION_BUILD_DIR\")-main.jsbundle.map\" ../node_modules/@bugsnag/react-native/bugsnag-react-native-xcode.sh";
 		};
-		A018E2DBA13778405FB568E5 /* [CP] Check Pods Manifest.lock */ = {
+		B062D7B4B1BC24104E07F9F1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager/Pods-PadelProManagerCommonPods-PadelProManager-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager/Pods-PadelProManagerCommonPods-PadelProManager-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager/Pods-PadelProManagerCommonPods-PadelProManager-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CD2F7BE9D307FE6BBB71967D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -413,23 +425,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A0EBDC0D213D33D6D9A21DE5 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager/Pods-PadelProManagerCommonPods-PadelProManager-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager/Pods-PadelProManagerCommonPods-PadelProManager-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager/Pods-PadelProManagerCommonPods-PadelProManager-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D3F0083C28D2202D0028859E /* Start Packager */ = {
@@ -479,23 +474,6 @@
 			shellPath = /bin/sh;
 			shellScript = "SOURCE_MAP=\"$TMPDIR/$(md5 -qs \"$CONFIGURATION_BUILD_DIR\")-main.jsbundle.map\" ../node_modules/@bugsnag/react-native/bugsnag-react-native-xcode.sh";
 		};
-		E6129CCCAACE2073500944CF /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager/Pods-PadelProManagerCommonPods-PadelProManager-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager/Pods-PadelProManagerCommonPods-PadelProManager-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PadelProManagerCommonPods-PadelProManager/Pods-PadelProManagerCommonPods-PadelProManager-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -525,7 +503,6 @@
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				D305AE0D278CE26D007BA8EC /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				046671296EDA3F117331A7E0 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,7 +513,6 @@
 				D3F0083E28D2202D0028859E /* AppDelegate.m in Sources */,
 				D3F0083F28D2202D0028859E /* File.swift in Sources */,
 				D3F0084028D2202D0028859E /* main.m in Sources */,
-				E3A67F8D2A8832AC29EFBC54 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,7 +521,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89AC7015FD4D8DE654AB5A24 /* Pods-PadelProManagerCommonPods-PadelProManager.debug.xcconfig */;
+			baseConfigurationReference = BE6833BC010256A9998F5FF6 /* Pods-PadelProManagerCommonPods-PadelProManager.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -579,7 +555,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 148077035C3A4053B548A11C /* Pods-PadelProManagerCommonPods-PadelProManager.release.xcconfig */;
+			baseConfigurationReference = BBC60430AB4FC2D871251894 /* Pods-PadelProManagerCommonPods-PadelProManager.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -736,7 +712,7 @@
 		};
 		D3F0085028D2202D0028859E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0A45E2F174C8B3EA40C010CB /* Pods-PadelProManagerCommonPods-PadelProManager-Development.debug.xcconfig */;
+			baseConfigurationReference = BACA7EF5F3A27B4DF0A755A0 /* Pods-PadelProManagerCommonPods-PadelProManager-Development.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -770,7 +746,7 @@
 		};
 		D3F0085128D2202D0028859E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B23787A3D6B0B0E9D31B91BB /* Pods-PadelProManagerCommonPods-PadelProManager-Development.release.xcconfig */;
+			baseConfigurationReference = D054C643262D3283BCE15B95 /* Pods-PadelProManagerCommonPods-PadelProManager-Development.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

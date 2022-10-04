@@ -6,10 +6,12 @@ import Config from 'react-native-config';
 console.log('CONFIG', Config);
 
 GoogleSignin.configure({
-  webClientId: Config.CLIENT_ID,
+  webClientId:
+    Platform.OS === 'ios' ? Config.CLIENT_ID_IOS : Config.CLIENT_ID_ANDROID,
 });
 
 import {useRef, useState} from 'react';
+import {Platform} from 'react-native';
 
 export const useLogin = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);

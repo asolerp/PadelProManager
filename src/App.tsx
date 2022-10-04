@@ -14,6 +14,8 @@ import {initRemoteConfig} from './Lib/FeatureToggle';
 import {toastConfig} from './Lib/Logging/utils/toastConfig';
 import '../i18n.config';
 import {DynamicLinkProvider} from './Context/DynamicLinkContext';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import t from './Theme/theme';
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -23,7 +25,7 @@ const App: React.FC = () => {
   });
 
   return (
-    <React.Fragment>
+    <GestureHandlerRootView style={[t.flexGrow]}>
       <StatusBar animated={true} barStyle="dark-content" />
       <AuthProvider>
         <DynamicLinkProvider>
@@ -37,7 +39,7 @@ const App: React.FC = () => {
         </DynamicLinkProvider>
       </AuthProvider>
       <Toast config={toastConfig} />
-    </React.Fragment>
+    </GestureHandlerRootView>
   );
 };
 

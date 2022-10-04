@@ -17,7 +17,7 @@ import {HDivider} from '../../Components/UI/HDivider';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {useNewSessionForm} from './hooks/useNewSessionForm';
-import * as Localization from 'expo-localization';
+// import * as Localization from 'expo-localization';
 
 import {ModalListOfPlayers} from '../../Components/NewMatch/ModalListOfPlayers';
 
@@ -188,7 +188,7 @@ export const NewSessionScreen = ({route}) => {
                   />
                   <Input
                     value={values?.price}
-                    subfix={String(Localization.currency)}
+                    // subfix={String(Localization.currency)}
                     onChangeText={handleChange('price')}
                     keyboardType="decimal-pad"
                     labelText={loc('new_session_form_price_session')}

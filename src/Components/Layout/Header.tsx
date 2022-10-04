@@ -40,6 +40,9 @@ export const Header: React.FC<Props> = ({
           t.itemsCenter,
           t.z20,
           t?.[position],
+          t.shadowNone,
+          t.border0,
+          {elevation: 5},
           containerStyle,
         ]}>
         <View style={[t.w20, t.itemsStart, leftStyles]}>

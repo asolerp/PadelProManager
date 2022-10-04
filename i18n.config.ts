@@ -1,6 +1,6 @@
 import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
-import {languageDetectorPlugin} from './src/Translations/utils/languageDetectorPlugin';
+// import {languageDetectorPlugin} from './src/Translations/utils/languageDetectorPlugin';
 import {en, es} from './src/Translations';
 
 //empty for now
@@ -15,7 +15,7 @@ const resources = {
 
 i18n
   .use(initReactI18next)
-  .use(languageDetectorPlugin)
+  // .use(languageDetectorPlugin)
   .init({
     compatibilityJSON: 'v3',
     resources,

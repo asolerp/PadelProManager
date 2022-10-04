@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:285595276470:android:93a39f2c057f0319ca4217",
         "android_client_info": {
-          "package_name": "com.padelpro"
+          "package_name": "com.padelpromanager"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "285595276470-u33so8phu4n2o05n1g8fiurt97j6soh8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.padelpro",
+            "package_name": "com.padelpromanager",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
@@ -42,7 +42,7 @@
               "client_id": "285595276470-38c4jh0dfh62rv1q9qkq1tvakpdmvhsq.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.padelpro"
+                "bundle_id": "com.padelpromanager"
               }
             }
           ]

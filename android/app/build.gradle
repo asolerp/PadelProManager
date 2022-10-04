@@ -84,10 +84,14 @@ project.ext.react = [
 ]
 
 project.ext.envConfigFiles = [
-    Development: ".env.development",
-    Production: ".env.production"
+    developmentdebug: ".env.development",
+    developmentrelease: ".env.development",
+    productiondebug: ".env.production",
+    productionrelease: ".env.production"
+
 ]
 
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 apply from: "../../node_modules/react-native/react.gradle"
 apply plugin: "com.bugsnag.android.gradle"
 
@@ -142,25 +146,31 @@ android {
        javaMaxHeapSize "3g"
     }
 
+    flavorDimensions "default"
+    productFlavors {
+        development {
+             minSdkVersion rootProject.ext.minSdkVersion
+             applicationId "com.padelpromanager.development"
+             targetSdkVersion rootProject.ext.targetSdkVersion
+             resValue "string", "build_config_package", "com.padelpromanager"
+             versionCode 1
+             versionName "1.0"
+        }
+        production {
+             minSdkVersion rootProject.ext.minSdkVersion
+             applicationId "com.padelpromanager"
+             targetSdkVersion rootProject.ext.targetSdkVersion
+             resValue "string", "build_config_package", "com.padelpromanager"
+             versionCode 1
+             versionName "1.0"
+        }
+    }
     defaultConfig {
-        applicationId "com.padelpro"
+        applicationId "com.padelpromanager"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-        flavorDimensions "default"
-    }
-    productFlavors {
-        Development {
-             minSdkVersion rootProject.ext.minSdkVersion
-             applicationId "com.padelpro.development"
-             targetSdkVersion rootProject.ext.targetSdkVersion
-        }
-        Production {
-             minSdkVersion rootProject.ext.minSdkVersion
-             applicationId "com.padelpro"
-             targetSdkVersion rootProject.ext.targetSdkVersion
-        }
     }
     splits {
         abi {
@@ -181,6 +191,7 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            matchingFallbacks = ['debug', 'release']
             if (nativeArchitectures) {
                 ndk {
                     abiFilters nativeArchitectures.split(',')
@@ -217,7 +228,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
-
+    implementation project(':react-native-config')
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
@@ -254,3 +265,7 @@ apply from: file("../../node_modules/@react-native-community/cli-platform-androi
 bugsnag {
   uploadReactNativeMappings = true
 }
+
+
+
+
