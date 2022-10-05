@@ -1,7 +1,7 @@
 import {useEffect, useState, useContext} from 'react';
 import {useDocumentData} from 'react-firebase-hooks/firestore';
 import {playerQuery, userQuery} from '../../../Api/queries';
-import {radarGraphDataGenerator} from '../../../Utils/radaGraphDataGenerator';
+import {radarGraphDataGenerator} from '../../../Utils/dataGenerators';
 import {AuthContext} from '../../../Context/AuthContex';
 
 export const useGetPlayer = (playerId: string) => {

@@ -15,6 +15,7 @@ export const useGetProducts = () => {
           setPackages(offerings.current.availablePackages);
         }
       } catch (err) {
+        console.log(err);
         error({
           title: 'Subscripción',
           subtitle: 'No se han podido recuperar los productos',

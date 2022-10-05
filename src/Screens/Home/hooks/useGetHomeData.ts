@@ -6,16 +6,20 @@ import {format} from 'date-fns';
 import {MatchType, PlayerType, SessionType} from '../../../Global/types';
 import {fetchContentful} from '../../../Lib/API/hooks/useFetchContentful';
 import {query} from '../../../Lib/API/queries/dailyExercise';
+import {defaultFunctions} from '../../../Lib/API/firebaseApp';
 
 export const useGetHomeData = () => {
   const {user} = useContext(AuthContext);
   const [proMatches, setProMatches] = useState<MatchType[]>([]);
   const [todaySessions, setTodaySessions] = useState<SessionType[]>([]);
   const [liveMatches, setLiveMatches] = useState<MatchType[]>([]);
+  const [totalPending, setTotalPending] = useState<Number>();
   const [players, setPlayers] = useState<PlayerType[]>([]);
   const [finishedMatches, setFinishedMatches] = useState<MatchType[]>([]);
   const [dailyExercise, setDailyExercise] = useState({});
   const [loading, setLoading] = useState(false);
+
+  const accountingResume = defaultFunctions.httpsCallable('getResumen');
 
   const start = new Date();
   start.setHours(0, 0, 0, 0);
@@ -33,6 +37,12 @@ export const useGetHomeData = () => {
       console.log(err);
     }
   }, []);
+
+  const getAccountingResumen = useCallback(async () => {
+    const {data} = await accountingResume();
+    console.log(data, 'DATA');
+    setTotalPending(data?.totalPending);
+  }, [accountingResume]);
 
   const getTodaySessions = useCallback(async () => {
     try {
@@ -79,6 +89,7 @@ export const useGetHomeData = () => {
         .where('category', '==', -1)
         .where('state', '==', 'finished')
         .orderBy('date')
+        .limit(5)
         .get();
       setProMatches(
         proMatchesQuery.docs.map(doc => ({
@@ -130,6 +141,7 @@ export const useGetHomeData = () => {
     try {
       setLoading(true);
       await Promise.all([
+        getAccountingResumen(),
         getFinishedMatches(),
         getDailyExercise(),
         getTodaySessions(),
@@ -154,6 +166,7 @@ export const useGetHomeData = () => {
     loading,
     proMatches,
     liveMatches,
+    totalPending,
     dailyExercise,
     todaySessions,
     finishedMatches,

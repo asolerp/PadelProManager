@@ -12,6 +12,9 @@ import {timeout} from '../../../Utils/timeout';
 
 import {firebaseIDGenerator} from '../../../Utils/firebaseIDGenerator';
 import {defaultFunctions} from '../../../Lib/API/firebaseApp';
+import {ACCOUNTING, SESSIONS} from '../../../Models/entities';
+import firestore from '@react-native-firebase/firestore';
+import {getCurrencies} from 'react-native-localize';
 
 export const useNewSessionForm = ({startDate, session}) => {
   const {user} = useContext(AuthContext);
@@ -35,8 +38,8 @@ export const useNewSessionForm = ({startDate, session}) => {
   });
 
   const newSessionFormRef = useRef();
-  const {updateDocument} = useUpdateDocument(sessionQuery);
-  const {updateDocument: updateAccounting} = useUpdateDocument(accountingQuery);
+  // const {updateDocument} = useUpdateDocument(sessionQuery);
+  const {updateDocument} = useUpdateDocument(accountingQuery);
 
   const newSessionsFn = defaultFunctions.httpsCallable('newSession');
 
@@ -84,7 +87,7 @@ export const useNewSessionForm = ({startDate, session}) => {
       coachId: user?.id,
       date: Number(timestampDate),
       price,
-      // currency: String(Localization.currency),
+      currency: String(getCurrencies()[0]),
       startTime: Number(format(new Date(startTimeWithMinutes), 'T')),
       endTime: Number(format(new Date(endTimeWithMinutes), 'T')),
       color: sessionColor,
@@ -95,21 +98,30 @@ export const useNewSessionForm = ({startDate, session}) => {
 
     try {
       if (session) {
-        await updateAccounting(session.accountingId, {
-          price: payload.price,
-          currency: payload.currency,
-          players: selectedPlayers.reduce((acc, p) => {
-            return {
-              ...acc,
-              [p.id]: false,
-            };
-          }),
-        });
-        await updateDocument(session?.id, {
-          ...payload,
-          week: [],
-          internalId: firebaseIDGenerator(),
-        });
+        console.log(session.accountingId);
+        await firestore()
+          .collection(SESSIONS)
+          .doc(session?.id)
+          .update({
+            ...payload,
+            week: [],
+            internalId: firebaseIDGenerator(),
+          });
+        console.log(payload.date);
+        await firestore()
+          .collection(ACCOUNTING)
+          .doc(session.accountingId)
+          .update({
+            date: new Date(payload.date),
+            price: payload.price,
+            currency: payload.currency,
+            players: payload.players.reduce((acc, player) => {
+              return {
+                ...acc,
+                [player.id]: false,
+              };
+            }, {}),
+          });
       } else {
         await newSessionsFn({
           payload,

@@ -15,7 +15,8 @@ import {Button} from '../../Components/UI/Button';
 
 import {useGetProducts} from './hooks/useGetProducts';
 import {usePayProduct} from './hooks/usePayProduct';
-import {useHideBootSplash} from '../../Hooks/useHideBootSplash';
+
+import {Header} from '../../Components/Layout';
 
 export const PROMOTIONAL_SUBSCRIPTION_SCREEN_KEY = 'promotionalSubscription';
 
@@ -41,13 +42,12 @@ export const PromotionalSubscription = () => {
   const {packages, loading} = useGetProducts();
   const {handleMakePayment} = usePayProduct();
 
-  useHideBootSplash();
-
   return (
     <>
       <StatusBar barStyle="light-content" />
       <ContainerWithBg backgroundColor="Gray900" opacity={80}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <Header withBack mode="dark" containerStyle={[t.absolute, t.top14]} />
+        <ScrollView showsVerticalScrollIndicator={false} style={[t.flex1]}>
           <View style={[t.flexGrow, t.itemsCenter, t.justifyCenter]}>
             <View style={[t.wFull, t.pY5]}>
               <View style={[t.flexRow, t.justifyBetween, t.mT5]}>

@@ -35,11 +35,11 @@ export const PaginatedList: React.FC<PaginatedListProps> = ({
   const isActive = i => i === index;
 
   const handlePressDot = index => {
-    console.log(
-      flatListRef.current.scrollToOffset({
-        offset: (Dimensions.get('window').width - 36) * index,
-      }),
-    );
+    // console.log(
+    //   flatListRef.current.scrollToOffset({
+    //     offset: (Dimensions.get('window').width - 36) * index,
+    //   }),
+    // );
   };
 
   return (

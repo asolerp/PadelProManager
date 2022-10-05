@@ -5,6 +5,7 @@ import {View, Text, ScrollView, RefreshControl} from 'react-native';
 import t from '../../Theme/theme';
 import {LiveMatchResume} from '../../Components/Common/LiveMatchResume';
 import {MatchResume} from '../../Components/Home/MatchResume';
+import {getCurrencies} from 'react-native-localize';
 
 import {MyPlayers} from '../../Components/Home/MyPlayers';
 
@@ -26,6 +27,11 @@ import {LastMatchesSkeleton} from '../../Components/Home/skeleton/LastMatchesSke
 import {ProMatchesList} from '../../Components/Home/ProMatchesList';
 import {PaginatedList} from '../../Components/Common/PaginatedList';
 import {ProMatchSkeleton} from '../../Components/Home/skeleton/ProMatchSkeleton';
+import PressableOpacity from '../../Components/UI/PressableOpacity';
+import {colorParser} from '../../Utils/sessionParsers';
+import {openScreenWithPush, openStack} from '../../Router/utils/actions';
+import {ACCOUTING_SCREEN_KEY} from '../Accounting/Accounting';
+import {TAB_STACK_KEY} from '../../Router/utils/routerKeys';
 
 export const HOME_SCREEN_KEY = 'homeScreen';
 
@@ -35,6 +41,7 @@ export const HomeScreen: FunctionComponent = () => {
   const {
     refetch,
     players,
+    totalPending,
     finishedMatches,
     dailyExercise,
     liveMatches,
@@ -61,6 +68,29 @@ export const HomeScreen: FunctionComponent = () => {
           <RefreshControl refreshing={loading} onRefresh={refetch} />
         }>
         <HomeHeader />
+        {totalPending > 0 && (
+          <View style={[t.mB7]}>
+            <PressableOpacity
+              onPress={() => openStack(TAB_STACK_KEY, 'Accounting')}
+              style={[
+                t.p3,
+                t.roundedSm,
+                t.shadowNone,
+                t.bgErrorLight,
+                t.border0_5,
+                t.borderErrorDark,
+              ]}>
+              <View style={[t.flexRow, t.justifyBetween]}>
+                <Text style={[t.fontSansBold, t.textWhite]}>
+                  SALDO PENDINETE
+                </Text>
+                <Text style={[t.fontSansBold, t.textWhite]}>
+                  {totalPending} {getCurrencies()[0]}
+                </Text>
+              </View>
+            </PressableOpacity>
+          </View>
+        )}
         <View style={[t.mB7]}>
           <MyTodaySessions sessions={todaySessions} />
         </View>

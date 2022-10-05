@@ -1,12 +1,13 @@
 import Purchase from 'react-native-purchases';
 import {error} from '../../../Lib/Logging';
+import {popScreen} from '../../../Router/utils/actions';
 
 export const usePayProduct = () => {
   const makePayment = async purchasePackage => {
     try {
       await Purchase.purchasePackage(purchasePackage);
+      popScreen();
     } catch (err) {
-      console.log(err.userInfo.readableErrorCode);
       if (err.userInfo.readableErrorCode !== 'PURCHASE_CANCELLED') {
         error({
           title: 'Subscripción',

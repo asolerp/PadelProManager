@@ -24,7 +24,7 @@ export const useLoginPlayer = ({coachId}) => {
         .doc(coachId)
         .get();
       const coachDoc = {id: coachQuery.id, ...coachQuery.data()};
-      console.log('COACH DATA', coachDoc);
+
       setCoach(coachDoc);
     };
     if (coachId) {

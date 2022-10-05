@@ -3,8 +3,6 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {appleAuth} from '@invertase/react-native-apple-authentication';
 import Config from 'react-native-config';
 
-console.log('CONFIG', Config);
-
 GoogleSignin.configure({
   webClientId:
     Platform.OS === 'ios' ? Config.CLIENT_ID_IOS : Config.CLIENT_ID_ANDROID,

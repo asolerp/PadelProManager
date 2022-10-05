@@ -10,7 +10,7 @@ import {Chip} from '../UI/Chip';
 import {AuthContext} from '../../Context/AuthContex';
 import PressableOpacity from '../UI/PressableOpacity';
 import {openScreenWithPush} from '../../Router/utils/actions';
-import {NEW_SESSION_SCREEN_KEY} from '../../Screens/NewSession/NewSession';
+
 import {SESSION_SCREEN_KEY} from '../../Screens/Session/Session';
 
 export const SessionItem = ({item, style}) => {
@@ -31,7 +31,7 @@ export const SessionItem = ({item, style}) => {
           styles.container,
           colorParser[item?.color],
           t.roundedSm,
-          t.shadow,
+          t.shadowNone,
           style,
         ]}>
         <View
@@ -70,7 +70,7 @@ export const SessionItem = ({item, style}) => {
                       key={p?.id}
                       img={p?.profileImg}
                       imageStyle={[t.w12, t.h12]}
-                      style={[t._mL4, item?.player?.length > 2 && t._mB4]}
+                      style={[t._mL4, item?.players?.length > 2 && t._mB4]}
                     />
                   ))}
                 </View>

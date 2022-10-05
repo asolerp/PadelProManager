@@ -33,7 +33,7 @@ export const Players = () => {
         rightSide={
           <PressableOpacity
             onPress={() =>
-              handleCheckCreateNewPlayer(() =>
+              handleCheckCreateNewPlayer(players?.length, () =>
                 openScreenWithPush(NEW_PLAYER_SCREEN_KEY),
               )
             }>
@@ -52,7 +52,7 @@ export const Players = () => {
       </View>
       {!loadingPlayers && (
         <FlatList
-          style={[t.pX4, t.mT3]}
+          style={[t.flex1, t.pX4, t.mT3]}
           showsVerticalScrollIndicator={false}
           data={filteredList}
           renderItem={renderItem}

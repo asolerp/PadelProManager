@@ -32,7 +32,6 @@ export const useGetSession = ({sessionId}) => {
   const sessionAccountingBalance = unitiPrice * playersHavePaid;
 
   const handleUpdatePaymentStatus = async playerId => {
-    console.log(accounting);
     try {
       await firestore()
         .collection('accounting')

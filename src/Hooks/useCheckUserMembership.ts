@@ -10,6 +10,7 @@ export const useCheckUserMembership = () => {
     setIsChecking(true);
     try {
       const purchaserInfo = await Purchases.getPurchaserInfo();
+      console.log('PURCHASEINFO', purchaserInfo);
       if (
         typeof purchaserInfo.entitlements.active[ENTITLEMENT_ID] !== 'undefined'
       ) {

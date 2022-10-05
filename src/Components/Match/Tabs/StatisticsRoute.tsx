@@ -1,18 +1,29 @@
-import React from 'react';
-import {ScrollView, View} from 'react-native';
+import React, {useContext} from 'react';
+import {Dimensions, ScrollView, Text, View} from 'react-native';
 import t from '../../../Theme/theme';
 import {PlayerRadarGraph} from '../../Common/PlayerRadarGraph';
 import {BarChart} from '../BarChart';
 import {useStatistics} from '../hooks/useStatistics';
 import {SetSelector} from '../SetSelector';
 import {StatisticItem} from '../StatisticItem';
+import {BlurView} from '@react-native-community/blur';
+import {SubscriptionContext} from '../../../Context/SubscriptionContext';
+import {Button} from '../../UI/Button';
+import {openScreenWithPush} from '../../../Router/utils/actions';
+import {PROMOTIONAL_SUBSCRIPTION_SCREEN_KEY} from '../../../Screens/PromotionalSubscription/PromotionalSubscription';
 
-export const StatisticsRoute = ({team1, team2, statistics}) => {
+export const StatisticsRoute = ({team1, team2, free, statistics}) => {
+  const {isSubscribed} = useContext(SubscriptionContext);
+
   const {
     dataP1,
     dataP2,
     dataP3,
     dataP4,
+    tableP1,
+    tableP2,
+    tableP3,
+    tableP4,
     matchStatistics,
     activeSet,
     handleSetActiveSet,
@@ -26,7 +37,8 @@ export const StatisticsRoute = ({team1, team2, statistics}) => {
     <>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={[t.itemsCenter, t.pX3, t.mT5]}>
+        style={[t.pX4]}
+        contentContainerStyle={[t.itemsCenter, t.pX4, t.mT5]}>
         {matchStatistics && (
           <>
             <BarChart
@@ -97,18 +109,75 @@ export const StatisticsRoute = ({team1, team2, statistics}) => {
             />
           </>
         )}
+        {!isSubscribed && !free && (
+          <BlurView
+            style={[
+              t.absolute,
+              t.z50,
+              {
+                width: Dimensions.get('window').width,
+              },
+              t.hFull,
+              t.roundedSm,
+              t.justifyCenter,
+              t.itemsCenter,
+            ]}
+            blurType="light"
+            blurAmount={10}
+            reducedTransparencyFallbackColor="white">
+            <View
+              style={[
+                t.absolute,
+                t.wFull,
+                t.hFull,
+                t.justifyStart,
+                t.itemsCenter,
+                t.pX10,
+              ]}>
+              <Text
+                style={[t.mT20, t.mB10, t.textCenter, t.fontSans, t.textLg]}>
+                Has superado el límite de partidos gratuitos, para visualizar
+                este contenido has de tener una cuenta premium
+              </Text>
+              <Button
+                title="Hazte premium"
+                type="info"
+                onPress={() =>
+                  openScreenWithPush(PROMOTIONAL_SUBSCRIPTION_SCREEN_KEY)
+                }
+                active
+              />
+            </View>
+          </BlurView>
+        )}
         <View style={[t.mT5, t.itemsCenter]}>
           {dataP1 && team1?.[0] && (
-            <PlayerRadarGraph player={team1?.[0]} data={dataP1} />
+            <PlayerRadarGraph
+              player={team1?.[0]}
+              data={dataP1}
+              table={tableP1}
+            />
           )}
           {dataP2 && team1?.[1] && (
-            <PlayerRadarGraph player={team1?.[1]} data={dataP2} />
+            <PlayerRadarGraph
+              player={team1?.[1]}
+              data={dataP2}
+              table={tableP2}
+            />
           )}
           {dataP3 && team2?.[0] && (
-            <PlayerRadarGraph player={team2?.[0]} data={dataP3} />
+            <PlayerRadarGraph
+              player={team2?.[0]}
+              data={dataP3}
+              table={tableP3}
+            />
           )}
           {dataP4 && team2?.[1] && (
-            <PlayerRadarGraph player={team2?.[1]} data={dataP4} />
+            <PlayerRadarGraph
+              player={team2?.[1]}
+              data={dataP4}
+              table={tableP4}
+            />
           )}
         </View>
       </ScrollView>

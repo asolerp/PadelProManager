@@ -182,16 +182,11 @@ export const Planner = () => {
           agendaDayTextColor: 'yellow',
           agendaDayNumColor: 'green',
           agendaTodayColor: 'red',
-          backgroundColor: 'white',
-          todayBackgroundColor: 'red',
+          backgroundColor: '#ffffff',
+          todayBackgroundColor: '#ffffff',
         }}
         // Agenda container style
-        style={[
-          t.hFull,
-          {
-            backgroundColor: 'white',
-          },
-        ]}
+        style={[t.hFull]}
       />
     </ScreenLayout>
   );

@@ -84,7 +84,11 @@ export const Input: React.FC<Props> = ({
                 <View style={[subfix && t.flexRow]}>
                   <TextInput
                     placeholderTextColor="#718096"
-                    style={[t.fontSans, t.textSm, inputStyle]}
+                    style={[
+                      props.value ? t.fontSansBold : t.fontSans,
+                      t.textSm,
+                      inputStyle,
+                    ]}
                     {...props}
                   />
                   {subfix && <Text style={[t.mL1]}>{subfix}</Text>}

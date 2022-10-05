@@ -2,8 +2,9 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import {RadarChart} from '../Common/RadarChart';
 import t from '../../Theme/theme';
+import {ResumenStatistic} from '../Match/ResumenStatistic';
 
-export const PlayerRadarGraph = ({player, data, mode = 'dark'}) => {
+export const PlayerRadarGraph = ({player, data, table, mode = 'dark'}) => {
   return (
     <View style={[t.mB4, t.itemsCenter]}>
       <Text style={[t.fontSansBold, mode === 'white' && t.textWhite]}>
@@ -17,7 +18,7 @@ export const PlayerRadarGraph = ({player, data, mode = 'dark'}) => {
           size={data?.size}
         />
       )}
-      {/* <ResumenStatistic statistics={data.dataSets} /> */}
+      <ResumenStatistic statistics={table?.dataSets} />
     </View>
   );
 };

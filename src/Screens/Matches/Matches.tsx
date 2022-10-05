@@ -15,12 +15,15 @@ import {SearchInput} from '../../Components/UI/SearchInput';
 import {searchOptions} from '../../Utils/lists';
 import PressableOpacity from '../../Components/UI/PressableOpacity';
 import {HDivider} from '../../Components/UI/HDivider';
+import {useCheckPermissions} from '../../Hooks/useCheckPermissions';
 
 export const MATCHES_SCREE_KEY = 'matchesScreen';
 
 export const Matches = () => {
   const {matches, setSearch, setSearchOption, search, searchOption} =
     useGetMatches();
+
+  const {handleCheckCreateNewPlayer} = useCheckPermissions();
 
   const renderItem = ({item}) => <MatchResume match={item} />;
 
@@ -30,7 +33,11 @@ export const Matches = () => {
         title="Historial de partidas"
         rightSide={
           <PressableOpacity
-            onPress={() => openScreenWithPush(NEW_MATCH_SCREEN_KEY)}>
+            onPress={() =>
+              handleCheckCreateNewPlayer(matches?.length, () =>
+                openScreenWithPush(NEW_MATCH_SCREEN_KEY),
+              )
+            }>
             <Icon name="ios-add-circle-outline" size={25} />
           </PressableOpacity>
         }

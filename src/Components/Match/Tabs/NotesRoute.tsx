@@ -22,7 +22,7 @@ export const NotesRoute = ({notes, matchId}) => {
   } = useNotes(matchId);
 
   const renderItem = ({item}) => (
-    <View style={[t.wFull]}>
+    <View style={[t.wFull, t.pX4]}>
       <View style={[t.flexRow, t.justifyBetween, t.itemsCenter, t.mB2]}>
         <View style={[t.flex1, t.mR3]}>
           <Text style={[t.fontSansBold, t.textLg, t.mB2]}>{item.title}</Text>

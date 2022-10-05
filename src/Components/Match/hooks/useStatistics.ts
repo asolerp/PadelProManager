@@ -1,6 +1,9 @@
 import {useEffect, useState} from 'react';
 import {MatchStatistic} from '../../../Global/types';
-import {radarGraphDataGenerator} from '../../../Utils/radaGraphDataGenerator';
+import {
+  radarGraphDataGenerator,
+  tableDataGenerator,
+} from '../../../Utils/dataGenerators';
 
 export const useStatistics = ({team1, team2, statistics, mode = 'dark'}) => {
   const [activeSet, setActiveSet] = useState<string>('total');
@@ -8,6 +11,10 @@ export const useStatistics = ({team1, team2, statistics, mode = 'dark'}) => {
   const [dataP2, setDataP2] = useState();
   const [dataP3, setDataP3] = useState();
   const [dataP4, setDataP4] = useState();
+  const [tableP1, setTableP1] = useState();
+  const [tableP2, setTableP2] = useState();
+  const [tableP3, setTableP3] = useState();
+  const [tableP4, setTableP4] = useState();
   const [matchStatistics, setMatchStatistics] = useState<MatchStatistic>();
   const [dataGenerated, setDataGenerated] = useState(false);
 
@@ -157,6 +164,31 @@ export const useStatistics = ({team1, team2, statistics, mode = 'dark'}) => {
           getStatisticCount(statistics?.total?.team2?.global?.ef?.count),
       });
 
+      setTableP1(
+        team1?.[0]?.id !== -1 &&
+          tableDataGenerator(
+            statistics?.[activeSet]?.team1?.players?.[team1?.[0]?.id],
+          ),
+      );
+      setTableP2(
+        team1?.[1]?.id !== -1 &&
+          tableDataGenerator(
+            statistics?.[activeSet]?.team1?.players?.[team1?.[1]?.id],
+          ),
+      );
+      setTableP3(
+        team2?.[0]?.id !== -1 &&
+          tableDataGenerator(
+            statistics?.[activeSet]?.team2?.players?.[team2?.[0]?.id],
+          ),
+      );
+      setTableP4(
+        team2?.[1]?.id !== -1 &&
+          tableDataGenerator(
+            statistics?.[activeSet]?.team2?.players?.[team2?.[1]?.id],
+          ),
+      );
+
       setDataP1(
         team1?.[0]?.id !== -1 &&
           radarGraphDataGenerator(
@@ -193,6 +225,10 @@ export const useStatistics = ({team1, team2, statistics, mode = 'dark'}) => {
     dataP2,
     dataP3,
     dataP4,
+    tableP1,
+    tableP2,
+    tableP3,
+    tableP4,
     dataGenerated,
     matchStatistics,
     activeSet,

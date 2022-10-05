@@ -65,9 +65,9 @@ const newSession = functions
           const docRef = admin.firestore().collection(SESSIONS).doc();
           const accountingDocRef = admin.firestore().collection(ACCOUNTING).doc()
 
-          console.log("DOCREF", docRef)
 
           batch.set(accountingDocRef, {
+              date: payload.date,
               coachId: payload.coachId,
               currency: payload.currency,
               price: payload.price,
@@ -86,21 +86,24 @@ const newSession = functions
 
         await batch.commit();
       } else {
-        const session = await admin
-            .firestore()
-            .collection(SESSIONS)
-            .add({
-              ...payload,
-              players: playersWithUserImage,
-            });
 
-            await admin.firestore().collection(ACCOUNTING).add({
-              coachId: payload.coachId,
-              currency: payload.currency,
-              price: payload.price,
-              players: playersId,
-              sessionId: session.id
-          })
+        const sessionRef = admin.firestore().collection(SESSIONS).doc();
+        const accountingDocRef = admin.firestore().collection(ACCOUNTING).doc()
+
+        await sessionRef.set({
+          ...payload,
+          players: playersWithUserImage,
+          accountingId: accountingDocRef.id,
+        });
+
+        await accountingDocRef.set({
+          date: payload.date,
+          coachId: payload.coachId,
+          currency: payload.currency,
+          price: payload.price,
+          players: playersId,
+          sessionId: sessionRef.id
+        })
       }
     });
 

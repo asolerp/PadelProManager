@@ -84,8 +84,6 @@ export const NewPoint = ({route}) => {
     setPoints(getPoints(resultPoint));
   }, [resultPoint]);
 
-  console.log('AREAS', areas);
-
   return (
     <ScreenLayout>
       <Header

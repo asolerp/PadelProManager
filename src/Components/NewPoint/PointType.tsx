@@ -33,8 +33,6 @@ export const PointType: React.FC<Props> = ({
 }) => {
   const textColor = t.textWhite;
 
-  console.log('POINT AREAS', areas);
-
   const handleOnDrop = area => {
     onDrop(area);
   };

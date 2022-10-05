@@ -37,8 +37,6 @@ export const useAnimatedPointType = ({
     }
   }, [areas]);
 
-  console.log('EFFECT AREAS', areasArray);
-
   useEffect(() => {
     if (usedPoints?.[result]?.type === type) {
       opacity.value = 0;

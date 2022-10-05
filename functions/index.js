@@ -15,6 +15,8 @@ const {getCalendar} = require("./calendar/getCalendar");
 const {newSession} = require("./calendar/newSession");
 const {newPoint} = require("./match/newPoint");
 
+const {getResumen} = require("./accounting/getResumen")
+
 admin.initializeApp(functions.config().firebase);
 
 exports.updatePlayerInMatch = updatePlayerInMatch;
@@ -26,5 +28,6 @@ exports.newUserChecker = newUserChecker;
 exports.deleteSession = deleteSession;
 exports.getCalendar = getCalendar;
 exports.newSession = newSession;
+exports.getResumen = getResumen;
 exports.newPlayer = newPlayer;
 exports.newPoint = newPoint;

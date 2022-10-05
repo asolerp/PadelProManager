@@ -7,7 +7,8 @@ import t from '../Theme/theme';
 import {Text} from 'react-native';
 import {Players} from '../Screens/Players/Players';
 import {Planner} from '../Screens/Planner/Planner';
-import {Training} from '../Screens/Training/Training';
+
+import {Accounting} from '../Screens/Accounting/Accounting';
 
 const Tab = createBottomTabNavigator();
 
@@ -51,17 +52,17 @@ export const TabStack = () => {
         })}
       />
       <Tab.Screen
-        name="Training"
-        component={Training}
+        name="Accounting"
+        component={Accounting}
         options={() => ({
           tabBarIcon: ({focused}) => (
             <>
               <Icon
-                name={focused ? 'ios-easel-sharp' : 'ios-easel-outline'}
+                name={focused ? 'ios-receipt-sharp' : 'ios-receipt-outline'}
                 size={20}
                 focused={focused}
               />
-              <Text style={[t.fontSans, t.textXs]}>Ejercicios</Text>
+              <Text style={[t.fontSans, t.textXs]}>Contabilidad</Text>
             </>
           ),
         })}

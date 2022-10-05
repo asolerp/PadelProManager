@@ -83,29 +83,32 @@ export const ModalListOfPlayers = ({
           placeholder="Nombre del jugador"
         />
         {filteredList && (
-          <FlatList
-            ListHeaderComponent={
-              <>
-                {withEmpyPlayer && (
-                  <PlayerItem
-                    onPress={() => handlePressPlayer(emptyPlayer)}
-                    item={emptyPlayer}
-                    rightSide={
-                      <RadioButton
-                        onPress={() => handlePressPlayer(emptyPlayer)}
-                        active={emptyPlayer?.id === player?.id}
-                      />
-                    }
-                  />
-                )}
-              </>
-            }
-            showsVerticalScrollIndicator={false}
-            data={filteredList}
-            renderItem={renderItem}
-            keyExtractor={item => item?.id}
-            contentContainerStyle={[t.flex1, t.mT3]}
-          />
+          <View style={[t.flexGrow]}>
+            <FlatList
+              contentInset={{bottom: 180}}
+              ListHeaderComponent={
+                <>
+                  {withEmpyPlayer && (
+                    <PlayerItem
+                      onPress={() => handlePressPlayer(emptyPlayer)}
+                      item={emptyPlayer}
+                      rightSide={
+                        <RadioButton
+                          onPress={() => handlePressPlayer(emptyPlayer)}
+                          active={emptyPlayer?.id === player?.id}
+                        />
+                      }
+                    />
+                  )}
+                </>
+              }
+              showsVerticalScrollIndicator={false}
+              data={filteredList}
+              renderItem={renderItem}
+              keyExtractor={item => item?.id}
+              contentContainerStyle={[t.flex1, t.mT3]}
+            />
+          </View>
         )}
       </View>
 

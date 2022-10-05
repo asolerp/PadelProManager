@@ -92,7 +92,6 @@ export const useNewPlayerForm = (playerId, edit, reset) => {
             }),
         );
       } else {
-        console.log('CREANDO JUEGO');
         await addDocument({
           docId: id,
           data: {

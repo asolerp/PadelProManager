@@ -42,6 +42,7 @@ export const MatchTabs = ({match, notes, pointsHistory}) => {
             team1={match?.t1}
             team2={match?.t2}
             statistics={match?.statistics}
+            free={match?.free}
           />
         );
       case 'historic':
@@ -58,7 +59,7 @@ export const MatchTabs = ({match, notes, pointsHistory}) => {
           renderTabBar={props => (
             <TabBar
               {...props}
-              style={{backgroundColor: null}}
+              style={[{backgroundColor: null}, t.pX4]}
               indicatorStyle={{backgroundColor: null}}
               renderLabel={({route, focused}) => {
                 const isFocused = focused ? t.opacity100 : t.opacity30;

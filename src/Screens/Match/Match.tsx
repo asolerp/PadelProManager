@@ -80,7 +80,7 @@ export const MatchScreen: React.FC = ({route}) => {
         />
       )}
       <HDivider />
-      <View style={[t.flex1, t.pX4]}>
+      <View style={[t.flex1, t.p0]}>
         {!loadingMatch && (
           <>
             <View style={[t.mB5]}>
@@ -100,13 +100,15 @@ export const MatchScreen: React.FC = ({route}) => {
               <>
                 <HDivider />
                 {match?.game ? (
-                  <MatchInfo
-                    tournamentName={match?.tournamentName}
-                    round={match?.round}
-                    club={match?.club}
-                    date={match?.date.toDate()}
-                    category={match?.category}
-                  />
+                  <View style={[t.pX4]}>
+                    <MatchInfo
+                      tournamentName={match?.tournamentName}
+                      round={match?.round}
+                      club={match?.club}
+                      date={match?.date.toDate()}
+                      category={match?.category}
+                    />
+                  </View>
                 ) : (
                   <MatchInfoSkeleton />
                 )}

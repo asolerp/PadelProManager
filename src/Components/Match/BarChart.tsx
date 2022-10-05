@@ -23,7 +23,7 @@ export const BarChart = ({players, winners, errorForced, nonForced}) => {
       {data && (
         <StackedBarChart
           data={data}
-          width={Dimensions.get('window').width}
+          width={Dimensions.get('window').width - 40}
           height={320}
           hideLegend={false}
           withHorizontalLabels={false}

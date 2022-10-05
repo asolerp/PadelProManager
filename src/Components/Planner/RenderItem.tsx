@@ -21,7 +21,7 @@ export const RenderItem = ({item, onPress, style}) => {
           styles.container,
           colorParser[item?.color],
           t.roundedSm,
-          t.shadow,
+          t.shadowNone,
           style,
         ]}>
         {item?.club && (

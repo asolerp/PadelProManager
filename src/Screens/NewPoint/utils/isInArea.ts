@@ -9,7 +9,7 @@ export const isInArea = (x1, y1, x2, y2, x, y) => {
 
 export const findInWhatArea = (areas, x, y) => {
   'worklet';
-  console.log(areas, x, y);
+
   const findedArea = Object.entries(areas).find(([key, value]) =>
     isInArea(
       value.x,

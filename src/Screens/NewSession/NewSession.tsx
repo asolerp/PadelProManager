@@ -26,6 +26,7 @@ import {useDeleteSession} from './hooks/useDeleteSession';
 import {CalendarType} from '../../Components/NewSession/CalendarType';
 import {WeekRep} from '../../Components/NewSession/WeekRep';
 import {useTranslationWrapper} from '../../Hooks/useTranslationsWrapper';
+import {getCurrencies} from 'react-native-localize';
 
 export const NEW_SESSION_SCREEN_KEY = 'newSession';
 
@@ -188,7 +189,7 @@ export const NewSessionScreen = ({route}) => {
                   />
                   <Input
                     value={values?.price}
-                    // subfix={String(Localization.currency)}
+                    subfix={String(getCurrencies()[0])}
                     onChangeText={handleChange('price')}
                     keyboardType="decimal-pad"
                     labelText={loc('new_session_form_price_session')}

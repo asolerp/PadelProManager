@@ -116,7 +116,6 @@ export const Select = ({
       </BottomModal>
       <Pressable
         onPress={() => {
-          console.log('HOLA');
           Keyboard.dismiss();
           !disabled && setIsVisible(true);
         }}>
@@ -131,6 +130,7 @@ export const Select = ({
             onBlur={onBlur}
             label={label}
             style={[t.flex2]}
+            inputStyle={[value && t.fontSansBold, t.textGray900]}
           />
         </View>
       </Pressable>

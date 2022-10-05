@@ -1,13 +1,13 @@
 import {useContext, useEffect, useMemo, useState} from 'react';
 import {useDocumentData} from 'react-firebase-hooks/firestore';
 import {userQuery} from '../../../Api/queries';
-import {radarGraphDataGenerator} from '../../../Utils/radaGraphDataGenerator';
+import {radarGraphDataGenerator} from '../../../Utils/dataGenerators';
 
 import {AuthContext} from '../../../Context/AuthContex';
 
 export const useGetPlayer = () => {
   const {user} = useContext(AuthContext);
-  console.log('USER', user);
+
   const queryStats = useMemo(
     () => userQuery.doc(user?.id).collection('stats').doc('global'),
     [user?.id],
@@ -18,7 +18,6 @@ export const useGetPlayer = () => {
   const [graphData, setGraphData] = useState();
 
   useEffect(() => {
-    console.log('stats', stats);
     if (stats) {
       setGraphData(radarGraphDataGenerator(stats, 'black'));
     }
@@ -30,8 +29,6 @@ export const useGetPlayer = () => {
 
   const loading = loadingStats;
   const error = errorStats;
-
-  console.log('GRAPHDATA', graphData);
 
   return {user, error, loading, tw, tl, tm, graphData};
 };
