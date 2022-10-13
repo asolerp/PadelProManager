@@ -13,9 +13,11 @@ import {HDivider} from '../../UI/HDivider';
 import {capitalize} from '../../../Utils/parsers';
 import {openScreenWithPush} from '../../../Router/utils/actions';
 import {PROMOTIONAL_SUBSCRIPTION_SCREEN_KEY} from '../../../Screens/PromotionalSubscription/PromotionalSubscription';
+import {AuthContext} from '../../../Context/AuthContex';
 
 export const HistoricRoute = ({match, pointsHistory}) => {
   const {isSubscribed} = useContext(SubscriptionContext);
+  const {isAdmin} = useContext(AuthContext);
 
   const {historyList, favoriteFilter, setFavoriteFilter} = useHistoryFilters(
     match,
@@ -42,46 +44,6 @@ export const HistoricRoute = ({match, pointsHistory}) => {
   };
   return (
     <>
-      {!isSubscribed && !match?.free && (
-        <BlurView
-          style={[
-            t.absolute,
-            t.z50,
-            {
-              width: Dimensions.get('window').width,
-            },
-            t.hFull,
-            t.roundedSm,
-            t.justifyCenter,
-            t.itemsCenter,
-          ]}
-          blurType="light"
-          blurAmount={10}
-          reducedTransparencyFallbackColor="white">
-          <View
-            style={[
-              t.absolute,
-              t.wFull,
-              t.hFull,
-              t.justifyStart,
-              t.itemsCenter,
-              t.pX10,
-            ]}>
-            <Text style={[t.mT20, t.mB10, t.textCenter, t.fontSans, t.textLg]}>
-              Has superado el límite de partidos gratuitos, para visualizar este
-              contenido has de tener una cuenta premium
-            </Text>
-            <Button
-              title="Hazte premium"
-              type="info"
-              onPress={() =>
-                openScreenWithPush(PROMOTIONAL_SUBSCRIPTION_SCREEN_KEY)
-              }
-              active
-            />
-          </View>
-        </BlurView>
-      )}
       <View style={[t.pX4]}>
         <View
           style={[

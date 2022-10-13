@@ -4,6 +4,7 @@ import {useDocumentData} from 'react-firebase-hooks/firestore';
 import {Roles, UserType} from '../Global/types';
 
 interface SubscriptionContextInterface {
+  isAdmin: boolean;
   isCoach: boolean;
   user?: UserType;
   setUser: React.Dispatch<UserType>;
@@ -11,6 +12,7 @@ interface SubscriptionContextInterface {
 
 export const AuthContext = createContext<SubscriptionContextInterface>({
   isCoach: false,
+  isAdmin: false,
   setUser: () => {},
 });
 
@@ -33,6 +35,7 @@ export const AuthProvider = ({children}) => {
   }, [userData]);
 
   const value = {
+    isAdmin: user?.role === Roles.ADMIN,
     isCoach: user?.role === Roles.COACH || user?.role === Roles.ADMIN,
     user,
     setUser,

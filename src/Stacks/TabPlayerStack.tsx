@@ -4,11 +4,18 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {Matches} from '../Screens/Matches/Matches';
 import {HomePlayerScreen} from '../Screens/HomePlayer/HomePlayer';
 import t from '../Theme/theme';
-import {Text} from 'react-native';
+import {Text, View} from 'react-native';
+import {Messages} from '../Screens/Messages/Messages';
+import {useGetNoReadMessages} from '../Hooks/useGetNoReadMessages';
+import {useContext} from 'react';
+import {AuthContext} from '../Context/AuthContex';
 
 const Tab = createBottomTabNavigator();
 
 export const TabPlayerStack = () => {
+  const {noReadMessages} = useGetNoReadMessages();
+  const {user} = useContext(AuthContext);
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -26,11 +33,45 @@ export const TabPlayerStack = () => {
                 size={20}
                 focused={focused}
               />
-              <Text style={[t.fontSans, t.textXs]}>Hoy</Text>
+              <Text style={[t.fontSans, t.textXs]}>Panel</Text>
             </>
           ),
         })}
       />
+      {user?.coachId && (
+        <Tab.Screen
+          name="Messages"
+          component={Messages}
+          options={() => ({
+            tabBarIcon: ({focused}) => (
+              <View style={[t.relative, t.itemsCenter, t.justifyCenter]}>
+                {noReadMessages && (
+                  <View
+                    style={[
+                      t.absolute,
+                      t.w3,
+                      t.h3,
+                      t.roundedFull,
+                      t.bgErrorDark,
+                      t._top0_5,
+                      t.right3,
+                      t.z50,
+                    ]}
+                  />
+                )}
+                <Icon
+                  name={
+                    focused ? 'chatbox-ellipses' : 'chatbox-ellipses-outline'
+                  }
+                  size={20}
+                  focused={focused}
+                />
+                <Text style={[t.fontSans, t.textXs]}>Mensajes</Text>
+              </View>
+            ),
+          })}
+        />
+      )}
 
       <Tab.Screen
         name="Partidos"

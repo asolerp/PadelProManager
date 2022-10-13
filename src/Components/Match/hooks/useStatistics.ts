@@ -25,7 +25,7 @@ export const useStatistics = ({team1, team2, statistics, mode = 'dark'}) => {
   };
 
   useEffect(() => {
-    if (matchStatistics && dataP1 && dataP2 && dataP3 && dataP4) {
+    if (matchStatistics && (dataP1 || dataP2 || dataP3 || dataP4)) {
       setDataGenerated(true);
     }
   }, [matchStatistics, dataP1, dataP2, dataP3, dataP4]);
@@ -112,6 +112,18 @@ export const useStatistics = ({team1, team2, statistics, mode = 'dark'}) => {
         t2Tgl:
           getStatisticCount(statistics?.[activeSet]?.team2?.global?.w?.gl) +
           getStatisticCount(statistics?.[activeSet]?.team2?.global?.ef?.gl),
+        t1Tx3:
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.w?.x3) +
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.ef?.x3),
+        t2Tx3:
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.w?.x3) +
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.ef?.x3),
+        t1Tx4:
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.w?.x4) +
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.ef?.x4),
+        t2Tx4:
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.w?.x4) +
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.ef?.x4),
         totalWPerPlayer: {
           p1: getStatisticCount(
             statistics?.total?.team1?.players?.[team1?.[0]?.id]?.w?.count,
@@ -156,12 +168,20 @@ export const useStatistics = ({team1, team2, statistics, mode = 'dark'}) => {
         },
         totalGoldPoints: getStatisticCount(statistics?.[activeSet]?.breakpoint),
         totalPoints: getStatisticCount(statistics?.[activeSet]?.count),
+        totalT1ConsecutiveWon: getStatisticCount(
+          statistics?.total?.team1?.global?.consecutiveWon,
+        ),
+        totalT2ConsecutiveWon: getStatisticCount(
+          statistics?.total?.team2?.global?.consecutiveWon,
+        ),
         totalT1PointsWins:
           getStatisticCount(statistics?.total?.team1?.global?.w?.count) +
-          getStatisticCount(statistics?.total?.team1?.global?.ef?.count),
+          getStatisticCount(statistics?.total?.team1?.global?.ef?.count) +
+          getStatisticCount(statistics?.total?.team1?.global?.wNs?.count),
         totalT2PointsWins:
           getStatisticCount(statistics?.total?.team2?.global?.w?.count) +
-          getStatisticCount(statistics?.total?.team2?.global?.ef?.count),
+          getStatisticCount(statistics?.total?.team2?.global?.ef?.count) +
+          getStatisticCount(statistics?.total?.team2?.global?.wNs?.count),
       });
 
       setTableP1(

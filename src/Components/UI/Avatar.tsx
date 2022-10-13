@@ -1,5 +1,6 @@
 import React from 'react';
 import {ImageBackground, Text, TextStyle, View, ViewStyle} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import t from '../../Theme/theme';
 import PressableOpacity from './PressableOpacity';
 
@@ -40,12 +41,15 @@ export const Avatar: React.FC<Props> = ({
         t.borderWhite,
       ]}
       onPress={onPress}>
-      <ImageBackground
-        source={{uri: img}}
-        style={[t.w12, t.h12, t.shadow, imageStyle]}
-        imageStyle={[t.roundedFull]}
-        resizeMode="cover"
+      <FastImage
+        style={[t.w12, t.h12, t.shadow, t.roundedFull, imageStyle]}
+        source={{
+          uri: img,
+          priority: FastImage.priority.normal,
+        }}
+        resizeMode={FastImage.resizeMode.cover}
       />
+
       {name && (
         <>
           {active ? (

@@ -8,6 +8,7 @@ import {VDivider} from '../UI/VDivider';
 import Animated, {LightSpeedInLeft} from 'react-native-reanimated';
 import {es} from 'date-fns/locale';
 import {capitalizeText} from '../../Utils/capitalizeText';
+import {matchCategoryParser} from '../../Utils/parsers';
 
 interface MatchInfoProps {
   club: string;
@@ -72,16 +73,15 @@ export const MatchInfo: React.FC<MatchInfoProps> = ({
         <InfoElement label="Categoría" align="center">
           <View
             style={[
-              t.w6,
               t.h6,
-              t.roundedFull,
+              t.roundedSm,
               t.bgInfo,
               t.justifyCenter,
               t.itemsCenter,
               t.p1,
             ]}>
             <Text style={[t.textWhite, t.fontSansBold, t.textSm]}>
-              {category}
+              {matchCategoryParser[category]}
             </Text>
           </View>
         </InfoElement>

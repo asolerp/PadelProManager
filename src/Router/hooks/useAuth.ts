@@ -2,76 +2,55 @@ import {useEffect, useCallback, useContext} from 'react';
 import auth from '@react-native-firebase/auth';
 import messaging from '@react-native-firebase/messaging';
 
-import firestore from '@react-native-firebase/firestore';
 import {AuthContext} from '../../Context/AuthContex';
-import {DynamicLinkContext} from '../../Context/DynamicLinkContext';
-import {emptyStats} from '../../Screens/NewPlayer/utils/emptyStats';
+
 import {LoadingModalContext} from '../../Context/LoadingModalContext';
+import {defaultFunctions} from '../../Lib/API/firebaseApp';
+import {RoleContext} from '../../Context/RoleContext';
 
-const DEFAULT_PHOTOURL =
-  'https://res.cloudinary.com/enalbis/image/upload/v1634766684/Padelia/9861109C-76CA-4EFC-8747-20146A72C02E_1_105_c_e0zjzz.jpg';
+const onAuthStateChange = (role, callback, setIsVisible) => {
+  const checkNewUserFn = defaultFunctions.httpsCallable('checkNewUser');
 
-const onAuthStateChange = (params, callback, setIsVisible) => {
   return auth().onAuthStateChanged(async user => {
     setIsVisible(true);
     try {
       let token = await messaging().getToken();
-
+      console.log('USER', user);
       if (user) {
-        let docRef = firestore().collection('users');
-        const userQuery = await firestore()
-          .collection('users')
-          .doc(user.uid)
-          .get();
-
-        if (userQuery.exists) {
-          return await docRef.doc(user.uid).update({token});
-        }
-
-        await docRef.doc(user.uid).set({
-          email: user.email,
-          role: params?.coach_id ? 'player' : 'coach',
-          coachId: params?.coach_id || '',
+        const response = await checkNewUserFn({
+          user: {
+            uid: user.uid,
+            email: user?.email,
+          },
+          role,
           token,
-          photoURL: user.photoURL || DEFAULT_PHOTOURL,
         });
-
-        await docRef
-          .doc(user.uid)
-          .collection('stats')
-          .doc('global')
-          .set({...emptyStats});
-      }
-    } catch (err) {
-      console.log(err);
-    } finally {
-      if (user) {
-        let docQuery = await firestore()
-          .collection('users')
-          .doc(user?.uid)
-          .get();
-
-        callback({loggedIn: true, id: docQuery.id, ...docQuery.data()});
+        console.log('RESPONSE', response.data);
+        callback({loggedIn: true, ...response?.data});
       } else {
+        console.log('Limpiando');
         callback({loggedIn: false});
       }
       setIsVisible(false);
+    } catch (err) {
+      console.log(err);
+      // error({
+      //   title: 'Lo sentimos',
+      //   subtitle: 'Vúelvelo a intentar más tarde',
+      // });
     }
   });
 };
 
 export const useAuth = () => {
   const {setUser} = useContext(AuthContext);
-  const {params} = useContext(DynamicLinkContext);
+
+  const {role} = useContext(RoleContext);
   const {setIsVisible} = useContext(LoadingModalContext);
   const handleSetUser = useCallback(user => setUser(user), [setUser]);
 
   useEffect(() => {
-    const authSubscriber = onAuthStateChange(
-      params,
-      handleSetUser,
-      setIsVisible,
-    );
+    const authSubscriber = onAuthStateChange(role, handleSetUser, setIsVisible);
     return authSubscriber;
   }, []);
 };

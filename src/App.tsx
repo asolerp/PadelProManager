@@ -16,30 +16,35 @@ import '../i18n.config';
 import {DynamicLinkProvider} from './Context/DynamicLinkContext';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import t from './Theme/theme';
+import {suppressInAppMessaging} from './Lib/InAppMessaging';
+import {RoleProvider} from './Context/RoleContext';
 
 const App: React.FC = () => {
   useEffect(() => {
     (async () => {
+      await suppressInAppMessaging();
       await initRemoteConfig();
     })();
   });
 
   return (
-    <GestureHandlerRootView style={[t.flexGrow]}>
-      <StatusBar animated={true} barStyle="dark-content" />
-      <AuthProvider>
-        <DynamicLinkProvider>
-          <SubscriptionProvider>
-            <LoadingModalProvider>
-              <PremiumModalProvider>
-                <AuthRouter />
-              </PremiumModalProvider>
-            </LoadingModalProvider>
-          </SubscriptionProvider>
-        </DynamicLinkProvider>
-      </AuthProvider>
-      <Toast config={toastConfig} />
-    </GestureHandlerRootView>
+    <DynamicLinkProvider>
+      <RoleProvider>
+        <GestureHandlerRootView style={[t.flexGrow]}>
+          <StatusBar animated={true} barStyle="dark-content" />
+          <AuthProvider>
+            <SubscriptionProvider>
+              <LoadingModalProvider>
+                <PremiumModalProvider>
+                  <AuthRouter />
+                </PremiumModalProvider>
+              </LoadingModalProvider>
+            </SubscriptionProvider>
+          </AuthProvider>
+          <Toast config={toastConfig} />
+        </GestureHandlerRootView>
+      </RoleProvider>
+    </DynamicLinkProvider>
   );
 };
 

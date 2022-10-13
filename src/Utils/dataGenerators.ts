@@ -133,6 +133,8 @@ export const tableDataGenerator = (playerStatistics: any) => {
           {value: w?.bj || 0},
           {value: w?.sm || 0},
           {value: w?.gl || 0},
+          {value: w?.x3 || 0},
+          {value: w?.x4 || 0},
         ],
         label: 'Winners',
         config: {
@@ -155,6 +157,8 @@ export const tableDataGenerator = (playerStatistics: any) => {
           {value: nf?.bj || 0},
           {value: nf?.sm || 0},
           {value: nf?.gl || 0},
+          {value: nf?.x3 || 0},
+          {value: nf?.x4 || 0},
         ],
         label: 'Errores no forzados',
         config: {
@@ -175,6 +179,8 @@ export const tableDataGenerator = (playerStatistics: any) => {
           {value: ef?.bj || 0},
           {value: ef?.sm || 0},
           {value: ef?.gl || 0},
+          {value: ef?.x3 || 0},
+          {value: ef?.x4 || 0},
         ],
         label: 'Errors forced',
         config: {

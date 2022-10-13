@@ -42,13 +42,13 @@ export const Accounting = () => {
         <AccountingStat
           color={t.textErrorDark}
           label="Pendiente"
-          value={`${totalPending} ${getCurrencies()[0]}`}
+          value={`${Math.round(totalPending)} ${getCurrencies()[0]}`}
         />
         <View style={[t.mL2]} />
         <AccountingStat
           color={t.textSuccessDark}
           label="Total"
-          value={`${total} ${getCurrencies()[0]}`}
+          value={`${Math.round(total)} ${getCurrencies()[0]}`}
         />
       </View>
       <FlatList

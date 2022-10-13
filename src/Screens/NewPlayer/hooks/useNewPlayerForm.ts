@@ -13,6 +13,8 @@ import {AuthContext} from '../../../Context/AuthContex';
 import {timeout} from '../../../Utils/timeout';
 import {useCameraOrLibrary} from '../../../Hooks/useCamerOrLibrary';
 import {error, info} from '../../../Lib/Logging';
+import firestore from '@react-native-firebase/firestore';
+import {CONVERSATIONS, REQUESTS} from '../../../Models/entities';
 
 export const useNewPlayerForm = (playerId, edit, reset) => {
   const {user} = useContext(AuthContext);
@@ -74,13 +76,22 @@ export const useNewPlayerForm = (playerId, edit, reset) => {
         await uploadCloudinary(
           response?.assets?.[0],
           `PadelPro/users/${id}/avatar`,
-          async url =>
+          async url => {
+            await firestore()
+              .collection(CONVERSATIONS)
+              .add({
+                coachEmail: user?.email,
+                playerEmail: values.email,
+                members: [user?.email, values.email],
+                type: 1,
+              });
             await addDocument({
               docId: id,
               data: {
                 ...Object.fromEntries(
                   Object.entries(values).filter(([key, value]) => !!value),
                 ),
+                active: false,
                 profileImg: url,
               },
               callback: async () =>
@@ -89,9 +100,25 @@ export const useNewPlayerForm = (playerId, edit, reset) => {
                   .collection('stats')
                   .doc('global')
                   .set(emptyStats),
-            }),
+            });
+            await firestore().collection(REQUESTS).add({
+              createdAt: new Date(),
+              playerEmail: values?.email,
+              coachEmail: user?.email,
+              coachId: user?.id,
+              active: false,
+            });
+          },
         );
       } else {
+        await firestore()
+          .collection(CONVERSATIONS)
+          .add({
+            coachEmail: user?.email,
+            playerEmail: values.email,
+            members: [user?.email, values.email],
+            type: 1,
+          });
         await addDocument({
           docId: id,
           data: {
@@ -105,6 +132,13 @@ export const useNewPlayerForm = (playerId, edit, reset) => {
               .collection('stats')
               .doc('global')
               .set(emptyStats),
+        });
+        await firestore().collection(REQUESTS).add({
+          createdAt: new Date(),
+          playerEmail: values?.email,
+          coachEmail: user?.email,
+          coachId: user?.id,
+          active: false,
         });
       }
     } catch (err) {

@@ -22,6 +22,7 @@ export const PlayerItem = ({
   onPress = () =>
     openScreenWithPush(PLAYER_SCREEN_KEY, {
       playerId: item?.id,
+      playerEmail: item?.email,
     }),
   rightSide,
 }) => {
@@ -33,7 +34,12 @@ export const PlayerItem = ({
             <Avatar img={item.profileImg} />
             <View style={[t.mL2]}>
               <Text style={[t.fontSansMedium, t.textLg, t.mB1]}>
-                {item.firstName} {item.secondName}
+                {item.firstName} {item.secondName}{' '}
+                {item?.active && (
+                  <Text style={[t.textXs, t.fontSansBold, t.textGray500]}>
+                    PadelPro
+                  </Text>
+                )}
               </Text>
               <View style={[t.flexRow, t.itemsCenter]}>
                 <View style={[t.flexRow, t.itemsCenter, t.mR2]}>
@@ -66,6 +72,7 @@ export const PlayerItem = ({
                   )}
                 </View>
               </View>
+              <View style={[t.mT2, t.selfStart, t.itemsCenter]} />
             </View>
           </View>
           {rightSide ? (

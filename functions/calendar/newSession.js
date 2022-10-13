@@ -67,7 +67,7 @@ const newSession = functions
 
 
           batch.set(accountingDocRef, {
-              date: payload.date,
+              date: date.valueOf(),
               coachId: payload.coachId,
               currency: payload.currency,
               price: payload.price,

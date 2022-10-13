@@ -16,10 +16,12 @@ import {
 } from '../../Utils/constants';
 import {EXERCICES_SCREEN_KEY} from '../Exercices/Exercicies';
 
+export const TRAINING_SCREEN_KEY = 'trainingScreen';
+
 export const Training = () => {
   return (
     <ScreenLayout>
-      <Header title="Biblioteca de ejercicios" />
+      <Header withBack title="Biblioteca" />
       <HDivider />
       <ScrollView style={[t.mT3, t.pX4]}>
         <View style={[t.mB5]}>

@@ -28,6 +28,10 @@ import {
 } from '../Screens/NewSession/NewSession';
 import {ProMatch, PRO_MATCH_SCREEN_KEY} from '../Screens/ProMatch/ProMatch';
 import {Session, SESSION_SCREEN_KEY} from '../Screens/Session/Session';
+import {Messages, MESSAGES_SCREEN_KEY} from '../Screens/Messages/Messages';
+import {Chat, CHAT_SCREEN_KEY} from '../Screens/Chat/Chat';
+import {NewGroup, NEW_GROUP_SCREEN_KEY} from '../Screens/NewGroup/NewGroup';
+import {Training, TRAINING_SCREEN_KEY} from '../Screens/Training/Training';
 
 const Stack = createNativeStackNavigator();
 
@@ -42,6 +46,11 @@ export const CoachStack = () => {
           options={{headerShown: false}}
           name={TAB_STACK_KEY}
           component={TabStack}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name={NEW_GROUP_SCREEN_KEY}
+          component={NewGroup}
         />
         <Stack.Screen
           options={{headerShown: false}}
@@ -89,6 +98,11 @@ export const CoachStack = () => {
         />
         <Stack.Screen
           options={{headerShown: false}}
+          name={TRAINING_SCREEN_KEY}
+          component={Training}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
           name={EXERCICES_SCREEN_KEY}
           component={Exercices}
         />
@@ -97,7 +111,16 @@ export const CoachStack = () => {
           name={SESSION_SCREEN_KEY}
           component={Session}
         />
-
+        <Stack.Screen
+          options={{headerShown: false}}
+          name={MESSAGES_SCREEN_KEY}
+          component={Messages}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name={CHAT_SCREEN_KEY}
+          component={Chat}
+        />
         <Stack.Screen
           options={{headerShown: false}}
           name={NEW_SESSION_SCREEN_KEY}

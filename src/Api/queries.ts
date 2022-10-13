@@ -1,9 +1,20 @@
 import firestore from '@react-native-firebase/firestore';
+import {
+  ACCOUNTING,
+  CONVERSATIONS,
+  GROUPS,
+  MATCHES,
+  PLAYERS,
+  RELATIONS,
+  SESSIONS,
+  USERS,
+} from '../Models/entities';
 
-export const matchQuery = firestore().collection('matches');
-export const playerQuery = userId =>
-  userQuery.doc(userId).collection('players');
-export const userQuery = firestore().collection('users');
-export const sessionQuery = firestore().collection('sessions');
-export const accountingQuery = firestore().collection('accounting');
-export const relationsQuery = firestore().collection('relations');
+export const matchQuery = firestore().collection(MATCHES);
+export const playerQuery = userId => userQuery.doc(userId).collection(PLAYERS);
+export const userQuery = firestore().collection(USERS);
+export const sessionQuery = firestore().collection(SESSIONS);
+export const accountingQuery = firestore().collection(ACCOUNTING);
+export const relationsQuery = firestore().collection(RELATIONS);
+export const conversationsQuery = firestore().collection(CONVERSATIONS);
+export const groupQuery = firestore().collection(GROUPS);

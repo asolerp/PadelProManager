@@ -1,7 +1,29 @@
 import {useEffect} from 'react';
 import messaging from '@react-native-firebase/messaging';
+import {Alert} from 'react-native';
+import {openScreenWithPush} from '../Router/utils/actions';
+import {CHAT_SCREEN_KEY} from '../Screens/Chat/Chat';
 
 export const useNotification = () => {
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      const {data} = remoteMessage;
+    });
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = messaging().setBackgroundMessageHandler(
+      async remoteMessage => {
+        if (remoteMessage) {
+          const {data} = remoteMessage;
+        }
+      },
+    );
+
+    return unsubscribe;
+  }, []);
+
   useEffect(() => {
     async function requestUserPermission() {
       const authStatus = await messaging().requestPermission();
@@ -24,7 +46,10 @@ export const useRedirectNotification = () => {
   useEffect(() => {
     messaging().onNotificationOpenedApp(async remoteMessage => {
       if (remoteMessage) {
-        console.log('REMOTE MESSAGE', remoteMessage);
+        const {data} = remoteMessage;
+        openScreenWithPush(CHAT_SCREEN_KEY, {
+          conversationId: data.docId,
+        });
       }
     });
   }, []);

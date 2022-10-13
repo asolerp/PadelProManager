@@ -1,3 +1,5 @@
+import {removeMultipleBlanks} from './removeMultipleBlanks';
+
 export const shortName = (
   pos = 1,
   firstName: string,
@@ -16,9 +18,21 @@ export const fullName = (
   secondName: string,
 ): string => {
   if (firstName && secondName) {
-    return firstName.toUpperCase() + ' ' + secondName.toUpperCase();
+    return (
+      removeMultipleBlanks(firstName.toUpperCase()) +
+      ' ' +
+      removeMultipleBlanks(secondName.toUpperCase()).split(' ')[0]
+    );
   }
   return `JUG ${pos}`;
+};
+
+export const parseRound = {
+  1: 'Final',
+  2: 'Semifinal',
+  4: 'Cuartos',
+  8: 'Octavos',
+  16: 'Dieciseisavos ',
 };
 
 export const roundParser = {
@@ -26,11 +40,11 @@ export const roundParser = {
 };
 
 export const capitalize = str => {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+  return str?.charAt(0).toUpperCase() + str.slice(1);
 };
 
 export const firstSurname = str => {
-  return str.split(' ')[0];
+  return str?.split(' ')[0];
 };
 
 export const colorByCategory = {
@@ -51,6 +65,15 @@ export const categoryParse = {
   3: 'Tercera',
   4: 'Cuarta',
   5: 'Quinta',
+};
+
+export const matchCategoryParser = {
+  [-1]: 'WPT',
+  1: '1',
+  2: '2',
+  3: '3',
+  4: '4',
+  5: '5',
 };
 
 export const handParse = {

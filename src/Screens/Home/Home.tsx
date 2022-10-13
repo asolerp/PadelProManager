@@ -28,15 +28,17 @@ import {ProMatchesList} from '../../Components/Home/ProMatchesList';
 import {PaginatedList} from '../../Components/Common/PaginatedList';
 import {ProMatchSkeleton} from '../../Components/Home/skeleton/ProMatchSkeleton';
 import PressableOpacity from '../../Components/UI/PressableOpacity';
-import {colorParser} from '../../Utils/sessionParsers';
-import {openScreenWithPush, openStack} from '../../Router/utils/actions';
-import {ACCOUTING_SCREEN_KEY} from '../Accounting/Accounting';
+
+import {openStack, openScreenWithPush} from '../../Router/utils/actions';
 import {TAB_STACK_KEY} from '../../Router/utils/routerKeys';
+import {useInAppMessaging} from '../../Hooks/useInAppMessaging';
+import {TRAINING_SCREEN_KEY} from '../Training/Training';
 
 export const HOME_SCREEN_KEY = 'homeScreen';
 
 export const HomeScreen: FunctionComponent = () => {
   useHideBootSplash();
+  useInAppMessaging();
   const {loc} = useTranslationWrapper();
   const {
     refetch,
@@ -76,23 +78,28 @@ export const HomeScreen: FunctionComponent = () => {
                 t.p3,
                 t.roundedSm,
                 t.shadowNone,
-                t.bgErrorLight,
+                t.bgWhite,
+                t.w32,
                 t.border0_5,
                 t.borderErrorDark,
               ]}>
-              <View style={[t.flexRow, t.justifyBetween]}>
-                <Text style={[t.fontSansBold, t.textWhite]}>
+              <View style={[t.justifyBetween]}>
+                <Text style={[t.fontSansBold, t.textXxs, t.textGray600, t.mB3]}>
                   SALDO PENDINETE
                 </Text>
-                <Text style={[t.fontSansBold, t.textWhite]}>
-                  {totalPending} {getCurrencies()[0]}
+                <Text style={[t.fontSansBold]}>
+                  {Math.round(totalPending)} {getCurrencies()[0]}
                 </Text>
               </View>
             </PressableOpacity>
           </View>
         )}
         <View style={[t.mB7]}>
-          <MyTodaySessions sessions={todaySessions} />
+          {loading ? (
+            <ProMatchSkeleton />
+          ) : (
+            <MyTodaySessions sessions={todaySessions} />
+          )}
         </View>
         <View>
           {loading ? (
@@ -149,9 +156,18 @@ export const HomeScreen: FunctionComponent = () => {
             )}
           </View>
         </View>
-        <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
-          {loc('DAILY_EXERCISE_TITLE')}
-        </Text>
+        <View style={[t.mB5, t.flexRow, t.justifyBetween]}>
+          <Text style={[t.textXl, t.fontSansBold]}>
+            {loc('DAILY_EXERCISE_TITLE')}
+          </Text>
+          <PressableOpacity
+            onPress={() => openScreenWithPush(TRAINING_SCREEN_KEY)}
+            style={[t.borderB0_5, t.borderGray700]}>
+            <Text style={[t.fontSansMedium, t.textGray900]}>
+              Más ejercicios
+            </Text>
+          </PressableOpacity>
+        </View>
         {loading ? (
           <DailyExerciseSkeleton />
         ) : (

@@ -12,6 +12,9 @@ export const useDeepLinks = () => {
   const handleDynamicLink = link => {
     const {action, ...params} = parse(link.url);
 
+    console.log('ACTION', action);
+    console.log('PARAMS', params);
+
     if (!action) {
       return;
     }

@@ -2,7 +2,7 @@ import {format} from 'date-fns';
 import {es} from 'date-fns/locale';
 import React from 'react';
 import {useContext} from 'react';
-import {Text, View} from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 import {Header, ScreenLayout} from '../../Components/Layout';
 import {SessionSettings} from '../../Components/Session/SessionSettings';
 import {Avatar} from '../../Components/UI/Avatar';
@@ -12,15 +12,13 @@ import {RadioButton} from '../../Components/UI/RadioButton';
 
 import {VDivider} from '../../Components/UI/VDivider';
 import {AuthContext} from '../../Context/AuthContex';
-import {Roles} from '../../Global/types';
-import {usePermissions} from '../../Hooks/usePermissions';
+
 import t from '../../Theme/theme';
 import {useGetSession} from './hooks/useGetSession';
 
 export const SESSION_SCREEN_KEY = 'sessionScreen';
 
 export const Session = ({route}) => {
-  const sessionDay = format(new Date(), 'iii d MMMM yyyy', {locale: es});
   const {
     session,
     accounting,
@@ -30,20 +28,35 @@ export const Session = ({route}) => {
     sessionId: route?.params?.sessionId,
   });
 
-  const {user} = useContext(AuthContext);
+  const sessionDay =
+    session &&
+    format(new Date(session?.date), 'iii d MMMM yyyy', {
+      locale: es,
+    });
+  const startHour =
+    session &&
+    format(new Date(session?.startTime), 'HH:mm', {
+      locale: es,
+    });
+  const endHour =
+    session &&
+    format(new Date(session?.endTime), 'HH:mm', {
+      locale: es,
+    });
+
+  const {isCoach} = useContext(AuthContext);
 
   return (
     <ScreenLayout>
       <Header
         title="Entreno de voleas"
         withBack
-        // rightSide={
-        //   (user?.role === Roles.COACH || Roles.ADMIN) && (
-        //     <SessionSettings sessionId={session?.id} />
-        //   )
-        // }
+        rightSide={isCoach && <SessionSettings session={session} />}
       />
-      <View style={[t.pX4]}>
+      <ScrollView
+        contentInset={{bottom: 20}}
+        showsVerticalScrollIndicator={false}
+        style={[t.pX4, t.flex1]}>
         <View style={[t.mT8]}>
           <Text style={[t.textGray500]}>General information</Text>
           <View style={[t.mT4, t.flexRow, t.mB2]}>
@@ -67,29 +80,35 @@ export const Session = ({route}) => {
               <Text style={[t.fontSansMedium, t.textBase, t.textGray700]}>
                 Hora inicio
               </Text>
-              <Text>17:00h</Text>
+              <Text>{startHour}h</Text>
             </View>
             <VDivider />
             <View style={[t.mL4]}>
               <Text style={[t.fontSansMedium, t.textBase, t.textGray700]}>
                 Hora fin
               </Text>
-              <Text>19:00h</Text>
+              <Text>{endHour}</Text>
             </View>
           </View>
         </View>
         <View style={[t.mT6]}>
           <Text style={[t.textGray500]}>Players</Text>
-          <View style={[t.flexRow, t.justifyStart, t.mT4]}>
+          <ScrollView
+            showsHorizontalScrollIndicator={false}
+            horizontal
+            style={[t.flexRow, t.mT4]}
+            contentContainerStyle={[t.justifyStart]}>
             {session?.players?.map(player => (
-              <View style={[t.mR2]}>
+              <View style={[t.mR2, t.justifyCenter, t.itemsCenter]}>
                 <Avatar img={player?.profileImg} />
                 <Text style={[t.mT1, t.textXs, t.textGray700]}>
-                  {player?.firstName} {player?.secondName}
+                  {player?.firstName?.[0]}
+                  {'.'}
+                  {player?.secondName?.split(' ')[0]}
                 </Text>
               </View>
             ))}
-          </View>
+          </ScrollView>
         </View>
         <View style={[t.mT6]}>
           <Text style={[t.textGray500]}>Notas para los jugadores</Text>
@@ -120,7 +139,8 @@ export const Session = ({route}) => {
                     ? t.textErrorDark
                     : t.textSuccessDark,
                 ]}>
-                {sessionAccountingBalance} {accounting?.[0]?.currency}
+                {Math.round(sessionAccountingBalance)}{' '}
+                {accounting?.[0]?.currency}
               </Text>
             </View>
           </View>
@@ -150,17 +170,21 @@ export const Session = ({route}) => {
                     <Chip text="Por pagar" mainColor="error" />
                   )}
                 </View>
-                <View style={[t.flexGrow, t.itemsEnd]}>
-                  <RadioButton
-                    active={accounting?.[0]?.players?.[player.id]}
-                    onPress={() => handleUpdatePaymentStatus(player?.id)}
-                  />
-                </View>
+                {isCoach && (
+                  <View style={[t.flexGrow, t.itemsEnd]}>
+                    <RadioButton
+                      active={accounting?.[0]?.players?.[player.id]}
+                      onPress={() =>
+                        isCoach && handleUpdatePaymentStatus(player?.id)
+                      }
+                    />
+                  </View>
+                )}
               </View>
             </View>
           ))}
         </View>
-      </View>
+      </ScrollView>
     </ScreenLayout>
   );
 };

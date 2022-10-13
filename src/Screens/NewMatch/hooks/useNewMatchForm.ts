@@ -87,8 +87,16 @@ export const useNewMatchForm = () => {
           team2: {},
         },
         total: {
-          team1: {},
-          team2: {},
+          team1: {
+            global: {
+              consecutiveWon: 0,
+            },
+          },
+          team2: {
+            global: {
+              consecutiveWon: 0,
+            },
+          },
         },
       },
       playersEmail:

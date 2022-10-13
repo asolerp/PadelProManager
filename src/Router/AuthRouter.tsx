@@ -1,28 +1,32 @@
 import React, {useContext, useEffect} from 'react';
 import {LoadingModal} from '../Components/Common/LoadingModal';
 import {AuthContext} from '../Context/AuthContex';
-import {
-  LoadingModalContext,
-  LoadingModalContextInterface,
-} from '../Context/LoadingModalContext';
+import {LoadingModalContext} from '../Context/LoadingModalContext';
 import {useAuth} from './hooks/useAuth';
 
 import {SignInRouter} from './SignInRouter';
 import {SignOutRouter} from './SignOutRouter';
 
-import {PremiumModal} from '../Components/Common/PremiumModal';
-import {PremiumModalContext} from '../Context/PremiumModalContext';
 import {useIAPayments} from '../Lib/Payments/hooks/useIAPayments';
-import {useNotification} from '../Hooks/useNotifications';
+import {
+  useNotification,
+  useRedirectNotification,
+} from '../Hooks/useNotifications';
+import {useLogout} from '../Hooks/useLogout';
 
 const AuthRouter = () => {
   useAuth();
   useIAPayments();
+  useRedirectNotification();
   useNotification();
+  const {logout} = useLogout();
 
   const {isVisible, text} = useContext<any>(LoadingModalContext);
-  const {isVisible: visiblePremiumModal} = useContext<any>(PremiumModalContext);
   const {user} = useContext<any>(AuthContext);
+
+  // useEffect(() => {
+  //   logout();
+  // }, []);
 
   if (!user) {
     return null;
@@ -35,7 +39,6 @@ const AuthRouter = () => {
   return (
     <>
       {isVisible && <LoadingModal text={text} isVisible={true} />}
-      <PremiumModal isVisible={visiblePremiumModal} />
       <SignInRouter />
     </>
   );

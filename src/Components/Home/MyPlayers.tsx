@@ -24,7 +24,8 @@ export const MyPlayers = ({players}) => {
         name={shortName(1, item.firstName, item.secondName.split(' ')[0])}
         onPress={() =>
           openScreenWithPush(PLAYER_SCREEN_KEY, {
-            playerId: item.id,
+            playerId: item?.id,
+            playerEmail: item?.email,
           })
         }
       />

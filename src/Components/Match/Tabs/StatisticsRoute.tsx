@@ -11,9 +11,11 @@ import {SubscriptionContext} from '../../../Context/SubscriptionContext';
 import {Button} from '../../UI/Button';
 import {openScreenWithPush} from '../../../Router/utils/actions';
 import {PROMOTIONAL_SUBSCRIPTION_SCREEN_KEY} from '../../../Screens/PromotionalSubscription/PromotionalSubscription';
+import {AuthContext} from '../../../Context/AuthContex';
 
 export const StatisticsRoute = ({team1, team2, free, statistics}) => {
   const {isSubscribed} = useContext(SubscriptionContext);
+  const {isAdmin, isCoach} = useContext(AuthContext);
 
   const {
     dataP1,
@@ -36,8 +38,8 @@ export const StatisticsRoute = ({team1, team2, free, statistics}) => {
   return (
     <>
       <ScrollView
+        nestedScrollEnabled={true}
         showsVerticalScrollIndicator={false}
-        style={[t.pX4]}
         contentContainerStyle={[t.itemsCenter, t.pX4, t.mT5]}>
         {matchStatistics && (
           <>
@@ -109,50 +111,10 @@ export const StatisticsRoute = ({team1, team2, free, statistics}) => {
             />
           </>
         )}
-        {!isSubscribed && !free && (
-          <BlurView
-            style={[
-              t.absolute,
-              t.z50,
-              {
-                width: Dimensions.get('window').width,
-              },
-              t.hFull,
-              t.roundedSm,
-              t.justifyCenter,
-              t.itemsCenter,
-            ]}
-            blurType="light"
-            blurAmount={10}
-            reducedTransparencyFallbackColor="white">
-            <View
-              style={[
-                t.absolute,
-                t.wFull,
-                t.hFull,
-                t.justifyStart,
-                t.itemsCenter,
-                t.pX10,
-              ]}>
-              <Text
-                style={[t.mT20, t.mB10, t.textCenter, t.fontSans, t.textLg]}>
-                Has superado el límite de partidos gratuitos, para visualizar
-                este contenido has de tener una cuenta premium
-              </Text>
-              <Button
-                title="Hazte premium"
-                type="info"
-                onPress={() =>
-                  openScreenWithPush(PROMOTIONAL_SUBSCRIPTION_SCREEN_KEY)
-                }
-                active
-              />
-            </View>
-          </BlurView>
-        )}
         <View style={[t.mT5, t.itemsCenter]}>
           {dataP1 && team1?.[0] && (
             <PlayerRadarGraph
+              withBlur={false}
               player={team1?.[0]}
               data={dataP1}
               table={tableP1}
@@ -160,6 +122,7 @@ export const StatisticsRoute = ({team1, team2, free, statistics}) => {
           )}
           {dataP2 && team1?.[1] && (
             <PlayerRadarGraph
+              withBlur={false}
               player={team1?.[1]}
               data={dataP2}
               table={tableP2}
@@ -167,6 +130,7 @@ export const StatisticsRoute = ({team1, team2, free, statistics}) => {
           )}
           {dataP3 && team2?.[0] && (
             <PlayerRadarGraph
+              withBlur={false}
               player={team2?.[0]}
               data={dataP3}
               table={tableP3}
@@ -174,6 +138,7 @@ export const StatisticsRoute = ({team1, team2, free, statistics}) => {
           )}
           {dataP4 && team2?.[1] && (
             <PlayerRadarGraph
+              withBlur={false}
               player={team2?.[1]}
               data={dataP4}
               table={tableP4}

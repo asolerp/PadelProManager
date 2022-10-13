@@ -1,8 +1,7 @@
-import {useCallback, useEffect, useState} from 'react';
+import {useState} from 'react';
 
 import {PlayerType} from '../../../Global/types';
 import {NONFORCED, TEAM1, TEAM2} from '../../../Utils/constants';
-import {showError} from '../utils/alertErrorMessages';
 
 interface PointStatsType {
   player: PlayerType;
@@ -49,7 +48,6 @@ export const useNewPoint = () => {
       .filter(ps => ps.team !== newStat.team)
       .filter(ps => ps.player.id !== newStat.player.id);
     setPointStats([...filteredPointStats, newStat]);
-    // setTypePoint(null);
   };
 
   const hasSavePointError = !winPointTeam;

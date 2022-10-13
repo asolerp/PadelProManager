@@ -117,6 +117,7 @@ export const ProfileScreen = () => {
                 />
 
                 <Input
+                  editable={false}
                   placeholder="Email"
                   value={values.email}
                   name="email"
@@ -125,6 +126,7 @@ export const ProfileScreen = () => {
                   onChangeText={handleChange('email')}
                   touched={touched.email}
                   style={[t.flex1, t.mB4]}
+                  inputStyle={[t.textGray600]}
                 />
 
                 <Input

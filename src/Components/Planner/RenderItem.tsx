@@ -22,43 +22,47 @@ export const RenderItem = ({item, onPress, style}) => {
           colorParser[item?.color],
           t.roundedSm,
           t.shadowNone,
+          t.flexRow,
           style,
         ]}>
-        {item?.club && (
-          <Text style={[t.fontSansMedium, t.textXs, t.textGray600, t.mB1]}>
-            {item?.club}
-          </Text>
-        )}
-        <View style={[t.flexRow, t.itemsCenter, t.justifyBetween]}>
-          <Text style={[t.fontSansBold, t.textBase, t.mB1]}>{item?.title}</Text>
-        </View>
-        {item?.notes && (
-          <Text style={[t.fontSansMedium, t.textXs, t.textGray800, t.mB4]}>
-            {item?.notes}
-          </Text>
-        )}
-        {!!item?.startTime && !!item?.endTime && (
+        <View style={[t.flex1]}>
+          {item?.club && (
+            <Text style={[t.fontSansMedium, t.textXs, t.textGray600, t.mB1]}>
+              {item?.club}
+            </Text>
+          )}
           <View style={[t.flexRow, t.itemsCenter, t.justifyBetween]}>
-            <Chip
-              mainColor="info"
-              text={`${format(Number(item?.startTime), HOUR_FORMAT)} - ${format(
-                Number(item?.endTime),
-                HOUR_FORMAT,
-              )}`}
-            />
-            {item?.players && (
-              <View style={[t.flexRow]}>
-                {item?.players?.map(p => (
-                  <Avatar
-                    img={p?.profileImg}
-                    imageStyle={[t.w8, t.h8]}
-                    style={[t._mL4]}
-                  />
-                ))}
-              </View>
-            )}
+            <Text style={[t.fontSansBold, t.textBase, t.mB1]}>
+              {item?.title}
+            </Text>
           </View>
-        )}
+          {item?.notes && (
+            <Text style={[t.fontSansMedium, t.textXs, t.textGray800, t.mB4]}>
+              {item?.notes}
+            </Text>
+          )}
+          {!!item?.startTime && !!item?.endTime && (
+            <View style={[t.flexRow, t.itemsCenter, t.justifyBetween]}>
+              <Chip
+                mainColor="info"
+                text={`${format(
+                  Number(item?.startTime),
+                  HOUR_FORMAT,
+                )} - ${format(Number(item?.endTime), HOUR_FORMAT)}`}
+              />
+            </View>
+          )}
+        </View>
+        <View style={[t.flex1, t.justifyCenter, t.itemsCenter]}>
+          {item?.players && (
+            <View
+              style={[t.flexRow, t.flexWrap, t.justifyCenter, t.itemsCenter]}>
+              {item?.players?.map(p => (
+                <Avatar img={p?.profileImg} imageStyle={[t.w8, t.h8]} />
+              ))}
+            </View>
+          )}
+        </View>
       </PressableOpacity>
       <HDivider />
     </>

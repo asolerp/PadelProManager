@@ -57,12 +57,8 @@ export const StatsPro: React.FC<Props> = ({matchStatistics}) => {
           title={loc('match_stats_gold_points_won')}
         />
         <StatItem
-          t1Value={`${matchStatistics.t1Br}/${
-            matchStatistics.t1Br + matchStatistics.t2Br
-          }`}
-          t2Value={`${matchStatistics.t2Br}/${
-            matchStatistics.t1Br + matchStatistics.t2Br
-          }`}
+          t1Value={`${matchStatistics.totalT1ConsecutiveWon}`}
+          t2Value={`${matchStatistics.totalT2ConsecutiveWon}`}
           title={loc('match_stats_consecutive_points')}
         />
       </View>

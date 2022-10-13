@@ -9,7 +9,7 @@ GoogleSignin.configure({
 });
 
 import {useRef, useState} from 'react';
-import {Platform} from 'react-native';
+import {Alert, Platform} from 'react-native';
 
 export const useLogin = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -39,6 +39,7 @@ export const useLogin = () => {
 
     // Create a Firebase credential from the response
     const {identityToken, nonce} = appleAuthRequestResponse;
+    Alert.alert(identityToken);
     const appleCredential = auth.AppleAuthProvider.credential(
       identityToken,
       nonce,

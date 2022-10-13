@@ -14,7 +14,6 @@ import {openScreenWithPush} from '../../Router/utils/actions';
 import {SESSION_SCREEN_KEY} from '../../Screens/Session/Session';
 
 export const SessionItem = ({item, style}) => {
-  const {isCoach} = useContext(AuthContext);
   const startTime = new Date(item?.startTime);
   const endTime = new Date(item?.endTime);
 
@@ -22,12 +21,10 @@ export const SessionItem = ({item, style}) => {
     <>
       <PressableOpacity
         onPress={() =>
-          isCoach &&
           openScreenWithPush(SESSION_SCREEN_KEY, {sessionId: item.id})
         }
         style={[
           t.p3,
-          {height: item.height},
           styles.container,
           colorParser[item?.color],
           t.roundedSm,
@@ -36,7 +33,7 @@ export const SessionItem = ({item, style}) => {
         ]}>
         <View
           style={[t.flexRow, t.itemsStart, t.itemsCenter, t.justifyBetween]}>
-          <View style={[t.flexShrink, t.flex2]}>
+          <View style={[t.flexShrink, t.flex1]}>
             {item?.club && (
               <Text style={[t.fontSansMedium, t.textXs, t.textGray600, t.mB1]}>
                 {item?.club}
@@ -61,21 +58,19 @@ export const SessionItem = ({item, style}) => {
               </View>
             )}
           </View>
-          <View style={[t.flex1, t.itemsEnd, t.mL10]}>
-            <View>
-              {item?.players && (
-                <View style={[t.flexRow, t.flexWrap]}>
-                  {item?.players?.map(p => (
-                    <Avatar
-                      key={p?.id}
-                      img={p?.profileImg}
-                      imageStyle={[t.w12, t.h12]}
-                      style={[t._mL4, item?.players?.length > 2 && t._mB4]}
-                    />
-                  ))}
-                </View>
-              )}
-            </View>
+          <View style={[t.flex1, t.itemsEnd]}>
+            {item?.players && (
+              <View style={[t.flexRow, t.flexWrap, t.justifyCenter]}>
+                {item?.players?.map(p => (
+                  <Avatar
+                    key={p?.id}
+                    img={p?.profileImg}
+                    imageStyle={[t.w10, t.h10]}
+                    // style={[t._mL4, item?.players?.length > 2 && t._mB4]}
+                  />
+                ))}
+              </View>
+            )}
           </View>
         </View>
       </PressableOpacity>

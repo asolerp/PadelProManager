@@ -5,6 +5,7 @@ import {View, Text} from 'react-native';
 import t from '../../Theme/theme';
 import {shortName} from '../../Utils/parsers';
 import {Avatar} from '../UI/Avatar';
+import {ResultPro} from '../PadelPro/ResultPro';
 
 export const FinishedMatchHeader = ({match}) => {
   const setStyle = [t.fontSansBold, t.text3xl, t.textInfoDark];
@@ -16,7 +17,16 @@ export const FinishedMatchHeader = ({match}) => {
 
   return (
     <Animated.View entering={LightSpeedInLeft} style={[t.mT7, t.bgWhite]}>
-      <View style={[t.flexRow, t.justifyBetween, t.itemsCenter, t.mB4]}>
+      <View style={[t.pX4]}>
+        <ResultPro
+          color="dark"
+          round={match.round}
+          game={match?.game}
+          t1={match?.t1}
+          t2={match?.t2}
+        />
+      </View>
+      {/* <View style={[t.flexRow, t.justifyBetween, t.itemsCenter, t.mB4]}>
         <View style={[t.flex1]}>
           <Avatar img={p1?.profileImg} style={[]} />
           <Avatar img={p2?.profileImg} style={[t._mT7, t.mL12]} />
@@ -53,7 +63,7 @@ export const FinishedMatchHeader = ({match}) => {
           <Text style={setStyle}>{match?.game?.s2t2}</Text>
           <Text style={setStyle}>{match?.game?.s3t2}</Text>
         </View>
-      </View>
+      </View> */}
     </Animated.View>
   );
 };

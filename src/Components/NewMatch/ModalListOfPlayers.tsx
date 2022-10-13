@@ -1,6 +1,6 @@
 import React from 'react';
-import {FlatList, View} from 'react-native';
-import {useGetPlayers} from '../../Hooks/useGetPlayers';
+import {FlatList, View, Text} from 'react-native';
+import {useGetPlayersAndGroups} from '../../Hooks/useGetPlayersAndGroups';
 import t from '../../Theme/theme';
 import {FullModal} from '../Modal/FullModal';
 import {HDivider} from '../UI/HDivider';
@@ -8,7 +8,7 @@ import {RadioButton} from '../UI/RadioButton';
 import {Button} from '../UI/Button';
 import {Header} from '../Layout/Header';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Input} from '../UI/Input';
+
 import {useModalList} from './hooks/useModalList';
 import {PlayerItem} from '../Players/PlayerItem';
 import PressableOpacity from '../UI/PressableOpacity';
@@ -25,13 +25,15 @@ const emptyPlayer = {
 
 export const ModalListOfPlayers = ({
   withEmpyPlayer = true,
+  chat = false,
   selectedPlayers,
+  initSelection,
   isVisible,
   multiple,
   onClose,
   onSave,
 }) => {
-  const {players} = useGetPlayers();
+  const {players} = useGetPlayersAndGroups({chat});
 
   const {
     player,
@@ -42,6 +44,7 @@ export const ModalListOfPlayers = ({
     filteredList,
     handlePressPlayer,
   } = useModalList({
+    initSelection,
     selectedPlayers,
     list: players,
     multiple,
@@ -75,6 +78,14 @@ export const ModalListOfPlayers = ({
         }
       />
       <HDivider />
+      {chat && (
+        <View style={[t.pX4, t.mT4]}>
+          <Text style={[t.fontSans, t.textLg, t.textGray700]}>
+            Solo se pueden crear grupos con los jugadores que se haya registrado
+            en Padel Pro Manager.
+          </Text>
+        </View>
+      )}
       <View style={[t.flex1, t.pX4]}>
         <SearchInput
           value={search}
@@ -121,7 +132,9 @@ export const ModalListOfPlayers = ({
             onClose();
           }}
           active
-          disabled={!player && playersSelected?.length === 0}
+          disabled={
+            withEmpyPlayer ? !player && playersSelected?.length === 0 : false
+          }
           title="Guardar"
           style={[t.mY3]}
           textStyle={[t.textLg]}

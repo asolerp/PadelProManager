@@ -40,7 +40,7 @@ export const useGetHomeData = () => {
 
   const getAccountingResumen = useCallback(async () => {
     const {data} = await accountingResume();
-    console.log(data, 'DATA');
+
     setTotalPending(data?.totalPending);
   }, [accountingResume]);
 

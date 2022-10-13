@@ -1,7 +1,10 @@
 import {useContext, useEffect, useMemo, useState} from 'react';
 import {useDocumentData} from 'react-firebase-hooks/firestore';
 import {userQuery} from '../../../Api/queries';
-import {radarGraphDataGenerator} from '../../../Utils/dataGenerators';
+import {
+  radarGraphDataGenerator,
+  tableDataGenerator,
+} from '../../../Utils/dataGenerators';
 
 import {AuthContext} from '../../../Context/AuthContex';
 
@@ -16,10 +19,12 @@ export const useGetPlayer = () => {
   const [stats, loadingStats, errorStats] = useDocumentData(queryStats);
 
   const [graphData, setGraphData] = useState();
+  const [playerStats, setPlayerStats] = useState();
 
   useEffect(() => {
     if (stats) {
       setGraphData(radarGraphDataGenerator(stats, 'black'));
+      setPlayerStats(tableDataGenerator(stats));
     }
   }, [stats]);
 
@@ -30,5 +35,5 @@ export const useGetPlayer = () => {
   const loading = loadingStats;
   const error = errorStats;
 
-  return {user, error, loading, tw, tl, tm, graphData};
+  return {user, error, loading, tw, tl, tm, graphData, playerStats};
 };

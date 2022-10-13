@@ -34,14 +34,6 @@ export const PaginatedList: React.FC<PaginatedListProps> = ({
   const [index, setIndex] = useState(0);
   const isActive = i => i === index;
 
-  const handlePressDot = index => {
-    // console.log(
-    //   flatListRef.current.scrollToOffset({
-    //     offset: (Dimensions.get('window').width - 36) * index,
-    //   }),
-    // );
-  };
-
   return (
     <View>
       <FlatList
@@ -61,7 +53,7 @@ export const PaginatedList: React.FC<PaginatedListProps> = ({
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
-      {data.length > 1 && (
+      {data?.length > 1 && (
         <View style={[t.flexRow, t.justifyCenter, t.mT2]}>
           {data.map((_, i) => (
             //   <Pressable key={i} onPress={() => handlePressDot(i)}>

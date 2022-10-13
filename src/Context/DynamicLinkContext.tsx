@@ -19,6 +19,7 @@ const getDeepLinkActionMap = () => ({
 });
 
 const onNewPlayerDeepLink = params => {
+  console.log('PARAMS LOGIN', params);
   openStackWithReplace(LOGIN_PLAYER_SCREEN_KEY, {
     coachId: params?.coachId,
   });
@@ -26,7 +27,7 @@ const onNewPlayerDeepLink = params => {
 
 export const DynamicLinkProvider = ({children}) => {
   const [action, setAction] = useState<string>('');
-  const [params, setParams] = useState<any>({});
+  const [params, setParams] = useState<any>();
   const deepLinkMap = getDeepLinkActionMap();
 
   useEffect(() => {

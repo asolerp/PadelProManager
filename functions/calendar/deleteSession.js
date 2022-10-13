@@ -35,10 +35,18 @@ const deleteSession = functions
             .get()
             .then((querySnapshot) => {
               const batch = admin.firestore().batch();
-              querySnapshot.forEach((doc) => {
+              querySnapshot.forEach(async (doc) => {
+                await admin.firestore().collection(ACCOUNTING).where("sessionId", "==", doc.id).get()
+                .then((querySnapshot) => {
+                  const accountingBatch = admin.firestore().batch()
+                  querySnapshot.forEach((doc) => {
+                    accountingBatch.delete(doc.ref)
+                  })
+                  accountingBatch.commit()
+                })
                 batch.delete(doc.ref);
               });
-              return batch.commit();
+              batch.commit();
             });
       } else {
         await admin.firestore().collection(SESSIONS).doc(sessionId).delete();

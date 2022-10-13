@@ -11,6 +11,9 @@ import {
 } from '../Screens/NewMatch/NewMatch';
 import {NewPoint, NEW_POINT_SCREEN_KEY} from '../Screens/NewPoint/NewPoint';
 import {ProfileScreen, PROFILE_SCREEN_KEY} from '../Screens/Profile/Profile';
+import {Session, SESSION_SCREEN_KEY} from '../Screens/Session/Session';
+import {Chat, CHAT_SCREEN_KEY} from '../Screens/Chat/Chat';
+import {ProMatch, PRO_MATCH_SCREEN_KEY} from '../Screens/ProMatch/ProMatch';
 
 const Stack = createNativeStackNavigator();
 
@@ -42,8 +45,23 @@ export const PlayerStack = () => {
           name={PROFILE_SCREEN_KEY}
           component={ProfileScreen}
         />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name={PRO_MATCH_SCREEN_KEY}
+          component={ProMatch}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name={SESSION_SCREEN_KEY}
+          component={Session}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name={CHAT_SCREEN_KEY}
+          component={Chat}
+        />
       </Stack.Group>
-      <Stack.Group screenOptions={{presentation: 'modal'}}>
+      <Stack.Group>
         <Stack.Screen
           options={{headerShown: false}}
           name={NEW_POINT_SCREEN_KEY}

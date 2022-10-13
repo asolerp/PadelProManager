@@ -47,14 +47,6 @@ export const NewPlayerScreen = ({route}) => {
 
   const [show, setShow] = useState(false);
 
-  const showDatePicker = () => {
-    setShow(true);
-  };
-
-  const hideDatePicker = () => {
-    setShow(false);
-  };
-
   return (
     <ScreenLayout edges={['top', 'right', 'left', 'bottom']}>
       <Header
@@ -88,20 +80,6 @@ export const NewPlayerScreen = ({route}) => {
         )}
 
         <>
-          <DateTimePickerModal
-            isVisible={show}
-            mode="date"
-            date={new Date()}
-            locale="es-ES"
-            display="spinner"
-            onConfirm={date => {
-              setValue('birthDate', format(date, DATE_FORM), {
-                shouldValidate: true,
-              });
-              setShow(false);
-            }}
-            onCancel={hideDatePicker}
-          />
           <View style={[t.flexGrow, t.mT10]}>
             <ImageSelector
               imageSource={initPlayerImg}
@@ -162,12 +140,15 @@ export const NewPlayerScreen = ({route}) => {
                 fieldState: {error},
               }) => (
                 <Input
+                  autoCapitalize="none"
+                  editable={edit ? false : true}
                   placeholder="Email"
                   value={value}
                   error={error?.message}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   style={[t.flex1, t.mB4]}
+                  inputStyle={[edit && t.textGray600]}
                 />
               )}
               name="email"
@@ -196,18 +177,24 @@ export const NewPlayerScreen = ({route}) => {
             />
             <Controller
               control={control}
-              render={({field: {onBlur, value}, fieldState: {error}}) => (
+              rules={{
+                required: 'La edad es obligatoria',
+              }}
+              render={({
+                field: {onChange, onBlur, value},
+                fieldState: {error},
+              }) => (
                 <Input
-                  editable={false}
-                  placeholder="Cumpleaños"
-                  onPressOut={() => showDatePicker()}
+                  keyboardType="numeric"
+                  placeholder="Edad"
                   value={value}
                   error={error?.message}
                   onBlur={onBlur}
+                  onChangeText={onChange}
                   style={[t.flex1, t.mB4]}
                 />
               )}
-              name="birthDate"
+              name="age"
             />
 
             <Controller

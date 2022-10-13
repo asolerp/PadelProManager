@@ -11,7 +11,7 @@ const getResumen = functions
       memory: "2GB",
     })
     .https.onCall(async (data, context) => {
-      console.log("CONTEXT", context)
+
       if (!context.auth) {
         throw new functions.https.HttpsError(
             "permission-denied",

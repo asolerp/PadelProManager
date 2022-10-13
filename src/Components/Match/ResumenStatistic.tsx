@@ -1,12 +1,13 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 import t from '../../Theme/theme';
 import {Chip} from '../../Components/UI/Chip';
 import {useResumeStatistics} from './hooks/useResumeStatistcis';
+import {BlurView} from '@react-native-community/blur';
 
 const CELL_SIZE = 30;
 
-export const ResumenStatistic = ({statistics}) => {
+export const ResumenStatistic = ({statistics, withBlur = true}) => {
   const {
     vdW,
     vrW,
@@ -17,6 +18,8 @@ export const ResumenStatistic = ({statistics}) => {
     bjW,
     smW,
     glW,
+    x3W,
+    x4W,
     vdEf,
     vrEf,
     fdEf,
@@ -26,6 +29,8 @@ export const ResumenStatistic = ({statistics}) => {
     bjEf,
     smEf,
     glEf,
+    x3Ef,
+    x4Ef,
     vdNf,
     vrNf,
     fdNf,
@@ -35,18 +40,28 @@ export const ResumenStatistic = ({statistics}) => {
     bjNf,
     smNf,
     glNf,
+    x3Nf,
+    x4Nf,
     totalW,
     totalEf,
     totalNf,
   } = useResumeStatistics({statistics});
 
   return (
-    <View style={[t.mB3, t.wFull]}>
-      <View style={[t.flexRow, t.wFull]}>
+    <BlurView
+      style={[t.mB3, t.wFull, !withBlur && t.bgWhite, t.p4, t.roundedSm]}
+      blurType={withBlur ? 'dark' : 'light'}
+      blurAmount={80}
+      reducedTransparencyFallbackColor="white">
+      <ScrollView
+        nestedScrollEnabled
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={[t.flexRow]}>
         <View>
           <View style={[t.flexRow, t.mB3]}>
             <View style={[{width: CELL_SIZE}, t.itemsCenter, t.justifyCenter]}>
-              <Text style={[t.fontSansBold]}>TP</Text>
+              <Text style={[t.fontSansBold, withBlur && t.textWhite]}>TP</Text>
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
               <Chip text="FD" mainColor="info" />
@@ -75,8 +90,16 @@ export const ResumenStatistic = ({statistics}) => {
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
               <Chip text="GL" mainColor="success" />
             </View>
+            <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
+              <Chip text="x3" mainColor="secondaryLight" />
+            </View>
+            <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
+              <Chip text="x4" mainColor="secondaryLight" />
+            </View>
             <View style={[t.itemsCenter, t.justifyCenter, t.mL3]}>
-              <Text style={[t.fontSansBold]}>Total</Text>
+              <Text style={[t.fontSansBold, withBlur && t.textWhite]}>
+                Total
+              </Text>
             </View>
           </View>
           <View style={[t.flexRow, t.itemsCenter, t.mB2]}>
@@ -109,6 +132,12 @@ export const ResumenStatistic = ({statistics}) => {
             </View>
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
               <Text style={[t.fontSansMedium, t.textSuccess]}>{glW}</Text>
+            </View>
+            <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
+              <Text style={[t.fontSansMedium, t.textSuccess]}>{x3W}</Text>
+            </View>
+            <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
+              <Text style={[t.fontSansMedium, t.textSuccess]}>{x4W}</Text>
             </View>
             <View
               style={[
@@ -155,6 +184,12 @@ export const ResumenStatistic = ({statistics}) => {
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
               <Text style={[t.fontSansMedium, t.textInfo]}>{glEf}</Text>
             </View>
+            <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
+              <Text style={[t.fontSansMedium, t.textInfo]}>{x3Ef}</Text>
+            </View>
+            <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
+              <Text style={[t.fontSansMedium, t.textInfo]}>{x4Ef}</Text>
+            </View>
             <View
               style={[
                 {width: CELL_SIZE},
@@ -200,6 +235,12 @@ export const ResumenStatistic = ({statistics}) => {
             <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
               <Text style={[t.fontSansMedium, t.textError]}>{glNf}</Text>
             </View>
+            <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
+              <Text style={[t.fontSansMedium, t.textError]}>{x3Nf}</Text>
+            </View>
+            <View style={[{width: CELL_SIZE}, t.itemsCenter]}>
+              <Text style={[t.fontSansMedium, t.textError]}>{x4Nf}</Text>
+            </View>
             <View
               style={[
                 {width: CELL_SIZE},
@@ -215,7 +256,7 @@ export const ResumenStatistic = ({statistics}) => {
             </View>
           </View>
         </View>
-      </View>
-    </View>
+      </ScrollView>
+    </BlurView>
   );
 };

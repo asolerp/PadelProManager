@@ -38,7 +38,7 @@ export const ContainerWithBg: React.FC<Props> = ({
       <View
         style={[t.wFull, t.hFull, isBox && t.roundedLg, bg, op, t.absolute]}
       />
-      <SafeAreaView style={[t.flexGrow, t.pX4]}>{children}</SafeAreaView>
+      {children}
     </ImageBackground>
   );
 };

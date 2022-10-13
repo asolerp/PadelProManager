@@ -39,7 +39,6 @@ export const useNewSessionForm = ({startDate, session}) => {
 
   const newSessionFormRef = useRef();
   // const {updateDocument} = useUpdateDocument(sessionQuery);
-  const {updateDocument} = useUpdateDocument(accountingQuery);
 
   const newSessionsFn = defaultFunctions.httpsCallable('newSession');
 
@@ -98,7 +97,6 @@ export const useNewSessionForm = ({startDate, session}) => {
 
     try {
       if (session) {
-        console.log(session.accountingId);
         await firestore()
           .collection(SESSIONS)
           .doc(session?.id)
@@ -107,12 +105,12 @@ export const useNewSessionForm = ({startDate, session}) => {
             week: [],
             internalId: firebaseIDGenerator(),
           });
-        console.log(payload.date);
+
         await firestore()
           .collection(ACCOUNTING)
           .doc(session.accountingId)
           .update({
-            date: new Date(payload.date),
+            date: payload.date,
             price: payload.price,
             currency: payload.currency,
             players: payload.players.reduce((acc, player) => {

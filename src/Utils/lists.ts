@@ -1,6 +1,6 @@
 export const cateogries = isAdmin => {
   return [
-    ...(isAdmin ? [{label: 'Pro', value: -1}] : []),
+    ...(isAdmin ? [{label: 'Live', value: -1}] : []),
     {label: 'WPT', value: 6},
     {label: '1ª', value: 1},
     {label: '2ª', value: 2},

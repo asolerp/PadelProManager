@@ -13,6 +13,10 @@ import {
   LOGIN_PLAYER_SCREEN_KEY,
 } from '../Screens/LoginPlayer/LoginPlayer';
 import {useDeepLinks} from '../Lib/DeepLinks/hooks/useDeepLinks';
+import {
+  RoleSelector,
+  ROLE_SELECTOR_SCREEN_KEY,
+} from '../Screens/RoleSelector/RoleSelector';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +41,11 @@ export const SignOutRouter = () => {
         <Stack.Screen
           name={LOGIN_PLAYER_SCREEN_KEY}
           component={LoginPlayerScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name={ROLE_SELECTOR_SCREEN_KEY}
+          component={RoleSelector}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

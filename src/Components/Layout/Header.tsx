@@ -9,6 +9,7 @@ import PressableOpacity from '../UI/PressableOpacity';
 
 interface Props {
   title?: string | React.ReactNode;
+  subtitle?: string | React.ReactNode;
   withBack?: boolean;
   position?: 'relative' | 'absolute';
   leftSide?: React.ReactNode;
@@ -22,6 +23,7 @@ interface Props {
 export const Header: React.FC<Props> = ({
   mode = 'default',
   title = '',
+  subtitle = '',
   position = 'relative',
   withBack,
   withPadding = true,
@@ -31,20 +33,20 @@ export const Header: React.FC<Props> = ({
   containerStyle,
 }) => {
   return (
-    <>
-      <View
-        style={[
-          t.flexRow,
-          t.pB3,
-          withPadding && t.pX4,
-          t.itemsCenter,
-          t.z20,
-          t?.[position],
-          t.shadowNone,
-          t.border0,
-          {elevation: 5},
-          containerStyle,
-        ]}>
+    <View
+      style={[
+        t.pB3,
+        t.wFull,
+        withPadding && t.pX4,
+        t.itemsCenter,
+        t.z20,
+        t?.[position],
+        t.shadowNone,
+        t.border0,
+        {elevation: 5},
+        containerStyle,
+      ]}>
+      <View style={[t.flexRow]}>
         <View style={[t.w20, t.itemsStart, leftStyles]}>
           {withBack && !leftSide ? (
             <PressableOpacity onPress={popScreen}>
@@ -75,6 +77,24 @@ export const Header: React.FC<Props> = ({
         </View>
         <View style={[t.w20, t.itemsEnd]}>{!!rightSide && rightSide}</View>
       </View>
-    </>
+      {subtitle ? (
+        <View>
+          {typeof subtitle === 'string' ? (
+            <Text
+              style={[
+                t.fontSansMedium,
+                t.textXs,
+                mode === 'default' ? t.textGray500 : t.textWhite,
+              ]}>
+              {subtitle}
+            </Text>
+          ) : (
+            subtitle
+          )}
+        </View>
+      ) : (
+        <></>
+      )}
+    </View>
   );
 };

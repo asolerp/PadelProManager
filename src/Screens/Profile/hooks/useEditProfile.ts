@@ -8,9 +8,11 @@ import {useUploadCloudinaryImage} from '../../../Hooks/useUploadCloudinaryImage'
 import {popScreen} from '../../../Router/utils/actions';
 import {timeout} from '../../../Utils/timeout';
 import firestore from '@react-native-firebase/firestore';
+import {defaultFunctions} from '../../../Lib/API/firebaseApp';
 export const useEditProfile = () => {
   const {response, onImagePress} = useCameraOrLibrary();
   const {user, setUser} = useContext(AuthContext);
+  const updatePlayerFn = defaultFunctions.httpsCallable('updatePlayer');
 
   const init = {
     firstName: '',
@@ -27,7 +29,7 @@ export const useEditProfile = () => {
   const [initialValues, setInitialValues] = useState(init);
   const {setIsVisible, setText} = useContext(LoadingModalContext);
   const {uploadCloudinary} = useUploadCloudinaryImage();
-  const {updateDocument, loading} = useUpdateDocument(userQuery);
+  const {loading} = useUpdateDocument(userQuery);
 
   const handleSubmitForm = () => {
     profileFormRef?.current.handleSubmit();
@@ -43,7 +45,13 @@ export const useEditProfile = () => {
           response?.assets?.[0],
           `PadelPro/users/${user?.id}/avatar`,
           async url => {
-            await updateDocument(user?.id, {
+            console.log({
+              id: user?.id,
+              ...values,
+              profileImg: url,
+            });
+            await updatePlayerFn({
+              id: user?.id,
               ...values,
               profileImg: url,
             });
@@ -55,7 +63,7 @@ export const useEditProfile = () => {
           },
         );
       } else {
-        await updateDocument(user?.id, {...values});
+        await updatePlayerFn({id: user?.id, ...values});
       }
     } catch (err) {
       console.log(err);

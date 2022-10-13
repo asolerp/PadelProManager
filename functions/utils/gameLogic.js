@@ -154,7 +154,7 @@ const tennisGameLogic = (game, winPointTeam) => {
       consecutiveWon:
         game?.lastPointWon === teamWinPoint
           ? game?.consecutiveWon + 1
-          : game?.consecutiveWon,
+          : 1,
       lastPointWon: teamWinPoint,
       [`${teamWinPoint}`]: game?.[`${teamWinPoint}`] + 1,
     };

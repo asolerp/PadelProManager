@@ -38,7 +38,14 @@ export const useDeleteSession = (sessionId, internalId) => {
       {
         text: 'Eliminar',
         style: 'destructive',
-        onPress: async () => await deleteSession(false),
+        onPress: async () => {
+          try {
+            await deleteSession(false);
+            popScreen();
+          } catch (err) {
+            console.log(err);
+          }
+        },
       },
     ]);
 

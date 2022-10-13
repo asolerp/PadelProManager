@@ -15,6 +15,8 @@ export interface UserType {
   email?: string;
   firstName?: string;
   secondName: string;
+  coachId: string;
+  coachEmail: string;
   gender?: 'male' | 'female';
   municipio?: string;
   phone?: string;
@@ -92,11 +94,17 @@ export interface MatchStatistic {
   t2Tsm: number;
   t1Tgl: number;
   t2Tgl: number;
+  t1Tx3: number;
+  t2Tx3: number;
+  t1Tx4: number;
+  t2Tx4: number;
   totalPoints: number;
   totalGoldPoints: number;
   totalWPerPlayer: PlayersStats;
   totalEFPerPlayer: PlayersStats;
   totalNFPerPlayer: PlayersStats;
+  totalT1ConsecutiveWon: number;
+  totalT2ConsecutiveWon: number;
   totalT1PointsWins: number;
   totalT2PointsWins: number;
 }

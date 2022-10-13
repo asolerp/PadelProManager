@@ -1,5 +1,6 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {matchQuery} from '../../../Api/queries';
+import {AuthContext} from '../../../Context/AuthContex';
 import {useUserCounts} from '../../../Hooks/useUserCounts';
 
 interface HookProps {
@@ -13,13 +14,14 @@ export const useAddNewMatch = () => {
   const [error, setError] = useState();
 
   const {matchesCount} = useUserCounts();
+  const {isCoach} = useContext(AuthContext);
 
   const addNewMatch = async ({data, callback}: HookProps) => {
     setLoading(true);
     try {
       setLoading(false);
       const result = await matchQuery
-        .add({...data, free: matchesCount < 2})
+        .add({...data, free: isCoach ? matchesCount < 2 : true})
         .then(async docRef => {
           await matchQuery.doc(docRef.id).collection('history').add({
             date: new Date(),

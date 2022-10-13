@@ -1,13 +1,20 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {PlayerType} from '../../../Global/types';
 import {removeAccents} from '../../../Utils/removeAccents';
 import {sortByName} from '../../../Utils/sorts';
 import {isSameUser, onlyInLeft} from '../utils/onlyInLeft';
 
-export const useModalList = ({selectedPlayers, list, multiple}) => {
+export const useModalList = ({
+  selectedPlayers,
+  initSelection,
+  list,
+  multiple,
+}) => {
   const [search, setSearch] = useState();
   const [player, setPlayer] = useState<PlayerType>();
   const [players, setPlayers] = useState<PlayerType[]>([]);
+
+  console.log('INIT', initSelection);
 
   const formatedSelectedPlayers =
     selectedPlayers &&
@@ -45,6 +52,12 @@ export const useModalList = ({selectedPlayers, list, multiple}) => {
     : playersList
         ?.sort(sortByName)
         ?.filter(p => getFormatedName(p).includes(formatedSearch));
+
+  useEffect(() => {
+    if (initSelection) {
+      setPlayers(initSelection);
+    }
+  }, [initSelection]);
 
   return {
     search,

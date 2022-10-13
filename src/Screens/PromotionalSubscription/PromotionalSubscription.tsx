@@ -53,7 +53,7 @@ export const PromotionalSubscription = () => {
               <View style={[t.flexRow, t.justifyBetween, t.mT5]}>
                 <Service
                   iconName="people-circle-sharp"
-                  title="Gestión de jugadores"
+                  title="Creación de grupos"
                 />
                 <Service iconName="tennisball" title="Análisis de partidos" />
               </View>

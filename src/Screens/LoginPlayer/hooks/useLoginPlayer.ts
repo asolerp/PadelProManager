@@ -5,10 +5,12 @@ import firestore from '@react-native-firebase/firestore';
 
 GoogleSignin.configure({
   webClientId:
-    '285595276470-73pf20dur3vrnrlmagli0igpijlbh0uq.apps.googleusercontent.com',
+    Platform.OS === 'ios' ? Config.CLIENT_ID_IOS : Config.CLIENT_ID_ANDROID,
 });
 
 import {useEffect, useRef, useState} from 'react';
+import Config from 'react-native-config';
+import {Platform} from 'react-native';
 
 export const useLoginPlayer = ({coachId}) => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);

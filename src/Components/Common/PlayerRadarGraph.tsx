@@ -4,7 +4,13 @@ import {RadarChart} from '../Common/RadarChart';
 import t from '../../Theme/theme';
 import {ResumenStatistic} from '../Match/ResumenStatistic';
 
-export const PlayerRadarGraph = ({player, data, table, mode = 'dark'}) => {
+export const PlayerRadarGraph = ({
+  player,
+  withBlur,
+  data,
+  table,
+  mode = 'dark',
+}) => {
   return (
     <View style={[t.mB4, t.itemsCenter]}>
       <Text style={[t.fontSansBold, mode === 'white' && t.textWhite]}>
@@ -18,7 +24,7 @@ export const PlayerRadarGraph = ({player, data, table, mode = 'dark'}) => {
           size={data?.size}
         />
       )}
-      <ResumenStatistic statistics={table?.dataSets} />
+      <ResumenStatistic withBlur={withBlur} statistics={table?.dataSets} />
     </View>
   );
 };
