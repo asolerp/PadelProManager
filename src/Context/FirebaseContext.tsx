@@ -12,6 +12,7 @@ import firestore from '@react-native-firebase/firestore';
 import {useDocumentData} from 'react-firebase-hooks/firestore';
 import {error} from '../Lib/Logging';
 import {useLogout} from '../Hooks/useLogout';
+import {USERS} from '../Models/entities';
 
 const FirebaseAuthContext = createContext(undefined);
 
@@ -67,27 +68,23 @@ const FirebaseAuthProvider: React.FC = ({children}) => {
       try {
         let token = await messaging().getToken();
         if (user) {
-          console.log({
-            user: {
-              uid: user.uid,
-              email: user?.email,
-            },
-            firstName,
-            secondName,
-            role,
-            token,
-          });
-          const response = await checkNewUserFn({
-            user: {
-              uid: user.uid,
-              email: user?.email,
-              firstName: firstName || '',
-              secondName: secondName || '',
-            },
-            role,
-            token,
-          });
-          setUser({loggedIn: true, ...response?.data});
+          const userQuery = await firestore()
+            .collection(USERS)
+            .doc(user?.uid)
+            .get();
+          if (userQuery.exists) {
+            await firestore().collection(USERS).doc(user?.uid).update({
+              token,
+              updatedAt: new Date(),
+            });
+            const response = await firestore()
+              .collection(USERS)
+              .doc(user?.uid)
+              .get();
+            const userDoc = {id: response.id, ...response.data()};
+            return setUser({loggedIn: true, ...userDoc});
+          }
+          setUser({loggedIn: true, id: user?.uid});
         } else {
           setUser({loggedIn: false});
           cleanFirebaseContext();
@@ -102,7 +99,7 @@ const FirebaseAuthProvider: React.FC = ({children}) => {
       }
     });
     return unsubscribe;
-  }, [role, firstName, secondName]);
+  }, []);
 
   return (
     <FirebaseAuthContext.Provider value={value}>

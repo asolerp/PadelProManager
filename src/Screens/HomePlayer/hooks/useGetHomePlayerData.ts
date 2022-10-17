@@ -59,7 +59,6 @@ export const useGetHomePlayerData = () => {
       if (!user?.coachId) {
         return setCoach(null);
       }
-      console.log('[[COACH ID]]', user?.coachId);
       const coachQuery = await userQuery.doc(user?.coachId).get();
       const coachDoc = {id: coachQuery.id, ...coachQuery.data()};
       setCoach(coachDoc);

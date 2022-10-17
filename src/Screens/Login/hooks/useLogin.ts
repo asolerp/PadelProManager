@@ -10,7 +10,9 @@ GoogleSignin.configure({
 
 import {useEffect, useRef, useState} from 'react';
 import {Platform} from 'react-native';
-import {warn} from '../../../Lib/Logging';
+import {info, warn} from '../../../Lib/Logging';
+import {useFirebaseAuth} from '../../../Context/FirebaseContext';
+import {defaultFunctions} from '../../../Lib/API/firebaseApp';
 
 const errorMessage = {
   'auth/email-already-exists': 'El usuario ya existe',
@@ -24,15 +26,43 @@ export const useLogin = playerEmail => {
   const [password, setPassword] = useState();
   const [secondPassword, setSecondPassword] = useState();
   const [visiblePassword, setVisiblePassword] = useState();
+  const {role, firstName, secondName} = useFirebaseAuth();
+
+  const checkNewUserFn = defaultFunctions.httpsCallable('checkNewUser');
 
   const handlePressVisiblePassword = () => setVisiblePassword(old => !old);
 
   const loginFormRef = useRef();
 
+  const resetPassword = async () => {
+    try {
+      await auth().sendPasswordResetEmail(email);
+      info({
+        title: 'Enviado',
+        subtitle: 'Ahora podrás restablecer tu contraseña',
+      });
+    } catch (err) {
+      warn({
+        title: 'Algo ocurrió..',
+        subtitle: 'Lo sentimos, inténtalo más tarde.',
+      });
+    }
+  };
+
   const logIn = async () => {
     setLoading(true);
     try {
-      await auth().signInWithEmailAndPassword(email, password);
+      const response = await auth().signInWithEmailAndPassword(email, password);
+      console.log('RESPONSE', response.user.uid);
+      await checkNewUserFn({
+        user: {
+          uid: response?.user?.uid,
+          email: email,
+          firstName: firstName,
+          secondName: secondName,
+        },
+        role,
+      });
     } catch (err) {
       warn({
         title: 'Ha ocurrido algo',
@@ -47,7 +77,19 @@ export const useLogin = playerEmail => {
     console.log(email, password);
     setLoading(true);
     try {
-      await auth().createUserWithEmailAndPassword(email, password);
+      const response = await auth().createUserWithEmailAndPassword(
+        email,
+        password,
+      );
+      await checkNewUserFn({
+        user: {
+          uid: response?.user?.uid,
+          email: email,
+          firstName: firstName,
+          secondName: secondName,
+        },
+        role,
+      });
     } catch (err) {
       warn({
         title: 'Ha ocurrido algo',
@@ -109,6 +151,7 @@ export const useLogin = playerEmail => {
     setEmail,
     password,
     setPassword,
+    resetPassword,
     registerEnable,
     visiblePassword,
     secondPassword,

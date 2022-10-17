@@ -60,8 +60,6 @@ export const HomePlayerScreen = () => {
   } = useGetHomePlayerData();
   const {loc} = useTranslationWrapper();
 
-  console.log('[[COACH]]', coach);
-
   useHideBootSplash();
   useInAppMessaging();
 

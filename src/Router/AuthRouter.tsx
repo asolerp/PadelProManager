@@ -20,8 +20,12 @@ const AuthRouter = () => {
   useNotification();
 
   const {isVisible, text} = useContext<any>(LoadingModalContext);
-
+  const {logout} = useLogout();
   const {user} = useFirebaseAuth();
+
+  // useEffect(() => {
+  //   logout();
+  // }, []);
 
   if (!user) {
     return null;

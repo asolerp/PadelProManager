@@ -29,6 +29,7 @@ export const LoginScreen = () => {
     password,
     setEmail,
     setPassword,
+    resetPassword,
     visiblePassword,
     handlePressVisiblePassword,
   } = useLogin();
@@ -94,8 +95,15 @@ export const LoginScreen = () => {
                 value={password}
               />
               <Spacer space={2} />
-              <PressableOpacity>
-                <Text style={[t.fontSans, t.textWhite, t.textXs, t.textRight]}>
+              <PressableOpacity disabled={!email} onPress={resetPassword}>
+                <Text
+                  style={[
+                    !email && t.opacity40,
+                    t.fontSans,
+                    t.textWhite,
+                    t.textXs,
+                    t.textRight,
+                  ]}>
                   He olvidado mi contraseña
                 </Text>
               </PressableOpacity>

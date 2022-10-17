@@ -15,7 +15,7 @@ const checkNewUser = functions
 })
 .https.onCall(async (data,) => {
 
-    const {user, token, role} = data;
+    const {user, role} = data;
  
     try {
       
@@ -35,19 +35,15 @@ const checkNewUser = functions
 
       if (userQuery.exists) {
         const userData = userQuery.data()
-         if (userData.role === "coach") {
-            await userRef.doc(user.uid).update({token, updatedAt: new Date()})
-         } else {
+         if (userData.role === "player") {
            if (requestDocs.length > 0) {
             await userRef.doc(user.uid).update({
               coachId: requestDocs?.[0]?.coachId,
               coachEmail: requestDocs?.[0]?.coachEmail,
-              token,
               updatedAt: new Date()
             })
             await requestRef.doc(requestDocs?.[0]?.id).delete()
            }
-           await userRef.doc(user.uid).update({token, updatedAt: new Date()})
          }
 
          const userDoc = await userRef.doc(user?.uid).get()
@@ -84,7 +80,6 @@ const checkNewUser = functions
           email: user.email,
           coachId: requestDocs?.[0]?.coachId,
           coachEmail: requestDocs?.[0]?.coachEmail,
-          token,
           role: "player",
           profileImg: user.photoURL || DEFAULT_PHOTOURL,
         }

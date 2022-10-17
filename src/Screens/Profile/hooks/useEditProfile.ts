@@ -81,6 +81,7 @@ export const useEditProfile = () => {
         .doc(user?.id)
         .get();
       const userDB = userLocalQuery.data();
+
       setInitialValues(userDB);
     };
     if (user?.id) {
