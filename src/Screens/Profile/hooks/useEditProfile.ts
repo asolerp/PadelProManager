@@ -1,6 +1,6 @@
 import {useContext, useEffect, useRef, useState} from 'react';
 import {userQuery} from '../../../Api/queries';
-import {AuthContext} from '../../../Context/AuthContex';
+
 import {LoadingModalContext} from '../../../Context/LoadingModalContext';
 import {useCameraOrLibrary} from '../../../Hooks/useCamerOrLibrary';
 import {useUpdateDocument} from '../../../Hooks/useUpdateDocument';
@@ -9,9 +9,10 @@ import {popScreen} from '../../../Router/utils/actions';
 import {timeout} from '../../../Utils/timeout';
 import firestore from '@react-native-firebase/firestore';
 import {defaultFunctions} from '../../../Lib/API/firebaseApp';
+import {useFirebaseAuth} from '../../../Context/FirebaseContext';
 export const useEditProfile = () => {
   const {response, onImagePress} = useCameraOrLibrary();
-  const {user, setUser} = useContext(AuthContext);
+  const {user, setUser} = useFirebaseAuth();
   const updatePlayerFn = defaultFunctions.httpsCallable('updatePlayer');
 
   const init = {

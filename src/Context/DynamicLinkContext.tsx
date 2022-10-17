@@ -12,16 +12,17 @@ export interface DynamicLinkContextInterface {
 export const DynamicLinkContext =
   createContext<DynamicLinkContextInterface | null>(null);
 
-const LINK_TO_NEW_PLAYER = 'new_player';
+export const LINK_TO_NEW_PLAYER = 'new_player';
+export const LINK_TO_ASK_COACH = 'ask_coach';
 
 const getDeepLinkActionMap = () => ({
   [LINK_TO_NEW_PLAYER]: onNewPlayerDeepLink,
 });
 
 const onNewPlayerDeepLink = params => {
-  console.log('PARAMS LOGIN', params);
   openStackWithReplace(LOGIN_PLAYER_SCREEN_KEY, {
     coachId: params?.coachId,
+    playerEmail: params?.playerEmail,
   });
 };
 

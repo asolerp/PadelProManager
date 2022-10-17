@@ -13,10 +13,11 @@ import {useRecursiveDelete} from '../../Hooks/useRecursiveDelete';
 import {showError} from './utils/alertErrorMessages';
 import {LoadingModalContext} from '../../Context/LoadingModalContext';
 import {timeout} from '../../Utils/timeout';
-import {AuthContext} from '../../Context/AuthContex';
+import {useFirebaseAuth} from '../../Context/FirebaseContext';
 
 export const PlayerSettings = ({playerId}) => {
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
+
   const [isVisible, setIsVisible] = useState(false);
   const {setIsVisible: setIsVisibleLoading, setText} =
     useContext(LoadingModalContext);

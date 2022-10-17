@@ -1,15 +1,17 @@
-import {useCallback, useContext, useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import {MATCHES, PLAYERS, SESSIONS, USERS} from '../../../Models/entities';
-import {AuthContext} from '../../../Context/AuthContex';
+
 import {format} from 'date-fns';
 import {MatchType, PlayerType, SessionType} from '../../../Global/types';
 import {fetchContentful} from '../../../Lib/API/hooks/useFetchContentful';
 import {query} from '../../../Lib/API/queries/dailyExercise';
 import {defaultFunctions} from '../../../Lib/API/firebaseApp';
+import {useFirebaseAuth} from '../../../Context/FirebaseContext';
 
 export const useGetHomeData = () => {
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
+
   const [proMatches, setProMatches] = useState<MatchType[]>([]);
   const [todaySessions, setTodaySessions] = useState<SessionType[]>([]);
   const [liveMatches, setLiveMatches] = useState<MatchType[]>([]);

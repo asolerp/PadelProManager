@@ -1,22 +1,13 @@
-import React, {useContext} from 'react';
-import {Dimensions, ScrollView, Text, View} from 'react-native';
+import React from 'react';
+import {ScrollView, View} from 'react-native';
 import t from '../../../Theme/theme';
 import {PlayerRadarGraph} from '../../Common/PlayerRadarGraph';
 import {BarChart} from '../BarChart';
 import {useStatistics} from '../hooks/useStatistics';
 import {SetSelector} from '../SetSelector';
 import {StatisticItem} from '../StatisticItem';
-import {BlurView} from '@react-native-community/blur';
-import {SubscriptionContext} from '../../../Context/SubscriptionContext';
-import {Button} from '../../UI/Button';
-import {openScreenWithPush} from '../../../Router/utils/actions';
-import {PROMOTIONAL_SUBSCRIPTION_SCREEN_KEY} from '../../../Screens/PromotionalSubscription/PromotionalSubscription';
-import {AuthContext} from '../../../Context/AuthContex';
 
 export const StatisticsRoute = ({team1, team2, free, statistics}) => {
-  const {isSubscribed} = useContext(SubscriptionContext);
-  const {isAdmin, isCoach} = useContext(AuthContext);
-
   const {
     dataP1,
     dataP2,

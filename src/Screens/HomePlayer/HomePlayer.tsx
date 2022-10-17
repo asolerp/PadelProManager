@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, RefreshControl} from 'react-native';
 import {RadarChart} from '../../Components/Common/RadarChart';
 import {ScreenLayout} from '../../Components/Layout/ScreenLayout';
 import {Stat} from '../../Components/Player/Stat';
@@ -17,43 +17,64 @@ import {PlayerHeader} from '../../Components/HomePlayer/PlayerHeader';
 import {PlayerLiveMatches} from '../../Components/Player/PlayerLiveMatches';
 
 import {Banner} from '../../Components/UI/Banner';
-import {AuthContext} from '../../Context/AuthContex';
+import {useFirebaseAuth} from '../../Context/FirebaseContext';
 import {PendingRelationModal} from '../../Components/HomePlayer/PendingRelationModal';
 import {useCheckPendingRelation} from './hooks/useCheckPendingRelation';
 import {useShareApp} from './hooks/useShareApp';
 import {useHideBootSplash} from '../../Hooks/useHideBootSplash';
-import {useGetTodaySession} from './hooks/useGetTodaySession';
+
 import PressableOpacity from '../../Components/UI/PressableOpacity';
 import {useGetConversationId} from './hooks/useGetConversationId';
 import {openScreenWithPush} from '../../Router/utils/actions';
 import {CHAT_SCREEN_KEY} from '../Chat/Chat';
 import {useInAppMessaging} from '../../Hooks/useInAppMessaging';
-import {useGetProMatches} from './hooks/useGetProMatches';
+
 import {ProMatchSkeleton} from '../../Components/Home/skeleton/ProMatchSkeleton';
 import {ProMatchesList} from '../../Components/Home/ProMatchesList';
 import {useTranslationWrapper} from '../../Hooks/useTranslationsWrapper';
-import {useGetCoachTips} from './hooks/useGetCoachTips';
+
 import {CoachCard} from '../../Components/HomePlayer/CoachCard';
+
+import {useGetHomePlayerData} from './hooks/useGetHomePlayerData';
+import {useFocusEffect} from '@react-navigation/native';
+import {useCallback} from 'react';
 
 export const HOME_PLAYER_SCREEN_KEY = 'playerScreen';
 
 export const HomePlayerScreen = () => {
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
   const {tw, tl, tm, graphData, playerStats} = useGetPlayer();
   const {pendingRelation} = useCheckPendingRelation();
   const {handleShare} = useShareApp();
-  const {sessions} = useGetTodaySession();
-  const {proMatches, loading} = useGetProMatches();
-  const {tip} = useGetCoachTips();
-  const {conversationId, coach, loading: loadingCoach} = useGetConversationId();
+
+  const {conversationId, loading: loadingConversation} = useGetConversationId();
+
+  const {
+    refetch,
+    tips,
+    coach,
+    liveMatches,
+    loading,
+    proMatches,
+    todaySessions,
+  } = useGetHomePlayerData();
   const {loc} = useTranslationWrapper();
+
+  console.log('[[COACH]]', coach);
 
   useHideBootSplash();
   useInAppMessaging();
 
+  useFocusEffect(
+    useCallback(() => {
+      const refetching = refetch();
+      return () => refetching;
+    }, []),
+  );
+
   return (
     <ScreenLayout>
-      {user?.coachId && (
+      {coach && (
         <PressableOpacity
           onPress={() =>
             openScreenWithPush(CHAT_SCREEN_KEY, {
@@ -78,11 +99,15 @@ export const HomePlayerScreen = () => {
         </PressableOpacity>
       )}
       <PendingRelationModal relations={pendingRelation} />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={refetch} />
+        }>
         <PlayerHeader />
-        {user?.coachId && (
+        {coach && (
           <>
-            {loadingCoach ? (
+            {loading ? (
               <View style={[t.pX4, t.mB5]}>
                 <ProMatchSkeleton />
               </View>
@@ -96,9 +121,9 @@ export const HomePlayerScreen = () => {
             )}
           </>
         )}
-        {user?.coachId && (
+        {coach && (
           <View style={[t.mB5, t.pX4]}>
-            <MyTodaySessions sessions={sessions} />
+            <MyTodaySessions sessions={todaySessions} />
           </View>
         )}
         <View style={[t.pX4]}>
@@ -119,7 +144,7 @@ export const HomePlayerScreen = () => {
             </>
           )}
         </View>
-        {/* {!user?.coachId && (
+        {!user?.coachId && (
           <View style={[t.pX4, t.mB5]}>
             <Banner
               mainColor="warning"
@@ -129,7 +154,7 @@ export const HomePlayerScreen = () => {
               subtitle="Hazle saber a tu entrenador de PadelPro para que pueda llevar un seguimiento de tus logros y tu evolución."
             />
           </View>
-        )} */}
+        )}
         <View style={[t.pX4]}>
           <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
             Mis estadísticas
@@ -159,13 +184,13 @@ export const HomePlayerScreen = () => {
               </>
             )}
           </View>
-          {user?.coachId && (
+          {coach && (
             <View style={[t.mT5]}>
               <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
                 Tips de tu entrenador
               </Text>
-              {tip ? (
-                <Text style={[t.fontSans, t.textLg]}>{tip.content}</Text>
+              {tips ? (
+                <Text style={[t.fontSans, t.textLg]}>{tips.content}</Text>
               ) : (
                 <Text>
                   En estos momentos no tienes ninguna tip de tu entrenador
@@ -177,7 +202,7 @@ export const HomePlayerScreen = () => {
             <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
               Partidos activos
             </Text>
-            <PlayerLiveMatches userEmail={user?.email} />
+            <PlayerLiveMatches liveMatches={liveMatches} />
           </View>
         </View>
       </ScrollView>

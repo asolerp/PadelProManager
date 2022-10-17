@@ -14,8 +14,6 @@ export const useModalList = ({
   const [player, setPlayer] = useState<PlayerType>();
   const [players, setPlayers] = useState<PlayerType[]>([]);
 
-  console.log('INIT', initSelection);
-
   const formatedSelectedPlayers =
     selectedPlayers &&
     Object.entries(selectedPlayers)?.map(([_, value]) => value);

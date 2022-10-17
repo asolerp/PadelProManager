@@ -6,28 +6,28 @@ import {popScreen} from '../../../Router/utils/actions';
 
 import {useUploadCloudinaryImage} from '../../../Hooks/useUploadCloudinaryImage';
 import {firebaseIDGenerator} from '../../../Utils/firebaseIDGenerator';
-import {emptyStats} from '../utils/emptyStats';
+
 import {useUpdateDocument} from '../../../Hooks/useUpdateDocument';
 import {LoadingModalContext} from '../../../Context/LoadingModalContext';
-import {AuthContext} from '../../../Context/AuthContex';
+
 import {timeout} from '../../../Utils/timeout';
 import {useCameraOrLibrary} from '../../../Hooks/useCamerOrLibrary';
 import {error, info} from '../../../Lib/Logging';
-import firestore from '@react-native-firebase/firestore';
-import {CONVERSATIONS, REQUESTS} from '../../../Models/entities';
+
+import {useFirebaseAuth} from '../../../Context/FirebaseContext';
+import {defaultFunctions} from '../../../Lib/API/firebaseApp';
 
 export const useNewPlayerForm = (playerId, edit, reset) => {
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
 
   const newPlayerFormRef = useRef();
   const [playerPosition, setPlayerPosition] = useState();
   const [initPlayerImg, setInitPlayerImg] = useState();
-
+  const [loading, setLoading] = useState();
   const {uploadCloudinary} = useUploadCloudinaryImage();
   const {response, onImagePress} = useCameraOrLibrary();
-  const {addDocument, loading: loadingAddDocument} = useAddDocument(
-    playerQuery(user?.id),
-  );
+
+  const newPlayerFn = defaultFunctions.httpsCallable('newPlayer');
 
   const {updateDocument} = useUpdateDocument(playerQuery(user?.id));
   const {setIsVisible, setText} = useContext(LoadingModalContext);
@@ -69,7 +69,7 @@ export const useNewPlayerForm = (playerId, edit, reset) => {
 
   const handleCreateNewPlayer = async values => {
     setIsVisible(true);
-    setText('Creando nuevo jugador...');
+    setLoading(true), setText('Creando nuevo jugador...');
     const id = firebaseIDGenerator();
     try {
       if (response?.assets?.length > 0) {
@@ -77,73 +77,27 @@ export const useNewPlayerForm = (playerId, edit, reset) => {
           response?.assets?.[0],
           `PadelPro/users/${id}/avatar`,
           async url => {
-            await firestore()
-              .collection(CONVERSATIONS)
-              .add({
-                coachEmail: user?.email,
-                playerEmail: values.email,
-                members: [user?.email, values.email],
-                type: 1,
-              });
-            await addDocument({
-              docId: id,
-              data: {
-                ...Object.fromEntries(
-                  Object.entries(values).filter(([key, value]) => !!value),
-                ),
-                active: false,
+            await newPlayerFn({
+              playerId: id,
+              coachId: user?.id,
+              player: {
+                ...values,
                 profileImg: url,
               },
-              callback: async () =>
-                await playerQuery(user?.id)
-                  .doc(id)
-                  .collection('stats')
-                  .doc('global')
-                  .set(emptyStats),
-            });
-            await firestore().collection(REQUESTS).add({
-              createdAt: new Date(),
-              playerEmail: values?.email,
-              coachEmail: user?.email,
-              coachId: user?.id,
-              active: false,
             });
           },
         );
       } else {
-        await firestore()
-          .collection(CONVERSATIONS)
-          .add({
-            coachEmail: user?.email,
-            playerEmail: values.email,
-            members: [user?.email, values.email],
-            type: 1,
-          });
-        await addDocument({
-          docId: id,
-          data: {
-            ...Object.fromEntries(
-              Object.entries(values).filter(([key, value]) => !!value),
-            ),
-          },
-          callback: async () =>
-            await playerQuery(user?.id)
-              .doc(id)
-              .collection('stats')
-              .doc('global')
-              .set(emptyStats),
-        });
-        await firestore().collection(REQUESTS).add({
-          createdAt: new Date(),
-          playerEmail: values?.email,
-          coachEmail: user?.email,
+        await newPlayerFn({
+          playerId: id,
           coachId: user?.id,
-          active: false,
+          player: values,
         });
       }
     } catch (err) {
       console.log(err);
     } finally {
+      setLoading(false);
       setIsVisible(false);
       popScreen();
     }
@@ -175,6 +129,6 @@ export const useNewPlayerForm = (playerId, edit, reset) => {
     initPlayerImg,
     onImagePress,
     response,
-    loading: loadingAddDocument,
+    loading,
   };
 };

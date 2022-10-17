@@ -1,10 +1,9 @@
-import {useContext} from 'react';
-import {AuthContext} from '../../../Context/AuthContex';
-
 import {relationsQuery} from '../../../Api/queries';
 import {useCollectionData} from 'react-firebase-hooks/firestore';
+import {useFirebaseAuth} from '../../../Context/FirebaseContext';
 export const useCheckPendingRelation = () => {
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
+
   const query = relationsQuery
     .where('playerEmail', '==', user?.email)
     .where('status', '==', 'pending');

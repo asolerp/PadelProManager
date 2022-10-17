@@ -1,13 +1,13 @@
-import {useContext, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 
-import {AuthContext} from '../../../Context/AuthContex';
 import firestore from '@react-native-firebase/firestore';
-import {CONVERSATIONS, USERS} from '../../../Models/entities';
+import {CONVERSATIONS} from '../../../Models/entities';
+import {useFirebaseAuth} from '../../../Context/FirebaseContext';
 
 export const useGetConversationId = () => {
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
+
   const [conversations, setConversations] = useState();
-  const [coach, setCoach] = useState();
   const [loading, setLoading] = useState();
 
   useEffect(() => {
@@ -26,14 +26,6 @@ export const useGetConversationId = () => {
             });
             setConversations(conversationsDocs);
           });
-
-        const coachQuery = await firestore()
-          .collection(USERS)
-          .doc(user?.coachId)
-          .get();
-
-        const coachDoc = coachQuery.data();
-        setCoach(coachDoc);
       } catch (err) {
         console.log(err);
       } finally {
@@ -47,7 +39,6 @@ export const useGetConversationId = () => {
   }, [user?.coachId]);
 
   return {
-    coach,
     loading,
     conversationId: conversations?.[0]?.id,
   };

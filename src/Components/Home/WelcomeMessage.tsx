@@ -2,7 +2,7 @@ import {format} from 'date-fns';
 import es from 'date-fns/esm/locale/es/index.js';
 import React, {useContext} from 'react';
 import {View, Text, ViewStyle} from 'react-native';
-import {AuthContext} from '../../Context/AuthContex';
+import {useFirebaseAuth} from '../../Context/FirebaseContext';
 import t from '../../Theme/theme';
 import {capitalize} from '../../Utils/parsers';
 import {useTranslation} from 'react-i18next';
@@ -11,7 +11,8 @@ interface WelcomeMessageProps {
 }
 
 export const WelcomeMessage: React.FC<WelcomeMessageProps> = ({style}) => {
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
+
   const {t: loc} = useTranslation();
   const date = format(Date.now(), 'EEEE dd MMMM', {
     locale: es,

@@ -1,24 +1,17 @@
-import React, {useContext} from 'react';
-import {BlurView} from '@react-native-community/blur';
+import React from 'react';
 
-import {View, FlatList, Text, Dimensions} from 'react-native';
+import {View, FlatList, Text} from 'react-native';
 import t from '../../../Theme/theme';
 import {Button} from '../../UI/Button';
 import {PointHistoryItem} from '../PointHistoryItem';
-import {SubscriptionContext} from '../../../Context/SubscriptionContext';
+
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {useHistoryFilters} from './hooks/useHistoryFilters';
 import {HDivider} from '../../UI/HDivider';
 import {capitalize} from '../../../Utils/parsers';
-import {openScreenWithPush} from '../../../Router/utils/actions';
-import {PROMOTIONAL_SUBSCRIPTION_SCREEN_KEY} from '../../../Screens/PromotionalSubscription/PromotionalSubscription';
-import {AuthContext} from '../../../Context/AuthContex';
 
 export const HistoricRoute = ({match, pointsHistory}) => {
-  const {isSubscribed} = useContext(SubscriptionContext);
-  const {isAdmin} = useContext(AuthContext);
-
   const {historyList, favoriteFilter, setFavoriteFilter} = useHistoryFilters(
     match,
     pointsHistory,

@@ -1,4 +1,4 @@
-import React, {createContext, useState} from 'react';
+import React, {createContext, useMemo, useState} from 'react';
 
 interface RoleContextInterface {
   role: string;
@@ -10,9 +10,11 @@ export const RoleContext = createContext<RoleContextInterface | null>(null);
 export const RoleProvider = ({children}) => {
   const [role, setRole] = useState();
 
-  const value = {
-    role,
-    setRole,
-  };
-  return <RoleContext.Provider value={value}>{children}</RoleContext.Provider>;
+  const contextValue = useMemo(() => {
+    return {role, setRole};
+  });
+
+  return (
+    <RoleContext.Provider value={contextValue}>{children}</RoleContext.Provider>
+  );
 };

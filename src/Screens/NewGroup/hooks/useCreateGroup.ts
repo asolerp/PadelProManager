@@ -1,6 +1,7 @@
 import firestore from '@react-native-firebase/firestore';
 import {useContext, useState} from 'react';
-import {AuthContext} from '../../../Context/AuthContex';
+
+import {useFirebaseAuth} from '../../../Context/FirebaseContext';
 import {LoadingModalContext} from '../../../Context/LoadingModalContext';
 import {useCameraOrLibrary} from '../../../Hooks/useCamerOrLibrary';
 import {useUploadCloudinaryImage} from '../../../Hooks/useUploadCloudinaryImage';
@@ -9,7 +10,8 @@ import {popScreen} from '../../../Router/utils/actions';
 import {firebaseIDGenerator} from '../../../Utils/firebaseIDGenerator';
 
 export const useCreateGroup = () => {
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
+
   const {response, onImagePress} = useCameraOrLibrary();
   const [groupName, setGroupName] = useState();
 

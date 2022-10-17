@@ -1,12 +1,13 @@
 import firestore from '@react-native-firebase/firestore';
-import {useCallback, useContext, useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
+import {useFirebaseAuth} from '../Context/FirebaseContext';
 
-import {AuthContext} from '../Context/AuthContex';
 import {defaultFunctions} from '../Lib/API/firebaseApp';
 import {PLAYERS, USERS} from '../Models/entities';
 
 export const useGetPlayersAndGroups = chat => {
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
+
   const [groups, setGroups] = useState();
   const [players, setPlayers] = useState();
   const [loading, setLoading] = useState(false);

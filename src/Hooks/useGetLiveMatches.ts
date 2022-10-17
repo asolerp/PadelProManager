@@ -1,10 +1,10 @@
-import {useContext} from 'react';
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 import {matchQuery} from '../Api/queries';
-import {AuthContext} from '../Context/AuthContex';
+
+import {useFirebaseAuth} from '../Context/FirebaseContext';
 
 export const useGetLiveMatches = () => {
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
 
   const query = matchQuery
     .where('coachId', '==', user?.id)

@@ -25,7 +25,7 @@ export interface UserType {
   provincia?: string;
   role?: Roles;
   token?: string;
-  loggedIn: boolean;
+  loggedIn?: boolean;
 }
 
 export interface SessionType {

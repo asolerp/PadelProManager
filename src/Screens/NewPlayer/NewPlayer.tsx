@@ -134,6 +134,10 @@ export const NewPlayerScreen = ({route}) => {
               control={control}
               rules={{
                 required: 'El email es obligatorio',
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: 'Email incorrecto',
+                },
               }}
               render={({
                 field: {onChange, onBlur, value},

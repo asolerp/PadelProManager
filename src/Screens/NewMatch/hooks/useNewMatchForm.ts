@@ -1,6 +1,6 @@
 import {useContext, useRef, useState} from 'react';
+import {useFirebaseAuth} from '../../../Context/FirebaseContext';
 
-import {AuthContext} from '../../../Context/AuthContex';
 import {NewMatchContext} from '../../../Context/NewMatchContext';
 import {usePermissions} from '../../../Hooks/usePermissions';
 
@@ -25,7 +25,8 @@ const emptyPlayer = {
 
 export const useNewMatchForm = () => {
   const newMatchFormRef = useRef();
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
+
   const [playerPosition, setPlayerPosition] = useState();
   const [loading, setLoading] = useState(false);
   const {selectedPlayers} = useContext(NewMatchContext);

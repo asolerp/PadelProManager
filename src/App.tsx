@@ -18,6 +18,7 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import t from './Theme/theme';
 import {suppressInAppMessaging} from './Lib/InAppMessaging';
 import {RoleProvider} from './Context/RoleContext';
+import {FirebaseAuthProvider} from './Context/FirebaseContext';
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -29,21 +30,21 @@ const App: React.FC = () => {
 
   return (
     <DynamicLinkProvider>
-      <RoleProvider>
+      <FirebaseAuthProvider>
         <GestureHandlerRootView style={[t.flexGrow]}>
           <StatusBar animated={true} barStyle="dark-content" />
-          <AuthProvider>
-            <SubscriptionProvider>
-              <LoadingModalProvider>
-                <PremiumModalProvider>
-                  <AuthRouter />
-                </PremiumModalProvider>
-              </LoadingModalProvider>
-            </SubscriptionProvider>
-          </AuthProvider>
+          {/* <AuthProvider> */}
+          <SubscriptionProvider>
+            <LoadingModalProvider>
+              <PremiumModalProvider>
+                <AuthRouter />
+              </PremiumModalProvider>
+            </LoadingModalProvider>
+          </SubscriptionProvider>
+          {/* </AuthProvider> */}
           <Toast config={toastConfig} />
         </GestureHandlerRootView>
-      </RoleProvider>
+      </FirebaseAuthProvider>
     </DynamicLinkProvider>
   );
 };

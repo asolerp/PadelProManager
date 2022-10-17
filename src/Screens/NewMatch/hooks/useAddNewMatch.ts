@@ -1,6 +1,7 @@
-import {useContext, useState} from 'react';
+import {useState} from 'react';
 import {matchQuery} from '../../../Api/queries';
-import {AuthContext} from '../../../Context/AuthContex';
+
+import {useFirebaseAuth} from '../../../Context/FirebaseContext';
 import {useUserCounts} from '../../../Hooks/useUserCounts';
 
 interface HookProps {
@@ -14,7 +15,7 @@ export const useAddNewMatch = () => {
   const [error, setError] = useState();
 
   const {matchesCount} = useUserCounts();
-  const {isCoach} = useContext(AuthContext);
+  const {isCoach} = useFirebaseAuth();
 
   const addNewMatch = async ({data, callback}: HookProps) => {
     setLoading(true);

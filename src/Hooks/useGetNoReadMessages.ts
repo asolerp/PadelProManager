@@ -1,10 +1,11 @@
-import {useContext} from 'react';
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 import {conversationsQuery} from '../Api/queries';
-import {AuthContext} from '../Context/AuthContex';
+
+import {useFirebaseAuth} from '../Context/FirebaseContext';
 
 export const useGetNoReadMessages = () => {
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
+
   const [conversations] = useCollectionData(conversationsQuery, {
     idField: 'id',
   });

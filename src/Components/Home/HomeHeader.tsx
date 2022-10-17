@@ -1,7 +1,6 @@
 import React, {useContext} from 'react';
 
 import {View} from 'react-native';
-import {AuthContext} from '../../Context/AuthContex';
 
 import {openScreenWithPush} from '../../Router/utils/actions';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -13,13 +12,15 @@ import {WelcomeMessage} from './WelcomeMessage';
 import PressableOpacity from '../UI/PressableOpacity';
 import {MESSAGES_SCREEN_KEY} from '../../Screens/Messages/Messages';
 import {useGetNoReadMessages} from '../../Hooks/useGetNoReadMessages';
+import {useFirebaseAuth} from '../../Context/FirebaseContext';
 
 interface Props {
   position?: 'absolute' | 'relative';
 }
 
 export const HomeHeader: React.FC<Props> = ({position}) => {
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
+
   const {noReadMessages} = useGetNoReadMessages();
 
   return (

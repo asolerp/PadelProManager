@@ -86,6 +86,17 @@ export const PlayerScreen = ({route}) => {
                     </PressableOpacity>
                   )}
                 </View>
+                <View>
+                  {player?.active ? (
+                    <Text style={[t.fontSansBold, t.textSuccessDark]}>
+                      ACTIVO
+                    </Text>
+                  ) : (
+                    <Text style={[t.fontSansBold, t.textErrorDark]}>
+                      INACTIVO
+                    </Text>
+                  )}
+                </View>
                 <View style={[t.flexRow, t.itemsCenter, t.mT3]}>
                   <View style={[t.flexRow, t.itemsCenter, t.mR2]}>
                     <Text style={[t.fontSans, t.textXs, t.textGray800, t.mR1]}>
@@ -138,45 +149,47 @@ export const PlayerScreen = ({route}) => {
                   </>
                 )}
               </View>
-              <View style={[t.mT5]}>
-                <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
-                  Tips para tu jugador
-                </Text>
-                <View
-                  style={[
-                    t.border0_5,
-                    t.borderGray200,
-                    t.pX4,
-                    t.pY2,
-                    t.roundedSm,
-                  ]}>
-                  <TextInput
-                    placeholder="Añade tips a tu jugador"
-                    multiline
-                    value={localTip}
-                    onChangeText={setLocalTip}
-                  />
-                  {localTip ? (
-                    <>
-                      {loadingTip ? (
-                        <View style={[t.selfEnd, t.mT4]}>
-                          <ActivityIndicator />
-                        </View>
-                      ) : (
-                        <PressableOpacity
-                          style={[t.selfEnd, t.mT4]}
-                          onPress={handleSaveTips}>
-                          <Text style={[t.fontSansBold, t.textInfoDark]}>
-                            Guardar
-                          </Text>
-                        </PressableOpacity>
-                      )}
-                    </>
-                  ) : (
-                    <></>
-                  )}
+              {player?.active && (
+                <View style={[t.mT5]}>
+                  <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
+                    Tips para tu jugador
+                  </Text>
+                  <View
+                    style={[
+                      t.border0_5,
+                      t.borderGray200,
+                      t.pX4,
+                      t.pY2,
+                      t.roundedSm,
+                    ]}>
+                    <TextInput
+                      placeholder="Añade tips a tu jugador"
+                      multiline
+                      value={localTip}
+                      onChangeText={setLocalTip}
+                    />
+                    {localTip ? (
+                      <>
+                        {loadingTip ? (
+                          <View style={[t.selfEnd, t.mT4]}>
+                            <ActivityIndicator />
+                          </View>
+                        ) : (
+                          <PressableOpacity
+                            style={[t.selfEnd, t.mT4]}
+                            onPress={handleSaveTips}>
+                            <Text style={[t.fontSansBold, t.textInfoDark]}>
+                              Guardar
+                            </Text>
+                          </PressableOpacity>
+                        )}
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </View>
                 </View>
-              </View>
+              )}
               <View style={[t.mT5]}>
                 <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
                   Últimos partidos

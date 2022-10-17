@@ -2,7 +2,7 @@ import {useEffect, useCallback, useContext} from 'react';
 import auth from '@react-native-firebase/auth';
 import messaging from '@react-native-firebase/messaging';
 
-import {AuthContext} from '../../Context/AuthContex';
+import {useFirebaseAuth} from '../../Context/FirebaseContext';
 
 import {LoadingModalContext} from '../../Context/LoadingModalContext';
 import {defaultFunctions} from '../../Lib/API/firebaseApp';
@@ -15,7 +15,7 @@ const onAuthStateChange = (role, callback, setIsVisible) => {
     setIsVisible(true);
     try {
       let token = await messaging().getToken();
-      console.log('USER', user);
+
       if (user) {
         const response = await checkNewUserFn({
           user: {
@@ -25,19 +25,14 @@ const onAuthStateChange = (role, callback, setIsVisible) => {
           role,
           token,
         });
-        console.log('RESPONSE', response.data);
+
         callback({loggedIn: true, ...response?.data});
       } else {
-        console.log('Limpiando');
         callback({loggedIn: false});
       }
       setIsVisible(false);
     } catch (err) {
       console.log(err);
-      // error({
-      //   title: 'Lo sentimos',
-      //   subtitle: 'Vúelvelo a intentar más tarde',
-      // });
     }
   });
 };
@@ -45,7 +40,7 @@ const onAuthStateChange = (role, callback, setIsVisible) => {
 export const useAuth = () => {
   const {setUser} = useContext(AuthContext);
 
-  const {role} = useContext(RoleContext);
+  const role = 'coach';
   const {setIsVisible} = useContext(LoadingModalContext);
   const handleSetUser = useCallback(user => setUser(user), [setUser]);
 

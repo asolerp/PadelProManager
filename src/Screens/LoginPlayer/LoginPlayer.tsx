@@ -1,25 +1,41 @@
 import React, {useContext} from 'react';
 
-import {Text, View, Image, StatusBar} from 'react-native';
+import {Text, View, Image, StatusBar, KeyboardAvoidingView} from 'react-native';
 
 import {ContainerWithBg} from '../../Components/UI/ContainerWithBg';
 import t from '../../Theme/theme';
 
-import {useLoginPlayer} from './hooks/useLoginPlayer';
+import {useGetCoach} from './hooks/useGetCoach';
 
-import {GoogleButton} from '../../Components/Login/GoogleButton';
-import {AppleButton} from '../../Components/Login/AppleButton';
-import {Spacer} from '../../Components/UI/Spacer';
 import {DynamicLinkContext} from '../../Context/DynamicLinkContext';
 import {Avatar} from '../../Components/UI/Avatar';
+import {SafeAreaView} from 'react-native-safe-area-context';
+
+import {Spacer} from '../../Components/UI/Spacer';
+import {Button} from '../../Components/UI/Button';
+import {InputLogin} from '../../Components/Login/InputLogin';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {useLogin} from '../Login/hooks/useLogin';
+import {useFirebaseAuth} from '../../Context/FirebaseContext';
 
 export const LOGIN_PLAYER_SCREEN_KEY = 'loginPlayerScreen';
 
 export const LoginPlayerScreen = () => {
   const {params} = useContext(DynamicLinkContext);
-  const {onGoogleButtonPress, onAppleButtonPress, coach} = useLoginPlayer({
+  const {coach} = useGetCoach({
     coachId: params?.coach_id,
   });
+  const {
+    email,
+    signIn,
+    password,
+    setEmail,
+    setPassword,
+    visiblePassword,
+    handlePressVisiblePassword,
+  } = useLogin(params?.player_email);
+
+  const {loading} = useFirebaseAuth();
 
   return (
     <>
@@ -29,57 +45,105 @@ export const LoginPlayerScreen = () => {
         backgroundColor="Gray900"
         opacity={90}
         imageSrc="https://res.cloudinary.com/enalbis/image/upload/v1662929406/PadelPro/varios/bgndlhuj3v1drepvw5uz.webp">
-        <View style={[t.flexGrow, t.flexCol, t.itemsCenter]}>
-          <View style={[t.justifyCenter, t.itemsCenter]}>
-            <Image
-              resizeMode="contain"
-              source={require('../../Assets/logo.png')}
-              style={[t.h8, t.mT5]}
-            />
-          </View>
-          <View style={[t.wFull, t.mT5]}>
-            <Text style={[t.text4xl, t.textWhite, t.fontSansBold]}>
-              Bienvenido a Padel Pro Manager!
-            </Text>
-          </View>
-          <View>
-            <View style={[t.itemsCenter, t.mT10]}>
-              <Avatar
-                img={coach?.profileImg}
-                imageStyle={[t.w28, t.h28]}
-                style={[t.border0_5, t.borderWhite, t.roundedFull]}
+        <SafeAreaView style={[t.flexGrow, t.pX4]}>
+          <KeyboardAwareScrollView
+            style={[t.flexCol]}
+            contentContainerStyle={[t.flexGrow]}>
+            <View style={[t.justifyCenter, t.itemsCenter]}>
+              <Image
+                resizeMode="contain"
+                source={require('../../Assets/logo.png')}
+                style={[t.h8, t.mT5]}
               />
             </View>
-            <View style={[t.mT5]}>
-              <Text style={[t.fontSans, t.textXl, t.textWhite]}>
-                El entrenador {coach?.firstName} {coach?.secondName} te invita a
-                que formes parte de su equipo de entrenamiento.
-              </Text>
-              <Text style={[t.fontSans, t.textSm, t.textGray500, t.mT2]}>
-                Al formar parte de un equipo de entrenamiento podrás tener un
-                seguimiento de tu evolución como jugador y mantenerte comunicado
-                con tu entrenador en todo momento.
+            <View style={[t.wFull, t.mT5]}>
+              <Text style={[t.text4xl, t.textWhite, t.fontSansBold]}>
+                Bienvenido a Padel Pro Manager!
               </Text>
             </View>
-          </View>
-          <View style={[t.flexGrow, t.wFull, t.justifyEnd, t.mB4]}>
-            <GoogleButton
-              onPress={() =>
-                onGoogleButtonPress()
-                  .then(() => console.log('Signed in with Google!'))
-                  .catch(e => console.log(e))
-              }
-            />
-            <Spacer space={3} />
-            <AppleButton
-              onPress={() =>
-                onAppleButtonPress().then(() =>
-                  console.log('Signed in with Apple!'),
-                )
-              }
-            />
-          </View>
-        </View>
+            <View>
+              <View style={[t.itemsCenter, t.mT10]}>
+                <Avatar
+                  img={coach?.profileImg}
+                  imageStyle={[t.w28, t.h28]}
+                  style={[t.border0_5, t.borderWhite, t.roundedFull]}
+                />
+              </View>
+              <View style={[t.mT5]}>
+                <Text style={[t.fontSans, t.textXl, t.textWhite]}>
+                  El entrenador {coach?.firstName} {coach?.secondName} te invita
+                  a que formes parte de su equipo de entrenamiento.
+                </Text>
+                <Text style={[t.fontSans, t.textSm, t.textGray500, t.mT2]}>
+                  Al formar parte de un equipo de entrenamiento podrás tener un
+                  seguimiento de tu evolución como jugador y mantenerte
+                  comunicado con tu entrenador en todo momento.
+                </Text>
+              </View>
+            </View>
+            <View style={[t.flexGrow, t.wFull, t.justifyEnd]}>
+              <InputLogin
+                editable={false}
+                leftIconName="ios-tennisball-sharp"
+                autoCapitalize="none"
+                placeholder="Email"
+                onChangeText={setEmail}
+                value={email}
+              />
+              <Spacer space={4} />
+              <InputLogin
+                leftIconName="ios-lock-closed"
+                rightIconName={visiblePassword ? 'ios-eye' : 'ios-eye-off'}
+                onPressRightIcon={handlePressVisiblePassword}
+                secureTextEntry={!visiblePassword}
+                placeholder="Contraseña"
+                onChangeText={setPassword}
+                value={password}
+              />
+              <Spacer space={4} />
+              <Button
+                loading={loading}
+                onPress={() => signIn()}
+                title="REGISTRARSE"
+                style={[t.h14, {borderRadius: 20}]}
+                textStyle={[t.textSm]}
+              />
+            </View>
+          </KeyboardAwareScrollView>
+          {/* <View style={[t.wFull, t.flexGrow, t.justifyEnd]}>
+            <BlurView
+              blurType="light"
+              blurAmount={5}
+              reducedTransparencyFallbackColor="white"
+              style={[
+                t.flexRow,
+                t.h14,
+                t.border0_5,
+                t.borderWhite,
+                t.roundedSm,
+              ]}>
+              <PressableOpacity
+                onPress={() =>
+                  onGoogleButtonPress()
+                    .then(() => console.log('Signed in with Google!'))
+                    .catch(e => console.log(e))
+                }
+                style={[t.flexGrow, t.itemsCenter, t.justifyCenter]}>
+                <Icon name="logo-google" size={25} color="white" />
+              </PressableOpacity>
+              <View style={[t.hFull, t.w1, t.border0_5, t.borderWhite]} />
+              <PressableOpacity
+                onPress={() =>
+                  onAppleButtonPress().then(() =>
+                    console.log('Signed in with Apple!'),
+                  )
+                }
+                style={[t.flexGrow, t.itemsCenter, t.justifyCenter]}>
+                <Icon name="logo-apple" size={25} color="white" />
+              </PressableOpacity>
+            </BlurView>
+          </View> */}
+        </SafeAreaView>
       </ContainerWithBg>
     </>
   );

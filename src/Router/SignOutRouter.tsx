@@ -17,6 +17,7 @@ import {
   RoleSelector,
   ROLE_SELECTOR_SCREEN_KEY,
 } from '../Screens/RoleSelector/RoleSelector';
+import {Register, REGISTER_SCREEN_KEY} from '../Screens/Register/Register';
 
 const Stack = createNativeStackNavigator();
 
@@ -46,6 +47,11 @@ export const SignOutRouter = () => {
         <Stack.Screen
           name={ROLE_SELECTOR_SCREEN_KEY}
           component={RoleSelector}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name={REGISTER_SCREEN_KEY}
+          component={Register}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

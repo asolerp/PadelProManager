@@ -1,10 +1,8 @@
 import {format, setHours, setMinutes} from 'date-fns';
-import {useContext, useEffect, useRef, useState} from 'react';
-import {accountingQuery, sessionQuery} from '../../../Api/queries';
-import {AuthContext} from '../../../Context/AuthContex';
+import {useEffect, useRef, useState} from 'react';
+
 // import * as Localization from 'expo-localization';
 
-import {useUpdateDocument} from '../../../Hooks/useUpdateDocument';
 import {popScreen} from '../../../Router/utils/actions';
 import {DATE_FORM, HOUR_FORMAT} from '../../../Utils/date-ext';
 import {ddmmyyyyToDate} from '../../../Utils/parsers';
@@ -15,9 +13,10 @@ import {defaultFunctions} from '../../../Lib/API/firebaseApp';
 import {ACCOUNTING, SESSIONS} from '../../../Models/entities';
 import firestore from '@react-native-firebase/firestore';
 import {getCurrencies} from 'react-native-localize';
+import {useFirebaseAuth} from '../../../Context/FirebaseContext';
 
 export const useNewSessionForm = ({startDate, session}) => {
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
 
   const [sessionColor, setSessionColor] = useState(session?.color || 'blue');
   const [loading, setLoading] = useState(false);

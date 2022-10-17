@@ -10,9 +10,12 @@ import {
 import t from '../../Theme/theme';
 import {capitalize} from '../../Utils/parsers';
 import PressableOpacity from './PressableOpacity';
+import Icon from 'react-native-vector-icons/Ionicons';
 interface Props extends ButtonProps {
   style?: ViewStyle[];
   textStyle?: TextStyle[];
+  iconName?: string;
+  iconColor?: string;
   title: string;
   active?: boolean;
   loading?: boolean;
@@ -28,6 +31,8 @@ export const Button: React.FC<Props> = ({
   onPress,
   title,
   loading,
+  iconName,
+  iconColor,
   disabled,
   rightSide,
   size = 'sm',
@@ -89,9 +94,17 @@ export const Button: React.FC<Props> = ({
         style,
       ]}>
       {loading ? (
-        <ActivityIndicator color="white" />
+        <ActivityIndicator color={type === 'info' ? 'black' : 'white'} />
       ) : (
         <View style={[t.flexRow, t.itemsCenter]}>
+          {iconName && (
+            <Icon
+              name={iconName}
+              size={25}
+              color={iconColor || 'black'}
+              style={[t.mR2]}
+            />
+          )}
           <Text
             style={[
               parseTextTypeColor[type],

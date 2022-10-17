@@ -1,10 +1,11 @@
-import {useContext, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 
-import {AuthContext} from '../Context/AuthContex';
 import firestore from '@react-native-firebase/firestore';
+import {useFirebaseAuth} from '../Context/FirebaseContext';
 
 export const useGetPlayerByUserId = () => {
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
+
   const [loading, setLoading] = useState<boolean>();
   const [player, setPlayer] = <any>useState();
 

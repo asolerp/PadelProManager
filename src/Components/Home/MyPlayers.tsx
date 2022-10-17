@@ -10,7 +10,6 @@ import {shortName} from '../../Utils/parsers';
 
 import {Banner} from '../UI/Banner';
 import {NEW_PLAYER_SCREEN_KEY} from '../../Screens/NewPlayer/NewPlayer';
-import {useCheckPermissions} from '../../Hooks/useCheckPermissions';
 
 import {sortByName} from '../../Utils/sorts';
 
@@ -20,8 +19,8 @@ export const MyPlayers = ({players}) => {
       <Player
         imageStyle={[t.w16, t.h16]}
         style={[t.mX2]}
-        img={item.profileImg}
-        name={shortName(1, item.firstName, item.secondName.split(' ')[0])}
+        img={item?.profileImg}
+        name={shortName(1, item?.firstName, item?.secondName?.split(' ')[0])}
         onPress={() =>
           openScreenWithPush(PLAYER_SCREEN_KEY, {
             playerId: item?.id,

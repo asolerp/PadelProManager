@@ -2,16 +2,15 @@ import {useFocusEffect} from '@react-navigation/native';
 import {format} from 'date-fns';
 import React from 'react';
 import {useCallback} from 'react';
-import {useContext} from 'react';
+
 import {ActivityIndicator, RefreshControl, Text, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 import {Header, ScreenLayout} from '../../Components/Layout';
 import {Avatar} from '../../Components/UI/Avatar';
 import {HDivider} from '../../Components/UI/HDivider';
 import PressableOpacity from '../../Components/UI/PressableOpacity';
-import {AuthContext} from '../../Context/AuthContex';
+import {useFirebaseAuth} from '../../Context/FirebaseContext';
 import {openScreenWithPush} from '../../Router/utils/actions';
 import t from '../../Theme/theme';
 import {CHAT_SCREEN_KEY} from '../Chat/Chat';
@@ -20,7 +19,7 @@ import {useGetConversations} from './hooks/useGetConversations';
 export const MESSAGES_SCREEN_KEY = 'messagesScreen';
 
 export const Messages = () => {
-  const {isCoach, user} = useContext(AuthContext);
+  const {isCoach, user} = useFirebaseAuth();
   const {conversations, loading, refetch} = useGetConversations();
 
   useFocusEffect(
@@ -64,7 +63,7 @@ export const Messages = () => {
     const chatSubtitle =
       item?.groupId &&
       item?.members
-        .map(p => p.firstName)
+        .map(p => p?.firstName)
         .join()
         .split(',')
         .join(', ');

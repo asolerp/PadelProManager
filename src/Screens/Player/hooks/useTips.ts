@@ -1,11 +1,13 @@
 import firestore from '@react-native-firebase/firestore';
-import {useContext, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useDocumentData} from 'react-firebase-hooks/firestore';
-import {AuthContext} from '../../../Context/AuthContex';
+
+import {useFirebaseAuth} from '../../../Context/FirebaseContext';
 import {TIPS} from '../../../Models/entities';
 
 export const useTips = ({playerEmail}) => {
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
+
   const [localTip, setLocalTip] = useState();
   const tipRef = firestore().collection(TIPS).doc(`${user?.id}-${playerEmail}`);
   const [loading, setLoading] = useState();

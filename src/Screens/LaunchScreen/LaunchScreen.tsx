@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {AuthContext} from '../../Context/AuthContex';
+import {useFirebaseAuth} from '../../Context/FirebaseContext';
 
 import {Roles} from '../../Global/types';
 
@@ -10,7 +10,7 @@ import {useDeepLinks} from '../../Lib/DeepLinks/hooks/useDeepLinks';
 export const LAUNCH_SCREEN_KEY = 'launchScreen';
 export const LaunchScreen = () => {
   useDeepLinks();
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
 
   if (user?.role === Roles.COACH || user?.role === Roles.ADMIN) {
     return <CoachStack />;

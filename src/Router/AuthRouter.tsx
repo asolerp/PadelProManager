@@ -1,8 +1,7 @@
 import React, {useContext, useEffect} from 'react';
 import {LoadingModal} from '../Components/Common/LoadingModal';
-import {AuthContext} from '../Context/AuthContex';
+
 import {LoadingModalContext} from '../Context/LoadingModalContext';
-import {useAuth} from './hooks/useAuth';
 
 import {SignInRouter} from './SignInRouter';
 import {SignOutRouter} from './SignOutRouter';
@@ -12,21 +11,17 @@ import {
   useNotification,
   useRedirectNotification,
 } from '../Hooks/useNotifications';
+import {useFirebaseAuth} from '../Context/FirebaseContext';
 import {useLogout} from '../Hooks/useLogout';
 
 const AuthRouter = () => {
-  useAuth();
   useIAPayments();
   useRedirectNotification();
   useNotification();
-  const {logout} = useLogout();
 
   const {isVisible, text} = useContext<any>(LoadingModalContext);
-  const {user} = useContext<any>(AuthContext);
 
-  // useEffect(() => {
-  //   logout();
-  // }, []);
+  const {user} = useFirebaseAuth();
 
   if (!user) {
     return null;

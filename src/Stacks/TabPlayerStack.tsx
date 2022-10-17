@@ -7,14 +7,14 @@ import t from '../Theme/theme';
 import {Text, View} from 'react-native';
 import {Messages} from '../Screens/Messages/Messages';
 import {useGetNoReadMessages} from '../Hooks/useGetNoReadMessages';
-import {useContext} from 'react';
-import {AuthContext} from '../Context/AuthContex';
+
+import {useFirebaseAuth} from '../Context/FirebaseContext';
 
 const Tab = createBottomTabNavigator();
 
 export const TabPlayerStack = () => {
   const {noReadMessages} = useGetNoReadMessages();
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
 
   return (
     <Tab.Navigator

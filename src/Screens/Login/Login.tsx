@@ -5,25 +5,45 @@ import {Text, View, Image, StatusBar} from 'react-native';
 import {ContainerWithBg} from '../../Components/UI/ContainerWithBg';
 import t from '../../Theme/theme';
 
-import Icon from 'react-native-vector-icons/Ionicons';
 import {useDeepLinks} from '../../Lib/DeepLinks/hooks/useDeepLinks';
-import {BlurView} from '@react-native-community/blur';
+
 import {SafeAreaView} from 'react-native-safe-area-context';
+
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {InputLogin} from '../../Components/Login/InputLogin';
+import {Spacer} from '../../Components/UI/Spacer';
+import {Button} from '../../Components/UI/Button';
 import PressableOpacity from '../../Components/UI/PressableOpacity';
 import {openScreenWithPush} from '../../Router/utils/actions';
-import {ROLE_SELECTOR_SCREEN_KEY} from '../RoleSelector/RoleSelector';
+import {ROLE_SELECTOR_SCREEN_KEY} from '../../Screens/RoleSelector/RoleSelector';
+import {useLogin} from './hooks/useLogin';
+import {useFirebaseAuth} from '../../Context/FirebaseContext';
 
 export const LOGIN_SCREEN_KEY = 'loginScreen';
 
 export const LoginScreen = () => {
   useDeepLinks();
+  const {
+    logIn,
+    email,
+    password,
+    setEmail,
+    setPassword,
+    visiblePassword,
+    handlePressVisiblePassword,
+  } = useLogin();
+
+  const {loading} = useFirebaseAuth();
 
   return (
     <>
       <StatusBar barStyle="light-content" />
       <ContainerWithBg isBox={false} backgroundColor="Gray900" opacity={80}>
         <SafeAreaView style={[t.flexGrow, t.pX4]}>
-          <View style={[t.flexGrow, t.flexCol, t.itemsCenter]}>
+          <KeyboardAwareScrollView
+            showsVerticalScrollIndicator={false}
+            style={[t.flexCol]}
+            contentContainerStyle={[t.flexGrow, t.itemsCenter]}>
             <View style={[t.itemsCenter]}>
               <Image
                 resizeMode="contain"
@@ -39,38 +59,62 @@ export const LoginScreen = () => {
                   t.textWhite,
                   t.textCenter,
                   t.mT3,
+                  t.text4xl,
                 ]}>
                 Padel Pro Manager
               </Text>
               <View style={[t.border0_5, t.borderWhite, t.flex, t.mY5]} />
               <Text
-                style={[t.fontSansMedium, t.textLg, t.textWhite, t.textCenter]}>
+                style={[
+                  t.fontSansMedium,
+                  t.textLg,
+                  t.textWhite,
+                  t.textCenter,
+                  t.textXl,
+                ]}>
                 La aplicación de gestión para entrenadores y jugadores de padel
               </Text>
             </View>
-            <View style={[t.itemsCenter, t.justifyCenter, t.mB4]}>
-              <BlurView
-                blurType="light"
-                blurAmount={20}
-                reducedTransparencyFallbackColor="white"
-                style={[{borderRadius: 30}]}>
-                <PressableOpacity
-                  onPress={() => openScreenWithPush(ROLE_SELECTOR_SCREEN_KEY)}
-                  style={[
-                    t.border0_5,
-                    t.borderWhite,
-                    t.roundedFull,
-                    t.h14,
-                    t.w14,
-                    t.justifyCenter,
-                    t.itemsCenter,
-                    t.shadow,
-                  ]}>
-                  <Icon name="chevron-forward" size={35} color="white" />
-                </PressableOpacity>
-              </BlurView>
+            <View style={[t.justifyEnd, t.wFull]}>
+              <InputLogin
+                leftIconName="ios-tennisball-sharp"
+                autoCapitalize="none"
+                placeholder="Email"
+                onChangeText={setEmail}
+                value={email}
+              />
+              <Spacer space={4} />
+              <InputLogin
+                leftIconName="ios-lock-closed"
+                rightIconName={visiblePassword ? 'ios-eye' : 'ios-eye-off'}
+                onPressRightIcon={handlePressVisiblePassword}
+                secureTextEntry={!visiblePassword}
+                placeholder="Contraseña"
+                onChangeText={setPassword}
+                value={password}
+              />
+              <Spacer space={2} />
+              <PressableOpacity>
+                <Text style={[t.fontSans, t.textWhite, t.textXs, t.textRight]}>
+                  He olvidado mi contraseña
+                </Text>
+              </PressableOpacity>
+              <Spacer space={4} />
+              <Button
+                loading={loading}
+                iconName="ios-log-in"
+                onPress={() => logIn()}
+                title="LOGIN"
+                style={[t.h14, {borderRadius: 20}]}
+                textStyle={[t.textSm]}
+              />
+              <Spacer space={4} />
+              <PressableOpacity
+                onPress={() => openScreenWithPush(ROLE_SELECTOR_SCREEN_KEY)}>
+                <Text style={[t.textCenter, t.textWhite]}>Registrarse</Text>
+              </PressableOpacity>
             </View>
-          </View>
+          </KeyboardAwareScrollView>
         </SafeAreaView>
       </ContainerWithBg>
     </>

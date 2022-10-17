@@ -1,26 +1,27 @@
-import React, {useContext, useState} from 'react';
-import {View, Text, Pressable, StatusBar} from 'react-native';
+import React from 'react';
+import {View, Text, StatusBar} from 'react-native';
 
 import t from '../../Theme/theme';
 
-import {useSetUserRole} from './hooks/useSetUserRole';
 import {ContainerWithBg} from '../../Components/UI/ContainerWithBg';
-import {Button} from '../../Components/UI/Button';
+
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {GoogleButton} from '../../Components/Login/GoogleButton';
-import {AppleButton} from '../../Components/Login/AppleButton';
-import {Spacer} from '../../Components/UI/Spacer';
+
 import {useLogin} from '../Login/hooks/useLogin';
 import PressableOpacity from '../../Components/UI/PressableOpacity';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {BlurView} from '@react-native-community/blur';
-import {RoleContext} from '../../Context/RoleContext';
+
+import {openScreenWithPush} from '../../Router/utils/actions';
+import {REGISTER_SCREEN_KEY} from '../Register/Register';
+
+import {useFirebaseAuth} from '../../Context/FirebaseContext';
+import {Header} from '../../Components/Layout/Header';
 
 export const ROLE_SELECTOR_SCREEN_KEY = 'roleSelectorScreen';
 
 export const RoleSelector = () => {
-  const {onGoogleButtonPress, onAppleButtonPress} = useLogin();
-  const {role, setRole} = useContext(RoleContext);
+  const {role, setRole} = useFirebaseAuth();
 
   const handlePressRole = r => {
     if (role === r) {
@@ -37,12 +38,13 @@ export const RoleSelector = () => {
         backgroundColor="black"
         imageSrc="https://blog.fuertehoteles.com/wp-content/uploads/2016/09/padel-tennis.jpg">
         <SafeAreaView style={[t.pX4, t.flexGrow]}>
+          <Header withBack mode="dark" />
+
           <View style={[t.flexGrow, t.pX1]}>
             <Text style={[t.fontSansBold, t.text5xl, t.textWhite, t.mB5]}>
               ¿Cual es tu rol?
             </Text>
-            <Text
-              style={[t.fontSansBold, t.textLg, t.textWhite, t.textGray400]}>
+            <Text style={[t.fontSans, t.textLg, t.textWhite, t.textGray200]}>
               Padel Pro Manager sirve tanto para entrenadores como para
               jugadores. A continuación te explicamos que funcionalidades
               incluye cada uno de los roles:
@@ -117,19 +119,43 @@ export const RoleSelector = () => {
                   style={[t.fontSansMedium, t.textBase, t.textGray400, t.mY3]}>
                   Los entrenadores pueden llevar el seguimiento de muchos
                   jugadores, guardar sus estadísticas de partidos, programar
-                  sesiones de entrenamiento y acceder a una biblioteca de
-                  ejercicios.
+                  sesiones de entrenamiento, acceder a una biblioteca de
+                  ejercicios y muchos más.
                 </Text>
               )}
               {role === 'player' && (
                 <Text
                   style={[t.fontSansMedium, t.textBase, t.textGray400, t.mY3]}>
                   Los jugadores pueden llevar un control de sus partidos y los
-                  gestionados por sus entrenadores.
+                  gestionados por sus entrenadores y estar en todo momento en
+                  concato con su equipo de trabajo.
                 </Text>
               )}
             </View>
-            <View style={[t.flexGrow, t.justifyEnd]}>
+            <View style={[t.flexGrow, t.itemsCenter, t.justifyEnd, t.mB4]}>
+              <BlurView
+                blurType="light"
+                blurAmount={20}
+                reducedTransparencyFallbackColor="white"
+                style={[{borderRadius: 30}, !role && t.opacity40]}>
+                <PressableOpacity
+                  disabled={!role}
+                  onPress={() => openScreenWithPush(REGISTER_SCREEN_KEY)}
+                  style={[
+                    t.border0_5,
+                    t.borderWhite,
+                    t.roundedFull,
+                    t.h14,
+                    t.w14,
+                    t.justifyCenter,
+                    t.itemsCenter,
+                    t.shadow,
+                  ]}>
+                  <Icon name="chevron-forward" size={35} color="white" />
+                </PressableOpacity>
+              </BlurView>
+            </View>
+            {/* <View style={[t.flexGrow, t.justifyEnd]}>
               <BlurView
                 blurType="light"
                 blurAmount={5}
@@ -164,7 +190,7 @@ export const RoleSelector = () => {
                   <Icon name="logo-apple" size={25} color="white" />
                 </PressableOpacity>
               </BlurView>
-            </View>
+            </View> */}
           </View>
         </SafeAreaView>
       </ContainerWithBg>

@@ -1,13 +1,14 @@
 import {useContext} from 'react';
-import {AuthContext} from '../../../Context/AuthContex';
 
 import {LoadingModalContext} from '../../../Context/LoadingModalContext';
 import {useUpdateDocument} from '../../../Hooks/useUpdateDocument';
 import {userQuery} from '../../../Api/queries';
 import {defaultFunctions} from '../../API/firebaseApp';
+import {useFirebaseAuth} from '../../../Context/FirebaseContext';
 
 export const useValidateReceipt = () => {
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
+
   const {setText, setIsVisible} = useContext(LoadingModalContext);
   const {updateDocument} = useUpdateDocument(userQuery);
 

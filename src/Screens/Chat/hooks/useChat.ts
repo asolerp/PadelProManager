@@ -1,9 +1,10 @@
 import firestore from '@react-native-firebase/firestore';
 
-import {useContext, useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 
 import {useCollectionData} from 'react-firebase-hooks/firestore';
-import {AuthContext} from '../../../Context/AuthContex';
+
+import {useFirebaseAuth} from '../../../Context/FirebaseContext';
 
 import {
   CHATS,
@@ -16,7 +17,8 @@ import {
 export const useChat = ({conversationId, chatTitle}) => {
   const [chatTitleFromDB, setChatTitleFromDB] = useState();
 
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
+
   const chatQuery = useMemo(
     () =>
       firestore()

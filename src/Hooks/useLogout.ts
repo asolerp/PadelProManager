@@ -1,6 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import {useContext} from 'react';
 import {DynamicLinkContext} from '../Context/DynamicLinkContext';
+
 // import Purchases from 'react-native-purchases';
 
 export const useLogout = () => {

@@ -10,10 +10,11 @@ import {openScreenWithPush} from '../../Router/utils/actions';
 import {Avatar} from '../UI/Avatar';
 import {WelcomeMessage} from './WelcomeMessage';
 import {PROFILE_SCREEN_KEY} from '../../Screens/Profile/Profile';
-import {AuthContext} from '../../Context/AuthContex';
+import {useFirebaseAuth} from '../../Context/FirebaseContext';
 
 export const PlayerHeader = ({position}) => {
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
+
   return (
     <View style={[t.mB10]}>
       <Header

@@ -14,22 +14,24 @@ const checkNewUser = functions
   memory: "2GB",
 })
 .https.onCall(async (data,) => {
+
     const {user, token, role} = data;
-
-    console.log("USER.ID", user?.uid)
-    console.log("USER.EMAIL", user?.email)
-
-
-    const userRef = admin.firestore().collection(USERS)
-
+ 
     try {
-
-      const userQuery = await admin.firestore().collection(USERS).doc(user?.uid).get()
+      
+      const userRef = admin.firestore().collection(USERS)
+      const userQuery = await userRef.doc(user?.uid).get()
 
       const requestRef = admin.firestore().collection(REQUESTS)
       const requestQuery = await requestRef.where("playerEmail", "==", user?.email).get();
 
-      const requestDocs = requestQuery.docs.map((d) => ({id: d.id, ...d.data()}));
+      const requestDocs = requestQuery.docs.map((d) => {
+      if (d.exists) {
+        return {
+          id: d.id, ...d.data()
+        }
+      }
+      });
 
       if (userQuery.exists) {
         const userData = userQuery.data()
@@ -37,17 +39,13 @@ const checkNewUser = functions
             await userRef.doc(user.uid).update({token, updatedAt: new Date()})
          } else {
            if (requestDocs.length > 0) {
-              if (!requestDocs[0].active) {
-                await userRef.doc(user.uid).update({
-                  coachId: requestDocs?.[0]?.coachId,
-                  coachEmail: requestDocs?.[0]?.coachEmail,
-                  token,
-                  updatedAt: new Date()
-                })
-                await requestRef.doc(requestDocs?.[0]?.id).update({
-                  active: true
-                })
-              }
+            await userRef.doc(user.uid).update({
+              coachId: requestDocs?.[0]?.coachId,
+              coachEmail: requestDocs?.[0]?.coachEmail,
+              token,
+              updatedAt: new Date()
+            })
+            await requestRef.doc(requestDocs?.[0]?.id).delete()
            }
            await userRef.doc(user.uid).update({token, updatedAt: new Date()})
          }
@@ -64,6 +62,8 @@ const checkNewUser = functions
 
         const newCoach = {
           email: user?.email,
+          firstName: user?.firstName,
+          secondName: user?.secondName,
           profileImg: user?.photoURL || DEFAULT_PHOTOURL,
           createdAt: new Date(),
           role: "coach"
@@ -89,21 +89,23 @@ const checkNewUser = functions
           profileImg: user.photoURL || DEFAULT_PHOTOURL,
         }
 
-        const playerInfoQuery = await admin.firestore().collection(USERS).doc(requestDocs?.[0]?.coachId).collection(PLAYERS).where("email", "==", user.email).get()
+        const playerRef = admin.firestore().collection(USERS).doc(requestDocs?.[0]?.coachId).collection(PLAYERS)
+        const playerInfoQuery = await playerRef.where("email", "==", user.email).get()
         const playerInfoDocs =  playerInfoQuery.docs.map(d => ({id: d.id, ...d.data()}))
         const player = playerInfoDocs[0]
 
-        console.log("PLAYER", player)
-
-        const { firstName, secondName, age, category, gender, phone } = player
-
-        await requestRef.doc(requestDocs?.[0]?.id).update({
+        await playerRef.doc(player.id).update({
           active: true
         })
+
+        const { firstName: firstNamePlayer, secondName: secondNamePlayer, age, category, gender, phone } = player
+
+        await requestRef.doc(requestDocs?.[0]?.id).delete()
+
         await userRef.doc(user?.uid).set({
             ...newPlayer,
-            firstName,
-            secondName,
+            firstName: firstNamePlayer,
+            secondName: secondNamePlayer,
             createdAt: new Date(),
             age,
             category, 
@@ -126,6 +128,8 @@ const checkNewUser = functions
 
         const newPlayerWithoutCoach = {
           email: user?.email,
+          firstName: user?.firstName,
+          secondName: user?.secondName,
           profileImg: user?.photoURL || DEFAULT_PHOTOURL,
           createdAt: new Date(),
           role: "player"

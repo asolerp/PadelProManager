@@ -1,7 +1,7 @@
 import {format} from 'date-fns';
 import {es} from 'date-fns/locale';
 import React from 'react';
-import {useContext} from 'react';
+
 import {ScrollView, Text, View} from 'react-native';
 import {Header, ScreenLayout} from '../../Components/Layout';
 import {SessionSettings} from '../../Components/Session/SessionSettings';
@@ -11,7 +11,7 @@ import {HDivider} from '../../Components/UI/HDivider';
 import {RadioButton} from '../../Components/UI/RadioButton';
 
 import {VDivider} from '../../Components/UI/VDivider';
-import {AuthContext} from '../../Context/AuthContex';
+import {useFirebaseAuth} from '../../Context/FirebaseContext';
 
 import t from '../../Theme/theme';
 import {useGetSession} from './hooks/useGetSession';
@@ -44,7 +44,7 @@ export const Session = ({route}) => {
       locale: es,
     });
 
-  const {isCoach} = useContext(AuthContext);
+  const {isCoach} = useFirebaseAuth();
 
   return (
     <ScreenLayout>

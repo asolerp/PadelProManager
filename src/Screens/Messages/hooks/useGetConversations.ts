@@ -1,11 +1,12 @@
 import {useCallback, useState} from 'react';
-import {useContext, useEffect} from 'react';
+import {useEffect} from 'react';
 
-import {AuthContext} from '../../../Context/AuthContex';
+import {useFirebaseAuth} from '../../../Context/FirebaseContext';
 import {defaultFunctions} from '../../../Lib/API/firebaseApp';
 
 export const useGetConversations = () => {
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
+
   const conversationsFn = defaultFunctions.httpsCallable('getConversations');
   const [conversations, setConversations] = useState();
   const [loading, setLoading] = useState();

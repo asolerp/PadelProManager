@@ -1,14 +1,15 @@
-import React, {useCallback, useContext} from 'react';
+import React, {useCallback} from 'react';
 import {ActivityIndicator} from 'react-native';
 
 import {GiftedChat} from 'react-native-gifted-chat';
 import {Day} from '../../Components/Chat/Day';
+import {Send} from '../../Components/Chat/Send';
 import {Time} from '../../Components/Chat/Time';
 import {Header, ScreenLayout} from '../../Components/Layout';
 
 import {HDivider} from '../../Components/UI/HDivider';
 import {Spacer} from '../../Components/UI/Spacer';
-import {AuthContext} from '../../Context/AuthContex';
+import {useFirebaseAuth} from '../../Context/FirebaseContext';
 import t from '../../Theme/theme';
 
 import {useChat} from './hooks/useChat';
@@ -20,7 +21,8 @@ export const Chat = ({route}) => {
   const chatTitle = route?.params?.chatTitle;
   const chatSubtitle = route?.params?.chatSubtitle;
 
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
+
   const {saveMessage, messages, chatTitleFromDB} = useChat({
     conversationId,
     chatTitle,
@@ -42,9 +44,11 @@ export const Chat = ({route}) => {
         messages={messages}
         showUserAvatar
         wrapInSafeArea={false}
+        placeholder="Nuevo mensaje..."
         onSend={messages => onSend(messages)}
         renderLoading={() => <ActivityIndicator />}
         renderDay={props => <Day {...props} />}
+        renderSend={props => <Send {...props} />}
         renderTime={props => <Time {...props} />}
         user={{
           _id: user?.email,

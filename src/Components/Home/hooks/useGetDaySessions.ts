@@ -1,11 +1,11 @@
 import {format} from 'date-fns';
-import {useContext} from 'react';
+
 import {useCollectionDataOnce} from 'react-firebase-hooks/firestore';
 import {sessionQuery} from '../../../Api/queries';
-import {AuthContext} from '../../../Context/AuthContex';
+import {useFirebaseAuth} from '../../../Context/FirebaseContext';
 
 export const useGetDaySessions = () => {
-  const {user, isCoach} = useContext(AuthContext);
+  const {user, isCoach} = useFirebaseAuth();
 
   const start = new Date();
   start.setHours(0, 0, 0, 0);

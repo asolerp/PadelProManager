@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 
 import {View} from 'react-native';
 import {Header} from '../../Components/Layout/Header';
@@ -23,12 +23,12 @@ import {municipios} from '../../Utils/municipios-espanoles';
 import {useEditProfile} from './hooks/useEditProfile';
 import {sortByLabel} from '../../Utils/sorts';
 import {ProfileSettings} from '../../Components/Profile/ProfileSettings';
-import {AuthContext} from '../../Context/AuthContex';
+import {useFirebaseAuth} from '../../Context/FirebaseContext';
 
 export const PROFILE_SCREEN_KEY = 'profileScreen';
 
 export const ProfileScreen = () => {
-  const {isCoach} = useContext(AuthContext);
+  const {isCoach} = useFirebaseAuth();
   const [show, setShow] = useState(false);
   const {
     handleUpdateProfile,

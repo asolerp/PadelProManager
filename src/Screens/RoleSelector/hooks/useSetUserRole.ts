@@ -1,6 +1,7 @@
 import {useContext} from 'react';
 import {userQuery} from '../../../Api/queries';
-import {AuthContext} from '../../../Context/AuthContex';
+
+import {useFirebaseAuth} from '../../../Context/FirebaseContext';
 import {LoadingModalContext} from '../../../Context/LoadingModalContext';
 
 import {useUpdateDocument} from '../../../Hooks/useUpdateDocument';
@@ -8,7 +9,8 @@ import {timeout} from '../../../Utils/timeout';
 import {emptyStats} from '../../NewPlayer/utils/emptyStats';
 
 export const useSetUserRole = () => {
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
+
   const {updateDocument} = useUpdateDocument(userQuery);
   const {setText, setIsVisible} = useContext(LoadingModalContext);
 

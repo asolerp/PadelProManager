@@ -1,14 +1,14 @@
-import {useEffect, useState, useContext} from 'react';
+import {useEffect, useState} from 'react';
 import {useDocumentData} from 'react-firebase-hooks/firestore';
 import {playerQuery} from '../../../Api/queries';
 import {radarGraphDataGenerator} from '../../../Utils/dataGenerators';
-import {AuthContext} from '../../../Context/AuthContex';
-import {Roles} from '../../../Global/types';
+
 import firestore from '@react-native-firebase/firestore';
-import {USERS} from '../../../Models/entities';
+
+import {useFirebaseAuth} from '../../../Context/FirebaseContext';
 
 export const useGetPlayer = (playerId: string, playerEmail: string) => {
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
 
   const [player, loadingPlayer, errorPlayer] = useDocumentData(
     playerQuery(user?.id).doc(playerId),

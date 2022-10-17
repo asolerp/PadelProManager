@@ -33,12 +33,21 @@ import {openStack, openScreenWithPush} from '../../Router/utils/actions';
 import {TAB_STACK_KEY} from '../../Router/utils/routerKeys';
 import {useInAppMessaging} from '../../Hooks/useInAppMessaging';
 import {TRAINING_SCREEN_KEY} from '../Training/Training';
+import {useGetPendingInvitations} from './hooks/useGetPendingInvitations';
+import {PendingRelationModal} from '../../Components/Home/PendingRelationModal';
 
 export const HOME_SCREEN_KEY = 'homeScreen';
 
 export const HomeScreen: FunctionComponent = () => {
   useHideBootSplash();
   useInAppMessaging();
+  const {
+    player,
+    isVisible,
+    setIsVisible,
+    handleAcceptInvitation,
+    handleCancelInvitation,
+  } = useGetPendingInvitations({onFinish: () => refetch()});
   const {loc} = useTranslationWrapper();
   const {
     refetch,
@@ -63,6 +72,13 @@ export const HomeScreen: FunctionComponent = () => {
 
   return (
     <ScreenLayout edges={['top', 'left', 'right']}>
+      <PendingRelationModal
+        onAccept={handleAcceptInvitation}
+        onCancel={handleCancelInvitation}
+        isVisible={isVisible}
+        setIsVisible={setIsVisible}
+        player={player}
+      />
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={[t.flex1, t.pX4]}

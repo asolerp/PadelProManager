@@ -7,7 +7,7 @@ import {HOUR_FORMAT} from '../../Utils/date-ext';
 import {colorParser} from '../../Utils/sessionParsers';
 import {Avatar} from '../UI/Avatar';
 import {Chip} from '../UI/Chip';
-import {AuthContext} from '../../Context/AuthContex';
+import {useFirebaseAuth} from '../../Context/FirebaseContext';
 import PressableOpacity from '../UI/PressableOpacity';
 import {openScreenWithPush} from '../../Router/utils/actions';
 

@@ -2,13 +2,14 @@ import {format} from 'date-fns';
 import es from 'date-fns/esm/locale/es/index.js';
 import React, {useContext} from 'react';
 import {View, Text} from 'react-native';
-import {AuthContext} from '../../Context/AuthContex';
+import {useFirebaseAuth} from '../../Context/FirebaseContext';
 
 import t from '../../Theme/theme';
 import {capitalize} from '../../Utils/parsers';
 
 export const WelcomeMessage = ({style}) => {
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
+
   const date = format(Date.now(), 'EEEE dd MMMM', {
     locale: es,
   });

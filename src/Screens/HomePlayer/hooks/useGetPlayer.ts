@@ -1,4 +1,4 @@
-import {useContext, useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useDocumentData} from 'react-firebase-hooks/firestore';
 import {userQuery} from '../../../Api/queries';
 import {
@@ -6,10 +6,10 @@ import {
   tableDataGenerator,
 } from '../../../Utils/dataGenerators';
 
-import {AuthContext} from '../../../Context/AuthContex';
+import {useFirebaseAuth} from '../../../Context/FirebaseContext';
 
 export const useGetPlayer = () => {
-  const {user} = useContext(AuthContext);
+  const {user} = useFirebaseAuth();
 
   const queryStats = useMemo(
     () => userQuery.doc(user?.id).collection('stats').doc('global'),

@@ -24,13 +24,17 @@ const { newMessageNotification } = require("./chat/newMessageNotification")
 const {getGroups} = require("./admin/getGroups")
 const {deleteConversation} = require("./chat/deleteConversation")
 const {checkNewUser} = require("./admin/checkNewUser")
+const {handleInvitations} = require("./coach/handlnvitation")
+const {leaveCoach} = require("./players/leaveCoach")
+const {onDeletePlayer} = require("./players/onDeletePlayer")
 
 admin.initializeApp(functions.config().firebase);
 
+exports.newMessageNotification = newMessageNotification
 exports.updatePlayerInMatch = updatePlayerInMatch;
 exports.updatePlayerByCoach = updatePlayerByCoach;
 exports.deleteConversation = deleteConversation;
-exports.newMessageNotification = newMessageNotification
+exports.handleInvitations = handleInvitations;
 exports.savePlayersStats = savePlayersStats;
 exports.getConversations = getConversations;
 exports.recursiveDelete = recursiveDelete;
@@ -38,10 +42,12 @@ exports.handleRelations = handleRelations;
 exports.validateReceipt = validateReceipt;
 exports.newUserChecker = newUserChecker;
 exports.deleteSession = deleteSession;
+exports.onDeletePlayer=onDeletePlayer;
 exports.updatePlayer = updatePlayer;
 exports.checkNewUser = checkNewUser;
 exports.activePlayer = activePlayer;
 exports.getCalendar = getCalendar;
+exports.leaveCoach = leaveCoach;
 exports.newSession = newSession;
 exports.getResumen = getResumen;
 exports.getGroups = getGroups;

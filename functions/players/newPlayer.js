@@ -2,31 +2,79 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 
 const fetch = require("node-fetch");
-const { USERS } = require("../utils/constants");
+const { USERS, CONVERSATIONS, PLAYERS, REQUESTS, FB_REGION } = require("../utils/constants");
 const { createTransporter } = require("../utils/email/config");
-const { generateNewPlayerTemplate } = require("../utils/email/newPlayerTemplate")
+const { generateNewPlayerTemplate } = require("../utils/email/newPlayerTemplate");
+const { PLAYER_EXISTS } = require("../utils/errorsCode");
+const { emptyStats } = require("../utils/emptyStats");
 
 const API_WEB_FIREBASE = "AIzaSyC8aj5yS0qRdb75tQHs101a-mSn2xaUujI";
 const DYNAMIK_LINK = "https://padelpromanager.page.link";
 
-const newPlayer = functions.firestore
-  .document("users/{userId}/players/{playerId}")
-  .onCreate(async (snap, context) => {
+const newPlayer = functions
+.region(FB_REGION)
+.runWith({
+  timeoutSeconds: 540,
+  memory: "2GB",
+})
+.https.onCall(async (data,) => {
 
-    const coachId = context.params.userId;
-    const player = snap.data()
+    const { player, coachId, playerId } = data
 
-    const coachQuery = await admin.firestore().collection(USERS).doc(coachId).get()
-    const { email, firstName, secondName, profileImg } = coachQuery.data()
+    const userRef = admin.firestore().collection(USERS)
+    const conversationRef = admin.firestore().collection(CONVERSATIONS)
 
+    const coachQuery = await userRef.doc(coachId).get()
+    const coachDoc = coachQuery.data()
+    const { email, firstName, secondName, profileImg } = coachDoc
     const fullName = `${firstName} ${secondName}`
 
-    console.log("EMAIL", email)
+    const conversationQuery = await conversationRef.where("coachEmail", "==", coachDoc.email).where("playerEmail", "==", player?.email).get()
+    const conversationDocs = conversationQuery.docs?.map(d => ({id: d.id, ...d.data()}))
+
+    const playerCoachQuery = await userRef.doc(coachId).collection(PLAYERS).where("email", "==", player?.email).get()
+    const playerCoachDocs = playerCoachQuery.docs?.map(d => ({id: d.id, ...d.data()}))
+
+    if (playerCoachDocs.length > 0) {
+      throw new Error(PLAYER_EXISTS);
+    }
+
+    if (conversationDocs?.length === 0 || !conversationDocs)  {
+      await admin.firestore()
+      .collection(CONVERSATIONS)
+      .add({
+        active: true,
+        coachEmail: email,
+        playerEmail: player.email?.toLowerCase(),
+        members: [email, player.email?.toLowerCase()],
+        type: 1,
+      });
+    }
+
+    await userRef.doc(coachId).collection(PLAYERS).doc(playerId).set({
+      ...Object.fromEntries(
+        Object.entries(player).filter(([,value]) => !!value),
+      ),
+      email: player.email?.toLowerCase(),
+    })
+
+    await userRef.doc(coachId).collection(PLAYERS).doc(playerId)
+        .collection("stats")
+        .doc("global")
+        .set(emptyStats)
+   
+    await admin.firestore().collection(REQUESTS).add({
+      createdAt: new Date(),
+      playerEmail: player.email?.toLowerCase(),
+      coachEmail: email,
+      coachId: coachId,
+      active: false,
+    });
 
     const body = {
       dynamicLinkInfo: {
         domainUriPrefix: DYNAMIK_LINK,
-        link: `https://padelpromanager.com/player_invitation?action=new_player&coach_id=${coachId}&coach_email=${email}`,
+        link: `https://padelpromanager.com/player_invitation?action=new_player&coach_id=${coachId}&coach_email=${email}&player_email=${player.email}`,
         iosInfo: {
           iosAppStoreId: "1608207639",
           iosBundleId: "com.padelpro",
@@ -42,19 +90,13 @@ const newPlayer = functions.firestore
       headers: {"Content-Type": "application/json"},
     });
 
-    const data = await response.json();
-
-    console.log(data);
-
-
-
-    console.log("PLAYER EMAIL", player?.email)
+    const dataDeepLink = await response.json();
   
     const mailOptions = {
       from: "info@padelpromanager.com",
       to: player?.email,
       subject: "Invitación a equipo de entrenamiento",
-      html: generateNewPlayerTemplate(fullName,profileImg,data.shortLink),
+      html: generateNewPlayerTemplate(fullName,profileImg,dataDeepLink.shortLink),
     };
   
     let emailTransporter = await createTransporter();
