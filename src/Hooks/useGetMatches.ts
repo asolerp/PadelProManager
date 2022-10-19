@@ -12,20 +12,17 @@ export const useGetMatches = (playerEmail = undefined) => {
 
   const {user, isCoach} = useFirebaseAuth();
 
-  const query = useMemo(
-    () =>
-      isCoach
-        ? playerEmail !== undefined
-          ? matchQuery
-              .where('coachId', '==', user?.id)
-              .where('playersEmail', 'array-contains', playerEmail)
-          : matchQuery.where('coachId', '==', user?.id)
-        : user?.coachId &&
-          matchQuery
-            .where('coachId', '==', user?.coachId)
-            .where('playersEmail', 'array-contains', user?.email),
-    [isCoach, user?.id, playerEmail, user?.email, user?.coachId],
-  );
+  const query = useMemo(() => {
+    if (isCoach) {
+      if (playerEmail !== undefined) {
+        return matchQuery
+          .where('coachId', '==', user?.id)
+          .where('playersEmail', 'array-contains', playerEmail);
+      }
+      return matchQuery.where('coachId', '==', user?.id);
+    }
+    return matchQuery.where('playersEmail', 'array-contains', user?.email);
+  }, [isCoach, user?.id, playerEmail, user?.email, user?.coachId]);
 
   const [matches, loading, error] = useCollectionData(query, {
     idField: 'id',

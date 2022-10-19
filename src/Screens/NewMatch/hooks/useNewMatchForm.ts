@@ -113,6 +113,7 @@ export const useNewMatchForm = () => {
 
     setLoading(true);
     try {
+      console.log('NEW MATCH', newMatch);
       await timeout(2000);
       await addNewMatch({
         data: newMatch,

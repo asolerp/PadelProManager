@@ -60,8 +60,7 @@ export const useLogin = playerEmail => {
     setLoading(true);
     try {
       const response = await auth().signInWithEmailAndPassword(email, password);
-      await firestore().collection(PENDING).add({
-        uid: response?.user?.uid,
+      await firestore().collection(PENDING).doc(response?.user?.uid).add({
         email,
       });
       await checkNewUserFn({
@@ -92,8 +91,7 @@ export const useLogin = playerEmail => {
         email,
         password,
       );
-      await firestore().collection(PENDING).add({
-        uid: response?.user?.uid,
+      await firestore().collection(PENDING).doc(response?.user?.uid).add({
         email,
       });
       await checkNewUserFn({

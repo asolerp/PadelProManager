@@ -74,19 +74,11 @@ const FirebaseAuthProvider: React.FC = ({children}) => {
 
           const pendingQuery = await firestore()
             .collection(PENDING)
-            .where('email', '==', user?.email)
+            .doc(user.uid)
             .get();
 
-          const pendingDocs = pendingQuery.docs.map(d => ({
-            id: d.id,
-            ...d.data(),
-          }));
-
           if (userQuery.exists) {
-            await firestore()
-              .collection(PENDING)
-              .doc(pendingDocs[0].id)
-              .delete();
+            await firestore().collection(PENDING).doc(user?.uid).delete();
             await firestore().collection(USERS).doc(user?.uid).update({
               token,
               updatedAt: new Date(),
@@ -98,12 +90,9 @@ const FirebaseAuthProvider: React.FC = ({children}) => {
             const userDoc = {id: response.id, ...response.data()};
             setUser({loggedIn: true, ...userDoc});
           } else {
-            if (pendingDocs.length > 0) {
+            if (pendingQuery.exists) {
               setUser({loggedIn: true, id: pendingDocs[0].uid});
-              await firestore()
-                .collection(PENDING)
-                .doc(pendingDocs[0].id)
-                .delete();
+              await firestore().collection(PENDING).doc(user?.uid).delete();
             } else {
               setUser(null);
               logout();
