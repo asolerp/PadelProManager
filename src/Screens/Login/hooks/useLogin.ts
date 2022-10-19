@@ -74,7 +74,6 @@ export const useLogin = playerEmail => {
   };
 
   const signIn = async () => {
-    console.log(email, password);
     setLoading(true);
     try {
       const response = await auth().createUserWithEmailAndPassword(
