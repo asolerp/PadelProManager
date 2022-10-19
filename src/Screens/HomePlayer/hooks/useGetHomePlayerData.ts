@@ -109,7 +109,6 @@ export const useGetHomePlayerData = () => {
     try {
       const liveQuery = await firestore()
         .collection(MATCHES)
-
         .where('playersEmail', 'array-contains', user?.email)
         .where('state', '==', 'live')
         .get();
