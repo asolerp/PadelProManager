@@ -1,23 +1,13 @@
 import auth from '@react-native-firebase/auth';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {appleAuth} from '@invertase/react-native-apple-authentication';
-import Config from 'react-native-config';
+
 import firestore from '@react-native-firebase/firestore';
 
-GoogleSignin.configure({
-  webClientId:
-    Platform.OS === 'ios' ? Config.CLIENT_ID_IOS : Config.CLIENT_ID_ANDROID,
-});
-
 import {useEffect, useRef, useState} from 'react';
-import {Platform} from 'react-native';
+
 import {info, warn} from '../../../Lib/Logging';
 import {useFirebaseAuth} from '../../../Context/FirebaseContext';
 import {defaultFunctions} from '../../../Lib/API/firebaseApp';
-import {openStack, openStackWithReplace} from '../../../Router/utils/actions';
-import {MAIN_STACK_KEY} from '../../../Router/utils/routerKeys';
-import {LAUNCH_SCREEN_KEY} from '../../LaunchScreen/LaunchScreen';
-import {SIGN_IN_ROUTER_STACK_KEY} from '../../../Router/SignInRouter';
+
 import {PENDING} from '../../../Models/entities';
 
 const errorMessage = {
@@ -135,8 +125,6 @@ export const useLogin = playerEmail => {
     secondPassword,
     setSecondPassword,
     handlePressVisiblePassword,
-    // onGoogleButtonPress,
-    // onAppleButtonPress,
     setIsLoginModalOpen,
     isLoginModalOpen,
     loginFormRef,
