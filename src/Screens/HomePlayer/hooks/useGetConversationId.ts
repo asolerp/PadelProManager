@@ -24,6 +24,7 @@ export const useGetConversationId = () => {
                 return {id: doc.id, ...doc.data()};
               }
             });
+            console.log('CONV');
             setConversations(conversationsDocs);
           });
       } catch (err) {

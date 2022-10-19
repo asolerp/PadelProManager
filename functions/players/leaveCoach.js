@@ -16,7 +16,6 @@ const leaveCoach = functions
 
         await admin.firestore().collection(USERS).doc(coachId).collection(PLAYERS).doc(playerDocs[0].id).update({active: false}) 
         
-        console.log("PLAYER EMAIL", playerEmail)
         await admin.firestore().collection(USERS).doc(playerId).update({
             coachId: admin.firestore.FieldValue.delete()
         })

@@ -45,6 +45,7 @@ export const HomeScreen: FunctionComponent = () => {
     player,
     isVisible,
     setIsVisible,
+    loadingInvitation,
     handleAcceptInvitation,
     handleCancelInvitation,
   } = useGetPendingInvitations({onFinish: () => refetch()});
@@ -75,6 +76,7 @@ export const HomeScreen: FunctionComponent = () => {
       <PendingRelationModal
         onAccept={handleAcceptInvitation}
         onCancel={handleCancelInvitation}
+        loading={loadingInvitation}
         isVisible={isVisible}
         setIsVisible={setIsVisible}
         player={player}

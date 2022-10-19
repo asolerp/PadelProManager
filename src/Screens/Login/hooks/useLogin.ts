@@ -2,6 +2,7 @@ import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {appleAuth} from '@invertase/react-native-apple-authentication';
 import Config from 'react-native-config';
+import firestore from '@react-native-firebase/firestore';
 
 GoogleSignin.configure({
   webClientId:
@@ -13,8 +14,14 @@ import {Platform} from 'react-native';
 import {info, warn} from '../../../Lib/Logging';
 import {useFirebaseAuth} from '../../../Context/FirebaseContext';
 import {defaultFunctions} from '../../../Lib/API/firebaseApp';
+import {openStack, openStackWithReplace} from '../../../Router/utils/actions';
+import {MAIN_STACK_KEY} from '../../../Router/utils/routerKeys';
+import {LAUNCH_SCREEN_KEY} from '../../LaunchScreen/LaunchScreen';
+import {SIGN_IN_ROUTER_STACK_KEY} from '../../../Router/SignInRouter';
+import {PENDING} from '../../../Models/entities';
 
 const errorMessage = {
+  'auth/user-not-found': 'El email o la contraseña son incorrectos',
   'auth/email-already-exists': 'El usuario ya existe',
   'auth/invalid-email': 'El email es inválido',
 };
@@ -53,7 +60,10 @@ export const useLogin = playerEmail => {
     setLoading(true);
     try {
       const response = await auth().signInWithEmailAndPassword(email, password);
-      console.log('RESPONSE', response.user.uid);
+      await firestore().collection(PENDING).add({
+        uid: response?.user?.uid,
+        email,
+      });
       await checkNewUserFn({
         user: {
           uid: response?.user?.uid,
@@ -64,6 +74,7 @@ export const useLogin = playerEmail => {
         role,
       });
     } catch (err) {
+      console.log(err);
       warn({
         title: 'Ha ocurrido algo',
         subtitle: errorMessage[err.code] || 'Inténtelo más tarde',
@@ -81,6 +92,10 @@ export const useLogin = playerEmail => {
         email,
         password,
       );
+      await firestore().collection(PENDING).add({
+        uid: response?.user?.uid,
+        email,
+      });
       await checkNewUserFn({
         user: {
           uid: response?.user?.uid,
@@ -99,41 +114,6 @@ export const useLogin = playerEmail => {
       setLoading(false);
     }
   };
-
-  // const onGoogleButtonPress = async () => {
-  //   try {
-  //     const {idToken} = await GoogleSignin.signIn();
-  //     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-  //     await auth().signInWithCredential(googleCredential);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
-  // async function onAppleButtonPress() {
-  //   // Start the sign-in request
-  //   const appleAuthRequestResponse = await appleAuth.performRequest({
-  //     requestedOperation: appleAuth.Operation.LOGIN,
-  //     requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
-  //   });
-
-  //   // Ensure Apple returned a user identityToken
-  //   if (!appleAuthRequestResponse.identityToken) {
-  //     throw 'Apple Sign-In failed - no identify token returned';
-  //   }
-
-  //   // Create a Firebase credential from the response
-  //   const {identityToken, nonce} = appleAuthRequestResponse;
-  //   const appleCredential = auth.AppleAuthProvider.credential(
-  //     identityToken,
-  //     nonce,
-  //   );
-
-  //   console.log('LOGIN', appleCredential);
-
-  //   // Sign the user in with the credential
-  //   return auth().signInWithCredential(appleCredential);
-  // }
 
   useEffect(() => {
     if (playerEmail) {

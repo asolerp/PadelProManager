@@ -11,3 +11,4 @@ export const RELATIONS = 'relations';
 export const ANALYTICS = 'analytics';
 export const TIPS = 'tips';
 export const REQUESTS = 'requests';
+export const PENDING = 'pending';

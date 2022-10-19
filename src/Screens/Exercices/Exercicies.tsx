@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, Text, View} from 'react-native';
+import {FlatList, Platform, Text, View} from 'react-native';
 import {Exercice} from '../../Components/Common/Exercice';
 
 import {Header, ScreenLayout} from '../../Components/Layout';
@@ -40,7 +40,13 @@ export const Exercices = ({route}) => {
         refreshing={refreshing}
         showsVerticalScrollIndicator={false}
         ListFooterComponent={() => (
-          <View style={[t.mT2, t.justifyCenter, t.itemsCenter]}>
+          <View
+            style={[
+              t.mT2,
+              t.justifyCenter,
+              t.itemsCenter,
+              Platform.OS === 'android' && t.mB10,
+            ]}>
             <Text style={[t.textCenter]}>
               ¿Te interesaría acceder a más ejercicios?
             </Text>

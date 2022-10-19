@@ -33,6 +33,9 @@ import {getPoints} from './utils/getPoints';
 import {PointMask} from '../../Components/NewPoint/PointMask';
 import {shortName} from '../../Utils/parsers';
 
+import {useWalkthroughSteps} from './hooks/useWalkthroughSteps';
+import PressableOpacity from '../../Components/UI/PressableOpacity';
+
 export const NEW_POINT_SCREEN_KEY = 'newPoint';
 const MODAL_WIDTH = 340;
 const MODAL_HEIGHT = 500;
@@ -60,6 +63,14 @@ export const NewPoint = ({route}) => {
     handlePressWinPointTeam,
     getTotalPlayerStatistics,
   } = useNewPoint();
+
+  const {
+    start,
+    stepOneOnLayout,
+    stepTwoOnLayout,
+    stepThirdOnLayout,
+    stepFourthOnLayout,
+  } = useWalkthroughSteps(true);
 
   const handlerSavePoint = point => {
     onSavePoint(point, () => {});
@@ -100,7 +111,17 @@ export const NewPoint = ({route}) => {
           </View>
         }
       />
+      <PressableOpacity
+        onPress={start}
+        style={[t.absolute, t.z50, {top: 85, right: 10}]}>
+        <Icon
+          name="ios-information-circle-outline"
+          color={t.bgWhite.backgroundColor}
+          size={30}
+        />
+      </PressableOpacity>
       <View
+        onLayout={stepThirdOnLayout}
         style={[
           t.h10,
           t.w10,
@@ -178,9 +199,11 @@ export const NewPoint = ({route}) => {
         </Pressable>
       </View>
       <View
+        onLayout={stepFourthOnLayout}
         style={[
           t.absolute,
           t.left0,
+          t.p2,
           t.right0,
           t.z50,
           t.bottom20,
@@ -200,7 +223,9 @@ export const NewPoint = ({route}) => {
         />
       </View>
       <HDivider style={[t.mB2]} />
-      <View style={[t.flexRow, t.mY4, t.justifyCenter, t.z50]}>
+      <View
+        style={[t.flexRow, t.mY4, t.justifyCenter, t.z50, t.p2]}
+        onLayout={stepOneOnLayout}>
         <Button
           title="Winner"
           type="success"
@@ -233,6 +258,7 @@ export const NewPoint = ({route}) => {
           t.shadowNone,
         ]}>
         <View
+          onLayout={stepTwoOnLayout}
           style={[
             t.flexGrow,
             t.flexRow,
@@ -277,7 +303,7 @@ export const NewPoint = ({route}) => {
             t.absolute,
             t.w28,
             t.h36,
-            {top: Dimensions.get('window').height / 4.96},
+            {top: Dimensions.get('window').height / 5.4},
             {left: Dimensions.get('window').width / 4.6},
           ]}>
           <View>
@@ -342,7 +368,7 @@ export const NewPoint = ({route}) => {
             t.absolute,
             t.w28,
             t.h36,
-            {top: Dimensions.get('window').height / 4.96},
+            {top: Dimensions.get('window').height / 5.4},
             {left: Dimensions.get('window').width / 1.98},
           ]}>
           <View>
@@ -407,7 +433,7 @@ export const NewPoint = ({route}) => {
             t.absolute,
             t.w28,
             t.h36,
-            {top: Dimensions.get('window').height / 2.62},
+            {top: Dimensions.get('window').height / 2.82},
             {left: Dimensions.get('window').width / 4.6},
           ]}>
           <View>
@@ -472,7 +498,7 @@ export const NewPoint = ({route}) => {
             t.absolute,
             t.w28,
             t.h36,
-            {top: Dimensions.get('window').height / 2.62},
+            {top: Dimensions.get('window').height / 2.82},
             {left: Dimensions.get('window').width / 1.98},
           ]}>
           <View>

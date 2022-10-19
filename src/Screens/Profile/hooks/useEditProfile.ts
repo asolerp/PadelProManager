@@ -20,6 +20,7 @@ export const useEditProfile = () => {
     secondName: '',
     gender: '',
     birthDate: '',
+    category: '',
     address: '',
     municipio: '',
     provincia: '',

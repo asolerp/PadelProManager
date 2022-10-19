@@ -7,9 +7,11 @@ import {LiveResult} from './LiveResult';
 import {openScreenWithPush} from '../../Router/utils/actions';
 import {PLAYER_SCREEN_KEY} from '../../Screens/Player/Player';
 import {firstSurname} from '../../Utils/parsers';
+import {useFirebaseAuth} from '../../Context/FirebaseContext';
 
 export const MatchHeader = ({match}) => {
-  const avatarPressable = player => player?.id && player?.id !== -1;
+  const {isCoach} = useFirebaseAuth();
+  const avatarPressable = player => player?.id && player?.id !== -1 && isCoach;
 
   return (
     <View style={[t.flexRow, t.justifyBetween]}>
@@ -24,6 +26,7 @@ export const MatchHeader = ({match}) => {
               avatarPressable(player) &&
               openScreenWithPush(PLAYER_SCREEN_KEY, {
                 playerId: player?.id,
+                playerEmail: player?.email,
               })
             }
           />
@@ -43,6 +46,7 @@ export const MatchHeader = ({match}) => {
               avatarPressable(player) &&
               openScreenWithPush(PLAYER_SCREEN_KEY, {
                 playerId: player?.id,
+                playerEmail: player?.email,
               })
             }
           />

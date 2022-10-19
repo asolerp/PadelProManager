@@ -33,7 +33,7 @@ export const ModalListOfPlayers = ({
   onClose,
   onSave,
 }) => {
-  const {players} = useGetPlayersAndGroups({chat});
+  const {players} = useGetPlayersAndGroups(chat);
 
   const {
     player,

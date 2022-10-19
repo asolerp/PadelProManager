@@ -110,39 +110,6 @@ export const LoginPlayerScreen = () => {
               />
             </View>
           </KeyboardAwareScrollView>
-          {/* <View style={[t.wFull, t.flexGrow, t.justifyEnd]}>
-            <BlurView
-              blurType="light"
-              blurAmount={5}
-              reducedTransparencyFallbackColor="white"
-              style={[
-                t.flexRow,
-                t.h14,
-                t.border0_5,
-                t.borderWhite,
-                t.roundedSm,
-              ]}>
-              <PressableOpacity
-                onPress={() =>
-                  onGoogleButtonPress()
-                    .then(() => console.log('Signed in with Google!'))
-                    .catch(e => console.log(e))
-                }
-                style={[t.flexGrow, t.itemsCenter, t.justifyCenter]}>
-                <Icon name="logo-google" size={25} color="white" />
-              </PressableOpacity>
-              <View style={[t.hFull, t.w1, t.border0_5, t.borderWhite]} />
-              <PressableOpacity
-                onPress={() =>
-                  onAppleButtonPress().then(() =>
-                    console.log('Signed in with Apple!'),
-                  )
-                }
-                style={[t.flexGrow, t.itemsCenter, t.justifyCenter]}>
-                <Icon name="logo-apple" size={25} color="white" />
-              </PressableOpacity>
-            </BlurView>
-          </View> */}
         </SafeAreaView>
       </ContainerWithBg>
     </>

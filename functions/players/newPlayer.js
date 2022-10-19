@@ -9,7 +9,7 @@ const { PLAYER_EXISTS } = require("../utils/errorsCode");
 const { emptyStats } = require("../utils/emptyStats");
 
 const API_WEB_FIREBASE = "AIzaSyC8aj5yS0qRdb75tQHs101a-mSn2xaUujI";
-const DYNAMIK_LINK = "https://padelpromanager.page.link";
+const DYNAMIK_LINK = "https://padelpromanager.com";
 
 const newPlayer = functions
 .region(FB_REGION)
@@ -78,6 +78,9 @@ const newPlayer = functions
         iosInfo: {
           iosAppStoreId: "1608207639",
           iosBundleId: "com.padelpro",
+        },
+        navigationInfo: {
+          enableForcedRedirect: true,
         },
       },
     };

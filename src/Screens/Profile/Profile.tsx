@@ -16,7 +16,12 @@ import {Button} from '../../Components/UI/Button';
 import {HDivider} from '../../Components/UI/HDivider';
 import {ImageSelector} from '../../Components/NewPlayer/ImageSelector';
 import {Select} from '../../Components/UI/Select';
-import {gender, lateralidad} from '../../Utils/lists';
+import {
+  cateogries,
+  gender,
+  lateralidad,
+  playerCategories,
+} from '../../Utils/lists';
 
 import {provincias} from '../../Utils/provincias-espanolas';
 import {municipios} from '../../Utils/municipios-espanoles';
@@ -170,6 +175,23 @@ export const ProfileScreen = () => {
                     onBlur={handleBlur('hand')}
                     onChange={v => setFieldValue('hand', v)}
                     label="Lateralidad"
+                    style={[t.flex1, t.mB4]}
+                  />
+                )}
+                {!isCoach && (
+                  <Select
+                    list={playerCategories}
+                    placeholder="Categoría"
+                    value={playerCategories?.find(
+                      s => s.value === values?.category,
+                    )}
+                    name="category"
+                    error={errors?.category}
+                    onBlur={handleBlur('category')}
+                    onChange={v =>
+                      setFieldValue('category', v, {shouldValidate: true})
+                    }
+                    label="Categoría"
                     style={[t.flex1, t.mB4]}
                   />
                 )}

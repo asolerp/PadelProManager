@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Text, View, Image, StatusBar} from 'react-native';
+import {Text, View, Image, StatusBar, Platform} from 'react-native';
 
 import {ContainerWithBg} from '../../Components/UI/ContainerWithBg';
 import t from '../../Theme/theme';
@@ -18,11 +18,13 @@ import {openScreenWithPush} from '../../Router/utils/actions';
 import {ROLE_SELECTOR_SCREEN_KEY} from '../../Screens/RoleSelector/RoleSelector';
 import {useLogin} from './hooks/useLogin';
 import {useFirebaseAuth} from '../../Context/FirebaseContext';
+import {useKeyboard} from '../../Hooks/useKeyboard';
 
 export const LOGIN_SCREEN_KEY = 'loginScreen';
 
 export const LoginScreen = () => {
   useDeepLinks();
+
   const {
     logIn,
     email,
@@ -35,6 +37,7 @@ export const LoginScreen = () => {
   } = useLogin();
 
   const {loading} = useFirebaseAuth();
+  const {isKeyboardVisible} = useKeyboard();
 
   return (
     <>
@@ -42,6 +45,7 @@ export const LoginScreen = () => {
       <ContainerWithBg isBox={false} backgroundColor="Gray900" opacity={80}>
         <SafeAreaView style={[t.flexGrow, t.pX4]}>
           <KeyboardAwareScrollView
+            enableOnAndroid
             showsVerticalScrollIndicator={false}
             style={[t.flexCol]}
             contentContainerStyle={[t.flexGrow, t.itemsCenter]}>
@@ -52,6 +56,7 @@ export const LoginScreen = () => {
                 style={[t.h20, t.mT5]}
               />
             </View>
+
             <View style={[t.flexGrow, t.justifyCenter]}>
               <Text
                 style={[
@@ -76,7 +81,8 @@ export const LoginScreen = () => {
                 La aplicación de gestión para entrenadores y jugadores de padel
               </Text>
             </View>
-            <View style={[t.justifyEnd, t.wFull]}>
+
+            <View style={[t.justifyEnd, t.wFull, isKeyboardVisible && t.pT10]}>
               <InputLogin
                 leftIconName="ios-tennisball-sharp"
                 autoCapitalize="none"
@@ -118,6 +124,7 @@ export const LoginScreen = () => {
               />
               <Spacer space={4} />
               <PressableOpacity
+                style={[Platform.OS === 'android' && t.pB4]}
                 onPress={() => openScreenWithPush(ROLE_SELECTOR_SCREEN_KEY)}>
                 <Text style={[t.textCenter, t.textWhite]}>Registrarse</Text>
               </PressableOpacity>

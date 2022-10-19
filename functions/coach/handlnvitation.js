@@ -12,14 +12,13 @@ const handleInvitations = functions
 })
 .https.onCall(async (data,) => {
     const {playerId, coachId} = data;
+    console.log("LOGS", playerId, coachId)
     try {
 
         const coachPlayerRef = admin
         .firestore()
         .collection(USERS)
         .doc(coachId)
-
-
         
         const playerRef = admin
         .firestore()
@@ -41,13 +40,14 @@ const handleInvitations = functions
             if (findPlayerDocs[0].active) {
               return
             }
-            await coachPlayerRef.doc(findPlayerDocs[0].id).update({...playerDoc, active: true})
+            await coachPlayerRef.collection(PLAYERS).doc(findPlayerDocs[0].id).update({...playerDoc, active: true})
         } else {
-          await coachPlayerRef.add({
+          await coachPlayerRef.collection(PLAYERS).add({
             ...playerDoc,
             active: true
         }).then(async d => {
           await coachPlayerRef
+          .collection(PLAYERS)
           .doc(d.id)
           .collection(STATS)
           .doc(GLOBAL)

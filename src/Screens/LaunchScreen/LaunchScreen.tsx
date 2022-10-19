@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {useFirebaseAuth} from '../../Context/FirebaseContext';
 
 import {Roles} from '../../Global/types';

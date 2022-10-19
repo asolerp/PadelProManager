@@ -5,11 +5,9 @@ import {Header} from '../../Components/Layout/Header';
 import {ScreenLayout} from '../../Components/Layout/ScreenLayout';
 import {Input} from '../../Components/UI/Input';
 import t from '../../Theme/theme';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import {format} from 'date-fns';
+
 import {useNewPlayerForm} from './hooks/useNewPlayerForm';
 
-import {DATE_FORM} from '../../Utils/date-ext';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Button} from '../../Components/UI/Button';
 import {HDivider} from '../../Components/UI/HDivider';
@@ -44,8 +42,6 @@ export const NewPlayerScreen = ({route}) => {
   const {logout} = useLogout();
   const {handleSubmitForm, onImagePress, response, loading, initPlayerImg} =
     useNewPlayerForm(playerId, edit, reset);
-
-  const [show, setShow] = useState(false);
 
   return (
     <ScreenLayout edges={['top', 'right', 'left', 'bottom']}>
@@ -99,7 +95,7 @@ export const NewPlayerScreen = ({route}) => {
                 fieldState: {error},
               }) => (
                 <Input
-                  placeholder="Nombre"
+                  placeholder="Nombre *"
                   value={value}
                   error={error?.message}
                   onBlur={onBlur}
@@ -119,7 +115,7 @@ export const NewPlayerScreen = ({route}) => {
                 fieldState: {error},
               }) => (
                 <Input
-                  placeholder="Apellidos"
+                  placeholder="Apellidos *"
                   value={value}
                   error={error?.message}
                   onBlur={onBlur}
@@ -146,7 +142,7 @@ export const NewPlayerScreen = ({route}) => {
                 <Input
                   autoCapitalize="none"
                   editable={edit ? false : true}
-                  placeholder="Email"
+                  placeholder="Email *"
                   value={value}
                   error={error?.message}
                   onBlur={onBlur}
@@ -160,9 +156,6 @@ export const NewPlayerScreen = ({route}) => {
 
             <Controller
               control={control}
-              rules={{
-                required: 'El teléfono es obligatorio',
-              }}
               render={({
                 field: {onChange, onBlur, value},
                 fieldState: {error},
@@ -181,9 +174,6 @@ export const NewPlayerScreen = ({route}) => {
             />
             <Controller
               control={control}
-              rules={{
-                required: 'La edad es obligatoria',
-              }}
               render={({
                 field: {onChange, onBlur, value},
                 fieldState: {error},
@@ -209,7 +199,7 @@ export const NewPlayerScreen = ({route}) => {
               render={({field: {onBlur, value}, fieldState: {error}}) => (
                 <Select
                   list={lateralidad}
-                  placeholder="Lateralidad"
+                  placeholder="Lateralidad *"
                   value={lateralidad?.find(s => s.value === value)}
                   name="hand"
                   error={error?.message}
@@ -247,7 +237,7 @@ export const NewPlayerScreen = ({route}) => {
               render={({field: {onBlur, value}, fieldState: {error}}) => (
                 <Select
                   list={playerCategories}
-                  placeholder="Categoría"
+                  placeholder="Categoría *"
                   value={playerCategories?.find(s => s.value === value)}
                   name="category"
                   error={error?.message}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {View, Image, StatusBar, Text} from 'react-native';
+import {View, Image, StatusBar, Text, Platform} from 'react-native';
 
 import {ContainerWithBg} from '../../Components/UI/ContainerWithBg';
 import t from '../../Theme/theme';
@@ -50,6 +50,7 @@ export const Register = () => {
           <Header withBack mode="dark" />
 
           <KeyboardAwareScrollView
+            enableOnAndroid
             showsVerticalScrollIndicator={false}
             style={[t.flexCol]}
             contentContainerStyle={[t.flexGrow, t.itemsCenter]}>
@@ -114,7 +115,11 @@ export const Register = () => {
                 loading={loading}
                 onPress={() => signIn()}
                 title="REGÍSTRATE"
-                style={[t.h14, {borderRadius: 20}]}
+                style={[
+                  t.h14,
+                  {borderRadius: 20},
+                  Platform.OS === 'android' && t.mB5,
+                ]}
                 textStyle={[t.textSm, t.fontSans]}
               />
             </View>

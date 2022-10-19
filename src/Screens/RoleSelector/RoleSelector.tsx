@@ -34,12 +34,12 @@ export const RoleSelector = () => {
     <>
       <StatusBar barStyle="light-content" />
       <ContainerWithBg
+        isBox={false}
+        backgroundColor="Gray900"
         opacity={80}
-        backgroundColor="black"
         imageSrc="https://blog.fuertehoteles.com/wp-content/uploads/2016/09/padel-tennis.jpg">
         <SafeAreaView style={[t.pX4, t.flexGrow]}>
           <Header withBack mode="dark" />
-
           <View style={[t.flexGrow, t.pX1]}>
             <Text style={[t.fontSansBold, t.text5xl, t.textWhite, t.mB5]}>
               ¿Cual es tu rol?
@@ -51,66 +51,54 @@ export const RoleSelector = () => {
             </Text>
             <View style={[t.mT10, t.flexRow, t.wFull, t.justifyAround]}>
               <View style={[t.itemsCenter]}>
-                <BlurView
-                  blurType="light"
-                  blurAmount={5}
-                  reducedTransparencyFallbackColor="white"
-                  style={[t.roundedSm]}>
-                  <PressableOpacity
+                <PressableOpacity
+                  style={[
+                    role === 'coach' && t.bgWhite,
+                    t.itemsCenter,
+                    t.borderWhite,
+                    t.justifyCenter,
+                    {borderWidth: 2},
+                    t.p2,
+                    t.roundedSm,
+                    t.w40,
+                    t.h40,
+                  ]}
+                  onPress={() => handlePressRole('coach')}>
+                  <Text
                     style={[
-                      role === 'coach' && t.bgWhite,
-                      t.itemsCenter,
-                      t.borderWhite,
-                      t.justifyCenter,
-                      {borderWidth: 2},
-                      t.p2,
-                      t.roundedSm,
-                      t.w40,
-                      t.h40,
-                    ]}
-                    onPress={() => handlePressRole('coach')}>
-                    <Text
-                      style={[
-                        t.fontSansMedium,
-                        t.textBase,
-                        role === 'coach' ? t.textGray700 : t.textWhite,
-                        t.mY3,
-                      ]}>
-                      ENTRENADOR
-                    </Text>
-                  </PressableOpacity>
-                </BlurView>
+                      t.fontSansMedium,
+                      t.textBase,
+                      role === 'coach' ? t.textGray700 : t.textWhite,
+                      t.mY3,
+                    ]}>
+                    ENTRENADOR
+                  </Text>
+                </PressableOpacity>
               </View>
               <View style={[t.itemsCenter]}>
-                <BlurView
-                  blurType="light"
-                  blurAmount={5}
-                  reducedTransparencyFallbackColor="white"
-                  style={[t.roundedSm]}>
-                  <PressableOpacity
+                <PressableOpacity
+                  style={[
+                    role === 'player' && t.bgWhite,
+                    t.itemsCenter,
+                    t.justifyCenter,
+                    t.borderWhite,
+                    {borderWidth: 2},
+                    t.p2,
+                    t.roundedSm,
+                    t.w40,
+                    t.h40,
+                  ]}
+                  onPress={() => handlePressRole('player')}>
+                  <Text
                     style={[
-                      role === 'player' && t.bgWhite,
-                      t.itemsCenter,
-                      t.justifyCenter,
-                      t.borderWhite,
-                      {borderWidth: 2},
-                      t.p2,
-                      t.roundedSm,
-                      t.w40,
-                      t.h40,
-                    ]}
-                    onPress={() => handlePressRole('player')}>
-                    <Text
-                      style={[
-                        t.fontSansMedium,
-                        t.textBase,
-                        role === 'player' ? t.textGray700 : t.textWhite,
-                        t.mY3,
-                      ]}>
-                      JUGADOR
-                    </Text>
-                  </PressableOpacity>
-                </BlurView>
+                      t.fontSansMedium,
+                      t.textBase,
+                      role === 'player' ? t.textGray700 : t.textWhite,
+                      t.mY3,
+                    ]}>
+                    JUGADOR
+                  </Text>
+                </PressableOpacity>
               </View>
             </View>
             <View style={[t.mT10]}>
@@ -132,28 +120,29 @@ export const RoleSelector = () => {
                 </Text>
               )}
             </View>
-            <View style={[t.flexGrow, t.itemsCenter, t.justifyEnd, t.mB4]}>
-              <BlurView
-                blurType="light"
-                blurAmount={20}
-                reducedTransparencyFallbackColor="white"
-                style={[{borderRadius: 30}, !role && t.opacity40]}>
-                <PressableOpacity
-                  disabled={!role}
-                  onPress={() => openScreenWithPush(REGISTER_SCREEN_KEY)}
-                  style={[
-                    t.border0_5,
-                    t.borderWhite,
-                    t.roundedFull,
-                    t.h14,
-                    t.w14,
-                    t.justifyCenter,
-                    t.itemsCenter,
-                    t.shadow,
-                  ]}>
-                  <Icon name="chevron-forward" size={35} color="white" />
-                </PressableOpacity>
-              </BlurView>
+            <View
+              style={[
+                t.flexGrow,
+                t.itemsCenter,
+                t.justifyEnd,
+                t.mB4,
+                !role && t.opacity40,
+              ]}>
+              <PressableOpacity
+                disabled={!role}
+                onPress={() => openScreenWithPush(REGISTER_SCREEN_KEY)}
+                style={[
+                  t.border0_5,
+                  t.borderWhite,
+                  t.roundedFull,
+                  t.h14,
+                  t.w14,
+                  t.justifyCenter,
+                  t.itemsCenter,
+                  t.shadow,
+                ]}>
+                <Icon name="chevron-forward" size={35} color="white" />
+              </PressableOpacity>
             </View>
             {/* <View style={[t.flexGrow, t.justifyEnd]}>
               <BlurView

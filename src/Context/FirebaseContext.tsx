@@ -12,7 +12,7 @@ import firestore from '@react-native-firebase/firestore';
 import {useDocumentData} from 'react-firebase-hooks/firestore';
 import {error} from '../Lib/Logging';
 import {useLogout} from '../Hooks/useLogout';
-import {USERS} from '../Models/entities';
+import {PENDING, USERS} from '../Models/entities';
 
 const FirebaseAuthContext = createContext(undefined);
 
@@ -26,6 +26,7 @@ const FirebaseAuthProvider: React.FC = ({children}) => {
 
   const cleanFirebaseContext = () => {
     setRole(null);
+    setUser(null);
     setFirstName(null);
     setSecondName(null);
   };
@@ -41,11 +42,9 @@ const FirebaseAuthProvider: React.FC = ({children}) => {
     cleanFirebaseContext,
     setRole,
     loading,
-    isCoach: user?.role === Roles.COACH,
+    isCoach: user?.role === Roles.COACH || user?.role === Roles.ADMIN,
     isAdmin: user?.role === Roles.ADMIN,
   };
-
-  const checkNewUserFn = defaultFunctions.httpsCallable('checkNewUser');
 
   const query = useMemo(
     () => firestore().collection('users').doc(user?.id),
@@ -72,7 +71,22 @@ const FirebaseAuthProvider: React.FC = ({children}) => {
             .collection(USERS)
             .doc(user?.uid)
             .get();
+
+          const pendingQuery = await firestore()
+            .collection(PENDING)
+            .where('email', '==', user?.email)
+            .get();
+
+          const pendingDocs = pendingQuery.docs.map(d => ({
+            id: d.id,
+            ...d.data(),
+          }));
+
           if (userQuery.exists) {
+            await firestore()
+              .collection(PENDING)
+              .doc(pendingDocs[0].id)
+              .delete();
             await firestore().collection(USERS).doc(user?.uid).update({
               token,
               updatedAt: new Date(),
@@ -82,19 +96,28 @@ const FirebaseAuthProvider: React.FC = ({children}) => {
               .doc(user?.uid)
               .get();
             const userDoc = {id: response.id, ...response.data()};
-            return setUser({loggedIn: true, ...userDoc});
+            setUser({loggedIn: true, ...userDoc});
+          } else {
+            if (pendingDocs.length > 0) {
+              setUser({loggedIn: true, id: pendingDocs[0].uid});
+              await firestore()
+                .collection(PENDING)
+                .doc(pendingDocs[0].id)
+                .delete();
+            } else {
+              setUser(null);
+              logout();
+            }
           }
-          setUser({loggedIn: true, id: user?.uid});
         } else {
-          setUser({loggedIn: false});
           cleanFirebaseContext();
         }
+        setLoading(false);
       } catch (err) {
         error({
           title: 'Algo fue mal..',
           subtitle: 'Inténtelo más tarde',
         });
-      } finally {
         setLoading(false);
       }
     });

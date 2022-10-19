@@ -5,7 +5,6 @@ import Toast from 'react-native-toast-message';
 import AuthRouter from './Router/AuthRouter';
 import {StatusBar} from 'react-native';
 import {LoadingModalProvider} from './Context/LoadingModalContext';
-import {AuthProvider} from './Context/AuthContex';
 
 import {SubscriptionProvider} from './Context/SubscriptionContext';
 import {PremiumModalProvider} from './Context/PremiumModalContext';
@@ -17,7 +16,8 @@ import {DynamicLinkProvider} from './Context/DynamicLinkContext';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import t from './Theme/theme';
 import {suppressInAppMessaging} from './Lib/InAppMessaging';
-import {RoleProvider} from './Context/RoleContext';
+import {WalkthroughProvider} from 'react-native-interactive-walkthrough';
+
 import {FirebaseAuthProvider} from './Context/FirebaseContext';
 
 const App: React.FC = () => {
@@ -37,7 +37,9 @@ const App: React.FC = () => {
           <SubscriptionProvider>
             <LoadingModalProvider>
               <PremiumModalProvider>
-                <AuthRouter />
+                <WalkthroughProvider>
+                  <AuthRouter />
+                </WalkthroughProvider>
               </PremiumModalProvider>
             </LoadingModalProvider>
           </SubscriptionProvider>

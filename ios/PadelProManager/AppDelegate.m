@@ -18,6 +18,7 @@
 #import <FlipperKitNetworkPlugin/FlipperKitNetworkPlugin.h>
 #import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
 #import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
+#import <RNFBDynamicLinksAppDelegateInterceptor.h>
 
 static void InitializeFlipper(UIApplication *application) {
   FlipperClient *client = [FlipperClient sharedClient];
@@ -31,6 +32,20 @@ static void InitializeFlipper(UIApplication *application) {
 #endif
 
 @implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    RNFBDynamicLinksAppDelegateInterceptor *interceptor = [RNFBDynamicLinksAppDelegateInterceptor sharedInstance];
+    if (url && !interceptor.initialLinkUrl)
+    {
+        FIRDynamicLink *dynamicLink = [[FIRDynamicLinks dynamicLinks] dynamicLinkFromCustomSchemeURL:url];
+        if (dynamicLink.url) 
+        {
+            interceptor.initialLinkUrl = dynamicLink.url.absoluteString;
+            interceptor.initialLinkMinimumAppVersion = dynamicLink.minimumAppVersion == nil ? [NSNull null] : dynamicLink.minimumAppVersion;
+        }
+    }
+    return YES;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

@@ -16,6 +16,7 @@ import {error, info} from '../../../Lib/Logging';
 
 import {useFirebaseAuth} from '../../../Context/FirebaseContext';
 import {defaultFunctions} from '../../../Lib/API/firebaseApp';
+import {objectWithoutUndefined} from '../../../Utils/cleanUndefinedObject';
 
 export const useNewPlayerForm = (playerId, edit, reset) => {
   const {user} = useFirebaseAuth();
@@ -48,7 +49,8 @@ export const useNewPlayerForm = (playerId, edit, reset) => {
             }),
         );
       } else {
-        await updateDocument(playerId, {...values});
+        const valuesWithoutUndefined = objectWithoutUndefined(values);
+        await updateDocument(playerId, {...valuesWithoutUndefined});
       }
       setIsVisible(false);
       popScreen();
@@ -64,6 +66,8 @@ export const useNewPlayerForm = (playerId, edit, reset) => {
           error: err,
         },
       });
+    } finally {
+      setIsVisible(false);
     }
   };
 

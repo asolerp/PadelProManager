@@ -34,6 +34,7 @@ export const PLAYER_SCREEN_KEY = 'playerScreen';
 export const PlayerScreen = ({route}) => {
   const {player, tw, tl, tm, loading, conversationId} = useGetPlayer(
     route?.params?.playerId,
+    route?.params?.playerEmail,
   );
   const {matches} = useGetMatches(route?.params?.playerEmail);
   const {

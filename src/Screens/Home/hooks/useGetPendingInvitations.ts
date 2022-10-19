@@ -11,6 +11,7 @@ export const useGetPendingInvitations = ({onFinish}) => {
   const [player, setPlayer] = useState();
   const [isVisible, setIsVisible] = useState();
   const {user} = useFirebaseAuth();
+  const [loadingInvitation, setLoadingInvitation] = useState();
 
   const acceptInvitationFn =
     defaultFunctions.httpsCallable('handleInvitations');
@@ -32,6 +33,8 @@ export const useGetPendingInvitations = ({onFinish}) => {
   );
 
   const handleAcceptInvitation = async () => {
+    setLoadingInvitation(true);
+    console.log('COACH', user?.id);
     try {
       await acceptInvitationFn({playerId: params?.player_id, coachId: user.id});
       info({
@@ -43,6 +46,7 @@ export const useGetPendingInvitations = ({onFinish}) => {
     } finally {
       setParams(null);
       setIsVisible(false);
+      setLoadingInvitation(false);
       onFinish();
     }
   };
@@ -56,6 +60,7 @@ export const useGetPendingInvitations = ({onFinish}) => {
     player,
     isVisible,
     setIsVisible,
+    loadingInvitation,
     handleAcceptInvitation,
     handleCancelInvitation,
   };

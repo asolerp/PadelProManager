@@ -84,6 +84,7 @@ export const PlayersSelector = () => {
   return (
     <>
       <ModalListOfPlayers
+        chat={false}
         selectedPlayers={selectedPlayers}
         isVisible={isVisible}
         onSave={handleSavePlayer}
