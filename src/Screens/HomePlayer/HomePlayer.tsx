@@ -47,7 +47,7 @@ export const HomePlayerScreen = () => {
   const {pendingRelation} = useCheckPendingRelation();
   const {handleShare} = useShareApp();
 
-  const {conversationId, loading: loadingConversation} = useGetConversationId();
+  const {conversationId} = useGetConversationId();
 
   const {
     refetch,

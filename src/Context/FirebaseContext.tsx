@@ -74,7 +74,7 @@ const FirebaseAuthProvider: React.FC = ({children}) => {
 
           const pendingQuery = await firestore()
             .collection(PENDING)
-            .doc(user.uid)
+            .doc(user?.uid)
             .get();
 
           if (userQuery.exists) {
@@ -91,7 +91,7 @@ const FirebaseAuthProvider: React.FC = ({children}) => {
             setUser({loggedIn: true, ...userDoc});
           } else {
             if (pendingQuery.exists) {
-              setUser({loggedIn: true, id: pendingDocs[0].uid});
+              setUser({loggedIn: true, id: pendingQuery.id});
               await firestore().collection(PENDING).doc(user?.uid).delete();
             } else {
               setUser(null);
@@ -103,6 +103,7 @@ const FirebaseAuthProvider: React.FC = ({children}) => {
         }
         setLoading(false);
       } catch (err) {
+        console.log(err);
         error({
           title: 'Algo fue mal..',
           subtitle: 'Inténtelo más tarde',

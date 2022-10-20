@@ -74,6 +74,7 @@ const handleInvitations = functions
 
       await playerRef.update({
         coachId: coachId,
+        coachEmail: coachDoc.email,
         active: true,
       })
      

@@ -1,10 +1,10 @@
 import dynamicLinks from '@react-native-firebase/dynamic-links';
 import {useContext, useEffect} from 'react';
-import {openScreenWithPush} from '../../../Router/utils/actions';
-import {LOGIN_SCREEN_KEY} from '../../../Screens/Login/Login';
+
 import {parse} from 'search-params';
 import {DynamicLinkContext} from '../../../Context/DynamicLinkContext';
-import {LOGIN_PLAYER_SCREEN_KEY} from '../../../Screens/LoginPlayer/LoginPlayer';
+
+import {Linking} from 'react-native';
 
 export const useDeepLinks = () => {
   const {setAction, setParams} = useContext(DynamicLinkContext);
@@ -29,6 +29,19 @@ export const useDeepLinks = () => {
       .then(link => {
         if (link) {
           handleDynamicLink(link);
+        } else {
+          Linking.getInitialURL()
+            .then(initialUrl => {
+              if (initialUrl) {
+                dynamicLinks()
+                  .resolveLink(initialUrl)
+                  .then(resolvedLink => {
+                    handleDynamicLink(resolvedLink);
+                  })
+                  .catch(console.warn);
+              }
+            })
+            .catch(console.warn);
         }
       })
       .catch(console.warn);

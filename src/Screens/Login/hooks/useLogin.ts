@@ -13,6 +13,7 @@ import {PENDING} from '../../../Models/entities';
 const errorMessage = {
   'auth/user-not-found': 'El email o la contraseña son incorrectos',
   'auth/email-already-exists': 'El usuario ya existe',
+  'auth/email-already-in-use': 'El email ya está en uso',
   'auth/invalid-email': 'El email es inválido',
 };
 
@@ -93,6 +94,7 @@ export const useLogin = playerEmail => {
         role,
       });
     } catch (err) {
+      console.log(err);
       warn({
         title: 'Ha ocurrido algo',
         subtitle: errorMessage[err.code] || 'Inténtelo más tarde',
