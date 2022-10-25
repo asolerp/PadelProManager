@@ -94,7 +94,7 @@ export const Button: React.FC<Props> = ({
         style,
       ]}>
       {loading ? (
-        <ActivityIndicator color={type === 'info' ? 'black' : 'white'} />
+        <ActivityIndicator color={type === 'info' ? 'white' : 'white'} />
       ) : (
         <View style={[t.flexRow, t.itemsCenter]}>
           {iconName && (

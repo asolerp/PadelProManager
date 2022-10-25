@@ -11,6 +11,7 @@ import {PlayerRadarGraph} from '../../Components/Common/PlayerRadarGraph';
 import {Header, ScreenLayout} from '../../Components/Layout';
 import {useStatistics} from '../../Components/Match/hooks/useStatistics';
 import {ResultPro} from '../../Components/PadelPro/ResultPro';
+import {SetSelector} from '../../Components/PadelPro/SetSelector';
 import {StatsPro} from '../../Components/PadelPro/StatsPro';
 import t from '../../Theme/theme';
 
@@ -28,8 +29,10 @@ export const ProMatch = ({route}) => {
     tableP2,
     tableP3,
     tableP4,
-    matchStatistics,
+    activeSet,
     dataGenerated,
+    matchStatistics,
+    handleSetActiveSet,
   } = useStatistics({
     team1: match?.t1,
     team2: match?.t2,
@@ -42,7 +45,7 @@ export const ProMatch = ({route}) => {
       style={[t.flexGrow]}
       resizeMode="stretch"
       source={{
-        uri: 'https://res.cloudinary.com/enalbis/image/upload/v1662134698/PadelPro/varios/mia8e5e2lx6l3vwpa3be.jpg',
+        uri: 'https://res.cloudinary.com/enalbis/image/upload/v1666683667/PadelPro/varios/qx0n0xokjfivjub92jcz.jpg',
       }}>
       <ScreenLayout mode="transparent">
         <Header
@@ -61,13 +64,21 @@ export const ProMatch = ({route}) => {
               t2={match?.t2}
             />
             <View style={[t.mT7]} />
+            <SetSelector
+              activeSet={activeSet}
+              handleActiveSet={handleSetActiveSet}
+            />
+            <View style={[t.mT7]} />
             <Text style={[t.fontSansBold, t.textWhite, t.textLg]}>
               RESUMEN DEL PARTIDO
             </Text>
             <View style={[t.mT2]} />
             {dataGenerated ? (
               <>
-                <StatsPro matchStatistics={matchStatistics} />
+                <StatsPro
+                  matchStatistics={matchStatistics}
+                  goldPoint={match?.game?.goldPoint}
+                />
                 <View style={[t.mT7, t.justifyCenter, t.itemsCenter]}>
                   {dataP1 && match?.t1?.[0] && (
                     <PlayerRadarGraph

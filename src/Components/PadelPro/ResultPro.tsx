@@ -4,8 +4,9 @@ import {GameType, PlayerType} from '../../Global/types';
 import t from '../../Theme/theme';
 import {fullName, parseRound} from '../../Utils/parsers';
 import {resultGame} from '../../Utils/resultGame';
-
+import Icon from 'react-native-vector-icons/Ionicons';
 interface Props {
+  withService?: boolean;
   mode?: 'small' | 'normal';
   game: GameType;
   round: number;
@@ -16,6 +17,7 @@ interface Props {
 
 export const ResultPro: React.FC<Props> = ({
   mode,
+  withService = false,
   color = 'white',
   game,
   round,
@@ -64,19 +66,24 @@ export const ResultPro: React.FC<Props> = ({
             {fullName(2, t1?.[1].firstName, t1?.[1].secondName)}
           </Text>
         </View>
+        {withService && game.service === 't1' && (
+          <View style={[t.itemsCenter, t.justifyCenter]}>
+            <Icon name="tennisball" color="white" />
+          </View>
+        )}
         <View style={[t.w12, t.itemsCenter, t.justifyCenter]}>
           <Text style={[t.text3xl, t.fontSansBold, textColor]}>
-            {game.s1t1}
+            {game?.s1t1}
           </Text>
         </View>
         <View style={[t.w12, t.itemsCenter, t.justifyCenter]}>
           <Text style={[t.text3xl, t.fontSansBold, textColor]}>
-            {game.s2t1}
+            {game?.s2t1}
           </Text>
         </View>
         <View style={[t.w12, t.itemsCenter, t.justifyCenter]}>
           <Text style={[t.text3xl, t.fontSansBold, textColor]}>
-            {game.s3t1}
+            {game?.s3t1}
           </Text>
         </View>
         <View style={[t.w12, t.bgInfoLight, t.itemsCenter, t.justifyCenter]}>
@@ -94,19 +101,24 @@ export const ResultPro: React.FC<Props> = ({
             {fullName(4, t2?.[1].firstName, t2?.[1].secondName)}
           </Text>
         </View>
+        {withService && game.service === 't2' && (
+          <View style={[t.itemsCenter, t.justifyCenter]}>
+            <Icon name="tennisball" color="white" />
+          </View>
+        )}
         <View style={[t.w12, t.itemsCenter, t.justifyCenter]}>
           <Text style={[t.text3xl, t.fontSansBold, textColor]}>
-            {game.s1t2}
+            {game?.s1t2}
           </Text>
         </View>
         <View style={[t.w12, t.itemsCenter, t.justifyCenter]}>
           <Text style={[t.text3xl, t.fontSansBold, textColor]}>
-            {game.s2t2}
+            {game?.s2t2}
           </Text>
         </View>
         <View style={[t.w12, t.itemsCenter, t.justifyCenter]}>
           <Text style={[t.text3xl, t.fontSansBold, textColor]}>
-            {game.s3t2}
+            {game?.s3t2}
           </Text>
         </View>
         <View style={[t.w12, t.bgInfoLight, t.itemsCenter, t.justifyCenter]}>

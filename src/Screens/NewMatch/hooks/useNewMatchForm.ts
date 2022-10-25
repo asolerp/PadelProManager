@@ -41,6 +41,7 @@ export const useNewMatchForm = () => {
       date,
       sex,
       round = '',
+      advanceStates = true,
       tournamentName = '',
       goldPoint,
     } = values;
@@ -140,6 +141,7 @@ export const useNewMatchForm = () => {
     date: '',
     category: '',
     round: '',
+    advanceStats: true,
     goldPoint: false,
     tournament: false,
   };

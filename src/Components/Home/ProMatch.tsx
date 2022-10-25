@@ -1,4 +1,5 @@
 import {format} from 'date-fns';
+import pt from 'date-fns/esm/locale/pt/index.js';
 import React from 'react';
 import {Dimensions, ImageBackground, Pressable, Text, View} from 'react-native';
 import {openScreenWithPush} from '../../Router/utils/actions';
@@ -9,7 +10,7 @@ import {parseRound} from '../../Utils/parsers';
 
 import {ResultPro} from '../PadelPro/ResultPro';
 
-const CARD_WIDTH = Dimensions.get('window').width - 36;
+const CARD_WIDTH = Dimensions.get('window').width - t.w8.width;
 
 export const ProMatchCard = ({match}) => {
   return (
@@ -21,7 +22,7 @@ export const ProMatchCard = ({match}) => {
         style={[t.wFull, t.p4, t.itemsCenter]}
         imageStyle={[t.roundedSm]}
         source={{
-          uri: 'https://res.cloudinary.com/enalbis/image/upload/v1662134698/PadelPro/varios/mia8e5e2lx6l3vwpa3be.jpg',
+          uri: 'https://res.cloudinary.com/enalbis/image/upload/v1666683667/PadelPro/varios/qx0n0xokjfivjub92jcz.jpg',
         }}>
         <View style={[t.flex1]}>
           <View style={[t.flexGrow]}>

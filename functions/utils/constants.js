@@ -12,11 +12,13 @@ const SESSIONS = "sessions";
 const ACCOUNTING = "accounting";
 const GLOBAL = "global";
 const CONVERSATIONS = "conversations"
+const COAH_REQUESTS = "coachRequests"
 const GROUPS = "groups";
 const HISTORY = "history";
 const RELATIONS = "relations";
 const STATS = "stats";
 const REQUESTS = "requests"
+const LAST_STATE = "lastState"
 
 module.exports = {
   USERS,
@@ -29,8 +31,10 @@ module.exports = {
   GLOBAL,
   REQUESTS,
   FB_REGION,
+  LAST_STATE,
   ACCOUNTING,
   RELATIONS,
+  COAH_REQUESTS,
   CONVERSATIONS,
   URL_IAP_PRODUCTION,
   URL_IAP_TEST,

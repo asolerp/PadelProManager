@@ -32,6 +32,10 @@ import {Messages, MESSAGES_SCREEN_KEY} from '../Screens/Messages/Messages';
 import {Chat, CHAT_SCREEN_KEY} from '../Screens/Chat/Chat';
 import {NewGroup, NEW_GROUP_SCREEN_KEY} from '../Screens/NewGroup/NewGroup';
 import {Training, TRAINING_SCREEN_KEY} from '../Screens/Training/Training';
+import {
+  NewSimplePoint,
+  NEW_SIMPLE_POINT_SCREEN_KEY,
+} from '../Screens/NewSimplePoint/NewSimplePoint';
 
 const Stack = createNativeStackNavigator();
 
@@ -71,6 +75,11 @@ export const CoachStack = () => {
           options={{headerShown: false}}
           name={NEW_POINT_SCREEN_KEY}
           component={NewPoint}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name={NEW_SIMPLE_POINT_SCREEN_KEY}
+          component={NewSimplePoint}
         />
         <Stack.Screen
           options={{headerShown: false}}

@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {useHistoryFilters} from './hooks/useHistoryFilters';
 import {HDivider} from '../../UI/HDivider';
 import {capitalize} from '../../../Utils/parsers';
+import {Spacer} from '../../UI/Spacer';
 
 export const HistoricRoute = ({match, pointsHistory}) => {
   const {historyList, favoriteFilter, setFavoriteFilter} = useHistoryFilters(
@@ -23,7 +24,7 @@ export const HistoricRoute = ({match, pointsHistory}) => {
       const bg = t?.[`bg${capitalizedColor}Dark`];
       return (
         <>
-          <View style={[t.pY3, t.pX4, bg, t.roundedSm, t.mY3]}>
+          <View style={[t.pY3, t.pX4, bg, t.roundedSm]}>
             <Text
               style={[t.fontSansMedium, t.textBase, t.textWhite, t.textCenter]}>
               {item.alert}
@@ -67,6 +68,7 @@ export const HistoricRoute = ({match, pointsHistory}) => {
         <View style={[t.mT5, t.flexGrow, t.itemsCenter, t.justifyCenter]}>
           <View style={[t.flexGrow, t.wFull]}>
             <FlatList
+              ItemSeparatorComponent={() => <Spacer space={1} />}
               showsVerticalScrollIndicator={false}
               data={historyList}
               renderItem={renderItem}

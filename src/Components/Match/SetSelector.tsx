@@ -10,7 +10,7 @@ interface Props {
 
 export const SetSelector: React.FC<Props> = ({active, setActive}) => {
   return (
-    <View style={[t.flexRow, t.justifyCenter, t.mY5]}>
+    <View style={[t.flexRow, t.justifyCenter, t.mB5]}>
       <Button
         onPress={() => setActive('total')}
         active={active === 'total'}

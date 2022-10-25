@@ -1,11 +1,17 @@
 import Purchase from 'react-native-purchases';
 import {error} from '../../../Lib/Logging';
 import {popScreen} from '../../../Router/utils/actions';
+import {ENTITLEMENT_ID} from '../../../Utils/constants';
 
 export const usePayProduct = () => {
   const makePayment = async purchasePackage => {
     try {
-      await Purchase.purchasePackage(purchasePackage);
+      const {purchaserInfo} = await Purchase.purchasePackage(purchasePackage);
+      if (
+        typeof purchaserInfo.entitlements.active[ENTITLEMENT_ID] !== 'undefined'
+      ) {
+        console.log('USER IS PRO');
+      }
       popScreen();
     } catch (err) {
       if (err.userInfo.readableErrorCode !== 'PURCHASE_CANCELLED') {
@@ -21,6 +27,7 @@ export const usePayProduct = () => {
   };
 
   const handleMakePayment = async purchasePackage => {
+    console.log('PACKAGE', purchasePackage);
     try {
       await makePayment(purchasePackage);
     } catch (err) {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {View, ImageBackground, ViewStyle} from 'react-native';
+import {View, ImageBackground, ViewStyle, Platform} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {boolean} from 'yup';
 import t from '../../Theme/theme';
@@ -33,10 +33,17 @@ export const ContainerWithBg: React.FC<Props> = ({
   return (
     <ImageBackground
       source={{uri: imageSrc}}
-      imageStyle={[isBox && t.roundedLg]}
+      imageStyle={[isBox && Platform.OS === 'ios' && t.roundedLg]}
       style={[t.flexGrow, t.relative, style]}>
       <View
-        style={[t.wFull, t.hFull, isBox && t.roundedLg, bg, op, t.absolute]}
+        style={[
+          t.wFull,
+          t.hFull,
+          isBox && Platform.OS === 'ios' && t.roundedLg,
+          bg,
+          op,
+          t.absolute,
+        ]}
       />
       {children}
     </ImageBackground>

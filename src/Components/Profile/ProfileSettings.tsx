@@ -20,6 +20,8 @@ import {useContext} from 'react';
 import {LoadingModalContext} from '../../Context/LoadingModalContext';
 import {timeout} from '../../Utils/timeout';
 import {userQuery} from '../../Api/queries';
+import {openScreenWithPush} from '../../Router/utils/actions';
+import {COACH_CODE_SCREEN_KEY} from '../../Screens/CoachCode/CoachCode';
 
 export const ProfileSettings = () => {
   const {isCoach, user, setUser} = useFirebaseAuth();
@@ -77,14 +79,25 @@ export const ProfileSettings = () => {
             {!isCoach && (
               <>
                 <Text style={[t.fontSans, t.pL4, t.mT4, t.mB2]}>General</Text>
-                <ListItem
-                  title="Dejar al entrenador"
-                  onPress={() =>
-                    leaveCoachAlert({
-                      onAccept: async () => await handleLeaveCoach(),
-                    })
-                  }
-                />
+                {!user?.coachId ? (
+                  <ListItem
+                    title="Insertar código de entrenador"
+                    onPress={async () => {
+                      setIsVisible(false);
+                      await timeout(500);
+                      openScreenWithPush(COACH_CODE_SCREEN_KEY);
+                    }}
+                  />
+                ) : (
+                  <ListItem
+                    title="Dejar al entrenador"
+                    onPress={() =>
+                      leaveCoachAlert({
+                        onAccept: async () => await handleLeaveCoach(),
+                      })
+                    }
+                  />
+                )}
               </>
             )}
             <Text style={[t.fontSans, t.pL4, t.mT4, t.mB2]}>Legal</Text>

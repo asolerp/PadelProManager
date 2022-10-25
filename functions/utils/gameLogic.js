@@ -9,9 +9,10 @@ const generateSet = (game, sets, team) => {
     team1Tiebreak: 0,
     team2Tiebreak: 0,
     tiebreak: false,
+    service: game.service === "t1" ? "t2" : "t1",
     set: game?.set + 1,
     [`winsSetTeam${team}`]: teamSetGame,
-    [`s${sets}t${team}`]: Number(game?.[`s${sets}t${team}`]) + 1,
+    [`s${sets}t${team}`]: Number(game?.[`s${sets}t${team}`]) < 3 ? Number(game?.[`s${sets}t${team}`]) + 1 : 3,
     finished: getIsMatchFinished(teamSetGame),
     winMatch: getIsMatchFinished(teamSetGame) && team,
     info: {
@@ -26,7 +27,7 @@ const getIsMatchFinished = teamSet => teamSet === 2;
 
 const checkSetState = (game, firstTeamToCheck, secondTeamToCheck) => {
   const mainTeam = firstTeamToCheck[1];
-  const sets = game[`s${game?.set}${firstTeamToCheck}`] + 1;
+  const sets = game[`s${game?.set}${firstTeamToCheck}`] < 3 ? game[`s${game?.set}${firstTeamToCheck}`] + 1 : 3;
   if (sets >= 6) {
     if (game[`s${game?.set}${firstTeamToCheck}`] === 7) {
       // firstTeamToCheck wins tiebreak
@@ -38,6 +39,7 @@ const checkSetState = (game, firstTeamToCheck, secondTeamToCheck) => {
         ...game,
         team1: 0,
         team2: 0,
+        service: game.service === "t1" ? "t2" : "t1",
         team1Tiebreak: 0,
         team2Tiebreak: 0,
         [`s${game?.set}${firstTeamToCheck}`]: sets,

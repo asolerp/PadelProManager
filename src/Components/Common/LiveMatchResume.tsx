@@ -17,7 +17,7 @@ const cardLabel = [t.textBase, t.fontSansBold, t.textWhite, t.opacity70];
 const cardInfo = [t.textBase, t.fontSansBold, t.textWhite];
 const setNumber = [t.textLg, t.fontSansBold, t.textWhite, t.opacity70];
 
-const CARD_WIDTH = Dimensions.get('window').width - 36;
+const CARD_WIDTH = Dimensions.get('window').width - t.w8.width;
 
 interface Props {
   match: any;
@@ -32,10 +32,9 @@ export const LiveMatchResume: React.FC<Props> = ({match}) => {
     <PressableOpacity
       style={[
         {width: CARD_WIDTH},
-
         t.h44,
-        t.bgInfo,
-        t.roundedLg,
+        t.bgInfoDark,
+        t.roundedSm,
         t.p3,
         t.shadow,
       ]}

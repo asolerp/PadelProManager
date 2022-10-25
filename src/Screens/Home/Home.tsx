@@ -165,6 +165,7 @@ export const HomeScreen: FunctionComponent = () => {
                       {loc('home_screen_active_matches')}
                     </Text>
                     <PaginatedList
+                      dotColor={[t.bgInfoDark]}
                       data={liveMatches?.sort(sortByDate)}
                       renderItem={renderItem}
                     />

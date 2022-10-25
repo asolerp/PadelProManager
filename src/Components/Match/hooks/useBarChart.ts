@@ -33,7 +33,6 @@ export const useBarChart = ({players, winners, errorForced, nonForced}) => {
     if (hasDataP1 || hasDataP2 || hasDataP3 || hasDataP4) {
       setData({
         labels: barLabels,
-        legend: ['Win', 'EF', 'NF'],
         data: generateData(),
         barColors: ['#4caf50', '#2196f3', '#f44336'],
       });

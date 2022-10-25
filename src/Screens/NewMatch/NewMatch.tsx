@@ -21,6 +21,7 @@ import {LoadingModal} from '../../Components/Common/LoadingModal';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {usePermissions} from '../../Hooks/usePermissions';
 import {useForm, Controller} from 'react-hook-form';
+import {Spacer} from '../../Components/UI/Spacer';
 
 export const NEW_MATCH_SCREEN_KEY = 'newMatchScreen';
 
@@ -170,11 +171,32 @@ export const NewMatchScreen = () => {
               )}
               name="sex"
             />
+
+            <Controller
+              control={control}
+              render={({field: {onBlur, value}}) => (
+                <SwitchInput
+                  label="Estadísticas avanzadas"
+                  subtitle={
+                    'Las estadísitcas avanzadas permiten registrar el tipo de punto por jugador. (winner, error forzado y errores no forzados)'
+                  }
+                  onBlur={onBlur}
+                  onValueChange={v => setValue('advanceStats', v)}
+                  value={value}
+                />
+              )}
+              name="advanceStats"
+            />
+            <HDivider />
+            <View style={[t.mB4]} />
             <Controller
               control={control}
               render={({field: {onBlur, value}}) => (
                 <SwitchInput
                   label="Punto de oro"
+                  subtitle={
+                    '¡Sin ventajas! Quien gane el punto en el 40-40 gana el jugo 💪'
+                  }
                   onBlur={onBlur}
                   onValueChange={v => setValue('goldPoint', v)}
                   value={value}
@@ -189,6 +211,9 @@ export const NewMatchScreen = () => {
               render={({field: {onBlur, value}}) => (
                 <SwitchInput
                   label="Torneo"
+                  subtitle={
+                    'Si el partido pertenece a un torneo, activa esta opción e introduce la ronda, nombre del toreno, etc..'
+                  }
                   onBlur={onBlur}
                   onValueChange={v => setValue('tournament', v)}
                   value={value}
@@ -234,6 +259,7 @@ export const NewMatchScreen = () => {
                 />
               </>
             )}
+            <HDivider />
             {(isCoach || isAdmin) && (
               <View style={[t.mY5]}>
                 <PlayersSelector />

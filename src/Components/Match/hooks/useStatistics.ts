@@ -35,16 +35,22 @@ export const useStatistics = ({team1, team2, statistics, mode = 'dark'}) => {
       // Gold Points
       setMatchStatistics({
         t1Br: getStatisticCount(
-          statistics?.[activeSet]?.team1?.global?.breakpoint,
+          statistics?.[activeSet]?.team1?.global?.breakpoints,
         ),
         t2Br: getStatisticCount(
-          statistics?.[activeSet]?.team2?.global?.breakpoint,
+          statistics?.[activeSet]?.team2?.global?.breakpoints,
+        ),
+        t1WBr: getStatisticCount(
+          statistics?.[activeSet]?.team1?.global?.wonBreakpoints,
+        ),
+        t2WBr: getStatisticCount(
+          statistics?.[activeSet]?.team2?.global?.wonBreakpoints,
         ),
         t1GP: getStatisticCount(
-          statistics?.[activeSet]?.team1?.global?.breakpoint,
+          statistics?.[activeSet]?.team1?.global?.wonGoldPoints,
         ),
         t2GP: getStatisticCount(
-          statistics?.[activeSet]?.team2?.global?.breakpoint,
+          statistics?.[activeSet]?.team2?.global?.wonGoldPoints,
         ),
         t1Tw: getStatisticCount(
           statistics?.[activeSet]?.team1?.global?.w?.count,
@@ -166,22 +172,37 @@ export const useStatistics = ({team1, team2, statistics, mode = 'dark'}) => {
             statistics?.total?.team2?.players?.[team2?.[1]?.id]?.nf?.count,
           ),
         },
-        totalGoldPoints: getStatisticCount(statistics?.[activeSet]?.breakpoint),
+        totalWonGoldPointsT1: getStatisticCount(
+          statistics?.[activeSet]?.team1?.global?.wonGoldPoints,
+        ),
+        totalWonGoldPointsT2: getStatisticCount(
+          statistics?.[activeSet]?.team2?.global?.wonGoldPoints,
+        ),
+        totalGoldPoints: getStatisticCount(statistics?.[activeSet]?.goldPoints),
+        totalEF:
+          getStatisticCount(statistics?.[activeSet]?.team1?.global?.ef?.count) +
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.ef?.count),
+        totalNF:
+          getStatisticCount(statistics?.[activeSet]?.team1?.global?.nf?.count) +
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.nf?.count),
+        totalWinners:
+          getStatisticCount(statistics?.[activeSet]?.team1?.global?.w?.count) +
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.w?.count),
         totalPoints: getStatisticCount(statistics?.[activeSet]?.count),
         totalT1ConsecutiveWon: getStatisticCount(
-          statistics?.total?.team1?.global?.consecutiveWon,
+          statistics?.[activeSet]?.team1?.global?.consecutiveWon,
         ),
         totalT2ConsecutiveWon: getStatisticCount(
-          statistics?.total?.team2?.global?.consecutiveWon,
+          statistics?.[activeSet]?.team2?.global?.consecutiveWon,
         ),
         totalT1PointsWins:
-          getStatisticCount(statistics?.total?.team1?.global?.w?.count) +
-          getStatisticCount(statistics?.total?.team1?.global?.ef?.count) +
-          getStatisticCount(statistics?.total?.team1?.global?.wNs?.count),
+          getStatisticCount(statistics?.[activeSet]?.team1?.global?.w?.count) +
+          getStatisticCount(statistics?.[activeSet]?.team1?.global?.ef?.count) +
+          getStatisticCount(statistics?.[activeSet]?.team1?.global?.wNs?.count),
         totalT2PointsWins:
-          getStatisticCount(statistics?.total?.team2?.global?.w?.count) +
-          getStatisticCount(statistics?.total?.team2?.global?.ef?.count) +
-          getStatisticCount(statistics?.total?.team2?.global?.wNs?.count),
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.w?.count) +
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.ef?.count) +
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.wNs?.count),
       });
 
       setTableP1(

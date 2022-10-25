@@ -24,6 +24,8 @@ import {NEW_POINT_SCREEN_KEY} from '../NewPoint/NewPoint';
 import {usePermissions} from '../../Hooks/usePermissions';
 import {MatchHeaderSkeleton} from '../../Components/Match/skeleton/MatchHeaderSkeleton';
 import {MatchInfoSkeleton} from '../../Components/Match/skeleton/MatchInfoSkeleton';
+import {NEW_SIMPLE_POINT_SCREEN_KEY} from '../NewSimplePoint/NewSimplePoint';
+import {LiveResult} from '../../Components/Match/LiveResult';
 
 export const MATCH_SCREEN_KEY = 'matchScreen';
 
@@ -57,7 +59,11 @@ export const MatchScreen: React.FC = ({route}) => {
         <Header
           withBack
           containerStyle={[t.bgWhite]}
-          title={match?.tournamentName || 'Partida'}
+          title={
+            <View style={[t.w20]}>
+              <LiveResult game={match?.game} />
+            </View>
+          }
           rightSide={isOnwer && <MatchSettings match={match} />}
         />
       )}
@@ -73,9 +79,14 @@ export const MatchScreen: React.FC = ({route}) => {
           iconName="tennisball"
           style={[t.bgSuccessLight]}
           onPress={() =>
-            openScreenWithPush(NEW_POINT_SCREEN_KEY, {
-              matchId: match?.id,
-            })
+            openScreenWithPush(
+              match?.advanceStats
+                ? NEW_POINT_SCREEN_KEY
+                : NEW_SIMPLE_POINT_SCREEN_KEY,
+              {
+                matchId: match?.id,
+              },
+            )
           }
         />
       )}

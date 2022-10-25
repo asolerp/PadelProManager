@@ -48,11 +48,7 @@ export const ResumenStatistic = ({statistics, withBlur = true}) => {
   } = useResumeStatistics({statistics});
 
   return (
-    <BlurView
-      style={[t.mB3, t.wFull, !withBlur && t.bgWhite, t.p4, t.roundedSm]}
-      blurType={withBlur ? 'dark' : 'light'}
-      blurAmount={80}
-      reducedTransparencyFallbackColor="white">
+    <View style={[t.mB3, t.wFull, !withBlur && t.bgWhite, t.p4, t.roundedSm]}>
       <ScrollView
         nestedScrollEnabled
         horizontal
@@ -257,6 +253,6 @@ export const ResumenStatistic = ({statistics, withBlur = true}) => {
           </View>
         </View>
       </ScrollView>
-    </BlurView>
+    </View>
   );
 };

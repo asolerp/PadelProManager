@@ -47,7 +47,9 @@ export const PromotionalSubscription = () => {
       <StatusBar barStyle="light-content" />
       <ContainerWithBg backgroundColor="Gray900" opacity={80}>
         <Header withBack mode="dark" containerStyle={[t.absolute, t.top14]} />
-        <ScrollView showsVerticalScrollIndicator={false} style={[t.flex1]}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={[t.flex1, t.pX4]}>
           <View style={[t.flexGrow, t.itemsCenter, t.justifyCenter]}>
             <View style={[t.wFull, t.pY5]}>
               <View style={[t.flexRow, t.justifyBetween, t.mT5]}>

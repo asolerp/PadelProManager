@@ -2,11 +2,12 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 
 const fetch = require("node-fetch");
-const { USERS, CONVERSATIONS, PLAYERS, REQUESTS, FB_REGION } = require("../utils/constants");
+const { USERS, CONVERSATIONS, PLAYERS, REQUESTS, FB_REGION, COAH_REQUESTS } = require("../utils/constants");
 const { createTransporter } = require("../utils/email/config");
 const { generateNewPlayerTemplate } = require("../utils/email/newPlayerTemplate");
 const { PLAYER_EXISTS } = require("../utils/errorsCode");
 const { emptyStats } = require("../utils/emptyStats");
+const { generateCoachRequestCode } = require("../utils/generateCoachRequestCode");
 
 const API_WEB_FIREBASE = "AIzaSyC8aj5yS0qRdb75tQHs101a-mSn2xaUujI";
 const DYNAMIK_LINK = "https://padelpromanager.com";
@@ -23,9 +24,10 @@ const newPlayer = functions
 
     const userRef = admin.firestore().collection(USERS)
     const conversationRef = admin.firestore().collection(CONVERSATIONS)
+    const coachRequestRef = admin.firestore().collection(COAH_REQUESTS)
 
     const coachQuery = await userRef.doc(coachId).get()
-    const coachDoc = coachQuery.data()
+    const coachDoc = {id: coachQuery.id, ...coachQuery.data()}
     const { email, firstName, secondName, profileImg } = coachDoc
     const fullName = `${firstName} ${secondName}`
 
@@ -50,6 +52,15 @@ const newPlayer = functions
         type: 1,
       });
     }
+
+    const coachRequestCode = generateCoachRequestCode()
+
+    await coachRequestRef.add({
+      coachId: coachDoc.id,
+      coachEmail: email,
+      code: coachRequestCode,
+      createdAt: new Date()
+    })
 
     await userRef.doc(coachId).collection(PLAYERS).doc(playerId).set({
       ...Object.fromEntries(

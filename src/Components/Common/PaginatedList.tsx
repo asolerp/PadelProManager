@@ -1,18 +1,26 @@
 import React, {useRef, useState} from 'react';
-import {Dimensions, ListRenderItem, Pressable, View} from 'react-native';
+import {
+  Dimensions,
+  ListRenderItem,
+  Pressable,
+  View,
+  ViewStyle,
+} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import t from '../../Theme/theme';
 
 interface DotProps {
   active: Boolean;
+  dotColor: ViewStyle;
 }
 
 interface PaginatedListProps {
   renderItem: ListRenderItem<any>;
   data: any;
+  dotColor: ViewStyle;
 }
 
-const Dot: React.FC<DotProps> = ({active}) => {
+const Dot: React.FC<DotProps> = ({active, dotColor = t.bgGray900}) => {
   return (
     <View
       style={[
@@ -20,13 +28,14 @@ const Dot: React.FC<DotProps> = ({active}) => {
         t.h4,
         t.mX1,
         t.roundedFull,
-        active ? t.bgInfoLight : t.bgGray300,
+        active ? dotColor : t.bgGray300,
       ]}
     />
   );
 };
 
 export const PaginatedList: React.FC<PaginatedListProps> = ({
+  dotColor,
   renderItem,
   data,
 }) => {
@@ -47,7 +56,8 @@ export const PaginatedList: React.FC<PaginatedListProps> = ({
           const current = Math.floor(xPos / totalWidth);
           setIndex(current);
         }}
-        snapToInterval={Dimensions.get('window').width - 32}
+        snapToAlignment="start"
+        snapToInterval={Dimensions.get('window').width}
         showsHorizontalScrollIndicator={false}
         data={data}
         renderItem={renderItem}
@@ -57,7 +67,7 @@ export const PaginatedList: React.FC<PaginatedListProps> = ({
         <View style={[t.flexRow, t.justifyCenter, t.mT2]}>
           {data.map((_, i) => (
             //   <Pressable key={i} onPress={() => handlePressDot(i)}>
-            <Dot key={i} active={isActive(i)} />
+            <Dot key={i} active={isActive(i)} dotColor={dotColor} />
             //   </Pressable>
           ))}
         </View>

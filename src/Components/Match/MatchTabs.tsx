@@ -39,10 +39,11 @@ export const MatchTabs = ({match, notes, pointsHistory}) => {
       case 'statistics':
         return (
           <StatisticsRoute
+            advanceStats={match?.advanceStats}
             team1={match?.t1}
             team2={match?.t2}
             statistics={match?.statistics}
-            free={match?.free}
+            goldPoint={match?.game?.goldPoint}
           />
         );
       case 'historic':

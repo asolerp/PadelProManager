@@ -38,9 +38,14 @@ export const StatItem: React.FC<Props> = ({
           t.h10,
           t.itemsCenter,
           t.justifyCenter,
-          {backgroundColor: DARK_BLUE},
+          {backgroundColor: gold ? DARK_GOLD : DARK_BLUE},
         ]}>
-        <Text style={[t.fontSansBold, t.textWhite, t.textXs]}>
+        <Text
+          style={[
+            t.fontSansBold,
+            {color: gold ? DARK_BLUE : 'white'},
+            t.textXs,
+          ]}>
           {title.toUpperCase()}
         </Text>
       </View>

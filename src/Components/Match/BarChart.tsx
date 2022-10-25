@@ -10,9 +10,10 @@ const chartConfig = {
   backgroundGradientFrom: '#ffffff',
   backgroundGradientTo: '#ffffff',
   color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-  strokeWidth: 1, // optional, default 3
+  strokeWidth: 0, // optional, default 3
   barPercentage: 1,
   useShadowColorFromDataset: false,
+  horizontalOffset: -10,
 };
 
 export const BarChart = ({players, winners, errorForced, nonForced}) => {
@@ -23,13 +24,16 @@ export const BarChart = ({players, winners, errorForced, nonForced}) => {
       {data && (
         <StackedBarChart
           data={data}
-          width={Dimensions.get('window').width - 40}
+          width={Dimensions.get('window').width}
           height={320}
-          hideLegend={false}
+          hideLegend={true}
           withHorizontalLabels={false}
           barPercentage={1}
           withVerticalLabels={true}
           chartConfig={chartConfig}
+          segments={-1}
+          formatYLabel={yLabel => `G ${Math.round(yLabel)}`}
+          style={{marginLeft: -60}}
         />
       )}
     </View>

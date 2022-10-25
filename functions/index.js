@@ -27,6 +27,7 @@ const {checkNewUser} = require("./admin/checkNewUser")
 const {handleInvitations} = require("./coach/handlnvitation")
 const {leaveCoach} = require("./players/leaveCoach")
 const {onDeletePlayer} = require("./players/onDeletePlayer")
+const {onSyncPlayer} = require("./coach/onSyncPlayer")
 
 admin.initializeApp(functions.config().firebase);
 
@@ -46,6 +47,7 @@ exports.onDeletePlayer=onDeletePlayer;
 exports.updatePlayer = updatePlayer;
 exports.checkNewUser = checkNewUser;
 exports.activePlayer = activePlayer;
+exports.onSyncPlayer = onSyncPlayer;
 exports.getCalendar = getCalendar;
 exports.leaveCoach = leaveCoach;
 exports.newSession = newSession;

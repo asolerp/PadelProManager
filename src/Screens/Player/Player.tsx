@@ -45,7 +45,11 @@ export const PlayerScreen = ({route}) => {
   } = useTips({
     playerEmail: player?.email,
   });
-  const renderItem = ({item}) => <MatchResume match={item} />;
+  const renderItem = ({item}) => (
+    <MatchResume match={item} playerEmail={player?.email} />
+  );
+
+  console.log('HOLA', player?.email);
 
   return (
     <ScreenLayout edges={['top', 'left', 'right', 'bottom']}>

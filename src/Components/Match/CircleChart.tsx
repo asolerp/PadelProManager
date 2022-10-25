@@ -3,13 +3,42 @@ import {StyleSheet, View} from 'react-native';
 import t from '../../Theme/theme';
 import Pie from 'react-native-pie';
 
-export const CircleChart = ({data, children}) => {
+const sizes = {
+  normal: {
+    radius: 50,
+    innerRadius: 40,
+    height: 100,
+  },
+  small: {
+    radius: 35,
+    innerRadius: 30,
+    height: 70,
+  },
+};
+
+export const CircleChart = ({data, children, size = 'normal'}) => {
   const hasStatistics = data.some(s => s.percentage > 0);
+  const sizeCircle = sizes[size];
 
   return (
-    <View style={[t.w28, {alignItems: 'center'}]}>
-      {hasStatistics && <Pie radius={50} innerRadius={40} sections={data} />}
-      <View style={[t.w14, hasStatistics && styles.gauge]}>{children}</View>
+    <View style={[{alignItems: 'center'}, t.mR2]}>
+      {hasStatistics && (
+        <Pie
+          radius={sizeCircle.radius}
+          innerRadius={sizeCircle.innerRadius}
+          sections={data}
+        />
+      )}
+      <View
+        style={[
+          t.w14,
+          hasStatistics && styles.gauge,
+          {height: sizeCircle.height},
+          !hasStatistics && t.itemsCenter,
+          !hasStatistics && t.justifyCenter,
+        ]}>
+        {children}
+      </View>
     </View>
   );
 };
@@ -18,7 +47,7 @@ const styles = StyleSheet.create({
   container: {alignItems: 'center', justifyContent: 'center', height: 1050},
   gauge: {
     position: 'absolute',
-    height: 100,
+    width: 40,
     alignItems: 'center',
     justifyContent: 'center',
   },

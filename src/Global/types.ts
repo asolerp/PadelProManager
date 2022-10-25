@@ -74,6 +74,8 @@ interface PlayersStats {
 export interface MatchStatistic {
   t1Br: number;
   t2Br: number;
+  t1WBr: number;
+  t2WBr: number;
   t1GP: number;
   t2GP: number;
   t1Tw: number;
@@ -100,6 +102,11 @@ export interface MatchStatistic {
   t2Tx4: number;
   totalPoints: number;
   totalGoldPoints: number;
+  totalWinners: number;
+  totalEF: number;
+  totalNF: number;
+  totalWonGoldPointsT1: number;
+  totalWonGoldPointsT2: number;
   totalWPerPlayer: PlayersStats;
   totalEFPerPlayer: PlayersStats;
   totalNFPerPlayer: PlayersStats;

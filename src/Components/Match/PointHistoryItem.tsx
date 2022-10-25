@@ -80,7 +80,7 @@ export const PointHistoryItem = ({match, pointHistory}) => {
         </View>
       </BottomModal>
       <View style={[t.pY3]}>
-        <View style={[t.flexRow, t.justifyBetween, t.itemsCenter, t.mB3]}>
+        <View style={[t.flexRow, t.justifyBetween, t.itemsCenter]}>
           <View style={[t.flexRow]}>
             <Text style={[t.mB1]}>
               <Text style={[getGameActive('t1')]}>
@@ -103,10 +103,10 @@ export const PointHistoryItem = ({match, pointHistory}) => {
         {pointHistory?.points?.map((p, i) => {
           const {player, result, point} = p;
           return (
-            <View key={i}>
-              <View style={[t.flexRow, t.flexWrap, t.itemsCenter, t.mB2]}>
+            <View key={i} style={[t.mT0]}>
+              <View style={[t.flexRow, t.flexWrap, t.itemsCenter]}>
                 {p?.player && (
-                  <Text style={[t.textBase]}>
+                  <Text style={[t.textBase, t.mY2]}>
                     <Text style={[t.fontSansBold]}>
                       {shortName(1, player?.firstName, player?.secondName)}
                     </Text>
@@ -122,8 +122,10 @@ export const PointHistoryItem = ({match, pointHistory}) => {
                     </Text>
                   </Text>
                 )}
-                {p?.info && (
-                  <Text style={[t.fontSans, t.mT2, t.textBase]}>{p?.info}</Text>
+                {p?.info?.length > 0 && (
+                  <Text style={[t.fontSans, t.textBase, t.mY1]}>
+                    {p?.info || ''}
+                  </Text>
                 )}
               </View>
             </View>
@@ -150,7 +152,7 @@ export const PointHistoryItem = ({match, pointHistory}) => {
             </View>
           </View>
         )}
-        <View style={[t.flexRow, t.justifyEnd]}>
+        <View style={[t.flexRow, t.justifyEnd, t.mT2]}>
           <PressableOpacity
             onPress={() => {
               setComment(pointHistory?.comment);

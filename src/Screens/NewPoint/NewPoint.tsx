@@ -35,6 +35,8 @@ import {shortName} from '../../Utils/parsers';
 
 import {useWalkthroughSteps} from './hooks/useWalkthroughSteps';
 import PressableOpacity from '../../Components/UI/PressableOpacity';
+import {useRestorePoint} from './hooks/useRestorePoint';
+import {getTotalPlayerStatistics} from './utils/getTotalPointsPlayer';
 
 export const NEW_POINT_SCREEN_KEY = 'newPoint';
 const MODAL_WIDTH = 340;
@@ -61,8 +63,10 @@ export const NewPoint = ({route}) => {
     checkIfIsInPointStats,
     isPointWithoutStatistic,
     handlePressWinPointTeam,
-    getTotalPlayerStatistics,
   } = useNewPoint();
+
+  const {handleRestorePoint, loadingRestorePoint, lastState} =
+    useRestorePoint(matchId);
 
   const {
     start,
@@ -84,7 +88,7 @@ export const NewPoint = ({route}) => {
     if (isPointWithoutStatistic) {
       return handlerSavePoint({
         winPointTeam,
-        points: [{info: 'Punto sin estádística'}],
+        points: [{info: ''}],
       });
     } else {
       return handlerSavePoint({points: point, winPointTeam});
@@ -212,13 +216,36 @@ export const NewPoint = ({route}) => {
         ]}>
         <Button
           loading={loading}
-          title="Enviar"
+          title="ENVIAR"
           active
           type="success"
-          size="lg"
+          size="md"
           style={[t.w32]}
           onPress={() => {
             handleSavePoint(pointStats);
+          }}
+        />
+      </View>
+      <View
+        onLayout={stepFourthOnLayout}
+        style={[
+          t.absolute,
+          t.left0,
+          t.p2,
+          t.right0,
+          t.z50,
+          t.bottom10,
+          t.justifyCenter,
+          t.itemsCenter,
+        ]}>
+        <Button
+          disabled={!lastState}
+          loading={loadingRestorePoint}
+          title="Eliminar punto"
+          size="xs"
+          active
+          onPress={() => {
+            handleRestorePoint();
           }}
         />
       </View>

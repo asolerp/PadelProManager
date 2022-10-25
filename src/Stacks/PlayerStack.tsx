@@ -14,6 +14,7 @@ import {ProfileScreen, PROFILE_SCREEN_KEY} from '../Screens/Profile/Profile';
 import {Session, SESSION_SCREEN_KEY} from '../Screens/Session/Session';
 import {Chat, CHAT_SCREEN_KEY} from '../Screens/Chat/Chat';
 import {ProMatch, PRO_MATCH_SCREEN_KEY} from '../Screens/ProMatch/ProMatch';
+import {CoachCode, COACH_CODE_SCREEN_KEY} from '../Screens/CoachCode/CoachCode';
 
 const Stack = createNativeStackNavigator();
 
@@ -59,6 +60,11 @@ export const PlayerStack = () => {
           options={{headerShown: false}}
           name={CHAT_SCREEN_KEY}
           component={Chat}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name={COACH_CODE_SCREEN_KEY}
+          component={CoachCode}
         />
       </Stack.Group>
       <Stack.Group>

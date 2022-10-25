@@ -2,7 +2,7 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const {firestore} = require("firebase-admin");
 const {tennisGameLogic} = require("../utils/gameLogic");
-const {FB_REGION, MATCHES, HISTORY} = require("../utils/constants");
+const {FB_REGION, MATCHES, HISTORY, LAST_STATE} = require("../utils/constants");
 
 const newPoint = functions
   .region(FB_REGION)
@@ -19,9 +19,17 @@ const newPoint = functions
     }
 
     const {match, stats} = data;
+    
+    const batch = admin.firestore().batch();
+    const matchRef = admin.firestore().collection(MATCHES).doc(match?.id);
+
+    await matchRef.collection(LAST_STATE).doc("lastState").set({
+      game: match.game,
+      statistics: match.statistics,
+      createdAt: new Date()
+    })
 
     const newStateGame = tennisGameLogic(match?.game, stats?.winPointTeam);
-    const matchRef = admin.firestore().collection(MATCHES).doc(match?.id);
     const historyQuery = admin
       .firestore()
       .collection(MATCHES)
@@ -58,129 +66,188 @@ const newPoint = functions
 
       delete newStateGame.info;
 
- 
-      // if (newStateGame?.team1 === 3 && newStateGame?.team2 === 3) {
-      //   batchMatch.update(matchRef,{
-      //     [`statistics.s${newStateGame.set}.breakpoint`]:
-      //       firestore.FieldValue.increment(1),
-      //     ["statistics.total.breakpoint"]: firestore.FieldValue.increment(1),
-      //   });
-      // }
 
-      // if (
-      //   match?.game?.team1 === 3 &&
-      //   match?.game?.team2 === 3 &&
-      //   match?.game?.goldPoint
-      // ) {
-      //   if (match?.game.service === "t1" && stats?.winPointTeam === "team1") {
-      //      batchMatch.update(matchRef, {
-      //       [`statistics.s${match?.game.set}.team1.global.serviceBreakpoint`]:
-      //         firestore.FieldValue.increment(1),
-      //       ["statistics.total.team1.global.serviceBreakpoint"]:
-      //         firestore.FieldValue.increment(1),
-      //     });
-      //   }
-      //   if (match?.game.service === "t2" && stats?.winPointTeam === "team1") {
-      //     batchMatch.update(matchRef, {
-      //       [`statistics.s${match?.game.set}.team1.global.returningBreakpoint`]:
-      //         firestore.FieldValue.increment(1),
-      //       ["statistics.total.team1.global.returningBreakpoint"]:
-      //         firestore.FieldValue.increment(1),
-      //     });
-      //   }
-      //   if (match?.game.service === "t1" && stats?.winPointTeam === "team2") {
-      //     batchMatch.update(matchRef, {
-      //       [`statistics.s${match?.game.set}.team2.global.returningBreakpoint`]:
-      //         firestore.FieldValue.increment(1) || 1,
-      //       ["statistics.total.team2.global.returningBreakpoint"]:
-      //         firestore.FieldValue.increment(1) || 1,
-      //     });
-      //   }
-      //   if (match?.game.service === "t2" && stats?.winPointTeam === "team2") {
-      //     batchMatch.update(matchRef, {
-      //       [`statistics.s${match?.game.set}.team2.global.serviceBreakpoint`]:
-      //         firestore.FieldValue.increment(1) || 1,
-      //       ["statistics.total.team2.global.serviceBreakpoint"]:
-      //         firestore.FieldValue.increment(1) || 1,
-      //     });
-      //   }
-      //   batchMatch.update(matchRef, {
-      //     [`statistics.s${match?.game.set}.${stats?.winPointTeam}.global.breakpoint`]:
-      //       firestore.FieldValue.increment(1),
-      //     [`statistics.total.${stats?.winPointTeam}.global.breakpoint`]:
-      //       firestore.FieldValue.increment(1),
-      //   });
-      // }
 
-        await Promise.all(stats?.points
-          .map(async p => {
-              console.log("RESULT", p?.result)
-              if (!p.result) {
-                if(match?.game?.lastPointWon === "team1" && !p?.result) {
-                  return await matchRef.update({
-                    ["statistics.total.team1.global.wNs.count"]:
-                    firestore.FieldValue.increment(1),
-                    ["statistics.total.team2.global.lNs.count"]:
-                    firestore.FieldValue.increment(1),
-                    [`statistics.s${newStateGame.set}.team1.global.wNs.count`]:
-                    firestore.FieldValue.increment(1),
-                    [`statistics.s${newStateGame.set}.team2.global.lNs.count`]:
-                    firestore.FieldValue.increment(1),
-                  })
-                }
-  
-                if(match?.game?.lastPointWon === "team2" && !p?.result) {
-                  return await matchRef.update({
-                    ["statistics.total.team1.global.lNs.count"]:
-                    firestore.FieldValue.increment(1),
-                    ["statistics.total.team2.global.wNs.count"]:
-                    firestore.FieldValue.increment(1),
-                    [`statistics.s${newStateGame.set}.team1.global.lNs.count`]:
-                    firestore.FieldValue.increment(1),
-                    [`statistics.s${newStateGame.set}.team2.global.wNs.count`]:
-                    firestore.FieldValue.increment(1),
-                  })
-                }
-              } else {
-                 return await matchRef.update({
-                 [`statistics.s${newStateGame.set}.${p?.team}.players.${p?.player?.id}.${p?.result}.${p?.point}`]:
-                   firestore.FieldValue.increment(1),
-                 [`statistics.s${newStateGame.set}.${p?.team}.global.${p?.result}.${p?.point}`]:
-                   firestore.FieldValue.increment(1),
-                 [`statistics.s${newStateGame.set}.${p?.team}.global.${p?.result}.count`]:
-                   firestore.FieldValue.increment(1),
-                 [`statistics.total.${p?.team}.players.${p?.player?.id}.${p?.result}.count`]:
-                   firestore.FieldValue.increment(1),
-                 [`statistics.total.${p?.team}.players.${p?.player?.id}.${p?.result}.${p?.point}`]:
-                   firestore.FieldValue.increment(1),
-                 [`statistics.total.${p?.team}.global.${p?.result}.${p?.point}`]:
-                   firestore.FieldValue.increment(1),
-                 [`statistics.total.${p?.team}.global.${p?.result}.count`]:
-                   firestore.FieldValue.increment(1),
-               })
-              }
-            }
-          ))
+      if(match.game.service === "t1" && newStateGame?.team2 === 3 && newStateGame?.team1 < 3) {
+       
+        // statisticsToUpdate[`s${newStateGame.set}`].team1.global.breakpoints = match?.statistics[`s${newStateGame.set}`].team1.global.breakpoints + 1
+        // statisticsToUpdate.total.team1.global.breakpoints = match?.statistics.total.team1.global.breakpoints + 1
 
-        if (
-          newStateGame?.consecutiveWon >
-          match?.statistics?.total?.[newStateGame?.lastPointWon].global?.consecutiveWon || 0
-        ) {
-          await matchRef.update({
-            [`statistics.total.${newStateGame?.lastPointWon}.global.consecutiveWon`]:
-              newStateGame?.consecutiveWon,
+       batch.update(matchRef,{
+          [`statistics.s${newStateGame.set}.team2.global.breakpoints`]:
+            firestore.FieldValue.increment(1),
+          ["statistics.total.team2.global.breakpoints"]: firestore.FieldValue.increment(1),
+        });
+      }
+
+      if(match.game.service === "t2" && newStateGame?.team1 === 3 && newStateGame?.team2 < 3) {
+        
+        // statisticsToUpdate[`s${newStateGame.set}`].team2.global.breakpoints = match?.statistics[`s${newStateGame.set}`].team2.global.breakpoints + 1
+        // statisticsToUpdate.total.team2.global.breakpoints = match?.statistics?.total.team2.global.breakpoints + 1
+
+        batch.update(matchRef,{
+          [`statistics.s${newStateGame.set}.team1.global.breakpoints`]:
+            firestore.FieldValue.increment(1),
+          ["statistics.total.team1.global.breakpoints"]: firestore.FieldValue.increment(1),
+        });
+      }
+
+
+      if(match.game.service === "t2" && match?.game?.team1 === 3) {
+        if (stats?.winPointTeam === "team1") {
+          batch.update(matchRef,{
+            [`statistics.s${newStateGame.set}.team1.global.wonBreakpoints`]:
+              firestore.FieldValue.increment(1),
+            ["statistics.total.team1.global.wonBreakpoints"]: firestore.FieldValue.increment(1),
           });
         }
+      }
 
-        await matchRef.update({
-          [`statistics.s${newStateGame.set}.count`]:
+      if(match.game.service === "t1" && match?.game?.team2 === 3) {
+        if (stats?.winPointTeam === "team2") {
+          batch.update(matchRef,{
+            [`statistics.s${newStateGame.set}.team2.global.wonBreakpoints`]:
+              firestore.FieldValue.increment(1),
+            ["statistics.total.team2.global.wonBreakpoints"]: firestore.FieldValue.increment(1),
+          });
+        }
+      }
+
+ 
+      if (newStateGame?.team1 === 3 && newStateGame?.team2 === 3 &&
+        match?.game?.goldPoint) {
+         if (match.game.service === "t1") {
+          batch.update(matchRef,{
+            [`statistics.s${newStateGame.set}.team2.global.breakpoints`]:
+              firestore.FieldValue.increment(1),
+            ["statistics.total.team2.global.breakpoints"]: firestore.FieldValue.increment(1),
+          });
+         } else {
+          batch.update(matchRef,{
+            [`statistics.s${newStateGame.set}.team1.global.breakpoints`]:
+              firestore.FieldValue.increment(1),
+            ["statistics.total.team1.global.breakpoints"]: firestore.FieldValue.increment(1),
+          });
+         }
+         batch.update(matchRef,{
+          [`statistics.s${newStateGame.set}.goldPoints`]:
             firestore.FieldValue.increment(1),
-          ["statistics.total.count"]: firestore.FieldValue.increment(1),
+          ["statistics.total.goldPoints"]: firestore.FieldValue.increment(1),
         });
+      }
 
-        await matchRef.update({
-          game: newStateGame,
+      if (
+        match?.game?.team1 === 3 &&
+        match?.game?.team2 === 3 &&
+        match?.game?.goldPoint
+      ) {
+        if (stats?.winPointTeam === "team1") {
+          batch.update(matchRef,{
+            [`statistics.s${match?.game.set}.team1.global.wonGoldPoints`]:
+              firestore.FieldValue.increment(1),
+            ["statistics.total.team1.global.wonGoldPoints"]:
+              firestore.FieldValue.increment(1),
+          });
+        } else {
+          batch.update(matchRef,{
+            [`statistics.s${match?.game.set}.team2.global.wonGoldPoints`]:
+              firestore.FieldValue.increment(1),
+            ["statistics.total.team2.global.wonGoldPoints"]:
+              firestore.FieldValue.increment(1),
+          });
+        }
+      }
+
+      console.log("[[POINTS]]", stats?.points)
+
+      const p = stats?.points?.[0]
+
+    
+      console.log("RESULT", p?.result)
+      
+      if (!p.result) {
+        if(stats?.winPointTeam === "team1") {
+          batch.update(matchRef,{
+            ["statistics.total.team1.global.wNs.count"]:
+            firestore.FieldValue.increment(1),
+            ["statistics.total.team2.global.lNs.count"]:
+            firestore.FieldValue.increment(1),
+            [`statistics.s${newStateGame.set}.team1.global.wNs.count`]:
+            firestore.FieldValue.increment(1),
+            [`statistics.s${newStateGame.set}.team2.global.lNs.count`]:
+            firestore.FieldValue.increment(1),
+          })
+        }
+
+        if(stats?.winPointTeam === "team2") {
+          batch.update(matchRef,{
+            ["statistics.total.team1.global.lNs.count"]:
+            firestore.FieldValue.increment(1),
+            ["statistics.total.team2.global.wNs.count"]:
+            firestore.FieldValue.increment(1),
+            [`statistics.s${newStateGame.set}.team1.global.lNs.count`]:
+            firestore.FieldValue.increment(1),
+            [`statistics.s${newStateGame.set}.team2.global.wNs.count`]:
+            firestore.FieldValue.increment(1),
+          })
+        }
+      } else {
+        batch.update(matchRef,{
+          [`statistics.s${newStateGame.set}.${p?.team}.players.${p?.player?.id}.${p?.result}.${p?.point}`]:
+            firestore.FieldValue.increment(1),
+          [`statistics.s${newStateGame.set}.${p?.team}.global.${p?.result}.${p?.point}`]:
+            firestore.FieldValue.increment(1),
+          [`statistics.s${newStateGame.set}.${p?.team}.global.${p?.result}.count`]:
+            firestore.FieldValue.increment(1),
+          [`statistics.total.${p?.team}.players.${p?.player?.id}.${p?.result}.count`]:
+            firestore.FieldValue.increment(1),
+          [`statistics.total.${p?.team}.players.${p?.player?.id}.${p?.result}.${p?.point}`]:
+            firestore.FieldValue.increment(1),
+          [`statistics.total.${p?.team}.global.${p?.result}.${p?.point}`]:
+            firestore.FieldValue.increment(1),
+          [`statistics.total.${p?.team}.global.${p?.result}.count`]:
+            firestore.FieldValue.increment(1),
+        })
+      }
+
+      console.log("[[CONSECUTIVE]]", newStateGame?.consecutiveWon > (match?.statistics?.[match?.game.set]?.[stats?.winPointTeam]?.global?.consecutiveWon || 0))
+
+      if (
+        newStateGame?.consecutiveWon >
+        (match?.statistics?.[match?.game.set]?.[stats?.winPointTeam]?.global?.consecutiveWon || 0)
+      ) {
+
+        console.log("actualizando set")
+
+        batch.update(matchRef,{
+          [`statistics.s${match?.game.set}.${stats?.winPointTeam}.global.consecutiveWon`]:
+            newStateGame?.consecutiveWon,
         });
+      }
+      
+
+      if (
+        newStateGame?.consecutiveWon >
+        (match?.statistics?.total?.[stats?.winPointTeam].global?.consecutiveWon || 0)
+      ) {
+
+        batch.update(matchRef,{
+          [`statistics.total.${stats?.winPointTeam}.global.consecutiveWon`]:
+            newStateGame?.consecutiveWon,
+        });
+      }
+
+      batch.update(matchRef,{
+        [`statistics.s${newStateGame.set}.count`]:
+          firestore.FieldValue.increment(1),
+        ["statistics.total.count"]: firestore.FieldValue.increment(1),
+      });
+
+      batch.update(matchRef,{
+        game: newStateGame,
+      });
+
+      await batch.commit()
 
     } catch (err) {
       console.log("ERROR", err)

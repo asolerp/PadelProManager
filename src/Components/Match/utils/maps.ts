@@ -33,6 +33,8 @@ export const mapShotColorStyles = {
   br: [t.textErrorDark],
   bj: [t.textPrimaryDark],
   sm: [t.textSecondaryDark],
+  x3: [t.textInfoLight],
+  x4: [t.textWarningLight],
 };
 
 export const mapShotNameShort = {
@@ -59,4 +61,6 @@ export const mapShotName = {
   br: 'bajada de revés',
   bj: 'bandeja',
   sm: 'smash',
+  x3: 'por 3',
+  x4: 'por 4',
 };

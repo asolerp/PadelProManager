@@ -153,24 +153,24 @@ android {
              applicationId "com.padelpromanager.development"
              targetSdkVersion rootProject.ext.targetSdkVersion
              resValue "string", "build_config_package", "com.padelpromanager"
-             versionCode 1
-             versionName "1.0"
+             versionCode 2
+             versionName "1.2"
         }
         production {
              minSdkVersion rootProject.ext.minSdkVersion
              applicationId "com.padelpromanager"
              targetSdkVersion rootProject.ext.targetSdkVersion
              resValue "string", "build_config_package", "com.padelpromanager"
-             versionCode 1
-             versionName "1.0"
+             versionCode 2
+             versionName "1.2"
         }
     }
     defaultConfig {
         applicationId "com.padelpromanager"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.2"
     }
     splits {
         abi {

@@ -12,3 +12,4 @@ export const ANALYTICS = 'analytics';
 export const TIPS = 'tips';
 export const REQUESTS = 'requests';
 export const PENDING = 'pending';
+export const HISTORY = 'history';
