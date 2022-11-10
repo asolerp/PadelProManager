@@ -1,8 +1,9 @@
+import com.android.build.OutputFile
+
 apply plugin: "com.android.application"
 apply plugin: 'com.google.gms.google-services'
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
-import com.android.build.OutputFile
 
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
@@ -78,11 +79,6 @@ import com.android.build.OutputFile
  *   extraPackagerArgs: []
  * ]
  */
-
-project.ext.react = [
-    enableHermes: false,  // clean and rebuild if changing
-]
-
 project.ext.envConfigFiles = [
     developmentdebug: ".env.development",
     developmentrelease: ".env.development",
@@ -92,7 +88,14 @@ project.ext.envConfigFiles = [
 ]
 
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+
+
+project.ext.react = [
+    enableHermes: false,  // clean and rebuild if changing
+]
+
 apply from: "../../node_modules/react-native/react.gradle"
+
 apply plugin: "com.bugsnag.android.gradle"
 
 /**
@@ -153,24 +156,25 @@ android {
              applicationId "com.padelpromanager.development"
              targetSdkVersion rootProject.ext.targetSdkVersion
              resValue "string", "build_config_package", "com.padelpromanager"
-             versionCode 2
-             versionName "1.2"
+             versionCode 5
+             versionName "1.4.2"
         }
         production {
              minSdkVersion rootProject.ext.minSdkVersion
              applicationId "com.padelpromanager"
              targetSdkVersion rootProject.ext.targetSdkVersion
              resValue "string", "build_config_package", "com.padelpromanager"
-             versionCode 2
-             versionName "1.2"
+             versionCode 5
+             versionName "1.4.2"
         }
     }
     defaultConfig {
         applicationId "com.padelpromanager"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "1.2"
+        versionCode 5
+        versionName "1.4.2"
+        resValue "string", "build_config_package", "com.padelpromanager"
     }
     splits {
         abi {

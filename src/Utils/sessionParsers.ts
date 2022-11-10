@@ -1,14 +1,16 @@
+import t from '../Theme/theme';
+
 export const colorParser = {
   blue: {
-    backgroundColor: '#79e4f720',
-    borderColor: '#79e4f7',
+    backgroundColor: t.bgInfo.backgroundColor,
+    borderColor: t.bgInfo.backgroundColor,
   },
   yellow: {
-    backgroundColor: '#f0f47720',
-    borderColor: '#f0f477',
+    backgroundColor: t.bgWarningDark.backgroundColor,
+    borderColor: t.bgWarningDark.backgroundColor,
   },
   red: {
-    backgroundColor: '#f4777720',
+    backgroundColor: '#f47777',
     borderColor: '#f47777',
   },
 };

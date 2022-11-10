@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 
 import {View} from 'react-native';
 
-import {openScreenWithPush} from '../../Router/utils/actions';
+import {openDrawer, openScreenWithPush} from '../../Router/utils/actions';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {PROFILE_SCREEN_KEY} from '../../Screens/Profile/Profile';
 import t from '../../Theme/theme';
@@ -24,7 +24,7 @@ export const HomeHeader: React.FC<Props> = ({position}) => {
   const {noReadMessages} = useGetNoReadMessages();
 
   return (
-    <View style={[t.mB10]}>
+    <View style={[t.mB10, t.pX4]}>
       <Header
         withPadding={false}
         position={position}
@@ -34,7 +34,7 @@ export const HomeHeader: React.FC<Props> = ({position}) => {
               imageStyle={[t.w12, t.h12]}
               style={[t.mR4]}
               img={user?.profileImg}
-              onPress={() => openScreenWithPush(PROFILE_SCREEN_KEY)}
+              onPress={() => openDrawer()}
             />
             <WelcomeMessage />
           </View>

@@ -33,7 +33,7 @@ export const Banner: React.FC<Props> = ({
   return (
     <ImageBackground
       source={{uri: imageSrc}}
-      imageStyle={[t.roundedLg, t.opacity50]}
+      imageStyle={[t.roundedSm, t.opacity50]}
       style={[
         {width: Dimensions.get('window').width - 32},
         t.h48,
@@ -46,7 +46,7 @@ export const Banner: React.FC<Props> = ({
           t.wFull,
           t.hFull,
           t.p3,
-          t.roundedLg,
+          t.roundedSm,
           bg,
           t.opacity60,
           t.absolute,

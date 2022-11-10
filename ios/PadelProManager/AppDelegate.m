@@ -10,7 +10,6 @@
 #import <React/RCTRootView.h>
 #import <Firebase.h>
 #import "RNBootSplash.h"
-#import <RNFBDynamicLinksAppDelegateInterceptor.h>
 
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
@@ -19,6 +18,8 @@
 #import <FlipperKitNetworkPlugin/FlipperKitNetworkPlugin.h>
 #import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
 #import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
+
+#import <RNFBDynamicLinksAppDelegateInterceptor.h>
 
 static void InitializeFlipper(UIApplication *application) {
   FlipperClient *client = [FlipperClient sharedClient];
@@ -49,6 +50,7 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [RNFBDynamicLinksAppDelegateInterceptor sharedInstance];
   [Bugsnag start];
 
 #ifdef FB_SONARKIT_ENABLED

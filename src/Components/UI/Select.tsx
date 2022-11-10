@@ -130,7 +130,7 @@ export const Select = ({
             onBlur={onBlur}
             label={label}
             style={[t.flex2]}
-            inputStyle={[value && t.fontSansBold, t.textGray900]}
+            inputStyle={[value && t.fontSansBold, t.textGray900, t.p0]}
           />
         </View>
       </Pressable>

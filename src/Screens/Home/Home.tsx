@@ -3,7 +3,7 @@ import React, {FunctionComponent, useCallback} from 'react';
 import {ScreenLayout} from '../../Components/Layout';
 import {View, Text, ScrollView, RefreshControl} from 'react-native';
 import t from '../../Theme/theme';
-import {LiveMatchResume} from '../../Components/Common/LiveMatchResume';
+
 import {MatchResume} from '../../Components/Home/MatchResume';
 import {getCurrencies} from 'react-native-localize';
 
@@ -13,6 +13,7 @@ import {DailyExercise} from '../../Components/Home/DailyExercise';
 import {sortByDate} from '../../Utils/sorts';
 
 import {HomeHeader} from '../../Components/Home/HomeHeader';
+import {MATCH_SCREEN_KEY} from '../../Screens/Match/Match';
 
 import {MyTodaySessions} from '../../Components/Home/MyTodaySessions';
 import {useHideBootSplash} from '../../Hooks/useHideBootSplash';
@@ -30,11 +31,14 @@ import {ProMatchSkeleton} from '../../Components/Home/skeleton/ProMatchSkeleton'
 import PressableOpacity from '../../Components/UI/PressableOpacity';
 
 import {openStack, openScreenWithPush} from '../../Router/utils/actions';
-import {TAB_STACK_KEY} from '../../Router/utils/routerKeys';
+import {DRAWER_STACK_KEY} from '../../Router/utils/routerKeys';
 import {useInAppMessaging} from '../../Hooks/useInAppMessaging';
 import {TRAINING_SCREEN_KEY} from '../Training/Training';
 import {useGetPendingInvitations} from './hooks/useGetPendingInvitations';
 import {PendingRelationModal} from '../../Components/Home/PendingRelationModal';
+import {ProMatchCard} from '../../Components/Home/ProMatch';
+
+import {FocusAwareStatusBar} from '../../Components/Drawer/FocusAwareStatusBar';
 
 export const HOME_SCREEN_KEY = 'homeScreen';
 
@@ -69,10 +73,21 @@ export const HomeScreen: FunctionComponent = () => {
     }, []),
   );
 
-  const renderItem = ({item}) => <LiveMatchResume match={item} />;
+  const renderItem = ({item}) => (
+    <ProMatchCard
+      onPress={() =>
+        openScreenWithPush(MATCH_SCREEN_KEY, {
+          matchId: item?.id,
+          title: item?.round,
+        })
+      }
+      match={item}
+    />
+  );
 
   return (
     <ScreenLayout edges={['top', 'left', 'right']}>
+      <FocusAwareStatusBar barStyle="dark-content" />
       <PendingRelationModal
         onAccept={handleAcceptInvitation}
         onCancel={handleCancelInvitation}
@@ -83,15 +98,15 @@ export const HomeScreen: FunctionComponent = () => {
       />
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={[t.flex1, t.pX4]}
+        style={[t.flex1]}
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={refetch} />
         }>
         <HomeHeader />
         {totalPending > 0 && (
-          <View style={[t.mB7]}>
+          <View style={[t.mB7, t.pX4]}>
             <PressableOpacity
-              onPress={() => openStack(TAB_STACK_KEY, 'Accounting')}
+              onPress={() => openStack(DRAWER_STACK_KEY, 'Contabilidad')}
               style={[
                 t.p3,
                 t.roundedSm,
@@ -112,7 +127,30 @@ export const HomeScreen: FunctionComponent = () => {
             </PressableOpacity>
           </View>
         )}
-        <View style={[t.mB7]}>
+        {/* <View style={[t.mB7, t.pX4]}>
+          <PressableOpacity
+            onPress={() => openScreenWithPush(NEW_OPEN_SESSION_SCREEN_KEY)}
+            style={[
+              t.w60,
+              t.shadow,
+              t.bgWhite,
+              t.borderGray200,
+              t.roundedSm,
+              t.itemsCenter,
+              t.p4,
+              t.justifyCenter,
+              {borderWidth: 1},
+            ]}>
+            <Text style={[t.mB2, t.fontSansBold, t.textLg, t.textGray800]}>
+              Crear sesión
+            </Text>
+            <Text style={[t.textXs]}>
+              Crea una sesión de entrenamiento para que jugadores de cualquier
+              parte puedan contratar tus servicios
+            </Text>
+          </PressableOpacity>
+        </View> */}
+        <View style={[t.mB7, t.pX4]}>
           {loading ? (
             <ProMatchSkeleton />
           ) : (
@@ -121,14 +159,14 @@ export const HomeScreen: FunctionComponent = () => {
         </View>
         <View>
           {loading ? (
-            <View style={[t.mB7]}>
+            <View style={[t.mB7, t.pX4]}>
               <ProMatchSkeleton />
             </View>
           ) : (
             <>
               {proMatches?.length > 0 && (
                 <View style={[t.mB7]}>
-                  <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
+                  <Text style={[t.textXl, t.fontSansBold, t.mB5, t.pX4]}>
                     {loc('home_screen_wpt_match_title')}
                   </Text>
                   <ProMatchesList proMatches={proMatches} />
@@ -137,7 +175,7 @@ export const HomeScreen: FunctionComponent = () => {
             </>
           )}
         </View>
-        <View>
+        <View style={[t.pX4]}>
           {loading ? (
             <View style={[t.mB7]}>
               <PlayersSkeleton />
@@ -154,18 +192,17 @@ export const HomeScreen: FunctionComponent = () => {
         <View>
           <View style={[t.flexRow, t.justifyBetween, t.itemsCenter]}>
             {loading ? (
-              <View style={[t.mB7]}>
+              <View style={[t.mB7, t.pX4]}>
                 <LiveMatchesSkeleton />
               </View>
             ) : (
               <>
                 {liveMatches?.length > 0 && (
                   <View style={[t.mB7]}>
-                    <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
+                    <Text style={[t.textXl, t.pX4, t.fontSansBold, t.mB5]}>
                       {loc('home_screen_active_matches')}
                     </Text>
                     <PaginatedList
-                      dotColor={[t.bgInfoDark]}
                       data={liveMatches?.sort(sortByDate)}
                       renderItem={renderItem}
                     />
@@ -175,7 +212,7 @@ export const HomeScreen: FunctionComponent = () => {
             )}
           </View>
         </View>
-        <View style={[t.mB5, t.flexRow, t.justifyBetween]}>
+        <View style={[t.mB5, t.pX4, t.flexRow, t.justifyBetween]}>
           <Text style={[t.textXl, t.fontSansBold]}>
             {loc('DAILY_EXERCISE_TITLE')}
           </Text>
@@ -187,12 +224,14 @@ export const HomeScreen: FunctionComponent = () => {
             </Text>
           </PressableOpacity>
         </View>
-        {loading ? (
-          <DailyExerciseSkeleton />
-        ) : (
-          <DailyExercise exercise={dailyExercise} />
-        )}
-        <View>
+        <View style={[t.pX4]}>
+          {loading ? (
+            <DailyExerciseSkeleton />
+          ) : (
+            <DailyExercise exercise={dailyExercise} />
+          )}
+        </View>
+        <View style={[t.pX4]}>
           <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
             Últimos partidos
           </Text>

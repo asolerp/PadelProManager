@@ -13,3 +13,4 @@ export const TIPS = 'tips';
 export const REQUESTS = 'requests';
 export const PENDING = 'pending';
 export const HISTORY = 'history';
+export const OPEN_SESSION = 'openSession';

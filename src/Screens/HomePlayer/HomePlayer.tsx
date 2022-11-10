@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 
 import {View, Text, ScrollView, RefreshControl} from 'react-native';
 import {RadarChart} from '../../Components/Common/RadarChart';
@@ -103,6 +103,17 @@ export const HomePlayerScreen = () => {
           <RefreshControl refreshing={loading} onRefresh={refetch} />
         }>
         <PlayerHeader />
+        {!user?.coachId && (
+          <View style={[t.pX4, t.mB5]}>
+            <Banner
+              mainColor="warning"
+              onPress={() => handleShare()}
+              ctaText="INFORMAR ENTRENADOR"
+              title="Avisa a tu entrenador"
+              subtitle="Hazle saber a tu entrenador de PadelPro para que pueda llevar un seguimiento de tus logros y tu evolución."
+            />
+          </View>
+        )}
         {coach && (
           <>
             {loading ? (
@@ -124,16 +135,16 @@ export const HomePlayerScreen = () => {
             <MyTodaySessions sessions={todaySessions} />
           </View>
         )}
-        <View style={[t.pX4]}>
+        <View style={[]}>
           {loading ? (
-            <View style={[t.mB5]}>
+            <View style={[t.pX4, t.mB5]}>
               <ProMatchSkeleton />
             </View>
           ) : (
             <>
               {proMatches?.length > 0 && (
                 <View style={[t.mB5]}>
-                  <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
+                  <Text style={[t.pX4, t.textXl, t.fontSansBold, t.mB5]}>
                     {loc('home_screen_wpt_match_title')}
                   </Text>
                   <ProMatchesList proMatches={proMatches} />
@@ -142,17 +153,7 @@ export const HomePlayerScreen = () => {
             </>
           )}
         </View>
-        {!user?.coachId && (
-          <View style={[t.pX4, t.mB5]}>
-            <Banner
-              mainColor="warning"
-              onPress={() => handleShare()}
-              ctaText="INFORMAR ENTRENADOR"
-              title="Avisa a tu entrenador"
-              subtitle="Hazle saber a tu entrenador de PadelPro para que pueda llevar un seguimiento de tus logros y tu evolución."
-            />
-          </View>
-        )}
+
         <View style={[t.pX4]}>
           <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
             Mis estadísticas

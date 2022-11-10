@@ -12,6 +12,7 @@ export const useGetProducts = () => {
       try {
         const offerings = await Purchases.getOfferings();
         if (offerings.current !== null) {
+          console.log('OFFERINGS', offerings.current);
           setPackages(offerings.current.availablePackages);
         }
       } catch (err) {

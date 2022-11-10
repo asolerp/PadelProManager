@@ -198,11 +198,17 @@ export const useStatistics = ({team1, team2, statistics, mode = 'dark'}) => {
         totalT1PointsWins:
           getStatisticCount(statistics?.[activeSet]?.team1?.global?.w?.count) +
           getStatisticCount(statistics?.[activeSet]?.team1?.global?.ef?.count) +
-          getStatisticCount(statistics?.[activeSet]?.team1?.global?.wNs?.count),
+          getStatisticCount(
+            statistics?.[activeSet]?.team1?.global?.wNs?.count,
+          ) +
+          getStatisticCount(statistics?.[activeSet]?.team2?.global?.nf?.count),
         totalT2PointsWins:
           getStatisticCount(statistics?.[activeSet]?.team2?.global?.w?.count) +
           getStatisticCount(statistics?.[activeSet]?.team2?.global?.ef?.count) +
-          getStatisticCount(statistics?.[activeSet]?.team2?.global?.wNs?.count),
+          getStatisticCount(
+            statistics?.[activeSet]?.team2?.global?.wNs?.count,
+          ) +
+          getStatisticCount(statistics?.[activeSet]?.team1?.global?.nf?.count),
       });
 
       setTableP1(

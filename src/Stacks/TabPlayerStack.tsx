@@ -9,6 +9,8 @@ import {Messages} from '../Screens/Messages/Messages';
 import {useGetNoReadMessages} from '../Hooks/useGetNoReadMessages';
 
 import {useFirebaseAuth} from '../Context/FirebaseContext';
+import {OpenSessions} from '../Screens/OpenSessions/OpenSessions';
+import {Planner} from '../Screens/Planner/Planner';
 
 const Tab = createBottomTabNavigator();
 
@@ -34,6 +36,22 @@ export const TabPlayerStack = () => {
                 focused={focused}
               />
               <Text style={[t.fontSans, t.textXs]}>Panel</Text>
+            </>
+          ),
+        })}
+      />
+      <Tab.Screen
+        name="Planner"
+        component={Planner}
+        options={() => ({
+          tabBarIcon: ({focused}) => (
+            <>
+              <Icon
+                name={focused ? 'ios-calendar' : 'ios-calendar-outline'}
+                size={20}
+                focused={focused}
+              />
+              <Text style={[t.fontSans, t.textXs]}>Sesiones</Text>
             </>
           ),
         })}

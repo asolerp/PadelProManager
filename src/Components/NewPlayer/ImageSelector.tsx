@@ -46,7 +46,14 @@ export const ImageSelector = ({
           />
         </View>
       </BottomModal>
-      <View style={[t.mB10, t.itemsCenter]}>
+      <View
+        style={[
+          t.border0_5,
+          t.borderWhite,
+          t.roundedFull,
+          t.itemsCenter,
+          t.shadow,
+        ]}>
         <PressableOpacity onPress={() => setIsVisible(true)}>
           {imageSource || imageSelected?.assets?.length > 0 ? (
             <ImageBackground

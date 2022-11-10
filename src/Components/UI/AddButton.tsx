@@ -9,11 +9,11 @@ export const AddButton = ({onPress, iconName, style}) => {
     <PressableOpacity
       onPress={onPress}
       style={[
-        t.w14,
-        t.h14,
+        t.w12,
+        t.h12,
         t.absolute,
         t.right5,
-        t.bottom5,
+        t.bottom10,
         t.roundedFull,
         t.justifyCenter,
         t.itemsCenter,
@@ -21,7 +21,7 @@ export const AddButton = ({onPress, iconName, style}) => {
         t.shadow,
         style,
       ]}>
-      <Icon name={iconName} size={35} color="white" />
+      <Icon name={iconName} size={25} color="white" />
     </PressableOpacity>
   );
 };

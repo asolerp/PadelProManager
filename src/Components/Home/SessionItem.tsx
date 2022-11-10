@@ -12,6 +12,8 @@ import PressableOpacity from '../UI/PressableOpacity';
 import {openScreenWithPush} from '../../Router/utils/actions';
 
 import {SESSION_SCREEN_KEY} from '../../Screens/Session/Session';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export const SessionItem = ({item, style}) => {
   const startTime = new Date(item?.startTime);
@@ -26,7 +28,7 @@ export const SessionItem = ({item, style}) => {
         style={[
           t.p3,
           styles.container,
-          colorParser[item?.color],
+          colorParser[item.type === 'session' ? 'blue' : 'yellow'],
           t.roundedSm,
           t.shadowNone,
           style,
@@ -34,43 +36,35 @@ export const SessionItem = ({item, style}) => {
         <View
           style={[t.flexRow, t.itemsStart, t.itemsCenter, t.justifyBetween]}>
           <View style={[t.flexShrink, t.flex1]}>
-            {item?.club && (
-              <Text style={[t.fontSansMedium, t.textXs, t.textGray600, t.mB1]}>
-                {item?.club}
-              </Text>
-            )}
-            <Text style={[t.fontSansBold, t.textBase, t.mB2]}>
+            <View style={[t.flexRow, t.justifyBetween, t.itemsCenter, t.mB1]}>
+              <View style={[t.flexRow, t.itemsCenter]}>
+                <FontAwesome name="map-marker" color="white" style={[t.mR1]} />
+                {item?.club && (
+                  <Text style={[t.fontSansMedium, t.textXs, t.textGray300]}>
+                    {item?.club}
+                  </Text>
+                )}
+              </View>
+              {!!item?.startTime && !!item?.endTime && (
+                <View style={[t.flexRow, t.itemsCenter]}>
+                  <Icon name="ios-time-outline" color="white" />
+                  <Chip
+                    style={[]}
+                    mainColor={item.type === 'session' ? 'info' : 'warningDark'}
+                    text={`${format(startTime, HOUR_FORMAT)} - ${format(
+                      endTime,
+                      HOUR_FORMAT,
+                    )}`}
+                  />
+                </View>
+              )}
+            </View>
+            <Text style={[t.fontSansBold, t.textSm, t.textWhite, t.mB2]}>
               {item?.title}
             </Text>
-            <Text style={[t.fontSansMedium, t.textXs, t.textGray800, t.mB3]}>
+            <Text style={[t.fontSansMedium, t.textXs, t.textGray300, t.mB3]}>
               {item?.notes}
             </Text>
-            {!!item?.startTime && !!item?.endTime && (
-              <View style={[t.flexRow, t.mT2]}>
-                <Chip
-                  style={[t.mB2]}
-                  mainColor="primary"
-                  text={`${format(startTime, HOUR_FORMAT)} - ${format(
-                    endTime,
-                    HOUR_FORMAT,
-                  )}`}
-                />
-              </View>
-            )}
-          </View>
-          <View style={[t.flex1, t.itemsEnd]}>
-            {item?.players && (
-              <View style={[t.flexRow, t.flexWrap, t.justifyCenter]}>
-                {item?.players?.map(p => (
-                  <Avatar
-                    key={p?.id}
-                    img={p?.profileImg}
-                    imageStyle={[t.w10, t.h10]}
-                    // style={[t._mL4, item?.players?.length > 2 && t._mB4]}
-                  />
-                ))}
-              </View>
-            )}
           </View>
         </View>
       </PressableOpacity>

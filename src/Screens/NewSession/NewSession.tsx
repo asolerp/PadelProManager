@@ -104,7 +104,7 @@ export const NewSessionScreen = ({route}) => {
         showsVerticalScrollIndicator={false}>
         {!session && (
           <View style={[t.mT5]}>
-            <Text style={[t.textLg, t.fontSans, t.textGray600]}>
+            <Text style={[t.textSm, t.fontSans, t.textGray600]}>
               Crear una sesión y compártela con tus jugadores. Te ayudamos a que
               te organices para que te puedas dedicar a lo que más importa, tus
               jugadores.
@@ -142,7 +142,7 @@ export const NewSessionScreen = ({route}) => {
                 }}
                 onCancel={hideDatePicker}
               />
-              <View style={[t.flexGrow, t.mT10]}>
+              <View style={[t.flexGrow, t.mT7]}>
                 <Input
                   placeholder={loc('default_club')}
                   value={values?.club}
@@ -239,7 +239,7 @@ export const NewSessionScreen = ({route}) => {
                     onInputPress={() => setIsVisible(true)}
                   />
                 </View>
-                <View
+                {/* <View
                   style={[
                     t.p3,
                     t.flexRow,
@@ -270,8 +270,8 @@ export const NewSessionScreen = ({route}) => {
                       onPress={() => setSessionColor('red')}
                     />
                   </View>
-                </View>
-                <WeekRep onPressDay={handleSetRepDays} activeDays={repDays} />
+                </View> */}
+                {/* <WeekRep onPressDay={handleSetRepDays} activeDays={repDays} /> */}
               </View>
             </>
           )}

@@ -2,7 +2,7 @@ import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
 
 import {en, es} from './src/Translations';
-import {getCurrencies, getLocales} from 'react-native-localize';
+import {getLocales} from 'react-native-localize';
 
 //empty for now
 const resources = {

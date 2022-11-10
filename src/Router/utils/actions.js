@@ -1,10 +1,13 @@
-import {StackActions} from '@react-navigation/native';
+import {DrawerActions, StackActions} from '@react-navigation/native';
 import {createRef} from 'react';
 
 export const navigation = createRef();
 export const routeName = createRef();
 
 export const popScreen = () => navigation.current?.dispatch(StackActions.pop());
+
+export const openDrawer = () =>
+  navigation.current?.dispatch(DrawerActions.openDrawer());
 
 export const openScreen = (screenId, options = {}) => {
   navigation.current?.dispatch(StackActions.replace(screenId, options));

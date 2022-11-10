@@ -7,7 +7,7 @@ import {PlayerItem} from '../../Components/Players/PlayerItem';
 import {useGetPlayersAndGroups} from '../../Hooks/useGetPlayersAndGroups';
 import t from '../../Theme/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {openScreenWithPush} from '../../Router/utils/actions';
+import {openDrawer, openScreenWithPush} from '../../Router/utils/actions';
 import {NEW_PLAYER_SCREEN_KEY} from '../NewPlayer/NewPlayer';
 import PressableOpacity from '../../Components/UI/PressableOpacity';
 import {useCheckPermissions} from '../../Hooks/useCheckPermissions';
@@ -41,17 +41,12 @@ export const Players = () => {
   );
 
   return (
-    <ScreenLayout>
+    <ScreenLayout edges={['top', 'bottom']}>
       <Header
         title="Mis jugadores"
         leftSide={
-          <PressableOpacity
-            onPress={() =>
-              handleCheckCreateNewPlayer(players?.length, () =>
-                openScreenWithPush(NEW_GROUP_SCREEN_KEY),
-              )
-            }>
-            <Icon name="people-sharp" size={25} />
+          <PressableOpacity onPress={openDrawer}>
+            <Icon name="ios-menu" size={25} />
           </PressableOpacity>
         }
         rightSide={
@@ -74,36 +69,34 @@ export const Players = () => {
           placeholder="Nombre del jugador"
         />
       </View>
-      <View>
-        {groups?.length > 0 && (
-          <View style={[t.mT3, t.mB3, t.pX4]}>
-            <Text style={[t.textLg, t.fontSans, t.textGray700]}>Grupos</Text>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              style={[t.flexRow, t.mT4]}>
-              {groups?.map(g => (
-                <View>
-                  <Avatar
-                    onPress={() =>
-                      openScreenWithPush(NEW_GROUP_SCREEN_KEY, {
-                        groupToEdit: g,
-                      })
-                    }
-                    imageStyle={[t.w12, t.h12]}
-                    style={[t.mR4]}
-                    img={g?.groupImage}
-                  />
-                  <Text style={[t.mT2, t.textXs, t.textGray600]}>
-                    {g?.groupName}
-                  </Text>
-                </View>
-              ))}
-            </ScrollView>
-          </View>
-        )}
-        <HDivider style={[groups?.length > 0 ? t.mT2 : t.mT5]} />
-      </View>
+      {/* {groups?.length > 0 && (
+        <View style={[t.mT3, t.mB3, t.pX4]}>
+          <Text style={[t.textLg, t.fontSans, t.textGray700]}>Grupos</Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={[t.flexRow, t.mT4]}>
+            {groups?.map(g => (
+              <View>
+                <Avatar
+                  onPress={() =>
+                    openScreenWithPush(NEW_GROUP_SCREEN_KEY, {
+                      groupToEdit: g,
+                    })
+                  }
+                  imageStyle={[t.w12, t.h12]}
+                  style={[t.mR4]}
+                  img={g?.groupImage}
+                />
+                <Text style={[t.mT2, t.textXs, t.textGray600]}>
+                  {g?.groupName}
+                </Text>
+              </View>
+            ))}
+          </ScrollView>
+          <HDivider style={[groups?.length > 0 ? t.mT2 : t.mT5]} />
+        </View>
+      )} */}
       {loadingPlayers ? (
         <PlayersSkeleton />
       ) : (

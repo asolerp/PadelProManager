@@ -94,7 +94,6 @@ export const ddmmyyyyDashToDate = ddmmyyyy => {
 };
 
 export const ddmmyyyyToDate = ddmmyyyy => {
-  const dateParts = ddmmyyyy?.split('/');
-  const date = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+  const date = new Date(ddmmyyyy);
   return date;
 };

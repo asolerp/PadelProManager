@@ -32,8 +32,6 @@ const App: React.FC = () => {
     <DynamicLinkProvider>
       <FirebaseAuthProvider>
         <GestureHandlerRootView style={[t.flexGrow]}>
-          <StatusBar animated={true} barStyle="dark-content" />
-          {/* <AuthProvider> */}
           <SubscriptionProvider>
             <LoadingModalProvider>
               <PremiumModalProvider>
@@ -43,7 +41,6 @@ const App: React.FC = () => {
               </PremiumModalProvider>
             </LoadingModalProvider>
           </SubscriptionProvider>
-          {/* </AuthProvider> */}
           <Toast config={toastConfig} />
         </GestureHandlerRootView>
       </FirebaseAuthProvider>

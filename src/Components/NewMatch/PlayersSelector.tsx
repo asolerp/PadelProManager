@@ -18,6 +18,8 @@ import PressableOpacity from '../UI/PressableOpacity';
 
 const HEIGHT_FIELD = 250;
 const FIELD_COLOR = '#0083B0';
+const DEFAULT_AVATAR =
+  'https://res.cloudinary.com/enalbis/image/upload/v1665611656/PadelPro/varios/ox3kmudzjq4o9lb0xvvw.png';
 
 const AvatarWithClose = ({
   selectedPlayer,
@@ -48,7 +50,7 @@ const AvatarWithClose = ({
         </PressableOpacity>
       )}
       <AddPlayer
-        imageSrc={selectedPlayer?.profileImg}
+        imageSrc={selectedPlayer?.profileImg || DEFAULT_AVATAR}
         title={selectedPlayer?.firstName || `Jugador ${pos}`}
         onPress={() => onPressAvatar()}
       />
@@ -94,7 +96,7 @@ export const PlayersSelector = () => {
         Seleccionar jugadores
       </Text>
       <View style={[t.mB4]}>
-        <Text style={[t.textLg, t.fontSans, t.textGray600]}>
+        <Text style={[t.fontSans, t.textGray600]}>
           Selecciona que jugadores van a jugar el partido. Añade los jugadores
           sin seguimiento necesarios para llenar todos los huecos
         </Text>

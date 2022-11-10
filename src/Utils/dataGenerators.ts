@@ -44,73 +44,60 @@ const DEFAULT_CAPTIONS = {
 };
 
 const emptyState = {
-  fd: 0,
-  fr: 0,
-  vd: 0,
-  vr: 0,
-  bd: 0,
-  br: 0,
-  bj: 0,
-  sm: 0,
-  gl: 0,
-  x3: 0,
-  x4: 0,
+  fd: 0.5,
+  fr: 0.5,
+  vd: 0.5,
+  vr: 0.5,
+  bd: 0.5,
+  br: 0.5,
+  bj: 0.5,
+  sm: 0.5,
+  gl: 0.5,
+  x3: 0.5,
+  x4: 0.5,
 };
 
-const getHigherShotNumber = shot =>
-  Math.max(
-    ...Object.entries(shot).map(([key, value]) => {
-      if (key !== 'count') {
-        return value;
-      }
-      return null;
-    }),
-  );
-
-const getKeyWithHigherShot = (shots, val) => {
-  const findedKeyObject = Object.entries(shots).find(
-    ([key, value]) => value === val,
-  );
-  return findedKeyObject?.[1] > 0 ? findedKeyObject?.[0] : 'none';
+const generateKeyValue = keyValue => {
+  if (keyValue < 1) {
+    if (keyValue > 0.1) {
+      return keyValue;
+    }
+    return 0.1;
+  }
+  return 1;
 };
 
-const generateShotData = shot => {
-  if (!shot) {
+const generateShotData = (w, ef, nf) => {
+  if (!w && !ef && !nf) {
     return {...emptyState};
   }
 
-  const shotsWithoutCount = Object.fromEntries(
-    Object.entries(shot).filter(([key, value]) => key !== 'count'),
-  );
+  const shotsWWithoutCount =
+    w &&
+    Object.fromEntries(Object.entries(w)?.filter(([key]) => key !== 'count'));
 
-  const higherShotNumber = getHigherShotNumber(shotsWithoutCount);
+  const shotsEFWithoutCount =
+    ef &&
+    Object.fromEntries(Object.entries(ef)?.filter(([key]) => key !== 'count'));
 
-  const keyHigherShot = getKeyWithHigherShot(
-    shotsWithoutCount,
-    higherShotNumber,
-  );
-
-  if (keyHigherShot === 'none') {
-    return {...emptyState};
-  }
-
-  const shotsWithoutHigherKeyShot = Object.fromEntries(
-    Object.entries(shotsWithoutCount).filter(
-      ([key, value]) => key !== keyHigherShot,
-    ),
-  );
+  const shotsNFWithoutCount =
+    nf &&
+    Object.fromEntries(Object.entries(nf)?.filter(([key]) => key !== 'count'));
 
   const copyEmptyState = {...emptyState};
 
-  copyEmptyState[keyHigherShot] = 1;
+  const response = Object.entries(emptyState).reduce((acc, [key]) => {
+    const keyValue =
+      emptyState[key] +
+      (shotsWWithoutCount?.[key] || 0) * 0.15 +
+      (shotsEFWithoutCount?.[key] || 0) * 0.05 -
+      (shotsNFWithoutCount?.[key] || 0) * 0.2;
 
-  const response = Object.entries(shotsWithoutHigherKeyShot).reduce(
-    (acc, [key, value]) => ({
+    return {
       ...acc,
-      [key]: value / shot[keyHigherShot],
-    }),
-    copyEmptyState,
-  );
+      [key]: generateKeyValue(keyValue),
+    };
+  }, copyEmptyState);
 
   return response;
 };
@@ -231,24 +218,10 @@ export const radarGraphDataGenerator = (
     chart: [
       // data
       {
-        data: generateShotData(ef),
+        data: generateShotData(w, ef, nf),
         meta: {
-          color: t.bgInfo.backgroundColor,
-          strokeWidth: 2,
-        },
-      },
-      {
-        data: generateShotData(nf),
-        meta: {
-          color: t.bgError.backgroundColor,
-          strokeWidth: 2,
-        },
-      },
-      {
-        data: generateShotData(w),
-        meta: {
-          color: t.bgSuccess.backgroundColor,
-          strokeWidth: 2,
+          color: '#FF5B42',
+          strokeWidth: 3,
         },
       },
     ],

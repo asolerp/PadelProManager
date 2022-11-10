@@ -41,7 +41,7 @@ export const Input: React.FC<Props> = ({
     <>
       <View style={[style]}>
         {withLabel && (
-          <Text style={[t.fontSans, t.textBase]}>
+          <Text numberOfLines={1} style={[t.fontSans, t.textSm]}>
             {labelText || props?.placeholder}
           </Text>
         )}
@@ -74,8 +74,16 @@ export const Input: React.FC<Props> = ({
                 <Pressable onPress={onInputPress}>
                   <View pointerEvents="none">
                     <TextInput
+                      textAlignVertical="top"
                       placeholderTextColor="#718096"
-                      style={[t.fontSans, t.textSm, inputStyle]}
+                      style={[
+                        props.value ? t.fontSansBold : t.fontSans,
+                        t.fontSans,
+                        t.textSm,
+                        inputStyle,
+                        t.textGray900,
+                        t.p0,
+                      ]}
                       {...props}
                     />
                   </View>
@@ -83,11 +91,14 @@ export const Input: React.FC<Props> = ({
               ) : (
                 <View style={[subfix && t.flexRow]}>
                   <TextInput
+                    textAlignVertical="top"
                     placeholderTextColor="#718096"
                     style={[
                       props.value ? t.fontSansBold : t.fontSans,
                       t.textSm,
+                      t.textGray900,
                       inputStyle,
+                      t.p0,
                     ]}
                     {...props}
                   />

@@ -6,6 +6,7 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {PlayerRadarGraph} from '../../Components/Common/PlayerRadarGraph';
 
 import {Header, ScreenLayout} from '../../Components/Layout';
@@ -45,13 +46,25 @@ export const ProMatch = ({route}) => {
       style={[t.flexGrow]}
       resizeMode="stretch"
       source={{
-        uri: 'https://res.cloudinary.com/enalbis/image/upload/v1666683667/PadelPro/varios/qx0n0xokjfivjub92jcz.jpg',
+        uri: 'https://res.cloudinary.com/enalbis/image/upload/v1662134698/PadelPro/varios/mia8e5e2lx6l3vwpa3be.jpg',
       }}>
       <ScreenLayout mode="transparent">
         <Header
           withBack
           mode="dark"
           title={match?.tournamentName.toUpperCase()}
+          rightSide={
+            <View style={[t.bgWhite, t.p1, t.roundedSm]}>
+              <FastImage
+                style={[t.w8, t.h8, t.z50]}
+                source={{
+                  uri: 'https://res.cloudinary.com/enalbis/image/upload/v1666768912/PadelPro/varios/tqlxyihmmf3nuhrspsmm.png',
+                  priority: FastImage.priority.normal,
+                }}
+                resizeMode={FastImage.resizeMode.cover}
+              />
+            </View>
+          }
         />
         <View style={[t.flex1]}>
           <ScrollView

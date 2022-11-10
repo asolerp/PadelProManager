@@ -9,9 +9,12 @@ export const useCheckUserMembership = () => {
     console.log('CHECKING MEMBERSHIP');
     setIsChecking(true);
     try {
-      const purchaserInfo = await Purchases.getPurchaserInfo();
+      const customerInfo = await Purchases.getCustomerInfo();
+      console.log('PURCHASE INFO', customerInfo.entitlements);
       if (
-        typeof purchaserInfo.entitlements.active[ENTITLEMENT_ID] !== 'undefined'
+        typeof customerInfo.entitlements.active[ENTITLEMENT_ID] !==
+          'undefined' ||
+        customerInfo.entitlements.all[ENTITLEMENT_ID].isSandbox === true
       ) {
         console.log('IS SUBSCRIBED');
         setIsSubscribed(true);
@@ -28,7 +31,7 @@ export const useCheckUserMembership = () => {
   }, [setIsChecking, setIsSubscribed]);
 
   useEffect(() => {
-    const paymentsSubscriber = Purchases.addPurchaserInfoUpdateListener(() => {
+    const paymentsSubscriber = Purchases.addCustomerInfoUpdateListener(() => {
       checkUserMembership();
     });
     return paymentsSubscriber;

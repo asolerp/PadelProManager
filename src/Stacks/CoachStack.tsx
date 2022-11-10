@@ -2,7 +2,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {PlayerScreen, PLAYER_SCREEN_KEY} from '../Screens/Player/Player';
 import {MatchScreen, MATCH_SCREEN_KEY} from '../Screens/Match/Match';
-import {TAB_STACK_KEY} from '../Router/utils/routerKeys';
+import {DRAWER_STACK_KEY, TAB_STACK_KEY} from '../Router/utils/routerKeys';
 import {TabStack} from './TabStack';
 import {
   NewMatchScreen,
@@ -36,6 +36,11 @@ import {
   NewSimplePoint,
   NEW_SIMPLE_POINT_SCREEN_KEY,
 } from '../Screens/NewSimplePoint/NewSimplePoint';
+import {
+  NewOpenSessionScreen,
+  NEW_OPEN_SESSION_SCREEN_KEY,
+} from '../Screens/OpenSession/OpenSession';
+import {DrawerStack} from './DrawerStack';
 
 const Stack = createNativeStackNavigator();
 
@@ -48,13 +53,18 @@ export const CoachStack = () => {
       <Stack.Group>
         <Stack.Screen
           options={{headerShown: false}}
-          name={TAB_STACK_KEY}
-          component={TabStack}
+          name={DRAWER_STACK_KEY}
+          component={DrawerStack}
         />
         <Stack.Screen
           options={{headerShown: false}}
           name={NEW_GROUP_SCREEN_KEY}
           component={NewGroup}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name={NEW_OPEN_SESSION_SCREEN_KEY}
+          component={NewOpenSessionScreen}
         />
         <Stack.Screen
           options={{headerShown: false}}

@@ -6,7 +6,7 @@ import {openScreenWithPush} from '../../Router/utils/actions';
 import {SESSION_SCREEN_KEY} from '../../Screens/Session/Session';
 import t from '../../Theme/theme';
 import {getFormatLocale} from '../../Utils/formatLocale';
-import {Avatar} from '../UI/Avatar';
+
 import PressableOpacity from '../UI/PressableOpacity';
 
 export const AccountingItem = ({item, balance}) => {
@@ -25,12 +25,16 @@ export const AccountingItem = ({item, balance}) => {
         <Text style={[t.mB2]}>{item?.session?.title}</Text>
       </View>
       <View>
+        {console.log(Math.round(balance), Number(item?.price))}
         <Text
           style={[
             t.fontSansBold,
-            balance > 0 ? t.textErrorDark : t.textSuccessDark,
+            Number(item?.price) - Math.round(balance) < Number(item?.price)
+              ? t.textErrorDark
+              : t.textSuccessDark,
           ]}>
-          {Math.round(balance)} {getCurrencies()[0]}
+          {Number(item?.price) - Math.round(balance)} /{' '}
+          {Math.round(item?.price)} {getCurrencies()[0]}
         </Text>
       </View>
     </PressableOpacity>

@@ -1,10 +1,15 @@
+import {addHours, format} from 'date-fns';
 import {useContext, useRef, useState} from 'react';
+import {event} from 'react-native-reanimated';
 import {useFirebaseAuth} from '../../../Context/FirebaseContext';
 
 import {NewMatchContext} from '../../../Context/NewMatchContext';
+import {useCalendar} from '../../../Hooks/useCalendar';
 import {usePermissions} from '../../../Hooks/usePermissions';
+import {defaultFunctions} from '../../../Lib/API/firebaseApp';
 
 import {popScreen} from '../../../Router/utils/actions';
+import {parseRound} from '../../../Utils/parsers';
 import {timeout} from '../../../Utils/timeout';
 
 import {
@@ -33,15 +38,18 @@ export const useNewMatchForm = () => {
   const {addNewMatch, loading: loadingAddMatch} = useAddNewMatch();
   const {isCoach, isAdmin} = usePermissions();
   const [errorPlayers, setErrorPlayers] = useState(false);
+  const {saveEvent} = useCalendar();
+  const newSessionsFn = defaultFunctions.httpsCallable('newSession');
 
   const handleCreateNewMatch = async values => {
     const {
       club,
       category,
       date,
+      startTime,
       sex,
       round = '',
-      advanceStates = true,
+      advanceStats = true,
       tournamentName = '',
       goldPoint,
     } = values;
@@ -49,11 +57,36 @@ export const useNewMatchForm = () => {
     const dateParts = date.split('/');
     const dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
 
+    const startTimeParts = startTime.split(':');
+
+    dateObject.setHours(
+      Number(startTimeParts[0]),
+      Number(startTimeParts[1]),
+      0,
+    );
+
+    const players = Object.entries(selectedPlayers)
+      .map(([, p]) => p)
+      .filter(p => p.id !== -1);
+
+    const newEvent = {
+      title: `Partido en ${club}`,
+      notes: round ? `Ronda ${parseRound[round]}` : 'Partido amistoso',
+      players,
+      club,
+      playersEmail: players.map(p => p.email),
+      coachId: user?.id,
+      date: Number(format(dateObject, 'T')),
+      startTime: Number(format(dateObject, 'T')),
+      endTime: Number(format(addHours(dateObject, 2), 'T')),
+    };
+
     const newMatch = {
       date: dateObject,
       club,
       round,
       sex,
+      advanceStats,
       coachId: (isCoach || isAdmin) && user?.id,
       owner: user?.id,
       tournamentName,
@@ -112,13 +145,26 @@ export const useNewMatchForm = () => {
           : [emptyPlayer, emptyPlayer],
     };
 
+    console.log(newEvent);
+
     setLoading(true);
     try {
-      console.log('NEW MATCH', newMatch);
       await timeout(2000);
       await addNewMatch({
         data: newMatch,
         callback: () => popScreen(),
+      });
+      await newSessionsFn({
+        payload: newEvent,
+      });
+      await saveEvent({
+        event: {
+          title: newEvent.title,
+          startDate: newEvent.startTime,
+          endDate: newEvent.endTime,
+          description: newEvent.notes,
+          notes: newEvent.notes,
+        },
       });
     } catch (err) {
     } finally {

@@ -27,7 +27,6 @@ const AuthRouter = () => {
   useNotification();
 
   const {isVisible, text} = useContext<any>(LoadingModalContext);
-
   const {user, loading} = useFirebaseAuth();
 
   if (loading) {

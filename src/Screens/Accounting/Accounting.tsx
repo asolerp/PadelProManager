@@ -9,13 +9,15 @@ import {AccountingStat} from '../../Components/Accounting/AccountingStat';
 import {Header, ScreenLayout} from '../../Components/Layout';
 
 import {HDivider} from '../../Components/UI/HDivider';
+import PressableOpacity from '../../Components/UI/PressableOpacity';
 
 import t from '../../Theme/theme';
 
 import {getSessionAccountingResume} from '../../Utils/getSessionAccountingResume';
-import {sortByDate} from '../../Utils/sorts';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import {useGetAccounting} from './hooks/useGetAccounting';
+import {openDrawer} from '../../Router/utils/actions';
 
 export const ACCOUTING_SCREEN_KEY = 'accountingScreen';
 
@@ -36,7 +38,14 @@ export const Accounting = () => {
 
   return (
     <ScreenLayout>
-      <Header title="Contabilidad" />
+      <Header
+        leftSide={
+          <PressableOpacity onPress={openDrawer}>
+            <Icon name="ios-menu" size={25} />
+          </PressableOpacity>
+        }
+        title="Contabilidad"
+      />
       <HDivider />
       <View style={[t.pX3, t.mT5, t.mB5, t.flexRow]}>
         <AccountingStat

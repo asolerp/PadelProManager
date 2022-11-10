@@ -14,9 +14,11 @@ import {ACCOUNTING, SESSIONS} from '../../../Models/entities';
 import firestore from '@react-native-firebase/firestore';
 import {getCurrencies} from 'react-native-localize';
 import {useFirebaseAuth} from '../../../Context/FirebaseContext';
+import {useCalendar} from '../../../Hooks/useCalendar';
 
 export const useNewSessionForm = ({startDate, session}) => {
   const {user} = useFirebaseAuth();
+  const {saveEvent} = useCalendar();
 
   const [sessionColor, setSessionColor] = useState(session?.color || 'blue');
   const [loading, setLoading] = useState(false);
@@ -29,7 +31,9 @@ export const useNewSessionForm = ({startDate, session}) => {
     title: '',
     description: '',
     price: 0,
-    date: startDate || format(new Date(), DATE_FORM),
+    date: startDate
+      ? format(new Date(startDate), DATE_FORM)
+      : format(new Date(), DATE_FORM),
     startTime: '',
     endTime: '',
     notes: '',
@@ -121,7 +125,19 @@ export const useNewSessionForm = ({startDate, session}) => {
           });
       } else {
         await newSessionsFn({
-          payload,
+          payload: {
+            ...payload,
+            type: 'session',
+          },
+        });
+        await saveEvent({
+          event: {
+            title: payload.title,
+            startDate: payload.startTime,
+            endDate: payload.endTime,
+            description: payload.notes,
+            notes: payload.notes,
+          },
         });
       }
     } catch (err) {

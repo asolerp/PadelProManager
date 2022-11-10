@@ -21,7 +21,7 @@ export const useAddNewMatch = () => {
     setLoading(true);
     try {
       setLoading(false);
-      const result = await matchQuery
+      await matchQuery
         .add({...data, free: isCoach ? matchesCount < 2 : true})
         .then(async docRef => {
           await matchQuery.doc(docRef.id).collection('history').add({
@@ -30,7 +30,6 @@ export const useAddNewMatch = () => {
             type: 'info',
           });
         });
-      return result;
     } catch (err) {
       console.log(err);
       setError(err);

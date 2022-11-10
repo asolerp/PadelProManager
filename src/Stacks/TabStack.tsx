@@ -46,7 +46,7 @@ export const TabStack = () => {
                 size={20}
                 focused={focused}
               />
-              <Text style={[t.fontSans, t.textXs]}>Agenda</Text>
+              <Text style={[t.fontSans, t.textXs]}>Sesiones</Text>
             </>
           ),
         })}

@@ -1,12 +1,8 @@
-import React, {useRef, useState} from 'react';
-import {
-  Dimensions,
-  ListRenderItem,
-  Pressable,
-  View,
-  ViewStyle,
-} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
+import React, {useState} from 'react';
+import {Dimensions, ListRenderItem, View, ViewStyle} from 'react-native';
+
+import Carousel from 'react-native-reanimated-carousel';
+
 import t from '../../Theme/theme';
 
 interface DotProps {
@@ -34,21 +30,31 @@ const Dot: React.FC<DotProps> = ({active, dotColor = t.bgGray900}) => {
   );
 };
 
+const {width} = Dimensions.get('window');
+
 export const PaginatedList: React.FC<PaginatedListProps> = ({
   dotColor,
   renderItem,
   data,
 }) => {
-  const flatListRef = useRef();
   const [index, setIndex] = useState(0);
   const isActive = i => i === index;
 
   return (
     <View>
-      <FlatList
+      <Carousel
+        loop={false}
+        width={width}
+        height={220}
+        autoPlay={false}
+        data={data}
+        scrollAnimationDuration={1000}
+        onSnapToItem={index => setIndex(index)}
+        renderItem={renderItem}
+      />
+      {/* <FlatList
         ref={flatListRef}
         horizontal
-        ItemSeparatorComponent={() => <View style={[t.mX1]} />}
         decelerationRate="fast"
         onScroll={event => {
           const totalWidth = event.nativeEvent.layoutMeasurement.width;
@@ -60,9 +66,15 @@ export const PaginatedList: React.FC<PaginatedListProps> = ({
         snapToInterval={Dimensions.get('window').width}
         showsHorizontalScrollIndicator={false}
         data={data}
-        renderItem={renderItem}
+        renderItem={({item, index}) => (
+          <View style={{width: ITEM_LENGTH}}>
+            <View style={{marginHorizontal: SPACING * 2}}>
+              {renderItem({item, index})}
+            </View>
+          </View>
+        )}
         keyExtractor={item => item.id}
-      />
+      /> */}
       {data?.length > 1 && (
         <View style={[t.flexRow, t.justifyCenter, t.mT2]}>
           {data.map((_, i) => (

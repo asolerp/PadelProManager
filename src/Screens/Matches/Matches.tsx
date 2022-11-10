@@ -5,7 +5,7 @@ import {ScreenLayout} from '../../Components/Layout/ScreenLayout';
 import t from '../../Theme/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import {openScreenWithPush} from '../../Router/utils/actions';
+import {openDrawer, openScreenWithPush} from '../../Router/utils/actions';
 import {NEW_MATCH_SCREEN_KEY} from '../NewMatch/NewMatch';
 import {useGetMatches} from '../../Hooks/useGetMatches';
 import {MatchResume} from '../../Components/Home/MatchResume';
@@ -25,12 +25,21 @@ export const Matches = () => {
 
   const {handleCheckCreateNewPlayer} = useCheckPermissions();
 
-  const renderItem = ({item}) => <MatchResume match={item} />;
+  const renderItem = ({item}) => (
+    <View style={[t.pX4]}>
+      <MatchResume match={item} />
+    </View>
+  );
 
   return (
-    <ScreenLayout>
+    <ScreenLayout edges={['top', 'bottom']}>
       <Header
         title="Historial de partidas"
+        leftSide={
+          <PressableOpacity onPress={openDrawer}>
+            <Icon name="ios-menu" size={25} />
+          </PressableOpacity>
+        }
         rightSide={
           <PressableOpacity
             onPress={() =>
@@ -43,29 +52,29 @@ export const Matches = () => {
         }
       />
       <HDivider />
-      <SearchInput
-        value={search}
-        defaultOption={searchOption}
-        onChangeText={setSearch}
-        onChange={setSearchOption}
-        list={searchOptions}
-        style={[t.mT5, t.mB5, t.pX4]}
+      <View>
+        <SearchInput
+          value={search}
+          defaultOption={searchOption}
+          onChangeText={setSearch}
+          onChange={setSearchOption}
+          list={searchOptions}
+          style={[t.mT5, t.mB5, t.pX4]}
+        />
+      </View>
+      <FlatList
+        ListEmptyComponent={() => (
+          <View style={[t.flexGrow, t.justifyCenter, t.itemsCenter]}>
+            <Text style={[t.fontSans]}>No tienes ningúna partida</Text>
+          </View>
+        )}
+        ItemSeparatorComponent={() => <HDivider />}
+        data={matches?.sort(sortByDate)}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+        style={[t.flex1, t.mT3]}
+        showsVerticalScrollIndicator={false}
       />
-      {matches?.length === 0 ? (
-        <View style={[t.flexGrow, t.justifyCenter, t.itemsCenter]}>
-          <Text style={[t.fontSans]}>No tienes ningúna partida</Text>
-        </View>
-      ) : (
-        <View style={[t.flexGrow]}>
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            data={matches?.sort(sortByDate)}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-            style={[t.pX4]}
-          />
-        </View>
-      )}
     </ScreenLayout>
   );
 };

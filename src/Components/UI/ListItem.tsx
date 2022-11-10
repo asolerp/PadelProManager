@@ -1,12 +1,13 @@
 import React from 'react';
-import {View, Text, TextStyle} from 'react-native';
+import {View, Text, TextStyle, ViewStyle} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import t from '../../Theme/theme';
-import {HDivider} from './HDivider';
+
 import PressableOpacity from './PressableOpacity';
 
 interface Props {
   title: string;
+  containerStyle?: ViewStyle[];
   textStyle?: TextStyle[];
   onPress?: () => void;
   iconName?: string;
@@ -17,6 +18,7 @@ interface Props {
 export const ListItem: React.FC<Props> = ({
   title,
   textStyle,
+  containerStyle,
   onPress,
   iconName,
   withIcon = true,
@@ -26,10 +28,23 @@ export const ListItem: React.FC<Props> = ({
     <>
       <PressableOpacity
         onPress={onPress}
-        style={[t.flexRow, t.justifyBetween, t.itemsCenter, t.p3]}>
+        style={[
+          t.flexRow,
+          t.justifyBetween,
+          t.itemsCenter,
+          t.p3,
+          containerStyle,
+        ]}>
         <View style={[t.flexRow, t.itemsCenter]}>
           {iconName && <Icon name={iconName} size={25} color={iconColor} />}
-          <Text style={[t.fontSans, t.textLg, iconName && t.mL3, textStyle]}>
+          <Text
+            style={[
+              t.fontSans,
+              t.textGray700,
+              t.textSm,
+              iconName && t.mL3,
+              textStyle,
+            ]}>
             {title}
           </Text>
         </View>
@@ -37,7 +52,6 @@ export const ListItem: React.FC<Props> = ({
           <Icon name="ios-chevron-forward" size={25} color="black" />
         )}
       </PressableOpacity>
-      <HDivider />
     </>
   );
 };

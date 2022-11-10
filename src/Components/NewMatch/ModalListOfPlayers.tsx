@@ -28,6 +28,7 @@ export const ModalListOfPlayers = ({
   chat = false,
   selectedPlayers,
   initSelection,
+  withBottomPadding,
   isVisible,
   multiple,
   onClose,
@@ -68,7 +69,10 @@ export const ModalListOfPlayers = ({
   );
 
   return (
-    <FullModal isVisible={isVisible} onClose={onClose}>
+    <FullModal
+      isVisible={isVisible}
+      onClose={onClose}
+      withBottomPadding={withBottomPadding}>
       <Header
         title="Jugadores"
         rightSide={
@@ -96,7 +100,7 @@ export const ModalListOfPlayers = ({
         {filteredList && (
           <View style={[t.flexGrow]}>
             <FlatList
-              contentInset={{bottom: 180}}
+              contentInset={{bottom: 80}}
               ListHeaderComponent={
                 <>
                   {withEmpyPlayer && (
@@ -117,14 +121,13 @@ export const ModalListOfPlayers = ({
               data={filteredList}
               renderItem={renderItem}
               keyExtractor={item => item?.id}
-              contentContainerStyle={[t.flex1, t.mT3]}
+              contentContainerStyle={[t.mT3]}
             />
           </View>
         )}
       </View>
-
       <HDivider />
-      <View style={[t.pX4]}>
+      <View style={[t.mX4, t.bgWhite, t.pY2]}>
         <Button
           onPress={() => {
             onSave(player || playersSelected);

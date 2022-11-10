@@ -60,8 +60,8 @@ export const StatisticsRoute = ({
                 />
                 <StatisticItem
                   label="🎾 Total puntos ganados 🎾"
-                  t1PointCount={matchStatistics?.t1GP}
-                  t2PointCount={matchStatistics?.t2GP}
+                  t1PointCount={matchStatistics?.totalT1PointsWins}
+                  t2PointCount={matchStatistics?.totalT2PointsWins}
                   withBar={false}
                 />
                 {goldPoint && (
@@ -118,7 +118,7 @@ export const StatisticsRoute = ({
                   label="Puntos ganados de smash"
                   t1PointCount={matchStatistics?.t1Tsm}
                   t2PointCount={matchStatistics?.t2Tsm}
-                  totalCount={matchStatistics?.t1Tsm + matchStatistics?.t2Tsm}
+                  withBar={false}
                 />
               </>
             ) : (
