@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {View, Text, ScrollView, RefreshControl} from 'react-native';
 import {RadarChart} from '../../Components/Common/RadarChart';
@@ -38,16 +38,22 @@ import {CoachCard} from '../../Components/HomePlayer/CoachCard';
 import {useGetHomePlayerData} from './hooks/useGetHomePlayerData';
 import {useFocusEffect} from '@react-navigation/native';
 import {useCallback} from 'react';
+import {useCheckRequest} from './hooks/useCheckRequest';
+import {PendingRequestModal} from '../../Components/HomePlayer/PendingRequestModal';
 
 export const HOME_PLAYER_SCREEN_KEY = 'playerScreen';
 
 export const HomePlayerScreen = () => {
+  useHideBootSplash();
+  useInAppMessaging();
+
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const {conversationId} = useGetConversationId();
   const {user} = useFirebaseAuth();
   const {tw, tl, tm, graphData, playerStats} = useGetPlayer();
   const {pendingRelation} = useCheckPendingRelation();
+  const {coach: coachRequest, pendingRequest} = useCheckRequest();
   const {handleShare} = useShareApp();
-
-  const {conversationId} = useGetConversationId();
 
   const {
     refetch,
@@ -60,15 +66,20 @@ export const HomePlayerScreen = () => {
   } = useGetHomePlayerData();
   const {loc} = useTranslationWrapper();
 
-  useHideBootSplash();
-  useInAppMessaging();
-
   useFocusEffect(
     useCallback(() => {
       const refetching = refetch();
       return () => refetching;
     }, []),
   );
+
+  useEffect(() => {
+    if (pendingRequest?.length > 0) {
+      setTimeout(() => {
+        setIsVisible(true);
+      }, 1000);
+    }
+  }, [pendingRequest]);
 
   return (
     <ScreenLayout>
@@ -97,13 +108,19 @@ export const HomePlayerScreen = () => {
         </PressableOpacity>
       )}
       <PendingRelationModal relations={pendingRelation} />
+      <PendingRequestModal
+        requestId={pendingRequest?.[0]?.id}
+        coach={coachRequest}
+        isVisible={isVisible}
+        setIsVisible={setIsVisible}
+      />
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={refetch} />
         }>
         <PlayerHeader />
-        {!user?.coachId && (
+        {!user?.coachId && pendingRequest?.length === 0 && (
           <View style={[t.pX4, t.mB5]}>
             <Banner
               mainColor="warning"
@@ -112,6 +129,14 @@ export const HomePlayerScreen = () => {
               title="Avisa a tu entrenador"
               subtitle="Hazle saber a tu entrenador de PadelPro para que pueda llevar un seguimiento de tus logros y tu evolución."
             />
+          </View>
+        )}
+        {pendingRequest?.length > 0 && (
+          <View>
+            <Text style={[t.pX4, t.textXl, t.fontSansBold, t.mB5]}>
+              Petición entrenador
+            </Text>
+            <View />
           </View>
         )}
         {coach && (

@@ -38,7 +38,7 @@ export const HistoricRoute = ({match, pointsHistory}) => {
   };
   return (
     <>
-      <View style={[t.pX4]}>
+      <View style={[t.pX4, t.flexGrow]}>
         <View
           style={[
             t.h14,
@@ -65,17 +65,15 @@ export const HistoricRoute = ({match, pointsHistory}) => {
             }
           />
         </View>
-        <View style={[t.mT5, t.flexGrow, t.itemsCenter, t.justifyCenter]}>
-          <View style={[t.flexGrow, t.wFull]}>
-            <FlatList
-              ItemSeparatorComponent={() => <Spacer space={1} />}
-              showsVerticalScrollIndicator={false}
-              data={historyList}
-              renderItem={renderItem}
-              keyExtractor={item => item.id}
-              style={[t.wFull]}
-            />
-          </View>
+        <View style={[t.mT5, t.itemsCenter, t.justifyCenter, t.flexGrow]}>
+          <FlatList
+            ItemSeparatorComponent={() => <Spacer space={1} />}
+            showsVerticalScrollIndicator={false}
+            data={historyList}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            style={[t.wFull]}
+          />
         </View>
       </View>
     </>

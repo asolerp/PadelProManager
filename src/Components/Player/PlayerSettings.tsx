@@ -14,9 +14,11 @@ import {showError} from './utils/alertErrorMessages';
 import {LoadingModalContext} from '../../Context/LoadingModalContext';
 import {timeout} from '../../Utils/timeout';
 import {useFirebaseAuth} from '../../Context/FirebaseContext';
+import {useSentInvitationPlayer} from '../../Screens/Player/hooks/useSentInvitationPlayer';
 
-export const PlayerSettings = ({playerId}) => {
+export const PlayerSettings = ({player}) => {
   const {user} = useFirebaseAuth();
+  const {handleSentInviation} = useSentInvitationPlayer();
 
   const [isVisible, setIsVisible] = useState(false);
   const {setIsVisible: setIsVisibleLoading, setText} =
@@ -37,7 +39,7 @@ export const PlayerSettings = ({playerId}) => {
   };
 
   const {recursiveDelete, loading} = useRecursiveDelete({
-    path: `users/${user?.id}/players/${playerId}`,
+    path: `users/${user?.id}/players/${player?.id}`,
   });
 
   return (
@@ -55,11 +57,21 @@ export const PlayerSettings = ({playerId}) => {
               onPress={() => {
                 openScreenWithPush(NEW_PLAYER_SCREEN_KEY, {
                   edit: true,
-                  playerId,
+                  playerId: player.id,
                 });
                 setIsVisible(false);
               }}
             />
+            {!player?.active && (
+              <ListItem
+                iconName="ios-send"
+                title="Invitar a equipo de trabajo"
+                onPress={() => {
+                  handleSentInviation(player);
+                  setIsVisible(false);
+                }}
+              />
+            )}
             <ListItem
               onPress={() =>
                 showError.delete_player({

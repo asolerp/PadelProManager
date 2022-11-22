@@ -23,7 +23,7 @@ export const Matches = () => {
   const {matches, setSearch, setSearchOption, search, searchOption} =
     useGetMatches();
 
-  const {handleCheckCreateNewPlayer} = useCheckPermissions();
+  const {handleCheckSubscription} = useCheckPermissions();
 
   const renderItem = ({item}) => (
     <View style={[t.pX4]}>
@@ -43,7 +43,7 @@ export const Matches = () => {
         rightSide={
           <PressableOpacity
             onPress={() =>
-              handleCheckCreateNewPlayer(matches?.length, () =>
+              handleCheckSubscription(matches?.length, () =>
                 openScreenWithPush(NEW_MATCH_SCREEN_KEY),
               )
             }>

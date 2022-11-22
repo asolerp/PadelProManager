@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {View, FlatList, Text, ScrollView} from 'react-native';
+import {View, FlatList, Text, ScrollView, SectionList} from 'react-native';
 import {Header, ScreenLayout} from '../../Components/Layout';
 import {useSearch} from '../../Components/Players/hooks/useSearch';
 import {PlayerItem} from '../../Components/Players/PlayerItem';
@@ -13,19 +13,19 @@ import PressableOpacity from '../../Components/UI/PressableOpacity';
 import {useCheckPermissions} from '../../Hooks/useCheckPermissions';
 import {HDivider} from '../../Components/UI/HDivider';
 import {SearchInput} from '../../Components/UI/SearchInput';
-import {NEW_GROUP_SCREEN_KEY} from '../NewGroup/NewGroup';
-import {useGetGroups} from './hooks/useGetGroups';
-import {Avatar} from '../../Components/UI/Avatar';
+
 import {useFocusEffect} from '@react-navigation/native';
 import {PlayersSkeleton} from '../../Components/Players/PlayersSkeleton';
+import {getCategoryPlayers} from './utils/getCategoryPlayers';
+import {capitalize, categoryParse, colorByCategory} from '../../Utils/parsers';
 
 export const PLAYERS_SCREEN_KEY = 'playersScreen';
 
 export const Players = () => {
-  const {groups, players, refetch, loadingPlayers} = useGetPlayersAndGroups();
+  const {groups, players, refetch} = useGetPlayersAndGroups();
 
   const {search, setSearch, filteredList} = useSearch({list: players});
-  const {handleCheckCreateNewPlayer} = useCheckPermissions();
+  const {handleCheckSubscription} = useCheckPermissions();
 
   const renderItem = ({item, index}) => (
     <View style={[t.pX4]}>
@@ -40,6 +40,8 @@ export const Players = () => {
     }, []),
   );
 
+  const categories = players && getCategoryPlayers(filteredList);
+
   return (
     <ScreenLayout edges={['top', 'bottom']}>
       <Header
@@ -52,7 +54,7 @@ export const Players = () => {
         rightSide={
           <PressableOpacity
             onPress={() =>
-              handleCheckCreateNewPlayer(players?.length, () =>
+              handleCheckSubscription(players?.length, () =>
                 openScreenWithPush(NEW_PLAYER_SCREEN_KEY),
               )
             }>
@@ -97,12 +99,27 @@ export const Players = () => {
           <HDivider style={[groups?.length > 0 ? t.mT2 : t.mT5]} />
         </View>
       )} */}
-      {loadingPlayers ? (
+      {!categories ? (
         <PlayersSkeleton />
       ) : (
-        <FlatList
+        <SectionList
+          sections={categories}
           style={[t.flex1, t.mT3]}
           showsVerticalScrollIndicator={false}
+          renderSectionHeader={({section: {title}}) => (
+            <View
+              style={[
+                t.pX4,
+                t.pY4,
+                t.itemsCenter,
+                t[`bg${capitalize(colorByCategory[title])}`],
+              ]}>
+              {console.log()}
+              <Text style={[t.fontSansBold, t.textWhite]}>
+                {categoryParse[title].toUpperCase()}
+              </Text>
+            </View>
+          )}
           data={filteredList}
           renderItem={renderItem}
           keyExtractor={item => item.id}

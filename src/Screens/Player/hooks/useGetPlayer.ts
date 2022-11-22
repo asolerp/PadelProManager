@@ -1,7 +1,10 @@
 import {useEffect, useState} from 'react';
 import {useDocumentData} from 'react-firebase-hooks/firestore';
 import {playerQuery} from '../../../Api/queries';
-import {radarGraphDataGenerator} from '../../../Utils/dataGenerators';
+import {
+  radarGraphDataGenerator,
+  tableDataGenerator,
+} from '../../../Utils/dataGenerators';
 
 import firestore from '@react-native-firebase/firestore';
 
@@ -17,8 +20,10 @@ export const useGetPlayer = (playerId: string, playerEmail: string) => {
     },
   );
   const [stats, loadingStats, errorStats] = useDocumentData(
-    playerQuery(user?.id).doc(playerId).collection('stats').doc('global'),
+    firestore().collection('stats').doc(playerEmail),
   );
+
+  console.log('STATS', stats);
 
   const [graphData, setGraphData] = useState();
   const [conversationId, setConversationId] = useState();
@@ -31,7 +36,6 @@ export const useGetPlayer = (playerId: string, playerEmail: string) => {
         .get();
 
       const conversations = conversationRef.docs.map(doc => ({id: doc.id}));
-
       setConversationId(conversations?.[0]?.id);
     };
     if (player) {
@@ -45,17 +49,20 @@ export const useGetPlayer = (playerId: string, playerEmail: string) => {
     }
   }, [stats]);
 
-  const tw = stats?.tw;
-  const tl = stats?.tl;
-  const tm = stats?.tm;
+  const tw = stats?.tw || 0;
+  const tl = stats?.tl || 0;
+  const tm = stats?.tm || 0;
 
   const loading = loadingStats || loadingPlayer;
   const error = errorPlayer || errorStats;
+
+  const tableStats = tableDataGenerator(stats);
 
   return {
     player,
     error,
     loading,
+    tableStats,
     tw,
     tl,
     tm,

@@ -25,7 +25,6 @@ export const AccountingItem = ({item, balance}) => {
         <Text style={[t.mB2]}>{item?.session?.title}</Text>
       </View>
       <View>
-        {console.log(Math.round(balance), Number(item?.price))}
         <Text
           style={[
             t.fontSansBold,

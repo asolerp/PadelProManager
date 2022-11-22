@@ -3,7 +3,7 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import {View, ImageBackground, Text, Linking} from 'react-native';
+import {View, Text, Linking} from 'react-native';
 import t from '../../Theme/theme';
 import {Avatar} from '../UI/Avatar';
 import {useFirebaseAuth} from '../../Context/FirebaseContext';
@@ -24,7 +24,7 @@ import {COACH_CODE_SCREEN_KEY} from '../../Screens/CoachCode/CoachCode';
 import {HDivider} from '../UI/HDivider';
 
 export const CustomDrawer = props => {
-  const {user, isCoach} = useFirebaseAuth();
+  const {user, isCoach, isAdmin} = useFirebaseAuth();
   const {isSubscribed} = useContext(SubscriptionContext);
   const {handleLeaveCoach} = useConfigProfile();
   const {logout} = useLogout();
@@ -43,7 +43,7 @@ export const CustomDrawer = props => {
           <Text style={[t.fontSansBold, t.textWhite]}>
             {user?.firstName} {user?.secondName}
           </Text>
-          {isSubscribed ? (
+          {isSubscribed || isAdmin ? (
             <Text style={[t.fontSansMedium, t.textXs, t.textWarningLight]}>
               Premium
             </Text>

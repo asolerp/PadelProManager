@@ -7,7 +7,9 @@ export const useGetNoReadMessages = () => {
   const {user} = useFirebaseAuth();
 
   const [conversations] = useCollectionData(
-    conversationsQuery.where('active', '==', true),
+    conversationsQuery
+      .where('active', '==', true)
+      .where('coachEmail', '==', user?.email),
     {
       idField: 'id',
     },
@@ -16,6 +18,8 @@ export const useGetNoReadMessages = () => {
   const noReadMessages = conversations?.some(
     c => c?.lastMessage?.readBy?.[user?.email] === false,
   );
+
+  console.log('NO READ', noReadMessages);
 
   return {
     noReadMessages,

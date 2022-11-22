@@ -158,12 +158,8 @@ const newPoint = functions
         }
       }
 
-      console.log("[[POINTS]]", stats?.points)
-
       const p = stats?.points?.[0]
 
-    
-      console.log("RESULT", p?.result)
       
       if (!p.result) {
         if(stats?.winPointTeam === "team1") {
@@ -209,8 +205,6 @@ const newPoint = functions
             firestore.FieldValue.increment(1),
         })
       }
-
-      console.log("[[CONSECUTIVE]]", newStateGame?.consecutiveWon > (match?.statistics?.[match?.game.set]?.[stats?.winPointTeam]?.global?.consecutiveWon || 0))
 
       if (
         newStateGame?.consecutiveWon >

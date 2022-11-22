@@ -28,14 +28,13 @@ import {openScreenWithPush} from '../../Router/utils/actions';
 import {CHAT_SCREEN_KEY} from '../Chat/Chat';
 import {useTips} from './hooks/useTips';
 import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
+import {ResumenStatistic} from '../../Components/Match/ResumenStatistic';
 
 export const PLAYER_SCREEN_KEY = 'playerScreen';
 
 export const PlayerScreen = ({route}) => {
-  const {player, tw, tl, tm, loading, conversationId} = useGetPlayer(
-    route?.params?.playerId,
-    route?.params?.playerEmail,
-  );
+  const {player, tw, tl, tm, loading, conversationId, tableStats} =
+    useGetPlayer(route?.params?.playerId, route?.params?.playerEmail);
   const {matches} = useGetMatches(route?.params?.playerEmail);
   const {
     handleSaveTips,
@@ -49,14 +48,12 @@ export const PlayerScreen = ({route}) => {
     <MatchResume match={item} playerEmail={player?.email} />
   );
 
-  console.log('HOLA', player?.email);
-
   return (
     <ScreenLayout edges={['top', 'left', 'right', 'bottom']}>
       <Header
         withBack
         position="absolute"
-        rightSide={<PlayerSettings playerId={player?.id} />}
+        rightSide={<PlayerSettings player={player} />}
       />
       <KeyboardAwareFlatList
         ListHeaderComponent={
@@ -139,7 +136,8 @@ export const PlayerScreen = ({route}) => {
                     )}
                   </View>
                 </View>
-                <View style={[t.flexRow, t.justifyBetween, t.w60, t.mT5]}>
+                <View
+                  style={[t.flexRow, t.justifyBetween, t.w60, t.mT5, t.mB2]}>
                   <Stat label="Jugados" count={tm} />
                   <Stat label="Ganados" count={tw} />
                   <Stat label="Perdidos" count={tl} />
@@ -149,7 +147,7 @@ export const PlayerScreen = ({route}) => {
                 {!loading && (
                   <>
                     <View style={[t.wFull]}>
-                      {/* <ResumenStatistic statistics={graphData?.dataSets} /> */}
+                      <ResumenStatistic statistics={tableStats.dataSets} />
                     </View>
                   </>
                 )}

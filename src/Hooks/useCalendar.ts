@@ -7,12 +7,10 @@ export const useCalendar = () => {
   }, []);
 
   const getCalendars = async () => {
-    const calendars = await RNCalendarEvents.findCalendars();
-    console.log(calendars);
+    return await RNCalendarEvents.findCalendars();
   };
 
   const saveEvent = async ({event}) => {
-    console.log('EVENT', event);
     await RNCalendarEvents.saveEvent(event.title, {...event});
   };
 

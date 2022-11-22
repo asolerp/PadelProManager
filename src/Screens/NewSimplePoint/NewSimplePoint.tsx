@@ -34,8 +34,6 @@ export const NewSimplePoint = ({route}) => {
     useRestorePoint(matchId);
 
   const handlePressTeam = team => {
-    console.log(team);
-    // handlePressWinPointTeam(team);
     onSavePoint(
       {
         winPointTeam: team,

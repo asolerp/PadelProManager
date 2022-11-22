@@ -21,7 +21,6 @@ interface Props {
 }
 
 export const MatchResume: React.FC<Props> = ({match, playerEmail}) => {
-  console.log('EMAIL', playerEmail);
   const matchDay = format(new Date(match?.date?.toDate()), 'iii d MMMM yyyy', {
     locale: es,
   });
@@ -33,7 +32,6 @@ export const MatchResume: React.FC<Props> = ({match, playerEmail}) => {
       const playerIsInWonTeam = match[`t${match.game.winMatch}`]?.some(
         p => p.email === playerEmail,
       );
-      console.log('WON', playerIsInWonTeam);
       if (playerIsInWonTeam) {
         setPlayerWon(true);
       } else {

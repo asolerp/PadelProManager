@@ -45,7 +45,7 @@ export const BottomModal: React.FC<BottomModalProps> = ({
       <KeyboardAvoidingView
         behavior={Platform.OS === 'android' ? 'height' : 'padding'}>
         <View style={[t.bgWhite, t.pT3, t.roundedTlLg, t.roundedTrLg, t.pB8]}>
-          <View style={[t.flexRow, t.itemsCenter, t.pX4, t.mB4]}>
+          <View style={[t.flexRow, t.itemsCenter, t.pX4, t.mB2]}>
             <View style={[t.flex1]} />
             <View style={[t.w10, t.h2, t.bgGray200, t.roundedFull]} />
             <Pressable onPress={onClose} style={[t.flex1, t.itemsEnd]}>

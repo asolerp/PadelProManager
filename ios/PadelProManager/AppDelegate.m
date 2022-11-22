@@ -1,5 +1,6 @@
 #import <Bugsnag/Bugsnag.h>
 #import "AppDelegate.h"
+#import <RNFBDynamicLinksAppDelegateInterceptor.h>
 
 #if RCT_DEV
 #import <React/RCTDevLoadingView.h>
@@ -18,8 +19,6 @@
 #import <FlipperKitNetworkPlugin/FlipperKitNetworkPlugin.h>
 #import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
 #import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
-
-#import <RNFBDynamicLinksAppDelegateInterceptor.h>
 
 static void InitializeFlipper(UIApplication *application) {
   FlipperClient *client = [FlipperClient sharedClient];

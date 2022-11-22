@@ -9,6 +9,10 @@ import {useFirebaseAuth} from '../../../Context/FirebaseContext';
 import {defaultFunctions} from '../../../Lib/API/firebaseApp';
 
 import {PENDING} from '../../../Models/entities';
+import {
+  removeBlanks,
+  removeMultipleBlanks,
+} from '../../../Utils/removeMultipleBlanks';
 
 const errorMessage = {
   'auth/user-not-found': 'El email o la contraseña son incorrectos',
@@ -50,7 +54,10 @@ export const useLogin = playerEmail => {
   const logIn = async () => {
     setLoading(true);
     try {
-      const response = await auth().signInWithEmailAndPassword(email, password);
+      const response = await auth().signInWithEmailAndPassword(
+        removeBlanks(email),
+        removeBlanks(password),
+      );
       await firestore().collection(PENDING).doc(response?.user?.uid).set({
         email,
       });

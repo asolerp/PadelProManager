@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 import Toast from 'react-native-toast-message';
 
 import AuthRouter from './Router/AuthRouter';
-import {StatusBar} from 'react-native';
+
 import {LoadingModalProvider} from './Context/LoadingModalContext';
 
 import {SubscriptionProvider} from './Context/SubscriptionContext';

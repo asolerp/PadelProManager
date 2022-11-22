@@ -34,13 +34,13 @@ const getConversations = functions
           return membersResponse[0]
         }))
 
-        const coach = members.find(m => m.role === "coach" || m.role === "admin")
+        const coach = members.find(m => m?.role === "coach" || m?.role === "admin")
         
         if (conve.type === 2 && conve.groupId) {
           const groupRef = await admin.firestore().collection(GROUPS).doc(conve.groupId).get()
           group = groupRef.data()
         } else {
-           player = conve.type === 1 ? members.find(m => m.role === "player") : null
+           player = conve.type === 1 ? members.find(m => m?.role === "player") : null
         } 
 
         return {

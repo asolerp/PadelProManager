@@ -1,29 +1,21 @@
 import Purchase from 'react-native-purchases';
+import {useCheckUserMembership} from '../../../Hooks/useCheckUserMembership';
 import {error} from '../../../Lib/Logging';
 import {popScreen} from '../../../Router/utils/actions';
 
 export const usePayProduct = () => {
+  const {checkUserMembership} = useCheckUserMembership();
   const makePayment = async purchasePackage => {
     try {
       await Purchase.purchasePackage(purchasePackage);
-      popScreen();
+      await checkUserMembership();
+      await popScreen();
     } catch (err) {
       console.log(err);
-      console.log(JSON.stringify(err));
-      // if (err.userInfo.readableErrorCode !== 'PURCHASE_CANCELLED') {
-      //   error({
-      //     title: 'Subscripción',
-      //     subtitle: 'No se ha podido realizar el pago',
-      //     data: {
-      //       error: err.userInfo.readableErrorCode,
-      //     },
-      //   });
-      // }
     }
   };
 
   const handleMakePayment = async purchasePackage => {
-    console.log('PACKAGE', purchasePackage);
     try {
       await makePayment(purchasePackage);
     } catch (err) {

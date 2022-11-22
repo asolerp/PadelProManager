@@ -96,12 +96,6 @@ const newSession = functions
         const sessionRef = admin.firestore().collection(SESSIONS).doc();
         const accountingDocRef = admin.firestore().collection(ACCOUNTING).doc()
 
-        console.log("[[SESSION]]", {
-          ...payload,
-          players: playersWithUserImage,
-          accountingId: payload.type === "session" ? accountingDocRef.id : null,
-        })
-
         await sessionRef.set({
           ...payload,
           players: playersWithUserImage,

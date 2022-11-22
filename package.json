@@ -1,11 +1,11 @@
 {
   "name": "padelpromanager",
-  "version": "1.5.0",
+  "version": "1.5.2",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "ios-prod": "yarn react-native run-ios --scheme PadelProManager",
-    "ios-dev": "yarn react-native run-ios --scheme PadelProManager-Development",
+    "ios-prod": "yarn react-native run-ios --simulator='iPhone 14' --scheme PadelProManager",
+    "ios-dev": "yarn react-native run-ios --simulator='iPhone 14' --scheme PadelProManager-Development",
     "android-dev": "react-native run-android --variant=developmentdebug --appIdSuffix development",
     "android-prod": "react-native run-android --variant=productiondebug --appIdSuffix production",
     "start": "react-native start",

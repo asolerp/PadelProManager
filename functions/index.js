@@ -26,6 +26,8 @@ const { getGroups } = require("./src/api/http/groups/get-groups");
 const { newPoint } = require("./src/api/http/match/new-point");
 const { newPlayer } = require("./src/api/http/players/new-player");
 const { deleteAccount } = require("./src/api/http/auth/delete-account");
+const { sentInvitation } = require("./src/api/http/players/sent-invitation");
+const { responseInvitation } = require("./src/api/http/players/response-invitation");
 
 
 admin.initializeApp(functions.config().firebase);
@@ -44,6 +46,8 @@ exports.onCreateConversation = onCreateConversation
 exports.onDeleteConversation = onDeleteConversation;
 
 // PLAYERS
+exports.responseInvitation = responseInvitation;
+exports.sentInvitation = sentInvitation;
 exports.onUpdatePlayer = onUpdatePlayer;
 exports.onDeletePlayer=onDeletePlayer;
 exports.savePlayersStats = savePlayersStats;

@@ -15,6 +15,10 @@ import {Session, SESSION_SCREEN_KEY} from '../Screens/Session/Session';
 import {Chat, CHAT_SCREEN_KEY} from '../Screens/Chat/Chat';
 import {ProMatch, PRO_MATCH_SCREEN_KEY} from '../Screens/ProMatch/ProMatch';
 import {CoachCode, COACH_CODE_SCREEN_KEY} from '../Screens/CoachCode/CoachCode';
+import {
+  NewPassword,
+  NEW_PASSWORD_SCREEN_KEY,
+} from '../Screens/NewPassword/NewPassword';
 
 const Stack = createNativeStackNavigator();
 
@@ -50,6 +54,11 @@ export const PlayerStack = () => {
           options={{headerShown: false}}
           name={PRO_MATCH_SCREEN_KEY}
           component={ProMatch}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name={NEW_PASSWORD_SCREEN_KEY}
+          component={NewPassword}
         />
         <Stack.Screen
           options={{headerShown: false}}

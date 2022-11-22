@@ -1,7 +1,7 @@
 import {useFocusEffect} from '@react-navigation/native';
 
 import React, {useCallback} from 'react';
-import {View} from 'react-native';
+import {SectionList, Text, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {getCurrencies} from 'react-native-localize';
 import {AccountingItem} from '../../Components/Accounting/AccountingItem';
@@ -18,11 +18,15 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import {useGetAccounting} from './hooks/useGetAccounting';
 import {openDrawer} from '../../Router/utils/actions';
+import {getDateAccounting} from './utils/getDateAccounting';
 
 export const ACCOUTING_SCREEN_KEY = 'accountingScreen';
 
 export const Accounting = () => {
   const {accounting, totalPending, total, refetch} = useGetAccounting();
+  const accountingData = getDateAccounting(accounting);
+
+  console.log('ACCOUNTING', accountingData);
 
   useFocusEffect(
     useCallback(() => {
@@ -60,13 +64,30 @@ export const Accounting = () => {
           value={`${Math.round(total)} ${getCurrencies()[0]}`}
         />
       </View>
-      <FlatList
-        data={accounting}
-        showsHorizontalScrollIndicator={false}
-        ItemSeparatorComponent={() => <HDivider />}
-        keyExtractor={item => item.id}
-        renderItem={renderItem}
-      />
+      <View style={[t.flex1, t.pB5]}>
+        <SectionList
+          sections={accountingData}
+          style={[t.flex1, t.mT3]}
+          showsVerticalScrollIndicator={false}
+          renderSectionHeader={({section: {title}}) => (
+            <View style={[t.pX4, t.pY4, t.itemsCenter, t.bgInfoLight]}>
+              {console.log()}
+              <Text style={[t.fontSansBold, t.textWhite]}>
+                {title.toUpperCase()}
+              </Text>
+            </View>
+          )}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+        />
+        {/* <FlatList
+          data={accounting}
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={() => <HDivider />}
+          keyExtractor={item => item.id}
+          renderItem={renderItem}
+        /> */}
+      </View>
     </ScreenLayout>
   );
 };

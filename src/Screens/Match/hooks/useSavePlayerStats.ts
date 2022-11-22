@@ -41,16 +41,15 @@ export const useSavePlayersStats = match => {
           type: 'info',
         },
       });
+      console.log(match?.[`t${winTeam}`]);
       await Promise.all(
         match?.[`t${winTeam}`]
           .filter(p => p !== null)
           .map(
             async player =>
               await firestore()
-                .collection('players')
-                .doc(player?.id)
                 .collection('stats')
-                .doc('global')
+                .doc(player?.email)
                 .update({
                   tw: firebase.firestore.FieldValue.increment(1),
                   tm: firebase.firestore.FieldValue.increment(1),
@@ -63,10 +62,8 @@ export const useSavePlayersStats = match => {
           .map(
             async player =>
               await firestore()
-                .collection('players')
-                .doc(player?.id)
                 .collection('stats')
-                .doc('global')
+                .doc(player?.email)
                 .update({
                   tl: firebase.firestore.FieldValue.increment(1),
                   tm: firebase.firestore.FieldValue.increment(1),

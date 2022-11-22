@@ -3,11 +3,12 @@ import {View, Text, ScrollView} from 'react-native';
 import t from '../../Theme/theme';
 import {Chip} from '../../Components/UI/Chip';
 import {useResumeStatistics} from './hooks/useResumeStatistcis';
-import {BlurView} from '@react-native-community/blur';
 
 const CELL_SIZE = 30;
 
 export const ResumenStatistic = ({statistics, withBlur = true}) => {
+  console.log('TABLE STATS', statistics);
+
   const {
     vdW,
     vrW,

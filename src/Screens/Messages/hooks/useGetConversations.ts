@@ -22,6 +22,8 @@ export const useGetConversations = () => {
         data: {conversationsWithFullMembers},
       } = conversationsRes;
 
+      console.log('CONVER', conversationsWithFullMembers);
+
       setConversations(
         conversationsWithFullMembers
           .filter(c => c.player)

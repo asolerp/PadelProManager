@@ -21,16 +21,6 @@ const findPlayerEmailById = async (userId, playerId) => {
   return player?.data()?.email;
 };
 
-const findUserIdByEmail = async email => {
-  const user = await admin
-    .firestore()
-    .collection(USERS)
-    .where("email", "==", email)
-    .get();
-
-  return user?.docs.length > 0 ? user.docs[0].id : null;
-};
-
 const savePlayersStats = functions
   .region(FB_REGION)
   .runWith({
@@ -47,30 +37,18 @@ const savePlayersStats = functions
 
     const userId = context.auth.uid;
     const batch = admin.firestore().batch();
-    const userBatch = admin.firestore().batch();
+    const statsBatch = admin.firestore().batch();
 
     const {playersStats, matchId} = data;
     const team1Stats = playersStats?.team1;
     const team2Stats = playersStats?.team2;
 
     const matchRef = admin.firestore().collection(MATCHES).doc(matchId);
-    const coachPlayerRef = playerId =>
+    const statsRef = playerEmail =>
       admin
         .firestore()
-        .collection(USERS)
-        .doc(userId)
-        .collection(PLAYERS)
-        .doc(playerId)
         .collection(STATS)
-        .doc("global");
-
-    const userRef = id =>
-      admin
-        .firestore()
-        .collection(USERS)
-        .doc(id)
-        .collection(STATS)
-        .doc("global");
+        .doc(playerEmail)
 
     batch.update(matchRef, {state: "finished"});
 
@@ -78,28 +56,34 @@ const savePlayersStats = functions
       team1Stats?.players &&
         (await Promise.all(
           Object.entries(team1Stats?.players).map(async ([key, value]) => {
+
             const playerEmail = await findPlayerEmailById(userId, key);
-            const id = await findUserIdByEmail(playerEmail);
-            if (id) {
-              userBatch.update(userRef(id), getStatsUpdateObject(value));
+            const statsPlayer = await statsRef(playerEmail).get()
+
+            if (statsPlayer.exists) {
+              statsBatch.update(statsRef(playerEmail), getStatsUpdateObject(value));
+            } else {
+              statsBatch.set(statsRef(playerEmail), getStatsUpdateObject(value));
             }
-            batch.update(coachPlayerRef(key), getStatsUpdateObject(value));
           }),
         ));
 
       team2Stats?.players &&
         (await Promise.all(
           Object.entries(team2Stats?.players).map(async ([key, value]) => {
+            
             const playerEmail = await findPlayerEmailById(userId, key);
-            const id = await findUserIdByEmail(playerEmail);
-            if (id) {
-              userBatch.update(userRef(id), getStatsUpdateObject(value));
-            }
-            batch.update(coachPlayerRef(key), getStatsUpdateObject(value));
+            const statsPlayer = await statsRef(playerEmail).get()
+
+            if (statsPlayer.exists) {
+                statsBatch.update(statsRef(playerEmail), getStatsUpdateObject(value));
+              } else {
+                statsBatch.set(statsRef(playerEmail), getStatsUpdateObject(value));
+              }
           }),
         ));
       await batch.commit();
-      await userBatch.commit();
+      await statsBatch.commit();
     } catch (err) {
       console.log(err);
     }

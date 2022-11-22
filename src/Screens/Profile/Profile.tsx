@@ -26,6 +26,8 @@ import {ProfileSettings} from '../../Components/Profile/ProfileSettings';
 import {useFirebaseAuth} from '../../Context/FirebaseContext';
 import PressableOpacity from '../../Components/UI/PressableOpacity';
 import {useDeleteAccount} from './hooks/useDeleteAccount';
+import {openScreenWithPush} from '../../Router/utils/actions';
+import {NEW_PASSWORD_SCREEN_KEY} from '../NewPassword/NewPassword';
 
 export const PROFILE_SCREEN_KEY = 'profileScreen';
 
@@ -245,7 +247,8 @@ export const ProfileScreen = () => {
                   </Text>
                   <Input
                     multiline
-                    placeholder="Descripción personal"
+                    labelText="Descripción personal"
+                    placeholder="Cuéntanos que tipo de entrenador eres"
                     value={values.personalDescription}
                     name="personalDescription"
                     error={errors.personalDescription}
@@ -255,6 +258,18 @@ export const ProfileScreen = () => {
                     style={[t.flex1, t.mR4]}
                   />
                 </View>
+                <PressableOpacity
+                  onPress={() => openScreenWithPush(NEW_PASSWORD_SCREEN_KEY)}>
+                  <Text
+                    style={[
+                      t.mT5,
+                      t.textCenter,
+                      t.fontSansBold,
+                      t.textInfoDark,
+                    ]}>
+                    Cambiar contraseña
+                  </Text>
+                </PressableOpacity>
                 <PressableOpacity onPress={() => handleDelete()}>
                   <Text
                     style={[

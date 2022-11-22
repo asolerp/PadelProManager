@@ -35,9 +35,6 @@ export const useNewOpenSessionForm = () => {
   };
 
   const handleSubmitSessionForm = async form => {
-    console.log('HOLA HOLA');
-    console.log('DATE', form?.date ? 'date' : 'no date');
-
     let dateParts;
 
     let timestampDate;

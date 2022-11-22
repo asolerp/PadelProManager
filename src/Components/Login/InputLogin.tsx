@@ -1,12 +1,15 @@
 import React from 'react';
-import {BlurView} from '@react-native-community/blur';
+
 import {TextInput} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import t from '../../Theme/theme';
 import {Platform, TextInputProps, View} from 'react-native';
 import PressableOpacity from '../UI/PressableOpacity';
 
-export const InputLogin: React.FC<TextInputProps> = ({...props}) => {
+export const InputLogin: React.FC<TextInputProps> = ({
+  clear = false,
+  ...props
+}) => {
   return (
     <View
       style={[
@@ -15,9 +18,13 @@ export const InputLogin: React.FC<TextInputProps> = ({...props}) => {
         t.itemsCenter,
         t.h14,
         t.wFull,
-        t.border0_5,
-        t.borderGray900,
-        {backgroundColor: `${t.bgGray900.backgroundColor}80`},
+        clear ? t.borderGray300 : t.borderGray900,
+        {
+          borderWidth: 1,
+          backgroundColor: clear
+            ? t.bgWhite
+            : `${t.bgGray900.backgroundColor}80`,
+        },
         {borderRadius: 20},
         t.justifyCenter,
         t.pX4,
@@ -26,7 +33,7 @@ export const InputLogin: React.FC<TextInputProps> = ({...props}) => {
         <Icon
           name={props.leftIconName}
           size={20}
-          color="white"
+          color={clear ? 'black' : 'white'}
           style={[t.mR4]}
         />
       )}
@@ -34,7 +41,7 @@ export const InputLogin: React.FC<TextInputProps> = ({...props}) => {
         <TextInput
           autoComplete={Platform.OS === 'web' ? 'none' : 'off'}
           placeholderTextColor={t.textGray500.color}
-          style={[t.textLg, t.textWhite, t.fontSans]}
+          style={[t.textLg, clear ? t.textGray900 : t.textWhite, t.fontSans]}
           {...props}
         />
       </View>
@@ -43,7 +50,7 @@ export const InputLogin: React.FC<TextInputProps> = ({...props}) => {
           <Icon
             name={props.rightIconName}
             size={20}
-            color="white"
+            color={clear ? 'black' : 'white'}
             style={[t.mR4]}
           />
         )}

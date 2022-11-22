@@ -22,7 +22,7 @@ export const EditResultModal = ({isVisible, onClose, match}) => {
         <View style={[t.flexCol, t.itemsCenter, t.mB5]}>
           <View style={[{width: '95%'}, t.mB3]}>
             <View style={[t.flexRow, t.itemsCenter, t.justifyBetween]}>
-              <View>
+              <View style={[t.w16]}>
                 <View style={[t.h8]} />
                 <View style={[t.mR3, t.w16]}>
                   <Text style={[t.fontSansMedium]}>
@@ -41,7 +41,7 @@ export const EditResultModal = ({isVisible, onClose, match}) => {
                   </Text>
                 </View>
               </View>
-              <View style={[t.justifyCenter, t.itemsCenter]}>
+              <View style={[t.w14, t.justifyCenter, t.itemsCenter]}>
                 <Text style={[t.mB3, t.fontSansMedium]}>Juego</Text>
                 <Input
                   keyboardType="numeric"
@@ -53,7 +53,7 @@ export const EditResultModal = ({isVisible, onClose, match}) => {
                   style={[t.w14]}
                 />
               </View>
-              <View style={[t.justifyCenter, t.itemsCenter]}>
+              <View style={[t.w14, t.justifyCenter, t.itemsCenter]}>
                 <Text style={[t.mB3, t.fontSansMedium]}>Set 1</Text>
                 <Input
                   keyboardType="numeric"
@@ -62,7 +62,7 @@ export const EditResultModal = ({isVisible, onClose, match}) => {
                   onSubmitEditing={Keyboard.dismiss}
                 />
               </View>
-              <View style={[t.justifyCenter, t.itemsCenter]}>
+              <View style={[t.w14, t.justifyCenter, t.itemsCenter]}>
                 <Text style={[t.mB3, t.fontSansMedium]}>Set 2</Text>
                 <Input
                   keyboardType="numeric"
@@ -70,7 +70,7 @@ export const EditResultModal = ({isVisible, onClose, match}) => {
                   onChangeText={t => setEditedMatch(old => ({...old, s2t1: t}))}
                 />
               </View>
-              <View style={[t.justifyCenter, t.itemsCenter]}>
+              <View style={[t.w14, t.justifyCenter, t.itemsCenter]}>
                 <Text style={[t.mB3, t.fontSansMedium]}>Set 3</Text>
                 <Input
                   keyboardType="numeric"
@@ -82,44 +82,56 @@ export const EditResultModal = ({isVisible, onClose, match}) => {
           </View>
           <View style={[{width: '95%'}, t.mB3]}>
             <View style={[t.flexRow, t.itemsCenter, t.justifyBetween]}>
-              <View style={[t.mR3, t.w16]}>
-                <Text style={[t.fontSansMedium]}>
-                  {shortName(
-                    3,
-                    match?.t2?.[0]?.firstName,
-                    match?.t2?.[0]?.secondName,
-                  )}
-                </Text>
-                <Text style={[t.fontSansMedium]}>
-                  {shortName(
-                    4,
-                    match?.t2?.[1]?.firstName,
-                    match?.t2?.[1]?.secondName,
-                  )}
-                </Text>
+              <View style={[t.w16]}>
+                <View style={[t.mR3, t.w16]}>
+                  <Text style={[t.fontSansMedium]}>
+                    {shortName(
+                      3,
+                      match?.t2?.[0]?.firstName,
+                      match?.t2?.[0]?.secondName,
+                    )}
+                  </Text>
+                  <Text style={[t.fontSansMedium]}>
+                    {shortName(
+                      4,
+                      match?.t2?.[1]?.firstName,
+                      match?.t2?.[1]?.secondName,
+                    )}
+                  </Text>
+                </View>
               </View>
-              <Input
-                keyboardType="numeric"
-                inputStyle={[t.textCenter]}
-                value={editedMatch?.team2?.toString()}
-                onChangeText={t => setEditedMatch(old => ({...old, team2: t}))}
-                style={[t.w14]}
-              />
-              <Input
-                keyboardType="numeric"
-                value={editedMatch?.s1t2?.toString()}
-                onChangeText={t => setEditedMatch(old => ({...old, s1t2: t}))}
-              />
-              <Input
-                keyboardType="numeric"
-                value={editedMatch?.s2t2?.toString()}
-                onChangeText={t => setEditedMatch(old => ({...old, s2t2: t}))}
-              />
-              <Input
-                keyboardType="numeric"
-                value={editedMatch?.s3t2?.toString()}
-                onChangeText={t => setEditedMatch(old => ({...old, s3t2: t}))}
-              />
+              <View style={[t.w14, t.justifyCenter, t.itemsCenter]}>
+                <Input
+                  keyboardType="numeric"
+                  inputStyle={[t.textCenter]}
+                  value={editedMatch?.team2?.toString()}
+                  onChangeText={t =>
+                    setEditedMatch(old => ({...old, team2: t}))
+                  }
+                  style={[t.w14]}
+                />
+              </View>
+              <View style={[t.w14, t.justifyCenter, t.itemsCenter]}>
+                <Input
+                  keyboardType="numeric"
+                  value={editedMatch?.s1t2?.toString()}
+                  onChangeText={t => setEditedMatch(old => ({...old, s1t2: t}))}
+                />
+              </View>
+              <View style={[t.w14, t.justifyCenter, t.itemsCenter]}>
+                <Input
+                  keyboardType="numeric"
+                  value={editedMatch?.s2t2?.toString()}
+                  onChangeText={t => setEditedMatch(old => ({...old, s2t2: t}))}
+                />
+              </View>
+              <View style={[t.w14, t.justifyCenter, t.itemsCenter]}>
+                <Input
+                  keyboardType="numeric"
+                  value={editedMatch?.s3t2?.toString()}
+                  onChangeText={t => setEditedMatch(old => ({...old, s3t2: t}))}
+                />
+              </View>
             </View>
           </View>
         </View>

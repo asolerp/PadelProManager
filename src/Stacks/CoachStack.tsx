@@ -41,6 +41,10 @@ import {
   NEW_OPEN_SESSION_SCREEN_KEY,
 } from '../Screens/OpenSession/OpenSession';
 import {DrawerStack} from './DrawerStack';
+import {
+  NewPassword,
+  NEW_PASSWORD_SCREEN_KEY,
+} from '../Screens/NewPassword/NewPassword';
 
 const Stack = createNativeStackNavigator();
 
@@ -65,6 +69,11 @@ export const CoachStack = () => {
           options={{headerShown: false}}
           name={NEW_OPEN_SESSION_SCREEN_KEY}
           component={NewOpenSessionScreen}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name={NEW_PASSWORD_SCREEN_KEY}
+          component={NewPassword}
         />
         <Stack.Screen
           options={{headerShown: false}}

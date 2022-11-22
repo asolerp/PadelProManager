@@ -49,7 +49,7 @@ export const Session = ({route}) => {
   return (
     <ScreenLayout>
       <Header
-        title="Entreno de voleas"
+        title="Sesión"
         withBack
         rightSide={isCoach && <SessionSettings session={session} />}
       />
