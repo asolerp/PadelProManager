@@ -35,7 +35,7 @@ export const TabStack = () => {
           ),
         })}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Planner"
         component={Planner}
         options={() => ({
@@ -66,7 +66,7 @@ export const TabStack = () => {
             </>
           ),
         })}
-      />
+      /> */}
       <Tab.Screen
         name="Jugadores"
         component={Players}

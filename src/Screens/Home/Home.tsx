@@ -1,7 +1,7 @@
 import React, {FunctionComponent, useCallback} from 'react';
 
 import {ScreenLayout} from '../../Components/Layout';
-import {View, Text, ScrollView, RefreshControl} from 'react-native';
+import {View, Text, ScrollView, RefreshControl, Dimensions} from 'react-native';
 import t from '../../Theme/theme';
 
 import {MatchResume} from '../../Components/Home/MatchResume';
@@ -25,7 +25,6 @@ import {LiveMatchesSkeleton} from '../../Components/Home/skeleton/LiveMatchesSke
 import {DailyExerciseSkeleton} from '../../Components/Home/skeleton/DailyExerciseSkeleton';
 import {LastMatchesSkeleton} from '../../Components/Home/skeleton/LastMatchesSkeleton';
 
-import {ProMatchesList} from '../../Components/Home/ProMatchesList';
 import {PaginatedList} from '../../Components/Common/PaginatedList';
 import {ProMatchSkeleton} from '../../Components/Home/skeleton/ProMatchSkeleton';
 import PressableOpacity from '../../Components/UI/PressableOpacity';
@@ -127,54 +126,6 @@ export const HomeScreen: FunctionComponent = () => {
             </PressableOpacity>
           </View>
         )}
-        {/* <View style={[t.mB7, t.pX4]}>
-          <PressableOpacity
-            onPress={() => openScreenWithPush(NEW_OPEN_SESSION_SCREEN_KEY)}
-            style={[
-              t.w60,
-              t.shadow,
-              t.bgWhite,
-              t.borderGray200,
-              t.roundedSm,
-              t.itemsCenter,
-              t.p4,
-              t.justifyCenter,
-              {borderWidth: 1},
-            ]}>
-            <Text style={[t.mB2, t.fontSansBold, t.textLg, t.textGray800]}>
-              Crear sesión
-            </Text>
-            <Text style={[t.textXs]}>
-              Crea una sesión de entrenamiento para que jugadores de cualquier
-              parte puedan contratar tus servicios
-            </Text>
-          </PressableOpacity>
-        </View> */}
-        <View style={[t.mB7, t.pX4]}>
-          {loading ? (
-            <ProMatchSkeleton />
-          ) : (
-            <MyTodaySessions sessions={todaySessions} />
-          )}
-        </View>
-        <View>
-          {loading ? (
-            <View style={[t.mB7, t.pX4]}>
-              <ProMatchSkeleton />
-            </View>
-          ) : (
-            <>
-              {proMatches?.length > 0 && (
-                <View style={[t.mB7]}>
-                  <Text style={[t.textXl, t.fontSansBold, t.mB5, t.pX4]}>
-                    {loc('home_screen_wpt_match_title')}
-                  </Text>
-                  <ProMatchesList proMatches={proMatches} />
-                </View>
-              )}
-            </>
-          )}
-        </View>
         <View style={[t.pX4]}>
           {loading ? (
             <View style={[t.mB7]}>
@@ -202,35 +153,19 @@ export const HomeScreen: FunctionComponent = () => {
                     <Text style={[t.textXl, t.pX4, t.fontSansBold, t.mB5]}>
                       {loc('home_screen_active_matches')}
                     </Text>
-                    <PaginatedList
-                      data={liveMatches?.sort(sortByDate)}
-                      renderItem={renderItem}
-                    />
+                    <View style={[{width: Dimensions.get('window').width}]}>
+                      <PaginatedList
+                        data={liveMatches?.sort(sortByDate)}
+                        renderItem={renderItem}
+                      />
+                    </View>
                   </View>
                 )}
               </>
             )}
           </View>
         </View>
-        <View style={[t.mB5, t.pX4, t.flexRow, t.justifyBetween]}>
-          <Text style={[t.textXl, t.fontSansBold]}>
-            {loc('DAILY_EXERCISE_TITLE')}
-          </Text>
-          <PressableOpacity
-            onPress={() => openScreenWithPush(TRAINING_SCREEN_KEY)}
-            style={[t.borderB0_5, t.borderGray700]}>
-            <Text style={[t.fontSansMedium, t.textGray900]}>
-              Más ejercicios
-            </Text>
-          </PressableOpacity>
-        </View>
-        <View style={[t.pX4]}>
-          {loading ? (
-            <DailyExerciseSkeleton />
-          ) : (
-            <DailyExercise exercise={dailyExercise} />
-          )}
-        </View>
+
         <View style={[t.pX4]}>
           <Text style={[t.textXl, t.fontSansBold, t.mB5]}>
             Últimos partidos

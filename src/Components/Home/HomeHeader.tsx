@@ -40,27 +40,6 @@ export const HomeHeader: React.FC<Props> = ({position}) => {
           </View>
         }
         leftStyles={[t.w48]}
-        rightSide={
-          <View style={[t.relative]}>
-            {noReadMessages && (
-              <View
-                style={[
-                  t.absolute,
-                  t.z50,
-                  t.right0,
-                  t.w3,
-                  t.h3,
-                  t.bgErrorDark,
-                  t.roundedFull,
-                ]}
-              />
-            )}
-            <PressableOpacity
-              onPress={() => openScreenWithPush(MESSAGES_SCREEN_KEY)}>
-              <Icon name="chatbox-ellipses" size={25} />
-            </PressableOpacity>
-          </View>
-        }
       />
     </View>
   );

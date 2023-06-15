@@ -531,6 +531,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1108202201106;
 				DEVELOPMENT_TEAM = Y86MT47MC7;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Y86MT47MC7;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PadelProManager/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -547,6 +548,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.padelpro;
 				PRODUCT_NAME = PadelProManager;
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.padelpro";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.padelpro";
 				SWIFT_OBJC_BRIDGING_HEADER = "PadelProManager-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
