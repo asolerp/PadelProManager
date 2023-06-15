@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="496.834" height="752.286" viewBox="0 0 496.834 752.286">
+  <defs>
+    <filter id="Elipse_42" x="69.64" y="90.143" width="56" height="56" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Elipse_43" x="308.64" y="90.143" width="56" height="56" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-2"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Elipse_44" x="59.64" y="626.143" width="56" height="56" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-3"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-3"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Grupo_53" data-name="Grupo 53" transform="translate(-4009.36 1164.143)">
+    <g id="Trazado_51" data-name="Trazado 51" transform="translate(4030 -1140)" fill="#0083b0">
+      <path d="M 454.5 702.5 L 0.5 702.5 L 0.5 0.5 L 454.5 0.5 L 454.5 702.5 Z" stroke="none"/>
+      <path d="M 1 1 L 1 702 L 454 702 L 454 1 L 1 1 M 0 0 L 455 0 L 455 703 L 0 703 L 0 0 Z" stroke="none" fill="#fff"/>
+    </g>
+    <line id="Línea_29" data-name="Línea 29" x2="454" transform="translate(4030.5 -788.5)" fill="none" stroke="#fff" stroke-width="5"/>
+    <line id="Línea_30" data-name="Línea 30" x2="454" transform="translate(4030.5 -987.5)" fill="none" stroke="#fff" stroke-width="3"/>
+    <line id="Línea_31" data-name="Línea 31" x2="455" transform="translate(4030 -589.5)" fill="none" stroke="#fff" stroke-width="3"/>
+    <line id="Línea_32" data-name="Línea 32" y2="398" transform="translate(4257.5 -987.5)" fill="none" stroke="#fff" stroke-width="1"/>
+    <path id="Trazado_52" data-name="Trazado 52" d="M3181.622-1121H3160.86v215.643h491.389V-1121h-17.126l.356,190.234-453.46-.219Z" transform="translate(849 493)" fill="#313131" stroke="#707070" stroke-width="1"/>
+    <path id="Trazado_53" data-name="Trazado 53" d="M21.254,0H0V215.643H491.389V0H474.263l.516,190.809-453.373.412Z" transform="translate(4505.694 -948) rotate(180)" fill="#313131" stroke="#707070" stroke-width="1"/>
+    <g id="Group_100" data-name="Group 100" transform="translate(4195.721 -1183.071)">
+      <g id="Group_97" data-name="Group 97" transform="translate(41.176 125.542)">
+        <path id="Path_20" data-name="Path 20" d="M14.819.3,10.5,2.49l-1.8.918a2.507,2.507,0,0,1-1.127.206,2.711,2.711,0,0,1-1.149-.252L0,0" transform="matrix(-0.035, -0.999, 0.999, -0.035, 44.995, 15.106)" fill="none" stroke="#fff258" stroke-linecap="round" stroke-width="3"/>
+        <path id="Path_21" data-name="Path 21" d="M14.819.3,11.893,1.784,10.5,2.49l-.522.266L8.7,3.408a2.507,2.507,0,0,1-1.127.206,2.711,2.711,0,0,1-1.149-.252L4.308,2.251,0,0" transform="matrix(-0.035, -0.999, 0.999, -0.035, 44.995, 15.106)" fill="none" stroke="#fff258" stroke-linecap="round" stroke-width="3"/>
+        <path id="Path_22" data-name="Path 22" d="M14.817.3,10.5,2.489l-1.8.918a2.506,2.506,0,0,1-1.127.206,2.71,2.71,0,0,1-1.149-.252L0,0" transform="translate(3.612 0) rotate(88)" fill="none" stroke="#fff258" stroke-linecap="round" stroke-width="3"/>
+        <g id="arrows_dark_arrow_1" data-name="arrows dark/arrow 1" transform="translate(4.145 8.088)">
+          <path id="Line" d="M.5,1.5H40.815" transform="translate(-0.5 -1.5)" fill="none" stroke="#fff258" stroke-linecap="square" stroke-miterlimit="10" stroke-width="8"/>
+        </g>
+      </g>
+    </g>
+    <path id="Path_19" data-name="Path 19" d="M11.2,3.377,7.916,1.148,6.545.216A1.522,1.522,0,0,0,5.692,0a1.62,1.62,0,0,0-.866.242L0,3.547" transform="matrix(-0.999, -0.035, 0.035, -0.999, 4088.038, -553.26)" fill="none" stroke="#fff258" stroke-linecap="round" stroke-width="3"/>
+    <g id="arrows_dark_arrow_1-2" data-name="arrows dark/arrow 1" transform="translate(4082.767 -1021.104) rotate(90)">
+      <path id="Line-2" data-name="Line" d="M0,0H464.528" transform="translate(0 0)" fill="none" stroke="#fff258" stroke-linecap="square" stroke-miterlimit="10" stroke-width="3"/>
+    </g>
+    <path id="Path_19-2" data-name="Path 19" d="M11.2,3.377,7.916,1.148,6.545.216A1.522,1.522,0,0,0,5.692,0a1.62,1.62,0,0,0-.866.242L0,3.547" transform="matrix(-0.899, -0.438, 0.438, -0.899, 4113.283, -550.831)" fill="none" stroke="#fff258" stroke-linecap="round" stroke-width="3"/>
+    <g id="arrows_dark_arrow_1-3" data-name="arrows dark/arrow 1" transform="matrix(-0.407, 0.914, -0.914, -0.407, 4316.75, -1020.781)">
+      <path id="Line-3" data-name="Line" d="M0,0H508.762" transform="translate(0 0)" fill="none" stroke="#fff258" stroke-linecap="square" stroke-miterlimit="10" stroke-width="3"/>
+    </g>
+    <g id="Rectángulo_2" data-name="Rectángulo 2" transform="translate(4297 -760)" fill="#e56d6d" stroke="#707070" stroke-width="1">
+      <rect width="78" height="50" stroke="none"/>
+      <rect x="0.5" y="0.5" width="77" height="49" fill="none"/>
+    </g>
+    <g id="Group_108" data-name="Group 108" transform="translate(4289.972 -760) rotate(-127)">
+      <path id="Path_19-3" data-name="Path 19" d="M11.2,3.377,7.916,1.148,6.545.216A1.522,1.522,0,0,0,5.692,0a1.62,1.62,0,0,0-.866.242L0,3.547" transform="matrix(-0.035, 0.999, -0.999, -0.035, 183.527, 0.124)" fill="none" stroke="#e56d6d" stroke-linecap="round" stroke-width="3"/>
+      <g id="arrows_dark_arrow_1-4" data-name="arrows dark/arrow 1" transform="translate(0 5.395)">
+        <path id="Line-4" data-name="Line" d="M0,0H180.211" transform="translate(0 0)" fill="none" stroke="#e56d6d" stroke-linecap="square" stroke-miterlimit="10" stroke-width="3" stroke-dasharray="5"/>
+      </g>
+    </g>
+    <g id="Group_108-2" data-name="Group 108" transform="translate(4310.366 -763.841) rotate(-91)">
+      <path id="Path_19-4" data-name="Path 19" d="M11.2,3.377,7.916,1.148,6.545.216A1.522,1.522,0,0,0,5.692,0a1.62,1.62,0,0,0-.866.242L0,3.547" transform="matrix(-0.035, 0.999, -0.999, -0.035, 183.527, 0.124)" fill="none" stroke="#e56d6d" stroke-linecap="round" stroke-width="3"/>
+      <g id="arrows_dark_arrow_1-5" data-name="arrows dark/arrow 1" transform="translate(0 5.395)">
+        <path id="Line-5" data-name="Line" d="M0,0H180.211" transform="translate(0 0)" fill="none" stroke="#e56d6d" stroke-linecap="square" stroke-miterlimit="10" stroke-width="3" stroke-dasharray="5"/>
+      </g>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, 4009.36, -1164.14)" filter="url(#Elipse_42)">
+      <circle id="Elipse_42-2" data-name="Elipse 42" cx="19" cy="19" r="19" transform="translate(78.64 96.14)" fill="#fff"/>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, 4009.36, -1164.14)" filter="url(#Elipse_43)">
+      <circle id="Elipse_43-2" data-name="Elipse 43" cx="19" cy="19" r="19" transform="translate(317.64 96.14)" fill="#fff"/>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, 4009.36, -1164.14)" filter="url(#Elipse_44)">
+      <g id="Elipse_44-2" data-name="Elipse 44" transform="translate(68.64 632.14)" fill="none" stroke="#36de4a" stroke-width="8">
+        <circle cx="19" cy="19" r="19" stroke="none"/>
+        <circle cx="19" cy="19" r="15" fill="none"/>
+      </g>
+    </g>
+  </g>
+</svg>

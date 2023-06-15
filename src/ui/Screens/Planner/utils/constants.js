@@ -1,0 +1,6 @@
+export const CONTAINER_MARGIN_TOP_NO_RESULTS = 16;
+export const CONTAINER_MARGIN_TOP = 160;
+export const MAP_IMAGE_HEIGHT = 160;
+export const SCROLL_LIMIT = 350;
+export const HEADER_CONTAINER_HEIGHT = 143;
+export const SCROLL_TOP_LIMIT = 125;

@@ -1,0 +1,18 @@
+<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 853.32 800.86">
+    <defs>
+        <style>.cls-1{fill:#ededed;}.cls-2{fill:#d6d6d6;}.cls-3{fill:#939393;}.cls-4{stroke:#333;stroke-miterlimit:10;fill:url(#Degradado_sin_nombre_3);}.cls-5{fill:#e6e6e6;}</style>
+        <linearGradient id="Degradado_sin_nombre_3" x1="255.16" y1="466.72" x2="596.88" y2="466.72" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#1c1c1c"/>
+            <stop offset="0.6" stop-color="#0d0d0d"/>
+            <stop offset="1"/>
+        </linearGradient>
+    </defs>
+    <polygon class="cls-1" points="0 146.67 427.72 251.16 853.32 146.67 426.66 800.86 0 146.67"/>
+    <path class="cls-2" d="M278.73,285H574.58c69.1,0,108.45,79,66.84,134.13L493.5,615.26c-33.5,44.4-100.18,44.4-133.68,0L211.9,419.14C170.29,364,209.64,285,278.73,285Z"/>
+    <path class="cls-3" d="M293.32,302.94H560c62.27,0,97.74,71.18,60.24,120.9L486.9,600.61c-30.19,40-90.3,40-120.49,0L233.08,423.84C195.57,374.12,231,302.94,293.32,302.94Z"/>
+    <path class="cls-4" d="M317,332.73H535.06c50.93,0,79.93,58.21,49.27,98.87l-109,144.56a61.7,61.7,0,0,1-98.53,0l-109-144.56C237.05,390.94,266.06,332.73,317,332.73Z"/>
+    <circle class="cls-5" cx="169.06" cy="46.17" r="46.17"/>
+    <circle class="cls-5" cx="340.79" cy="46.17" r="46.17"/>
+    <circle class="cls-5" cx="512.53" cy="46.17" r="46.17"/>
+    <circle class="cls-5" cx="684.26" cy="46.17" r="46.17"/>
+</svg>
